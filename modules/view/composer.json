@@ -1,0 +1,42 @@
+{
+    "name": "cms-module/view",
+    "description": "CmsTool Module",
+    "type": "library",
+    "version": "1.0",
+    "license": "proprietary",
+    "require": {
+		"twig/twig": "^3.7"
+	},
+    "autoload": {
+        "psr-4": {
+            "CmsTool\\View\\": "src/",
+            "Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require-dev": {
+        "laravel/pint": "^1.13",
+        "pestphp/pest": "^2.24",
+        "phpstan/phpstan": "^1.10",
+        "symfony/var-dumper": "^6.3",
+        "takemo101/chubby": "^0.0.9",
+        "mockery/mockery": "^1.6"
+    },
+    "scripts": {
+        "lint": "pint -v",
+        "test:lint": "pint --test --preset psr12 -v",
+        "test:types": "phpstan analyse --ansi",
+        "test:unit": "pest --colors=always",
+        "test": [
+            "@test:lint",
+            "@test:types",
+            "@test:unit"
+        ]
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
+}

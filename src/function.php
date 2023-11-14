@@ -6,7 +6,6 @@
 use Psr\Container\ContainerInterface;
 use Takemo101\CmsTool\Error\ErrorPageRender;
 use Takemo101\Chubby\Http\ErrorHandler\ErrorResponseRenders;
-use Takemo101\Chubby\Http\Renderer\HtmlRenderer;
 use Takemo101\Chubby\Support\ApplicationSummary;
 use Takemo101\CmsTool\Action\VendorAssetAction;
 

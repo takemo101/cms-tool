@@ -1,16 +1,19 @@
 {
-    "name": "cms-module/view",
+    "name": "cms-module/support",
     "description": "CmsTool Module",
     "type": "library",
     "version": "1.0",
     "license": "proprietary",
     "require": {
         "php": "^8.2",
-		"twig/twig": "^3.7"
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "ext-openssl": "*",
+        "illuminate/collections": "^10.31"
 	},
     "autoload": {
         "psr-4": {
-            "CmsTool\\View\\": "src/",
+            "CmsTool\\Support\\": "src/",
             "Tests\\": "tests/"
         }
     },

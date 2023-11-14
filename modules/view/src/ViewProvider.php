@@ -44,9 +44,19 @@ class ViewProvider implements Provider
     {
         $definitions->add([
             TemplateFinder::class => function (
-                DefaultTemplateFinder $finder,
+                ContainerInterface $container,
+                ConfigRepository $config,
                 Hook $hook,
             ) {
+                /** @var class-string<TemplateFinder> */
+                $class = $config->get(
+                    'view.finder',
+                    DefaultTemplateFinder::class,
+                );
+
+                /** @var TemplateFinder */
+                $finder = $container->get($class);
+
                 /** @var TemplateFinder */
                 $finder = $hook->filter(
                     TemplateFinder::class,
@@ -56,9 +66,19 @@ class ViewProvider implements Provider
                 return $finder;
             },
             TemplateRenderer::class => function (
-                TwigTemplateRenderer $renderer,
+                ContainerInterface $container,
+                ConfigRepository $config,
                 Hook $hook,
             ) {
+                /** @var class-string<TemplateRenderer> */
+                $class = $config->get(
+                    'view.renderer',
+                    TwigTemplateRenderer::class,
+                );
+
+                /** @var TemplateRenderer */
+                $renderer = $container->get($class);
+
                 /** @var TemplateRenderer */
                 $renderer = $hook->filter(
                     TemplateRenderer::class,

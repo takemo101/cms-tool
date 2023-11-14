@@ -1,14 +1,22 @@
 <?php
 
 use CmsTool\View\Contract\Htmlable;
+use CmsTool\View\DefaultTemplateFinder;
 use CmsTool\View\Twig\Extension\ConfigExtension;
 use CmsTool\View\Twig\Extension\ContextExtension;
 use CmsTool\View\Twig\Extension\FiltersExtension;
 use CmsTool\View\Twig\Extension\FunctionsExtension;
 use CmsTool\View\Twig\Extension\RouteExtension;
+use CmsTool\View\Twig\TwigTemplateRenderer;
 use Takemo101\Chubby\Contract\Renderable;
 
 return [
+
+    // TemplateFinder implementation class name
+    'finder' => DefaultTemplateFinder::class,
+
+    // TemplateRenderer implementation class name
+    'renderer' => TwigTemplateRenderer::class,
 
     'locations' => [
         base_path('resources/views'),

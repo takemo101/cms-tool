@@ -1,67 +1,73 @@
 {
-  "name": "takemo101/chubby-skeleton",
-  "type": "project",
-  "description": "This is Chubby's project.",
-  "keywords": ["php", "slim", "chubbt", "framework"],
-  "authors": [
-    {
-      "name": "takemo101",
-      "email": "takemo101@gmail.com"
-    }
-  ],
-  "homepage": "https://github.com/takemo101/chubby",
-  "license": "MIT",
-  "autoload": {
-    "psr-4": {
-      "Takemo101\\CmsTool\\": "src/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Tests\\": "tests/"
-    }
-  },
-  "require": {
-    "php": "^8.2",
-    "ext-json": "*",
-    "cms-module/support": "^1.0",
-    "cms-module/view": "^1.0",
-    "takemo101/chubby": "^0.0.10"
-  },
-  "require-dev": {
-    "laravel/pint": "^1.13",
-    "pestphp/pest": "^2.24",
-    "phpstan/phpstan": "^1.10",
-    "symfony/var-dumper": "^6.3"
-  },
-  "scripts": {
-    "lint": "pint -v",
-    "test:lint": "pint --test --preset psr12 -v",
-    "test:types": "phpstan analyse --ansi",
-    "test:unit": "pest --colors=always",
-    "test": [
-      "@test:lint",
-      "@test:types",
-      "@test:unit"
+    "name": "takemo101/chubby-skeleton",
+    "type": "project",
+    "description": "This is Chubby's project.",
+    "keywords": [
+        "php",
+        "slim",
+        "chubbt",
+        "framework"
+    ],
+    "authors": [
+        {
+            "name": "takemo101",
+            "email": "takemo101@gmail.com"
+        }
+    ],
+    "homepage": "https://github.com/takemo101/chubby",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Takemo101\\CmsTool\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "php": "^8.2",
+        "ext-json": "*",
+        "cms-module/support": "^1.0",
+        "cms-module/session": "^1.0",
+        "cms-module/view": "^1.0",
+        "takemo101/chubby": "^0.0.11"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.13",
+        "pestphp/pest": "^2.24",
+        "phpstan/phpstan": "^1.10",
+        "symfony/var-dumper": "^6.3"
+    },
+    "scripts": {
+        "lint": "pint -v",
+        "test:lint": "pint --test --preset psr12 -v",
+        "test:types": "phpstan analyse --ansi",
+        "test:unit": "pest --colors=always",
+        "test": [
+            "@test:lint",
+            "@test:types",
+            "@test:unit"
+        ]
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "path",
+            "url": "modules/*",
+            "options": {
+                "symlink": true
+            }
+        }
     ]
-  },
-  "config": {
-    "optimize-autoloader": true,
-    "preferred-install": "dist",
-    "sort-packages": true,
-    "allow-plugins": {
-      "pestphp/pest-plugin": true
-    }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "repositories": [
-    {
-      "type": "path",
-      "url": "modules/*",
-      "options": {
-        "symlink": true
-      }
-    }
-  ]
 }

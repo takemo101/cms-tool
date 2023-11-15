@@ -2,6 +2,7 @@
 
 namespace Takemo101\CmsTool;
 
+use CmsTool\Session\SessionProvider;
 use CmsTool\Support\SupportProvider;
 use CmsTool\View\ViewProvider;
 use Takemo101\Chubby\Application;
@@ -23,6 +24,7 @@ final class CmsToolApplicationBuilder
         return $app->addProvider(
             new CmsToolProvider(),
             new ViewProvider(),
+            new SessionProvider(),
             new SupportProvider(),
         );
     }

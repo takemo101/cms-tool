@@ -31,64 +31,53 @@ final class VendorPath
     /**
      * Path to base directory
      *
-     * @param string|null $path
+     * @param string ...$paths
      * @return string
      */
-    public function getBasePath(?string $path = null): string
+    public function getBasePath(string ...$paths): string
     {
-        return $path
-            ? $this->helper->join($this->basePath, $path)
-            : $this->basePath;
+        return $this->helper->join($this->basePath, ...$paths);
     }
 
     /**
      * Path to source directory
      *
-     * @param string|null $path
+     * @param string ...$paths
      * @return string
      */
-    public function getSourcePath(?string $path = null): string
+    public function getSourcePath(string ...$paths): string
     {
-        $extendPath = $path
-            ? [$this->sourcePath, $path]
-            : [$this->sourcePath];
-
         return $this->getBasePath(
-            $this->helper->join(...$extendPath),
+            $this->sourcePath,
+            ...$paths,
         );
     }
 
     /**
      * Path to config directory
      *
-     * @param string|null $path
+     * @param string ...$paths
      * @return string
      */
-    public function getConfigPath(?string $path = null): string
+    public function getConfigPath(string ...$paths): string
     {
-        $extendPath = $path
-            ? [$this->configPath, $path]
-            : [$this->configPath];
-
         return $this->getBasePath(
-            $this->helper->join(...$extendPath),
+            $this->configPath,
+            ...$paths,
         );
     }
 
     /**
      * Path to resource directory
      *
-     * @param string|null $path
+     * @param string ...$paths
      * @return string
      */
-    public function getResourcePath(?string $path = null): string
+    public function getResourcePath(string ...$paths): string
     {
-        $extendPath = $path
-            ? [$this->resourcePath, $path]
-            : [$this->resourcePath];
-
         return $this->getBasePath(
-            $this->helper->join(...$extendPath),
+            $this->resourcePath,
+            ...$paths,
         );
     }
 }

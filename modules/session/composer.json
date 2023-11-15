@@ -1,19 +1,17 @@
 {
-    "name": "cms-module/support",
+    "name": "cms-module/session",
     "description": "CmsTool Module",
     "type": "library",
     "version": "1.0",
     "license": "proprietary",
     "require": {
         "php": "^8.2",
-        "ext-json": "*",
-        "ext-mbstring": "*",
-        "ext-openssl": "*",
-        "illuminate/collections": "^10.31"
+        "odan/session": "^6.1",
+        "slim/csrf": "^1.3"
 	},
     "autoload": {
         "psr-4": {
-            "CmsTool\\Support\\": "src/",
+            "CmsTool\\Session\\": "src/",
             "Tests\\": "tests/"
         }
     },

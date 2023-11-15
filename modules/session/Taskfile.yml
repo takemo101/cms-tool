@@ -1,7 +1,5 @@
 version: '3'
 
-# reference: https://yewton.github.io/my-marp-slides/2022-11_task/PITCHME.html
-
 # please install Taskfile => https://taskfile.dev/ja-JP/installation/
 
 # template => https://go-task.github.io/slim-sprig/
@@ -12,42 +10,15 @@ vars:
   PHPSTAN_BIN: ./vendor/bin/phpstan
 
 tasks:
-  setup:
-    cmds:
-      - cp .example.env .env
-
   # ex: task composer -- install
   composer:
     cmds:
       - docker-compose run --rm composer {{default "--version" .CLI_ARGS}}
 
-  all-update:
-    cmds:
-      - for:
-          - ./modules/view
-          - ./modules/support
-          - ./modules/session
-        cmd: |
-          cd {{.ITEM}} &&
-          task pkg-update
-      - task: pkg-update
-
   pkg-update:
     cmds:
-      - docker-compose run --rm composer remove takemo101/chubby
-      - docker-compose run --rm composer require takemo101/chubby
-
-  start:
-    cmds:
-      - docker-compose up -d chubby-app
-
-  shell:
-    cmds:
-      - docker-compose exec chubby-app bash
-
-  stop:
-    cmds:
-      - docker-compose stop chubby-app
+      - docker-compose run --rm composer remove --dev takemo101/chubby
+      - docker-compose run --rm composer require --dev takemo101/chubby
 
   pint:
     cmds:
@@ -66,8 +37,3 @@ tasks:
     cmds:
       - docker-compose run --rm php {{.PEST_BIN}} --colors=always
         {{if .GROUP}}--group={{.GROUP}}{{end}}
-
-  # ex: task serve PORT=8000 ROOT=./public/index.php
-  serve:
-    cmds:
-      - php -S {{default "localhost" .HOST}}:{{default "8080" .PORT}} {{default "./public/index.php" .ROOT}}

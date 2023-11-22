@@ -3,9 +3,8 @@
 namespace Takemo101\CmsTool\Infra\JsonAccess\Repository;
 
 use Takemo101\CmsTool\Domain\MicroCms\MicroCmsApi;
-use Illuminate\Support\Arr;
 
-final class JsonAccessMicroCmsApiEntityMapper
+class JsonAccessMicroCmsApiEntityMapper
 {
     /**
      * @param MicroCmsApi $api

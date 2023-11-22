@@ -9,7 +9,7 @@ use Takemo101\Chubby\Contract\Arrayable;
 /**
  * @extends Arrayable<string,mixed>
  */
-abstract readonly class ViewModel implements Arrayable
+abstract class ViewModel implements Arrayable
 {
     /**
      * @var string[] Method excluding data

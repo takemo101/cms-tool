@@ -5,7 +5,7 @@ namespace Takemo101\CmsTool\UseCase\SiteMeta\Handler;
 use Takemo101\CmsTool\Domain\SiteMeta\SiteMeta;
 use Takemo101\CmsTool\Domain\SiteMeta\SiteMetaRepository;
 
-readonly class SaveSiteMetaHandler
+class SaveSiteMetaHandler
 {
     /**
      * constructor
@@ -22,9 +22,9 @@ readonly class SaveSiteMetaHandler
      * Execute the processing the processing
      *
      * @param SaveSiteMetaCommand $command
-     * @return void
+     * @return SiteMeta
      */
-    public function handle(SaveSiteMetaCommand $command): void
+    public function handle(SaveSiteMetaCommand $command): SiteMeta
     {
         $meta = new SiteMeta(
             name: $command->name,
@@ -33,5 +33,7 @@ readonly class SaveSiteMetaHandler
         );
 
         $this->repository->save($meta);
+
+        return $meta;
     }
 }

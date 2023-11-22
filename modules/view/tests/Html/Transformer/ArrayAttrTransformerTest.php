@@ -8,7 +8,7 @@ describe(
 
         $transformer = new ArrayAttrTransformer();
 
-        test(
+        it(
             'should return null if the value is not an array',
             function () use ($transformer) {
                 $result = $transformer->transform('class', 'not an array');
@@ -17,7 +17,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'should return null if the value is an empty array',
             function () use ($transformer) {
                 $result = $transformer->transform('class', []);
@@ -26,7 +26,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'should return a string of space-separated values if the value is a non-empty array of strings',
             function () use ($transformer) {
                 $result = $transformer->transform('class', ['foo', 'bar', 'baz']);
@@ -35,7 +35,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'should ignore non-string values in the array',
             function () use ($transformer) {
                 $result = $transformer->transform('class', ['foo', 123, true, 'bar', null, 'baz']);
@@ -44,7 +44,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'should ignore empty strings in the array',
             function () use ($transformer) {
                 $result = $transformer->transform('class', ['foo', '', 'bar', 'baz', '']);

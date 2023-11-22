@@ -26,7 +26,7 @@ readonly class JsonAccessMicroCmsApiRepository implements MicroCmsApiRepository
     /**
      * @return boolean
      */
-    public function has(): bool
+    public function exists(): bool
     {
         $object = $this->creator->create();
 
@@ -36,7 +36,7 @@ readonly class JsonAccessMicroCmsApiRepository implements MicroCmsApiRepository
     /**
      * @return MicroCmsApi|null
      */
-    public function get(): ?MicroCmsApi
+    public function find(): ?MicroCmsApi
     {
         $object = $this->creator->create();
 

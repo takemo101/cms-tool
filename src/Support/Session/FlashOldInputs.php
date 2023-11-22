@@ -6,7 +6,7 @@ use CmsTool\Session\Flash\AbstractFlashSession;
 use Illuminate\Support\Arr;
 
 
-final class FlashOldInputs extends AbstractFlashSession
+class FlashOldInputs extends AbstractFlashSession
 {
     /**
      * @var string

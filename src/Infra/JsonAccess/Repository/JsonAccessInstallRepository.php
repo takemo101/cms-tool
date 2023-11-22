@@ -5,7 +5,7 @@ namespace Takemo101\CmsTool\Infra\JsonAccess\Repository;
 use Takemo101\CmsTool\Domain\Install\InstallRepository;
 use Takemo101\CmsTool\Infra\JsonAccess\SettingJsonAccessObjectCreator;
 
-readonly class JsonAccessInstallRepository implements InstallRepository
+class JsonAccessInstallRepository implements InstallRepository
 {
     public const ObjectKey = 'installed';
 

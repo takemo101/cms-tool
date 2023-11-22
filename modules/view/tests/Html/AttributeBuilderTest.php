@@ -10,7 +10,7 @@ describe(
 
         $builder = new AttributeBuilder(new AttrTransformers());
 
-        test(
+        it(
             'should return an empty string when given an empty array',
             function () use ($builder) {
                 $result = $builder->build([]);
@@ -19,7 +19,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'should return a string of attributes when given an array of attributes',
             function () use ($builder) {
                 $attributes = [
@@ -37,7 +37,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'should transform attribute keys to lowercase',
             function () use ($builder) {
                 $attributes = [

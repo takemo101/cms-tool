@@ -7,12 +7,12 @@ interface MicroCmsApiRepository
     /**
      * @return boolean
      */
-    public function has(): bool;
+    public function exists(): bool;
 
     /**
      * @return MicroCmsApi|null
      */
-    public function get(): ?MicroCmsApi;
+    public function find(): ?MicroCmsApi;
 
     /**
      * @param MicroCmsApi $api

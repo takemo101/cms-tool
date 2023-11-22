@@ -7,7 +7,7 @@ use Stringable;
 use InvalidArgumentException;
 use RuntimeException;
 
-final readonly class ViewName implements Stringable
+readonly class ViewName implements Stringable
 {
     /**
      * @var string

@@ -8,7 +8,7 @@ describe(
 
         $transformer = new BooleanAttrTransformer();
 
-        test(
+        it(
             'should return null if the value is not a boolean',
             function () use ($transformer) {
                 $result = $transformer->transform('disabled', 'not a boolean');
@@ -17,7 +17,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'should return the key if the value is true',
             function () use ($transformer) {
                 $result = $transformer->transform('disabled', true);
@@ -26,7 +26,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'should return null if the value is false',
             function () use ($transformer) {
                 $result = $transformer->transform('disabled', false);

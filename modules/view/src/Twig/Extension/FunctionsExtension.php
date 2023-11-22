@@ -15,7 +15,7 @@ class FunctionsExtension extends AbstractExtension
      */
     public function __construct(
         #[Inject('config.view.twig.functions')]
-        private readonly array $functions,
+        private array $functions,
     ) {
         //
     }

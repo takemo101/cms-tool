@@ -6,8 +6,10 @@ use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use Takemo101\CmsTool\Domain\MicroCms\MicroCmsApi;
 
-readonly class MicroCmsClient
+class MicroCmsClient
 {
+    public const TokenKey = 'X-MICROCMS-API-KEY';
+
     /**
      * constructor
      *
@@ -59,7 +61,7 @@ readonly class MicroCmsClient
     private function createHeaders(): array
     {
         return [
-            'X-MICROCMS-API-KEY' => $this->key,
+            self::TokenKey => $this->key,
             'Content-Type' => 'application/json',
         ];
     }
@@ -69,13 +71,13 @@ readonly class MicroCmsClient
      *
      * @param MicroCmsApi $entity
      * @param ClientInterface $client
-     * @return static
+     * @return self
      */
     public static function fromEntity(
         MicroCmsApi $entity,
         ClientInterface $client = new Client(),
     ): static {
-        return new static(
+        return new self(
             key: $entity->key,
             serviceId: $entity->serviceId,
             client: $client,

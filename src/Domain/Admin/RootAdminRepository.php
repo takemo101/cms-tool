@@ -7,12 +7,12 @@ interface RootAdminRepository
     /**
      * @return boolean
      */
-    public function has(): bool;
+    public function exists(): bool;
 
     /**
      * @return RootAdmin|null
      */
-    public function get(): ?RootAdmin;
+    public function find(): ?RootAdmin;
 
     /**
      * @param RootAdmin $root

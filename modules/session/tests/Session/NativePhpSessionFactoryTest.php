@@ -4,7 +4,7 @@ use CmsTool\Session\NativePhpSessionFactory;
 use Odan\Session\SessionInterface as Session;
 use Odan\Session\SessionManagerInterface as SessionManager;
 
-test(
+it(
     'should create a session',
     function () {
         $factory = new NativePhpSessionFactory();

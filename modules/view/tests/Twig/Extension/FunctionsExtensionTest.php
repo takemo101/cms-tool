@@ -6,7 +6,7 @@ use Tests\TestCase;
 describe(
     'FunctionsExtension',
     function () {
-        test(
+        it(
             'should register functions Twig functions',
             function () {
                 /** @var TestCase $this */

@@ -11,7 +11,7 @@ use RuntimeException;
  * reference: https://note.com/waaaq___/n/n9b08d864c3ea
  * reference: https://github.com/laravel/framework/blob/10.x/src/Illuminate/Encryption/Encrypter.php
  */
-readonly class DefaultEncrypter implements Encrypter
+class DefaultEncrypter implements Encrypter
 {
     /**
      * constructor

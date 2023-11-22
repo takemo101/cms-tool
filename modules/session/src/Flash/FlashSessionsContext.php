@@ -4,7 +4,7 @@ namespace CmsTool\Session\Flash;
 
 use Takemo101\Chubby\Http\Support\AbstractContext;
 
-final class FlashSessionsContext extends AbstractContext
+class FlashSessionsContext extends AbstractContext
 {
     public const ContextKey = self::class;
 

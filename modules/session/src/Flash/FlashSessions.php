@@ -4,7 +4,7 @@ namespace CmsTool\Session\Flash;
 
 use InvalidArgumentException;
 
-final class FlashSessions
+class FlashSessions
 {
     /**
      * @var array<class-string<FlashSession>,FlashSession>

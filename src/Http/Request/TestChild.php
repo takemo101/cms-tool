@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 /**
  * reference: https://dev.to/beganovich/validating-requests-in-the-symfony-app-2g0a
  */
-final class TestChild extends FormRequestObject
+class TestChild extends FormRequestObject
 {
     #[NotBlank]
     public string $title;

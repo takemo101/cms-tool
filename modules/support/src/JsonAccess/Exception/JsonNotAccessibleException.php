@@ -4,7 +4,7 @@ namespace CmsTool\Support\JsonAccess\Exception;
 
 use Throwable;
 
-final class JsonNotAccessibleException extends JsonAccessException
+class JsonNotAccessibleException extends JsonAccessException
 {
     /**
      * Exception thrown when a JSON data is not readable.

@@ -10,7 +10,7 @@ use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Throwable;
 
-final class HttpValidationErrorException extends HttpSpecializedException
+class HttpValidationErrorException extends HttpSpecializedException
 {
     /**
      * @var integer

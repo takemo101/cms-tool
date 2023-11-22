@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
 
 #[CamelCaseMapper]
-final class SaveApiRequest extends FormRequest
+class SaveApiRequest extends FormRequest
 {
     #[NotBlank]
     #[Length(max: 100)]

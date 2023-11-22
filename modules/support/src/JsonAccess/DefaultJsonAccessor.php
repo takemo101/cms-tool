@@ -8,7 +8,7 @@ use CmsTool\Support\JsonAccess\Exception\NotFoundJsonException;
 use CmsTool\Support\JsonAccess\Exception\JsonAccessException;
 use Takemo101\Chubby\Filesystem\LocalFilesystem;
 
-final class DefaultJsonAccessor implements JsonArrayAccessor
+class DefaultJsonAccessor implements JsonArrayAccessor
 {
     /**
      * constructor

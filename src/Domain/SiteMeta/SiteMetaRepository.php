@@ -7,7 +7,7 @@ interface SiteMetaRepository
     /**
      * @return boolean
      */
-    public function has(): bool;
+    public function exists(): bool;
 
     /**
      * @param SiteMeta $meta

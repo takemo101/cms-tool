@@ -26,7 +26,7 @@ readonly class JsonAccessRootAdminRepository implements RootAdminRepository
     /**
      * @return boolean
      */
-    public function has(): bool
+    public function exists(): bool
     {
         $object = $this->creator->create();
 
@@ -36,7 +36,7 @@ readonly class JsonAccessRootAdminRepository implements RootAdminRepository
     /**
      * @return RootAdmin|null
      */
-    public function get(): ?RootAdmin
+    public function find(): ?RootAdmin
     {
         $object = $this->creator->create();
 

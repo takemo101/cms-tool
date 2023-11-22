@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints\Regex;
 
 
 #[CamelCaseMapper]
-final class SaveAccountRequest extends FormRequest
+class SaveAccountRequest extends FormRequest
 {
     #[NotBlank]
     #[Length(min: 4, max: 50)]

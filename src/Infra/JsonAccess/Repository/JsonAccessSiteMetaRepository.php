@@ -27,7 +27,7 @@ readonly class JsonAccessSiteMetaRepository implements SiteMetaRepository
     /**
      * @return boolean
      */
-    public function has(): bool
+    public function exists(): bool
     {
         $object = $this->creator->create();
 

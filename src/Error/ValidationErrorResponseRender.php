@@ -13,7 +13,7 @@ use Takemo101\Chubby\Http\Renderer\ResponseRenderer;
 use Takemo101\CmsTool\Support\Session\FlashErrorMessages;
 use Throwable;
 
-final class ValidationErrorResponseRender extends AbstractErrorResponseRender
+class ValidationErrorResponseRender extends AbstractErrorResponseRender
 {
     /**
      * Determine if the response should be rendered.

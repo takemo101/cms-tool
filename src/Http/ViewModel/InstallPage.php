@@ -4,7 +4,7 @@ namespace Takemo101\CmsTool\Http\ViewModel;
 
 use Takemo101\CmsTool\UseCase\Shared\QueryService\InstallSettingData;
 
-readonly class InstallPage extends ViewModel
+class InstallPage extends ViewModel
 {
     /**
      * constructor

@@ -6,7 +6,7 @@ use Odan\Session\FlashInterface as Flash;
 use Odan\Session\SessionInterface as Session;
 use Takemo101\Chubby\Http\Support\AbstractContext;
 
-final class SessionContext extends AbstractContext
+class SessionContext extends AbstractContext
 {
     public const ContextKey = self::class;
 

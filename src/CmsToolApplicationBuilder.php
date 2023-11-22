@@ -9,7 +9,7 @@ use Takemo101\Chubby\Application;
 use Takemo101\Chubby\ApplicationBuilder;
 use Takemo101\Chubby\ApplicationOption;
 
-final class CmsToolApplicationBuilder
+class CmsToolApplicationBuilder
 {
     /**
      * @param ApplicationOption|null $option

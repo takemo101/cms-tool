@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
 
 #[CamelCaseMapper]
-final class SaveMetaRequest extends FormRequest
+class SaveMetaRequest extends FormRequest
 {
     #[NotBlank]
     #[Length(max: 50)]

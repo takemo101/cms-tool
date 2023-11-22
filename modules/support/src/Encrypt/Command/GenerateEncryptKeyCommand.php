@@ -6,7 +6,7 @@ use CmsTool\Support\Encrypt\EncryptCipher;
 use Symfony\Component\Console\Output\OutputInterface;
 use Takemo101\Chubby\Console\Command\Command;
 
-final class GenerateEncryptKeyCommand extends Command
+class GenerateEncryptKeyCommand extends Command
 {
     /**
      * @return void

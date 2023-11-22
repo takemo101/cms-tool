@@ -2,7 +2,7 @@
 
 namespace CmsTool\View\Html\Transformer;
 
-final class BooleanAttrTransformer extends AbstractAttrTransformer
+class BooleanAttrTransformer extends AbstractAttrTransformer
 {
     /**
      * Transform attributes

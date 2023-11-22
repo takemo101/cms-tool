@@ -4,7 +4,7 @@ namespace CmsTool\View\Html\Transformer;
 
 use Stringable;
 
-final class ArrayAttrTransformer extends AbstractAttrTransformer
+class ArrayAttrTransformer extends AbstractAttrTransformer
 {
     /**
      * Transform attributes

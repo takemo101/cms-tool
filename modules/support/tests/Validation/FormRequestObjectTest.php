@@ -7,7 +7,7 @@ use Takemo101\Chubby\Contract\Arrayable;
 describe(
     'FormRequestObject',
     function () {
-        test(
+        it(
             'should populate properties correctly',
             function () {
                 $expectedArray = [
@@ -33,7 +33,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'should convert the object to array representation',
             function () {
                 $request = new class() extends FormRequestObject
@@ -61,7 +61,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'should exclude properties from array representation',
             function () {
                 $request = new class() extends FormRequestObject
@@ -90,7 +90,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'should populate properties using the populate method',
             function () {
                 $expectedArray = [

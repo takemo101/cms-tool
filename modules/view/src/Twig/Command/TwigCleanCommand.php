@@ -5,10 +5,9 @@ namespace CmsTool\View\Twig\Command;
 use Symfony\Component\Console\Output\OutputInterface;
 use Takemo101\Chubby\Console\Command\Command;
 use Takemo101\Chubby\Filesystem\LocalFilesystem;
-use Twig\Cache\CacheInterface;
 use Twig\Environment;
 
-final class TwigCleanCommand extends Command
+class TwigCleanCommand extends Command
 {
     /**
      * @return void

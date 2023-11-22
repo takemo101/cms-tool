@@ -4,7 +4,7 @@ namespace CmsTool\Support\JsonAccess\Exception;
 
 use Throwable;
 
-final class NotFoundJsonException extends JsonAccessException
+class NotFoundJsonException extends JsonAccessException
 {
     public function __construct(string $path, int $code = 0, Throwable $previous = null)
     {

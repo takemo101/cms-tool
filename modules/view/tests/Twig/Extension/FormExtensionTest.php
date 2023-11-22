@@ -10,7 +10,7 @@ describe(
     'FiltersExtension',
     function () {
 
-        test(
+        it(
             'should register form_open and form_close Twig functions',
             function () {
                 $routeParser = Mockery::mock(RouteParserInterface::class);

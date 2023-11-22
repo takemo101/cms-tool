@@ -4,7 +4,7 @@ namespace CmsTool\Support\JsonAccess\Exception;
 
 use Throwable;
 
-final class JsonConversionException extends JsonAccessException
+class JsonConversionException extends JsonAccessException
 {
     /**
      * Exception thrown when a JSON conversion error occurs.

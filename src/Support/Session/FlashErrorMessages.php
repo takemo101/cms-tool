@@ -6,7 +6,7 @@ use CmsTool\Session\Flash\AbstractFlashSession;
 
 
 
-final class FlashErrorMessages extends AbstractFlashSession
+class FlashErrorMessages extends AbstractFlashSession
 {
     /**
      * @var string

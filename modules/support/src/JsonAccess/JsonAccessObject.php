@@ -10,7 +10,7 @@ use Illuminate\Support\Arr;
 /**
  * @implements Arrayable<string,mixed>
  */
-final class JsonAccessObject implements Arrayable
+class JsonAccessObject implements Arrayable
 {
     /**
      * constructor

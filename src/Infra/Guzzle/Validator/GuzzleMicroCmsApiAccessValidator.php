@@ -6,7 +6,7 @@ use Takemo101\CmsTool\Domain\MicroCms\MicroCmsApi;
 use Takemo101\CmsTool\Domain\MicroCms\MicroCmsApiAccessValidator;
 use Takemo101\CmsTool\Infra\Guzzle\HttpClient\MicroCmsClient;
 
-readonly class GuzzleMicroCmsApiAccessValidator implements MicroCmsApiAccessValidator
+class GuzzleMicroCmsApiAccessValidator implements MicroCmsApiAccessValidator
 {
     /**
      * Verify whether the Microcms API key and service ID are valid

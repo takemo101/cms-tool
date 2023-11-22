@@ -5,7 +5,7 @@ namespace Takemo101\CmsTool\Infra\Guzzle\HttpClient;
 use Takemo101\CmsTool\Domain\MicroCms\MicroCmsApiRepository;
 use Exception;
 
-readonly class MicroCmsClientFactory
+class MicroCmsClientFactory
 {
     /**
      * constructor
@@ -26,7 +26,7 @@ readonly class MicroCmsClientFactory
      */
     public function create(): MicroCmsClient
     {
-        $api = $this->repository->get();
+        $api = $this->repository->find();
 
         if (!$api) {
             throw new Exception('MicroCmsApi is not set');

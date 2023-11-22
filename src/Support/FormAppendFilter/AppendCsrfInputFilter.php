@@ -5,7 +5,7 @@ namespace Takemo101\CmsTool\Support\FormAppendFilter;
 use CmsTool\Session\Csrf\CsrfToken;
 use CmsTool\View\Html\Filter\FormAppendFilter;
 
-final class AppendCsrfInputFilter implements FormAppendFilter
+class AppendCsrfInputFilter implements FormAppendFilter
 {
     /** @var string[] */
     public const IgnoreMethods = [

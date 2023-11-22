@@ -9,7 +9,7 @@ use Takemo101\Chubby\Http\Renderer\HtmlRenderer;
 use Takemo101\Chubby\Http\Renderer\ResponseRenderer;
 use Throwable;
 
-final class ErrorPageRender extends HtmlErrorResponseRender
+class ErrorPageRender extends HtmlErrorResponseRender
 {
     /**
      * Create error response renderer.

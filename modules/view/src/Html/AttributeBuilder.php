@@ -6,7 +6,7 @@ use CmsTool\View\Html\Transformer\AttrTransformer;
 use CmsTool\View\Html\Transformer\AttrTransformers;
 use DI\Attribute\Inject;
 
-final class AttributeBuilder
+class AttributeBuilder
 {
     /**
      * constructor

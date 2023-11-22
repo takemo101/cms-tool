@@ -10,7 +10,7 @@ use Twig\Extension\EscaperExtension;
 use Twig\Extension\ExtensionInterface;
 use Twig\Loader\LoaderInterface;
 
-final class TwigFactory
+class TwigFactory
 {
     /**
      * constructor

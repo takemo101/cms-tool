@@ -6,7 +6,7 @@ use CmsTool\View\Html\FormBuilder;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
-final class FormExtension extends AbstractExtension
+class FormExtension extends AbstractExtension
 {
     /**
      * constructor

@@ -3,7 +3,7 @@
 namespace Takemo101\CmsTool\Http\Controller;
 
 
-readonly class LoginController
+class LoginController
 {
     public function loginPage()
     {

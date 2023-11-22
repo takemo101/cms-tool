@@ -13,7 +13,7 @@ describe(
     'CsrfGuardFactory',
     function () {
 
-        test(
+        it(
             'should create a CsrfGuard instance',
             function () {
                 $responseFactory = Mockery::mock(ResponseFactoryInterface::class);
@@ -29,7 +29,7 @@ describe(
             }
         );
 
-        test('should return a callable that throws an HttpCsrfTokenMismatchException', function () {
+        it('should return a callable that throws an HttpCsrfTokenMismatchException', function () {
             /** @var TestCase $this */
 
             $responseFactory = Mockery::mock(ResponseFactoryInterface::class);

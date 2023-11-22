@@ -22,7 +22,7 @@ describe(
     'JsonAccessObject::all',
     function () {
 
-        test(
+        it(
             'should return all data',
             function () {
                 expect($this->object->all())->toBe($this->data);
@@ -35,7 +35,7 @@ describe(
     'JsonAccessObject::get',
     function () {
 
-        test(
+        it(
             'should return the data of the specified key',
             function () {
                 expect($this->object->get('foo'))->toBe('bar');
@@ -44,7 +44,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'should return the default value if the key does not exist',
             function () {
                 expect($this->object->get('nonexistent', 'default'))->toBe('default');
@@ -57,7 +57,7 @@ describe(
     'JsonAccessObject::set',
     function () {
 
-        test(
+        it(
             'should set the data on the specified key',
             function () {
                 $this->object->set('foo', 'new value');
@@ -74,7 +74,7 @@ describe(
     'json-access-oject::delete',
     function () {
 
-        test(
+        it(
             'should delete the data of the specified key',
             function () {
                 $this->object->delete('foo');
@@ -89,7 +89,7 @@ describe(
     'json-access-oject::has',
     function () {
 
-        test(
+        it(
             'should return true if the specified key exists',
             function () {
                 expect($this->object->has('foo'))->toBeTrue();
@@ -98,7 +98,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'should return false if the specified key does not exist',
             function () {
                 expect($this->object->has('nonexistent'))->toBeFalse();
@@ -111,7 +111,7 @@ describe(
     'jsonAccessObject::save',
     function () {
 
-        test(
+        it(
             'should save the current data in JSON format',
             function () {
                 $this->saver->shouldReceive('save')
@@ -129,14 +129,14 @@ describe(
     'JsonAccessObject::toArray',
     function () {
 
-        test(
+        it(
             'should implement Arrayable',
             function () {
                 expect($this->object)->toBeInstanceOf(Arrayable::class);
             }
         );
 
-        test(
+        it(
             'should convert the object to its array representation',
             function () {
                 expect($this->object->toArray())->toBe($this->data);

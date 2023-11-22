@@ -13,7 +13,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 /**
  * To execute this middleware, you need to execute the Sessionstart middleware first.
  */
-final readonly class Csrf implements MiddlewareInterface
+class Csrf implements MiddlewareInterface
 {
     /**
      * constructor

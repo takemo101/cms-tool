@@ -8,7 +8,7 @@ use Takemo101\CmsTool\UseCase\Shared\QueryService\MicroCmsApiData;
 use Takemo101\CmsTool\UseCase\Shared\QueryService\RootAdminData;
 use Takemo101\CmsTool\UseCase\Shared\QueryService\SiteMetaData;
 
-final class JsonAccessInstallSettingDataMapper
+class JsonAccessInstallSettingDataMapper
 {
     /**
      * @param array{

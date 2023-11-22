@@ -7,7 +7,7 @@ use function Symfony\Component\String\u;
 use Attribute;
 
 #[Attribute(Attribute::TARGET_CLASS)]
-final class CamelCaseMapper implements PropertyNameMapper
+class CamelCaseMapper implements PropertyNameMapper
 {
     /**
      * Convert property name

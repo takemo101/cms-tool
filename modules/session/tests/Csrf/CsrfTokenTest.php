@@ -7,7 +7,7 @@ describe(
     'CsrfToken',
     function () {
 
-        test(
+        it(
             'should create a new instance of CsrfToken',
             function () {
                 $name = 'token_name';
@@ -21,7 +21,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'should check if token is empty',
             function () {
                 $emptyToken = new CsrfToken();
@@ -32,7 +32,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'should create a new instance of CsrfToken from a ServerRequestInterface object',
             function () {
                 /** @var TestCase $this */

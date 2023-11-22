@@ -8,7 +8,7 @@ describe(
     'BcryptHasher',
     function () {
 
-        test(
+        it(
             'should generate a hash correctly',
             function () {
                 $hasher = new BcryptHasher();
@@ -21,7 +21,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'should verify a correct hash',
             function () {
                 $hasher = new BcryptHasher();
@@ -34,7 +34,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'should throw an exception when hashing fails',
             function () {
                 $hasher = new BcryptHasher(-1);

@@ -21,7 +21,7 @@ describe(
     'FormBuilder::buildOpen',
     function () {
 
-        test(
+        it(
             'should build a form element with default method and action',
             function () {
                 $attributes = [];
@@ -33,7 +33,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'should build a form element with specified method and action',
             function () {
                 $attributes = [
@@ -48,7 +48,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'should build a form element with specified route',
             function () {
                 $attributes = [
@@ -69,7 +69,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'should build a form element with specified route and data',
             function () {
                 $attributes = [
@@ -90,7 +90,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'should throw an exception if route name is not specified',
             function () {
                 $attributes = [
@@ -102,7 +102,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'should throw an exception if route data is not an array',
             function () {
                 $attributes = [
@@ -114,7 +114,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'should append form content',
             function () {
                 $attributes = [];
@@ -145,7 +145,7 @@ describe(
     'FormBuilder::buildClose',
     function () {
 
-        test(
+        it(
             'should build a form element close tag',
             function () {
 

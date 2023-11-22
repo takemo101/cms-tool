@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints\Valid;
 /**
  * reference: https://dev.to/beganovich/validating-requests-in-the-symfony-app-2g0a
  */
-final class TestRequest extends FormRequest
+class TestRequest extends FormRequest
 {
     #[NotBlank(message: 'title is required')]
     public string $title;

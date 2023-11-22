@@ -13,7 +13,7 @@ describe(
     'JsonAccessObject::create',
     function () {
 
-        test(
+        it(
             'should return a new JsonAccessObject if it does not exist',
             function () {
                 $path = '/path/to/test.json';
@@ -34,7 +34,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'should return a new JsonAccessObject if it does not exist and no default is provided',
             function () {
                 $path = '/path/to/test.json';
@@ -54,7 +54,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'should return an existing JsonAccessObject if it exists',
             function () {
                 $path = '/path/to/test.json';
@@ -77,7 +77,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'should return the same JsonAccessObject for the same path',
             function () {
                 $path = '/path/to/test.json';

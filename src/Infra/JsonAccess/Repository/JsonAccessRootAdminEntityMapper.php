@@ -5,7 +5,7 @@ namespace Takemo101\CmsTool\Infra\JsonAccess\Repository;
 use Takemo101\CmsTool\Domain\Admin\RootAdmin;
 use Takemo101\CmsTool\Domain\Shared\HashedPassword;
 
-final class JsonAccessRootAdminEntityMapper
+class JsonAccessRootAdminEntityMapper
 {
     /**
      * @param RootAdmin $root

@@ -6,7 +6,7 @@ use Slim\Csrf\Guard;
 use Psr\Http\Message\ResponseFactoryInterface;
 use ArrayAccess;
 
-final class CsrfGuard extends Guard
+class CsrfGuard extends Guard
 {
     /** @var string */
     public const Prefix = 'csrf';

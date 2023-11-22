@@ -21,7 +21,7 @@ use Takemo101\CmsTool\UseCase\Shared\QueryService\InstallSettingQueryService;
 use Takemo101\CmsTool\UseCase\SiteMeta\Handler\SaveSiteMetaCommand;
 use Takemo101\CmsTool\UseCase\SiteMeta\Handler\SaveSiteMetaHandler;
 
-readonly class InstallController
+class InstallController
 {
     /**
      * constructor

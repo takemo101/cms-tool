@@ -4,7 +4,7 @@ namespace CmsTool\Support\Validation\Mapper;
 
 use CmsTool\Support\Validation\PropertyNameMapper;
 
-final class DefaultCaseMapper implements PropertyNameMapper
+class DefaultCaseMapper implements PropertyNameMapper
 {
     /**
      * Convert property name

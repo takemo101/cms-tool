@@ -7,7 +7,7 @@ describe(
     'FormAppendFilters::addFilter()',
     function () {
 
-        test(
+        it(
             'should add a filter to the collection',
             function () {
                 $filter1 = new class implements FormAppendFilter
@@ -41,7 +41,7 @@ describe(
     'FormAppendFilters::filter()',
     function () {
 
-        test(
+        it(
             'should return null if no filters match',
             function () {
                 $formAppendFilters = new FormAppendFilters();
@@ -52,7 +52,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'should return the result of the first matching filter',
             function () {
                 $filter1 = new class implements FormAppendFilter
@@ -79,7 +79,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'should concatenate the results of all matching filters',
             function () {
                 $filter1 = new class implements FormAppendFilter

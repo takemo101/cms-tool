@@ -8,7 +8,7 @@ use CmsTool\Session\Contract\SessionFactory;
 use DI\Attribute\Inject;
 use Odan\Session\PhpSession;
 
-final class NativePhpSessionFactory implements SessionFactory
+class NativePhpSessionFactory implements SessionFactory
 {
     /**
      * constructor

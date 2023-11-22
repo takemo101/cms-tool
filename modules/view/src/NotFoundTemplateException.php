@@ -4,7 +4,7 @@ namespace CmsTool\View;
 
 use RuntimeException;
 
-final class NotFoundTemplateException extends RuntimeException
+class NotFoundTemplateException extends RuntimeException
 {
     /**
      * constructor

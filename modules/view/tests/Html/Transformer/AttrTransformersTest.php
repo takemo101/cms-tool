@@ -17,7 +17,7 @@ describe(
             },
         );
 
-        test(
+        it(
             'should return the key if the value is null',
             function () use ($transformers) {
                 $result = $transformers->transform('disabled', null);
@@ -26,7 +26,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'should return the key-value pair if the value is a string',
             function () use ($transformers) {
                 $result = $transformers->transform('class', 'my-class');
@@ -35,7 +35,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'should return the key-value pair if the value is numeric',
             function () use ($transformers) {
                 $result = $transformers->transform('data-id', 123);
@@ -44,7 +44,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'should return the key-value pair if the value is a Stringable object',
             function () use ($transformers) {
                 $value = new class implements Stringable
@@ -61,7 +61,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'should return the result of the first transformer that returns a non-null value',
             function () use ($transformers) {
                 $result = $transformers->transform('disabled', true);
@@ -70,7 +70,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'should return the value if no transformer returns a null value',
             function () use ($transformers) {
                 $value = new stdClass();

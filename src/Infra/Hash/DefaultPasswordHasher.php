@@ -6,7 +6,7 @@ use Takemo101\CmsTool\Domain\Shared\HashedPassword;
 use Takemo101\CmsTool\Domain\Shared\PasswordHasher;
 use Takemo101\CmsTool\Domain\Shared\PlainPassword;
 
-final class DefaultPasswordHasher implements PasswordHasher
+class DefaultPasswordHasher implements PasswordHasher
 {
     /**
      * Hash the password

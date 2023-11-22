@@ -6,7 +6,7 @@ use CmsTool\Support\Hash\Exception\HashingException;
 use DI\Attribute\Inject;
 use Error;
 
-readonly class BcryptHasher implements Hasher
+class BcryptHasher implements Hasher
 {
     /**
      * constructor

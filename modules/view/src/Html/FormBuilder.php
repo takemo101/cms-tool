@@ -9,7 +9,7 @@ use Slim\Interfaces\RouteParserInterface;
 use Illuminate\Support\Arr;
 use InvalidArgumentException;
 
-final class FormBuilder
+class FormBuilder
 {
     public const ElementName = 'form';
 

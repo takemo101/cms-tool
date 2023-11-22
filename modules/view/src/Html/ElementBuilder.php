@@ -2,7 +2,7 @@
 
 namespace CmsTool\View\Html;
 
-final class ElementBuilder
+class ElementBuilder
 {
     /**
      * constructor

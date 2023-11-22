@@ -2,10 +2,9 @@
 
 namespace CmsTool\Session\Csrf;
 
-use Psr\Http\Message\ServerRequestInterface;
 use Takemo101\Chubby\Http\Support\AbstractContext;
 
-final class CsrfGuardContext extends AbstractContext
+class CsrfGuardContext extends AbstractContext
 {
     public const ContextKey = self::class;
 

@@ -9,7 +9,7 @@ use Takemo101\Chubby\Contract\Arrayable;
 /**
  * @implements Arrayable<string,mixed>
  */
-final readonly class TwigOption implements Arrayable
+readonly class TwigOption implements Arrayable
 {
     /**
      * constructor

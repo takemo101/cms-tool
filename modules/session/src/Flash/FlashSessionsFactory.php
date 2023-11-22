@@ -5,7 +5,7 @@ namespace CmsTool\Session\Flash;
 use Odan\Session\SessionInterface as Session;
 use InvalidArgumentException;
 
-final class FlashSessionsFactory
+class FlashSessionsFactory
 {
     /**
      * @var class-string<FlashSession>[]

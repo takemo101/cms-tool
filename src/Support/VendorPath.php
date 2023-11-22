@@ -4,7 +4,7 @@ namespace Takemo101\CmsTool\Support;
 
 use Takemo101\Chubby\Filesystem\PathHelper;
 
-final class VendorPath
+readonly class VendorPath
 {
     /**
      * @var PathHelper
@@ -20,10 +20,10 @@ final class VendorPath
      * @param string $resourcePath
      */
     public function __construct(
-        private string $basePath,
-        private string $sourcePath = 'src',
-        private string $configPath = 'config' . DIRECTORY_SEPARATOR . 'vendor',
-        private string $resourcePath = 'resources',
+        public string $basePath,
+        public string $sourcePath = 'src',
+        public string $configPath = 'config' . DIRECTORY_SEPARATOR . 'vendor',
+        public string $resourcePath = 'resources',
     ) {
         $this->helper = new PathHelper();
     }

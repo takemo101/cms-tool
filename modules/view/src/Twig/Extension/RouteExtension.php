@@ -14,7 +14,7 @@ class RouteExtension extends AbstractExtension
      * @param RouteParserInterface $routeParser
      */
     public function __construct(
-        private readonly RouteParserInterface $routeParser,
+        private RouteParserInterface $routeParser,
     ) {
         //
     }

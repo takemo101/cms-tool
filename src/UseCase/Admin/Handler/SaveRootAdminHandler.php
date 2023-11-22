@@ -7,7 +7,7 @@ use Takemo101\CmsTool\Domain\Admin\RootAdminRepository;
 use Takemo101\CmsTool\Domain\Shared\PasswordHasher;
 use Takemo101\CmsTool\Domain\Shared\PlainPassword;
 
-readonly class SaveRootAdminHandler
+class SaveRootAdminHandler
 {
     /**
      * constructor
@@ -26,9 +26,9 @@ readonly class SaveRootAdminHandler
      * Execute the processing the processing
      *
      * @param SaveRootAdminCommand $command
-     * @return void
+     * @return RootAdmin
      */
-    public function handle(SaveRootAdminCommand $command): void
+    public function handle(SaveRootAdminCommand $command): RootAdmin
     {
         $root = new RootAdmin(
             name: $command->name,
@@ -38,5 +38,7 @@ readonly class SaveRootAdminHandler
         );
 
         $this->repository->save($root);
+
+        return $root;
     }
 }

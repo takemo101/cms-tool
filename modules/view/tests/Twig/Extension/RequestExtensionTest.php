@@ -7,7 +7,7 @@ use Tests\TestCase;
 describe(
     'RequestExtension',
     function () {
-        test(
+        it(
             'should register request Twig functions',
             function () {
                 /** @var TestCase $this */

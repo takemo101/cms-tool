@@ -13,7 +13,7 @@ use Twig\Source;
 /**
  * Basic loader using absolute paths.
  */
-final class TwigLoader implements LoaderInterface
+class TwigLoader implements LoaderInterface
 {
     /**
      * @var array<string,string>

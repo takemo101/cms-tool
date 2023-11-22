@@ -6,7 +6,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use InvalidArgumentException;
 
-final readonly class RequestValidator
+class RequestValidator
 {
     /**
      * constructor

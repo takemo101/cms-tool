@@ -6,7 +6,7 @@ use Takemo101\CmsTool\Domain\Admin\RootAdminRepository;
 use Takemo101\CmsTool\Domain\MicroCms\MicroCmsApiRepository;
 use Takemo101\CmsTool\Domain\SiteMeta\SiteMetaRepository;
 
-readonly class InstalledSpec
+class InstalledSpec
 {
     /**
      * constructor
@@ -30,8 +30,8 @@ readonly class InstalledSpec
      */
     public function isSatisfiedBy(): bool
     {
-        return $this->microCmsApiRepository->has()
-            && $this->siteMetaRepository->has()
-            && $this->rootAdminRepository->has();
+        return $this->microCmsApiRepository->exists()
+            && $this->siteMetaRepository->exists()
+            && $this->rootAdminRepository->exists();
     }
 }

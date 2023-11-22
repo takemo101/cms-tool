@@ -16,7 +16,7 @@ beforeEach(function () {
 describe(
     'Encrypter::__construct',
     function () {
-        test(
+        it(
             'should throw an exception if the key length is invalid',
             function () {
                 $invalidKey = 'short';
@@ -32,7 +32,7 @@ describe(
     'Encrypter::encrypt',
     function () {
 
-        test(
+        it(
             'should encrypt the given value',
             function () {
                 $value = 'secret-value';
@@ -49,7 +49,7 @@ describe(
     'Encrypter::decrypt',
     function () {
 
-        test(
+        it(
             'should decrypt the given value',
             function () {
                 $value = 'secret-value';
@@ -62,7 +62,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'should throw an exception if the payload is invalid',
             function () {
                 expect(fn () => $this->encrypter->decrypt('invalid-payload'))
@@ -70,7 +70,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'should throw an exception if decryption fails',
             function () {
                 $value = 'secret-value';

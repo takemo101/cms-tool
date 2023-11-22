@@ -4,7 +4,7 @@ namespace CmsTool\Session\Csrf;
 
 use Psr\Http\Message\ServerRequestInterface;
 
-final readonly class CsrfToken
+readonly class CsrfToken
 {
     /** @var string */
     public const NameKey = CsrfGuard::TokenNameKey;

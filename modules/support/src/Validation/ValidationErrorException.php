@@ -9,7 +9,7 @@ use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Throwable;
 use Exception;
 
-final class ValidationErrorException extends Exception
+class ValidationErrorException extends Exception
 {
     /**
      * constructor

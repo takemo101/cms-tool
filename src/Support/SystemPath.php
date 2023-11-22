@@ -4,7 +4,7 @@ namespace Takemo101\CmsTool\Support;
 
 use Takemo101\Chubby\Support\ApplicationPath;
 
-final class SystemPath
+readonly class SystemPath
 {
     /**
      * constructor
@@ -15,8 +15,8 @@ final class SystemPath
      */
     public function __construct(
         private ApplicationPath $path,
-        private string $publicPath = 'public',
-        private string $themePath = 'themes',
+        public string $publicPath = 'public',
+        public string $themePath = 'themes',
     ) {
         //
     }

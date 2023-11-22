@@ -2,9 +2,7 @@
 
 namespace Takemo101\CmsTool\Domain\MicroCms;
 
-use InvalidArgumentException;
-
-readonly class MicroCmsApiFactory
+class MicroCmsApiFactory
 {
     /**
      * constructor

@@ -7,7 +7,7 @@ use Tests\TestCase;
 describe(
     'ConfigExtension',
     function () {
-        test(
+        it(
             'should register config Twig functions',
             function () {
                 /** @var TestCase $this */

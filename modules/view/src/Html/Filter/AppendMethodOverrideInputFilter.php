@@ -2,7 +2,7 @@
 
 namespace CmsTool\View\Html\Filter;
 
-final class AppendMethodOverrideInputFilter implements FormAppendFilter
+class AppendMethodOverrideInputFilter implements FormAppendFilter
 {
     /** @var string[] */
     public const SpoofedMethods = [

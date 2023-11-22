@@ -8,7 +8,7 @@ use Takemo101\CmsTool\Domain\MicroCms\MicroCmsApiAccessValidator;
 use Takemo101\CmsTool\Domain\MicroCms\MicroCmsApiFactory;
 use Takemo101\CmsTool\Domain\MicroCms\MicroCmsApiRepository;
 
-readonly class SaveMicroCmsApiHandler
+class SaveMicroCmsApiHandler
 {
     /**
      * constructor
@@ -27,10 +27,10 @@ readonly class SaveMicroCmsApiHandler
      * Execute the processing the processing
      *
      * @param SaveMicroCmsApiCommand $command
-     * @return void
+     * @return MicroCmsApi
      * @throws MicroCmsApiAccessException
      */
-    public function handle(SaveMicroCmsApiCommand $command): void
+    public function handle(SaveMicroCmsApiCommand $command): MicroCmsApi
     {
         $api = $this->factory->create(
             key: $command->key,
@@ -38,5 +38,7 @@ readonly class SaveMicroCmsApiHandler
         );
 
         $this->repository->save($api);
+
+        return $api;
     }
 }

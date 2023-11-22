@@ -6,7 +6,7 @@ use Tests\TestCase;
 describe(
     'FiltersExtension',
     function () {
-        test(
+        it(
             'should register filters Twig functions',
             function () {
                 /** @var TestCase $this */

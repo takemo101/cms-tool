@@ -2,7 +2,7 @@
 
 namespace CmsTool\View\Html\Filter;
 
-final class FormAppendFilters implements FormAppendFilter
+class FormAppendFilters implements FormAppendFilter
 {
     /**
      * @var FormAppendFilter[]

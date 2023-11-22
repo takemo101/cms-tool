@@ -4,7 +4,7 @@ use CmsTool\Session\Csrf\CsrfGuard;
 use CmsTool\Session\Csrf\CsrfToken;
 use Psr\Http\Message\ResponseFactoryInterface;
 
-test(
+it(
     'should create a CSRF token',
     function () {
         $responseFactory = Mockery::mock(ResponseFactoryInterface::class);

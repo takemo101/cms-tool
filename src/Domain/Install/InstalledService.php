@@ -2,7 +2,7 @@
 
 namespace Takemo101\CmsTool\Domain\Install;
 
-readonly class InstalledService
+class InstalledService
 {
     /**
      * constructor

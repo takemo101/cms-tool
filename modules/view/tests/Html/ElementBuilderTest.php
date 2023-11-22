@@ -9,7 +9,7 @@ describe(
 
         $builder = new ElementBuilder(new AttributeBuilder());
 
-        test(
+        it(
             'should build an element with no attributes or content',
             function () use ($builder) {
                 $result = $builder->buildOpen('div');
@@ -18,7 +18,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'should build an element with attributes but no content',
             function () use ($builder) {
                 $attributes = [
@@ -32,7 +32,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'should build an element with content but no attributes',
             function () use ($builder) {
                 $result = $builder->build('div', [], 'Hello, world!');
@@ -41,7 +41,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'should build an element with both attributes and content',
             function () use ($builder) {
                 $attributes = [
@@ -55,7 +55,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'should build a self-terminating element',
             function () use ($builder) {
                 $attributes = [

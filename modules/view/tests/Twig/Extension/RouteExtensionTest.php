@@ -7,7 +7,7 @@ use Tests\TestCase;
 describe(
     'RouteExtension',
     function () {
-        test(
+        it(
             'should register route Twig functions',
             function () {
                 /** @var TestCase $this */

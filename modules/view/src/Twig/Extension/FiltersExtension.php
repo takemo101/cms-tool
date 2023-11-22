@@ -15,7 +15,7 @@ class FiltersExtension extends AbstractExtension
      */
     public function __construct(
         #[Inject('config.view.twig.filters')]
-        private readonly array $filters,
+        private array $filters,
     ) {
         //
     }

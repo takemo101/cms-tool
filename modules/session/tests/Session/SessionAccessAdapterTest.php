@@ -8,7 +8,7 @@ describe(
     'SessionAccessAdapter',
     function () {
 
-        test(
+        it(
             'should set and get values',
             function (string $key, $value) {
                 $session = new MemorySession();
@@ -24,7 +24,7 @@ describe(
             ['baz', 'qux'],
         ]);
 
-        test(
+        it(
             'should check if offset exists',
             function (string $key) {
                 $sessionMock = Mockery::mock(Session::class);
@@ -45,7 +45,7 @@ describe(
             'baz',
         ]);
 
-        test(
+        it(
             'should delete values',
             function (string $key, $value) {
                 $session = new MemorySession();
@@ -65,7 +65,7 @@ describe(
             ['baz', 'qux'],
         ]);
 
-        test(
+        it(
             'should iterate over values',
             function (array $data) {
                 $session = new MemorySession();
@@ -94,7 +94,7 @@ describe(
             ],
         ]);
 
-        test(
+        it(
             'should count values',
             function (array $data) {
                 $sessionMock = Mockery::mock(Session::class);

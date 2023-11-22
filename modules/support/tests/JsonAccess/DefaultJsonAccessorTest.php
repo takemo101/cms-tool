@@ -18,7 +18,7 @@ describe(
     'DefaultJsonAccessor::load',
     function () {
 
-        test(
+        it(
             'should throw NotFoundJsonException if file does not exist',
             function () {
                 $path = '/path/to/test.json';
@@ -32,7 +32,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'should throw NotFoundJsonException if path is not a file',
             function () {
                 $path = '/path/to/directory';
@@ -51,7 +51,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'should throw JsonNotAccessibleException if file is not readable',
             function () {
                 $path = '/path/to/test.json';
@@ -75,7 +75,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'should throw JsonConversionException if file contains invalid JSON',
             function () {
                 $path = '/path/to/test.json';
@@ -104,7 +104,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'should return array if file contains valid JSON',
             function () {
                 $path = '/path/to/test.json';
@@ -136,7 +136,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'Read the JSON file for the test',
             function () {
                 /** @var TestCase $this */
@@ -160,7 +160,7 @@ describe(
     'DefaultJsonAccessor::save',
     function () {
 
-        test(
+        it(
             'should throw JsonConversionException if data cannot be encoded as JSON',
             function () {
                 $path = '/path/to/test.json';
@@ -170,7 +170,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'should throw JsonNotAccessibleException if file is not writable',
             function () {
                 $path = '/path/to/test.json';
@@ -185,7 +185,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'should write data to file if file is writable',
             function () {
                 $path = '/path/to/test.json';
@@ -200,7 +200,7 @@ describe(
             }
         );
 
-        test(
+        it(
             'Save the temporary file and read it',
             function () {
                 /** @var TestCase $this */

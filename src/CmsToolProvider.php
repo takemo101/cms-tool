@@ -25,7 +25,7 @@ use Takemo101\CmsTool\Support\Twig\SessionExtension;
 use Takemo101\CmsTool\Support\VendorPath;
 use Twig\Environment;
 
-final class CmsToolProvider implements Provider
+class CmsToolProvider implements Provider
 {
     /**
      * constructor

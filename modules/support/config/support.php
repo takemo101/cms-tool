@@ -2,6 +2,7 @@
 
 use CmsTool\Support\Encrypt\DefaultEncrypter;
 use CmsTool\Support\Encrypt\EncryptCipher;
+use CmsTool\Support\Hash\BcryptHasher;
 use CmsTool\Support\JsonAccess\DefaultJsonAccessor;
 
 return [
@@ -15,6 +16,15 @@ return [
 
         // Cryptocation key used by default
         'key' => env('APP_KEY'),
+    ],
+
+    'hash' => [
+
+        // Default hasher class
+        'hasher' => BcryptHasher::class,
+
+        // Default hash cost
+        'cost' => 10,
     ],
 
     'json' => [

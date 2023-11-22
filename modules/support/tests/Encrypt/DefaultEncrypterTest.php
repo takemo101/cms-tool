@@ -14,7 +14,7 @@ beforeEach(function () {
 });
 
 describe(
-    'encrypter::__construct',
+    'Encrypter::__construct',
     function () {
         test(
             'should throw an exception if the key length is invalid',
@@ -29,7 +29,7 @@ describe(
 )->group('encrypt');
 
 describe(
-    'encrypter::encrypt',
+    'Encrypter::encrypt',
     function () {
 
         test(
@@ -46,7 +46,7 @@ describe(
 )->group('encrypt');
 
 describe(
-    'encrypter::decrypt',
+    'Encrypter::decrypt',
     function () {
 
         test(

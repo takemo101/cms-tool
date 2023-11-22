@@ -5,6 +5,7 @@ namespace CmsTool\View\Twig\Command;
 use Symfony\Component\Console\Output\OutputInterface;
 use Takemo101\Chubby\Console\Command\Command;
 use Takemo101\Chubby\Filesystem\LocalFilesystem;
+use Twig\Cache\CacheInterface;
 use Twig\Environment;
 
 final class TwigCleanCommand extends Command
@@ -23,6 +24,7 @@ final class TwigCleanCommand extends Command
      *
      * @param OutputInterface $output
      * @param Environment $twig
+     * @param LocalFilesystem $filesystem
      * @return integer
      */
     public function handle(
@@ -32,12 +34,14 @@ final class TwigCleanCommand extends Command
     ) {
         $cache = $twig->getCache();
 
-        $filesystem->deleteDirectory($cache);
+        if (is_string($cache)) {
+            $filesystem->deleteDirectory($cache);
 
-        if ($filesystem->exists($cache)) {
-            $output->writeln('<error>Failed to clear Twig cache.</error>');
+            if ($filesystem->exists($cache)) {
+                $output->writeln('<error>Failed to clear Twig cache.</error>');
 
-            return self::FAILURE;
+                return self::FAILURE;
+            }
         }
 
         $output->writeln('<info>Twig cache cleared.</info>');

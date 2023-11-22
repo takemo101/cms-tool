@@ -4,7 +4,7 @@ use CmsTool\View\HtmlObject;
 use Tests\TestCase;
 
 describe(
-    'html-object',
+    'HtmlObject',
     function () {
         test(
             'Obtains a string stored in an object',
@@ -20,4 +20,4 @@ describe(
             'test',
         ]);
     }
-)->group('html-object');
+)->group('html-object', 'view');

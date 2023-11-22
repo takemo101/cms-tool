@@ -29,10 +29,11 @@
     "require": {
         "php": "^8.2",
         "ext-json": "*",
-        "cms-module/support": "^1.0",
         "cms-module/session": "^1.0",
+        "cms-module/support": "^1.0",
         "cms-module/view": "^1.0",
-        "takemo101/chubby": "^0.0.11"
+        "guzzlehttp/guzzle": "^7.8",
+        "takemo101/chubby": "^0.0.13"
     },
     "require-dev": {
         "laravel/pint": "^1.13",

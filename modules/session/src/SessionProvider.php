@@ -4,6 +4,8 @@ namespace CmsTool\Session;
 
 use CmsTool\Session\Contract\SessionFactory;
 use CmsTool\Session\Csrf\CsrfGuard;
+use CmsTool\Session\Flash\FlashSession;
+use CmsTool\Session\Flash\FlashSessionsFactory;
 use Psr\Container\ContainerInterface;
 use Takemo101\Chubby\ApplicationContainer;
 use Takemo101\Chubby\Bootstrap\Definitions;
@@ -50,7 +52,20 @@ class SessionProvider implements Provider
                 );
 
                 return $factory;
-            }
+            },
+            FlashSessionsFactory::class => function (
+                ConfigRepository $config,
+                Hook $hook,
+            ) {
+                /** @var class-string<FlashSession>[] */
+                $flashes = $config->get('session.flashes', []);
+
+                $factory = new FlashSessionsFactory(...$flashes);
+
+                $hook->doByObject($factory);
+
+                return $factory;
+            },
         ]);
     }
 
@@ -71,12 +86,9 @@ class SessionProvider implements Provider
         $config->merge(
             'session',
             ConfigPhpRepository::getConfigByPath(
-                $helper->join(
-                    dirname(__DIR__, 1),
-                    'config',
-                    'session.php',
-                ),
+                $helper->join(dirname(__DIR__, 1), 'config', 'session.php')
             ),
+            false,
         );
     }
 }

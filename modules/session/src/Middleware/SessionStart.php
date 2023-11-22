@@ -3,6 +3,8 @@
 namespace CmsTool\Session\Middleware;
 
 use CmsTool\Session\Contract\SessionFactory;
+use CmsTool\Session\Flash\FlashSessionsContext;
+use CmsTool\Session\Flash\FlashSessionsFactory;
 use CmsTool\Session\SessionContext;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -14,10 +16,12 @@ final readonly class SessionStart implements MiddlewareInterface
     /**
      * constructor
      *
-     * @param SessionFactory $factory
+     * @param SessionFactory $sessionFactory
+     * @param FlashSessionsFactory $flashSessionsFactory
      */
     public function __construct(
-        private SessionFactory $factory,
+        private SessionFactory $sessionFactory,
+        private FlashSessionsFactory $flashSessionsFactory,
     ) {
         //
     }
@@ -34,16 +38,21 @@ final readonly class SessionStart implements MiddlewareInterface
         RequestHandlerInterface $handler,
     ): ResponseInterface {
 
-        $session = $this->factory->create();
+        $session = $this->sessionFactory->create();
 
         if (!$session->isStarted()) {
             $session->start();
         }
 
-        $context = new SessionContext($session);
+        $flashSessions = $this->flashSessionsFactory->create($session);
+
+        $sessionContext = new SessionContext($session);
+        $flashSessionsContext = new FlashSessionsContext($flashSessions);
 
         $response = $handler->handle(
-            $context->withContext($request),
+            $flashSessionsContext->withContext(
+                $sessionContext->withContext($request),
+            ),
         );
 
         $session->save();

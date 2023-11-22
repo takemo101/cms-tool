@@ -15,7 +15,7 @@ beforeEach(
 );
 
 describe(
-    'default-json-accessor::load',
+    'DefaultJsonAccessor::load',
     function () {
 
         test(
@@ -157,7 +157,7 @@ describe(
 )->group('local-json-accessor', 'json-access');
 
 describe(
-    'local-json-accessor::save',
+    'DefaultJsonAccessor::save',
     function () {
 
         test(

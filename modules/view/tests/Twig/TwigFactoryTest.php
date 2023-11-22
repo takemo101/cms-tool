@@ -8,7 +8,7 @@ use Twig\Environment;
 use Twig\Loader\LoaderInterface;
 
 describe(
-    'twig-factory',
+    'TwigFactory',
     function () {
         test(
             'Create an Environment instance',
@@ -29,4 +29,4 @@ describe(
             },
         );
     }
-)->group('twig-factory');
+)->group('twig-factory', 'twig');

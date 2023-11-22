@@ -12,10 +12,10 @@ final class CsrfGuard extends Guard
     public const Prefix = 'csrf';
 
     /** @var string */
-    public const TokenNameKey = '_csrf_name';
+    public const TokenNameKey = '_CSRF_NAME';
 
     /** @var string */
-    public const TokenValueKey = '_csrf_value';
+    public const TokenValueKey = '_CSRF_VALUE';
 
     /**
      * constructor
@@ -37,7 +37,7 @@ final class CsrfGuard extends Guard
     ) {
         parent::__construct(
             responseFactory: $responseFactory,
-            prefix: static::Prefix,
+            prefix: self::Prefix,
             storage: $storage,
             failureHandler: $failureHandler,
             storageLimit: $storageLimit,
@@ -51,7 +51,7 @@ final class CsrfGuard extends Guard
      */
     public function getTokenNameKey(): string
     {
-        return static::TokenNameKey;
+        return self::TokenNameKey;
     }
 
     /**
@@ -59,7 +59,7 @@ final class CsrfGuard extends Guard
      */
     public function getTokenValueKey(): string
     {
-        return static::TokenValueKey;
+        return self::TokenValueKey;
     }
 
     /**

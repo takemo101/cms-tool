@@ -3,7 +3,6 @@
 namespace CmsTool\View\Twig;
 
 use CmsTool\View\Contract\TemplateRenderer;
-use Takemo101\Chubby\Contract\Arrayable;
 use Twig\Environment;
 
 class TwigTemplateRenderer implements TemplateRenderer

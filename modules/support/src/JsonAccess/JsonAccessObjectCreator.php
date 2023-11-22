@@ -40,7 +40,7 @@ class JsonAccessObjectCreator
             return $this->objects[$path];
         }
 
-        $object = JsonAccessObject::fromArray(
+        $object = new JsonAccessObject(
             saver: $this->accessor,
             path: $path,
             data: $this->accessor->exists($path)

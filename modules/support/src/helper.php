@@ -1,8 +1,9 @@
 <?php
 
 use CmsTool\Support\Encrypt\Encrypter;
-use CmsTool\Support\Encrypt\EncryptException;
+use CmsTool\Support\Encrypt\Exception\EncryptException;
 use CmsTool\Support\Encrypt\Exception\DecryptException;
+use Takemo101\Chubby\Support\ServiceLocator;
 
 if (!function_exists('encrypt')) {
     /**
@@ -16,7 +17,7 @@ if (!function_exists('encrypt')) {
         string $value,
     ): string {
         /** @var Encrypter */
-        $encrypter = container()->get(Encrypter::class);
+        $encrypter = ServiceLocator::container()->get(Encrypter::class);
 
         return $encrypter->encrypt($value);
     }
@@ -34,7 +35,7 @@ if (!function_exists('decrypt')) {
         string $value,
     ): string {
         /** @var Encrypter */
-        $encrypter = container()->get(Encrypter::class);
+        $encrypter = ServiceLocator::container()->get(Encrypter::class);
 
         return $encrypter->decrypt($value);
     }

@@ -3,8 +3,9 @@
 use CmsTool\View\Contract\Htmlable;
 use CmsTool\View\DefaultTemplateFinder;
 use CmsTool\View\Twig\Extension\ConfigExtension;
-use CmsTool\View\Twig\Extension\ContextExtension;
+use CmsTool\View\Twig\Extension\RequestExtension;
 use CmsTool\View\Twig\Extension\FiltersExtension;
+use CmsTool\View\Twig\Extension\FormExtension;
 use CmsTool\View\Twig\Extension\FunctionsExtension;
 use CmsTool\View\Twig\Extension\RouteExtension;
 use CmsTool\View\Twig\TwigTemplateRenderer;
@@ -78,10 +79,11 @@ return [
         // Set the class name of the Twig Extension to be enabled
         'extensions' => [
             ConfigExtension::class,
-            ContextExtension::class,
+            RequestExtension::class,
             RouteExtension::class,
             FiltersExtension::class,
             FunctionsExtension::class,
+            FormExtension::class,
         ],
 
         // Set up functions to be used in Twig

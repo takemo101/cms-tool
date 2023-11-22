@@ -10,7 +10,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Tests\TestCase;
 
 describe(
-    'csrf-guard-factory',
+    'CsrfGuardFactory',
     function () {
 
         test(

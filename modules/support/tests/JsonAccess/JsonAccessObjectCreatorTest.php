@@ -10,7 +10,7 @@ beforeEach(function () {
 });
 
 describe(
-    'json-access-object-creator::create',
+    'JsonAccessObject::create',
     function () {
 
         test(

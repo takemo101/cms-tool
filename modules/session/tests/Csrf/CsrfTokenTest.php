@@ -4,7 +4,7 @@ use CmsTool\Session\Csrf\CsrfToken;
 use Tests\TestCase;
 
 describe(
-    'csrf-token',
+    'CsrfToken',
     function () {
 
         test(

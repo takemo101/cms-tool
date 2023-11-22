@@ -5,10 +5,10 @@ use Takemo101\Chubby\Config\ConfigRepository;
 use Tests\TestCase;
 
 describe(
-    'extension-config',
+    'ConfigExtension',
     function () {
         test(
-            'Register the config twig function',
+            'should register config Twig functions',
             function () {
                 /** @var TestCase $this */
 
@@ -26,4 +26,4 @@ describe(
             },
         );
     }
-)->group('extension-config');
+)->group('config-extension', 'extension');

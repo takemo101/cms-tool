@@ -16,9 +16,11 @@ use Takemo101\Chubby\Bootstrap\Definitions;
 use Takemo101\Chubby\Bootstrap\Provider\Provider;
 use Takemo101\Chubby\Config\ConfigRepository;
 use Takemo101\Chubby\Filesystem\PathHelper;
-use Takemo101\Chubby\Config\ConfigPhpRepository;
 use Takemo101\Chubby\Hook\Hook;
 use RuntimeException;
+use Symfony\Component\Validator\Validation;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Takemo101\Chubby\Config\ConfigPhpRepository;
 use Takemo101\Chubby\Console\CommandCollection;
 
 use function DI\get;
@@ -40,6 +42,7 @@ class SupportProvider implements Provider
     {
         $this->registerJsonAccess($definitions);
         $this->registerEncrypt($definitions);
+        $this->registerValidation($definitions);
 
         $definitions->add([
             //
@@ -63,12 +66,9 @@ class SupportProvider implements Provider
         $config->merge(
             'support',
             ConfigPhpRepository::getConfigByPath(
-                $helper->join(
-                    dirname(__DIR__, 1),
-                    'config',
-                    'support.php',
-                ),
+                $helper->join(dirname(__DIR__, 1), 'config', 'support.php')
             ),
+            false,
         );
 
         require $helper->join(__DIR__, 'helper.php');
@@ -168,7 +168,30 @@ class SupportProvider implements Provider
         ]);
     }
 
-    public function bootEncrypt(ApplicationContainer $container)
+    /**
+     * Execute Validation providing process.
+     *
+     * @param Definitions $definitions
+     * @return void
+     */
+    public function registerValidation(Definitions $definitions): void
+    {
+        $definitions->add([
+            ValidatorInterface::class => function () {
+                return Validation::createValidatorBuilder()
+                    ->enableAnnotationMapping()
+                    ->getValidator();
+            },
+        ]);
+    }
+
+    /**
+     * Execute Encrypt booting process.
+     *
+     * @param ApplicationContainer $container
+     * @return void
+     */
+    public function bootEncrypt(ApplicationContainer $container): void
     {
         /** @var Hook */
         $hook = $container->get(Hook::class);

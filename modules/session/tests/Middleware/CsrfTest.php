@@ -10,7 +10,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Tests\TestCase;
 
 describe(
-    'csrf-middleware',
+    'CsrfMiddleware',
     function () {
 
         test(

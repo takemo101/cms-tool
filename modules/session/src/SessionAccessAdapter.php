@@ -13,6 +13,9 @@ use Countable;
  */
 class SessionAccessAdapter implements ArrayAccess, Iterator, Countable
 {
+    /** @var string */
+    public const IgnoreKeyPrefix = '_';
+
     /**
      * @var int[]|string[]
      */
@@ -26,7 +29,12 @@ class SessionAccessAdapter implements ArrayAccess, Iterator, Countable
     public function __construct(
         private Session $session,
     ) {
-        $this->keys = array_keys($session->all());
+        $keys = array_keys($session->all());
+
+        $this->keys = array_filter(
+            $keys,
+            fn ($key) => !str_starts_with($key, self::IgnoreKeyPrefix),
+        );
     }
 
     /**
@@ -44,7 +52,7 @@ class SessionAccessAdapter implements ArrayAccess, Iterator, Countable
     /**
      * Whether a offset exists.
      *
-     * @param mixed $offset An offset to check for
+     * @param string $offset An offset to check for
      *
      * @return bool true on success or false on failure
      */
@@ -56,7 +64,7 @@ class SessionAccessAdapter implements ArrayAccess, Iterator, Countable
     /**
      * Offset to retrieve.
      *
-     * @param mixed $offset The offset to retrieve
+     * @param string $offset The offset to retrieve
      *
      * @return mixed Can return all value types
      */
@@ -68,7 +76,7 @@ class SessionAccessAdapter implements ArrayAccess, Iterator, Countable
     /**
      * Offset to set.
      *
-     * @param mixed $offset The offset to assign the value to
+     * @param string $offset The offset to assign the value to
      * @param mixed $value  The value to set
      *
      * @return void
@@ -82,7 +90,7 @@ class SessionAccessAdapter implements ArrayAccess, Iterator, Countable
     /**
      * Offset to unset.
      *
-     * @param mixed $offset The offset to unset
+     * @param string $offset The offset to unset
      *
      * @return void
      */
@@ -110,7 +118,9 @@ class SessionAccessAdapter implements ArrayAccess, Iterator, Countable
      */
     public function current(): mixed
     {
+        /** @var string */
         $key = current($this->keys);
+
         return $this->session->get($key);
     }
 

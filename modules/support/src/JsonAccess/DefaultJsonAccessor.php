@@ -5,6 +5,7 @@ namespace CmsTool\Support\JsonAccess;
 use CmsTool\Support\JsonAccess\Exception\JsonConversionException;
 use CmsTool\Support\JsonAccess\Exception\JsonNotAccessibleException;
 use CmsTool\Support\JsonAccess\Exception\NotFoundJsonException;
+use CmsTool\Support\JsonAccess\Exception\JsonAccessException;
 use Takemo101\Chubby\Filesystem\LocalFilesystem;
 
 final class DefaultJsonAccessor implements JsonArrayAccessor

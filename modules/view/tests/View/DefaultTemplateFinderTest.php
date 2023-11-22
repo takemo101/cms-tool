@@ -6,7 +6,7 @@ use Takemo101\Chubby\Filesystem\PathHelper;
 use Tests\TestCase;
 
 describe(
-    'default-template-finder',
+    'DefaultTemplateFinder',
     function () {
         test(
             'Get path from template name',
@@ -56,4 +56,4 @@ describe(
             },
         );
     }
-)->group('default-template-finder');
+)->group('default-template-finder', 'view');

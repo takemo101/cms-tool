@@ -92,11 +92,15 @@ final class TwigLoader implements LoaderInterface
     {
         $path = $this->findTemplate($name);
 
-        return new Source($this->filesystem->read($path), $name, $path);
+        return new Source(
+            $this->filesystem->read($path) ?? '',
+            $name,
+            $path,
+        );
     }
 
     /**
-     * @param int $time Timestamp of the last modification time of the cached template
+     * @param string $name
      *
      * @throws LoaderError When $name is not found
      */

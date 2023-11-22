@@ -2,11 +2,12 @@
 
 namespace CmsTool\Session\Csrf;
 
+use Psr\Http\Message\ServerRequestInterface;
 use Takemo101\Chubby\Http\Support\AbstractContext;
 
 final class CsrfGuardContext extends AbstractContext
 {
-    public const ContextKey = '__csrf__';
+    public const ContextKey = self::class;
 
     /**
      * constructor
@@ -27,5 +28,18 @@ final class CsrfGuardContext extends AbstractContext
     public function getGuard(): CsrfGuard
     {
         return $this->guard;
+    }
+
+    /**
+     * Get contextual data.
+     *
+     * @return array<string,mixed>
+     */
+    protected function getServerRequestAttributes(): array
+    {
+        return [
+            CsrfGuard::class => $this->getGuard(),
+            CsrfToken::class => $this->getGuard()->getToken(),
+        ];
     }
 }

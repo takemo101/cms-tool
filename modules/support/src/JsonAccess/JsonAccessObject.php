@@ -4,22 +4,25 @@ namespace CmsTool\Support\JsonAccess;
 
 use CmsTool\Support\JsonAccess\Exception\JsonNotAccessibleException;
 use CmsTool\Support\JsonAccess\Exception\JsonConversionException;
-use Illuminate\Support\Collection;
 use Takemo101\Chubby\Contract\Arrayable;
+use Illuminate\Support\Arr;
 
-class JsonAccessObject implements Arrayable
+/**
+ * @implements Arrayable<string,mixed>
+ */
+final class JsonAccessObject implements Arrayable
 {
     /**
      * constructor
      *
      * @param JsonArraySaver $saver
      * @param string $path
-     * @param Collection<string,mixed> $data
+     * @param array<string,mixed> $data
      */
     public function __construct(
         private readonly JsonArraySaver $saver,
         private string $path,
-        private Collection $data = new Collection(),
+        private array $data = [],
     ) {
         //
     }
@@ -31,7 +34,7 @@ class JsonAccessObject implements Arrayable
      */
     public function all(): array
     {
-        return $this->data->all();
+        return $this->data;
     }
 
     /**
@@ -39,11 +42,11 @@ class JsonAccessObject implements Arrayable
      *
      * @param string $key
      * @param mixed $default
-     * @return void
+     * @return mixed
      */
-    public function get(string $key, mixed $default = null)
+    public function get(string $key, mixed $default = null): mixed
     {
-        return $this->data->get($key, $default);
+        return Arr::get($this->data, $key, $default);
     }
 
     /**
@@ -55,7 +58,7 @@ class JsonAccessObject implements Arrayable
      */
     public function set(string $key, mixed $value): void
     {
-        $this->data->put($key, $value);
+        Arr::set($this->data, $key, $value);
     }
 
     /**
@@ -66,7 +69,7 @@ class JsonAccessObject implements Arrayable
      */
     public function delete(string $key): void
     {
-        $this->data->forget($key);
+        Arr::forget($this->data, $key);
     }
 
     /**
@@ -77,7 +80,7 @@ class JsonAccessObject implements Arrayable
      */
     public function has(string $key): bool
     {
-        return $this->data->has($key);
+        return Arr::has($this->data, $key);
     }
 
     /**
@@ -90,7 +93,7 @@ class JsonAccessObject implements Arrayable
     {
         $this->saver->save(
             $this->path,
-            $this->data->all(),
+            $this->data,
         );
     }
 
@@ -101,26 +104,6 @@ class JsonAccessObject implements Arrayable
      */
     public function toArray(): array
     {
-        return $this->data->toArray();
-    }
-
-    /**
-     * Create a new instance from the specified path
-     *
-     * @param JsonArraySaver $saver
-     * @param string $path
-     * @param array<string,mixed> $data
-     * @return static
-     */
-    public static function fromArray(
-        JsonArraySaver $saver,
-        string $path,
-        array $data = [],
-    ): static {
-        return new static(
-            saver: $saver,
-            path: $path,
-            data: new Collection($data),
-        );
+        return $this->data;
     }
 }

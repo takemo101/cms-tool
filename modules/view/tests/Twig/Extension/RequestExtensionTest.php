@@ -1,0 +1,28 @@
+<?php
+
+use CmsTool\View\Twig\Extension\RequestExtension;
+use Psr\Http\Message\ServerRequestInterface;
+use Tests\TestCase;
+
+describe(
+    'RequestExtension',
+    function () {
+        test(
+            'should register request Twig functions',
+            function () {
+                /** @var TestCase $this */
+
+                $extension = new RequestExtension(
+                    Mockery::mock(ServerRequestInterface::class)
+                );
+                $functions = $extension->getFunctions();
+
+                expect($functions)->toHaveCount(2);
+
+                foreach ($functions as $function) {
+                    expect($function->getCallable()[0])->toBeInstanceOf(RequestExtension::class);
+                }
+            },
+        );
+    }
+)->group('request-extension', 'extension');

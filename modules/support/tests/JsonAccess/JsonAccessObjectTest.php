@@ -15,11 +15,11 @@ beforeEach(function () {
             'corge' => null,
         ],
     ];
-    $this->object = JsonAccessObject::fromArray($this->saver, $this->path, $this->data);
+    $this->object = new JsonAccessObject($this->saver, $this->path, $this->data);
 });
 
 describe(
-    'json-access-oject::all',
+    'JsonAccessObject::all',
     function () {
 
         test(
@@ -32,7 +32,7 @@ describe(
 )->group('json-access-object', 'json-access');
 
 describe(
-    'json-access-oject::get',
+    'JsonAccessObject::get',
     function () {
 
         test(
@@ -54,7 +54,7 @@ describe(
 )->group('json-access-object', 'json-access');
 
 describe(
-    'json-access-oject::set',
+    'JsonAccessObject::set',
     function () {
 
         test(
@@ -108,7 +108,7 @@ describe(
 )->group('json-access-object', 'json-access');
 
 describe(
-    'json-access-oject::save',
+    'jsonAccessObject::save',
     function () {
 
         test(
@@ -126,7 +126,7 @@ describe(
 )->group('json-access-object', 'json-access');
 
 describe(
-    'json-access-oject::toArray',
+    'JsonAccessObject::toArray',
     function () {
 
         test(

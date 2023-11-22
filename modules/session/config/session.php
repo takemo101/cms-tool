@@ -5,6 +5,11 @@ use CmsTool\Session\NativePhpSessionFactory;
 return [
     'factory' => NativePhpSessionFactory::class,
 
+    // FlashSession classes
+    'flashes' => [
+        //
+    ],
+
     // PhpSession options
     // reference: \Odan\Session\PhpSession
     'options' => [

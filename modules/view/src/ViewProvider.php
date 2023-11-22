@@ -4,13 +4,19 @@ namespace CmsTool\View;
 
 use CmsTool\View\Contract\TemplateFinder;
 use CmsTool\View\Contract\TemplateRenderer;
+use CmsTool\View\Html\Filter\AppendMethodOverrideInputFilter;
+use CmsTool\View\Html\Filter\FormAppendFilters;
+use CmsTool\View\Html\Transformer\ArrayAttrTransformer;
+use CmsTool\View\Html\Transformer\AttrTransformers;
+use CmsTool\View\Html\Transformer\BooleanAttrTransformer;
 use CmsTool\View\Twig\Command\TwigCleanCommand;
-use CmsTool\View\Twig\Extension\ContextExtension;
+use CmsTool\View\Twig\Extension\RequestExtension;
 use CmsTool\View\Twig\TwigFactory;
 use CmsTool\View\Twig\TwigLoader;
 use CmsTool\View\Twig\TwigOption;
 use CmsTool\View\Twig\TwigTemplateRenderer;
 use Psr\Container\ContainerInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Takemo101\Chubby\ApplicationContainer;
 use Takemo101\Chubby\Bootstrap\Definitions;
 use Takemo101\Chubby\Bootstrap\Provider\Provider;
@@ -18,7 +24,6 @@ use Takemo101\Chubby\Config\ConfigRepository;
 use Takemo101\Chubby\Console\CommandCollection;
 use Takemo101\Chubby\Filesystem\PathHelper;
 use Takemo101\Chubby\Hook\Hook;
-use Takemo101\Chubby\Http\Context;
 use Twig\Environment;
 use Twig\Extension\ExtensionInterface;
 use Twig\Loader\LoaderInterface;
@@ -137,6 +142,29 @@ class ViewProvider implements Provider
 
                 return $creator;
             },
+            AttrTransformers::class => function (
+                Hook $hook,
+            ) {
+                $transformers = new AttrTransformers(
+                    new ArrayAttrTransformer(),
+                    new BooleanAttrTransformer(),
+                );
+
+                $hook->doByObject($transformers);
+
+                return $transformers;
+            },
+            FormAppendFilters::class => function (
+                Hook $hook,
+            ) {
+                $filters = new FormAppendFilters(
+                    new AppendMethodOverrideInputFilter(),
+                );
+
+                $hook->doByObject($filters);
+
+                return $filters;
+            },
         ]);
     }
 
@@ -157,12 +185,9 @@ class ViewProvider implements Provider
         $config->merge(
             'view',
             ConfigPhpRepository::getConfigByPath(
-                $helper->join(
-                    dirname(__DIR__, 1),
-                    'config',
-                    'view.php',
-                ),
+                $helper->join(dirname(__DIR__, 1), 'config', 'view.php')
             ),
+            false,
         );
 
         /** @var Hook */
@@ -170,12 +195,14 @@ class ViewProvider implements Provider
 
         $hook
             ->onByType(
-                function (Context $context, ContainerInterface $container) {
+                function (ServerRequestInterface $request, ContainerInterface $container) {
                     /** @var Environment */
                     $twig = $container->get(Environment::class);
 
-                    $twig->getExtension(ContextExtension::class)
-                        ->setContext($context);
+                    $twig->getExtension(RequestExtension::class)
+                        ->setServerRequest($request);
+
+                    return $request;
                 }
             )->onByType(
                 fn (CommandCollection $commands) => $commands->add(

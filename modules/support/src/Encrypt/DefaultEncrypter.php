@@ -78,7 +78,7 @@ readonly class DefaultEncrypter implements Encrypter
 
         $json = json_encode(compact('iv', 'encrypted'), JSON_UNESCAPED_SLASHES);
 
-        if (json_last_error() !== JSON_ERROR_NONE) {
+        if (!$json || json_last_error() !== JSON_ERROR_NONE) {
             throw EncryptException::encodeJsonFailedError();
         }
 

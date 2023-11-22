@@ -1,0 +1,26 @@
+<div>
+    <h1>meta</h1>
+    {{ form_open({route: 'install.meta.save', method: 'post'}) }}
+        <input
+            type="text"
+            name="name"
+            value="{{ old('name', setting.meta.name) }}"
+            placeholder="name"/>
+        <input
+            type="text"
+            name="title"
+            value="{{ old('title', setting.meta.title) }}"
+            placeholder="title"/>
+        <input
+            type="text"
+            name="description"
+            value="{{ old('description', setting.meta.description) }}"
+            placeholder="description"/>
+        {% for errs in error_all() %}
+            {% for e in errs %}
+                <p>{{ e }}</p>
+            {% endfor %}
+        {% endfor %}
+        <input type="submit" value="Submit"/>
+    {{ form_close() }}
+</div>

@@ -8,7 +8,7 @@ use Takemo101\Chubby\Contract\Arrayable;
 use Tests\TestCase;
 
 describe(
-    'view-creator',
+    'ViewCreator',
     function () {
         test(
             'Create a View object',
@@ -166,7 +166,7 @@ describe(
             },
         );
     }
-)->group('view-creator');
+)->group('view-creator', 'view');
 
 
 dataset(

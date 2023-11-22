@@ -1,0 +1,21 @@
+<div>
+    <h1>Api</h1>
+    {{ form_open({route: 'install.api.save', method: 'post'}) }}
+        <input
+            type="text"
+            name="key"
+            value="{{ old('key', setting.api.key) }}"
+            placeholder="key"/>
+        <input
+            type="text"
+            name="service_id"
+            value="{{ old('service_id', setting.api.serviceId) }}"
+            placeholder="service_id"/>
+        {% for errs in error_all() %}
+            {% for e in errs %}
+                <p>{{ e }}</p>
+            {% endfor %}
+        {% endfor %}
+        <input type="submit" value="Submit"/>
+    {{ form_close() }}
+</div>

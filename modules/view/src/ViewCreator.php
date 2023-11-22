@@ -104,7 +104,7 @@ class ViewCreator
     /**
      * Get the template finder implementation.
      *
-     * @return TemplateRenderer
+     * @return TemplateFinder
      */
     public function getFinder(): TemplateFinder
     {

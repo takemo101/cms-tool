@@ -10,7 +10,7 @@ enum EncryptCipher: string
     /**
      * Get the key length of the encryption key.
      *
-     * @return integer
+     * @return int<1,max>
      */
     public function getKeyLength(): int
     {
@@ -27,19 +27,21 @@ enum EncryptCipher: string
      */
     public function generateKey(): string
     {
-        return random_bytes($this->getKeyLength());
+        $length = $this->getKeyLength();
+
+        return random_bytes($length);
     }
 
     /**
      * Acquire an encryption method from an ambiguous value
      *
      * @param string|self $value
-     * @return self
+     * @return static
      */
-    public static function fromAmbiguousValue(string|self $value): self
+    public static function fromAmbiguousValue(string|self $value): static
     {
         return is_string($value)
-            ? self::from(strtolower($value))
+            ? static::from(strtolower($value))
             : $value;
     }
 }

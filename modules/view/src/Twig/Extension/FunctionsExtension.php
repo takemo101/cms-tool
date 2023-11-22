@@ -11,7 +11,7 @@ class FunctionsExtension extends AbstractExtension
     /**
      * constructor
      *
-     * @param array<string|integer,callable-string>
+     * @param array<string|integer,callable-string> $functions
      */
     public function __construct(
         #[Inject('config.view.twig.functions')]

@@ -5,7 +5,7 @@ use Odan\Session\MemorySession;
 use Odan\Session\SessionInterface as Session;
 
 describe(
-    'session-access-adapter',
+    'SessionAccessAdapter',
     function () {
 
         test(

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d271f1fd4a2e61c2e3b555ccf1f85ab7",
+    "content-hash": "d169277a1b9346b74fea97f33d7aa278",
     "packages": [
         {
             "name": "symfony/polyfill-ctype",
@@ -5540,16 +5540,16 @@
         },
         {
             "name": "takemo101/chubby",
-            "version": "v0.0.11",
+            "version": "v0.0.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/takemo101/chubby.git",
-                "reference": "bb34cafc1752d5345b637063c1e29709ce77ae8f"
+                "reference": "913ef434c36452275eb5ed928a7865a0e135408e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/takemo101/chubby/zipball/bb34cafc1752d5345b637063c1e29709ce77ae8f",
-                "reference": "bb34cafc1752d5345b637063c1e29709ce77ae8f",
+                "url": "https://api.github.com/repos/takemo101/chubby/zipball/913ef434c36452275eb5ed928a7865a0e135408e",
+                "reference": "913ef434c36452275eb5ed928a7865a0e135408e",
                 "shasum": ""
             },
             "require": {
@@ -5600,9 +5600,9 @@
             ],
             "support": {
                 "issues": "https://github.com/takemo101/chubby/issues",
-                "source": "https://github.com/takemo101/chubby/tree/v0.0.11"
+                "source": "https://github.com/takemo101/chubby/tree/v0.0.13"
             },
-            "time": "2023-11-15T05:01:35+00:00"
+            "time": "2023-11-20T09:54:20+00:00"
         },
         {
             "name": "theseer/tokenizer",

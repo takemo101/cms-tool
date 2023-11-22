@@ -5,10 +5,10 @@ use Slim\Interfaces\RouteParserInterface;
 use Tests\TestCase;
 
 describe(
-    'extension-route',
+    'RouteExtension',
     function () {
         test(
-            'Register the route twig function',
+            'should register route Twig functions',
             function () {
                 /** @var TestCase $this */
 
@@ -30,4 +30,4 @@ describe(
             },
         );
     }
-)->group('extension-route');
+)->group('route-extension', 'extension');

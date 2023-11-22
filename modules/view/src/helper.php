@@ -3,6 +3,7 @@
 use CmsTool\View\View;
 use CmsTool\View\ViewCreator;
 use Takemo101\Chubby\Contract\Arrayable;
+use Takemo101\Chubby\Support\ServiceLocator;
 
 if (!function_exists('view')) {
     /**
@@ -17,7 +18,7 @@ if (!function_exists('view')) {
         array|Arrayable $data = [],
     ): View {
         /** @var ViewCreator */
-        $creator = container()->get(ViewCreator::class);
+        $creator = ServiceLocator::container()->get(ViewCreator::class);
 
         return $creator->create($name, $data);
     }

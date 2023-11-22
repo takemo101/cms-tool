@@ -11,7 +11,7 @@ class FiltersExtension extends AbstractExtension
     /**
      * constructor
      *
-     * @param array<string|integer,callable-string>
+     * @param array<string|integer,callable-string> $filters
      */
     public function __construct(
         #[Inject('config.view.twig.filters')]

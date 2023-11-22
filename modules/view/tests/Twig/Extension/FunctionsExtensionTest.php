@@ -4,10 +4,10 @@ use CmsTool\View\Twig\Extension\FunctionsExtension;
 use Tests\TestCase;
 
 describe(
-    'extension-functions',
+    'FunctionsExtension',
     function () {
         test(
-            'Register the twig functions',
+            'should register functions Twig functions',
             function () {
                 /** @var TestCase $this */
 
@@ -23,4 +23,4 @@ describe(
             },
         );
     }
-)->group('extension-functions');
+)->group('functions-extension', 'extension');

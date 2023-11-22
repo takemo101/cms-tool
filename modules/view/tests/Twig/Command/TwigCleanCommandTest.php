@@ -5,7 +5,7 @@ use Tests\TestCase;
 use Twig\Environment;
 
 describe(
-    'command-twig:clean',
+    'TwigCleanCommand twig:clean',
     function () {
         test(
             'Remove the cache directory by twig:clean command',
@@ -31,4 +31,4 @@ describe(
             },
         );
     }
-)->group('command-twig:clean');
+)->group('command-twig:clean', 'command');

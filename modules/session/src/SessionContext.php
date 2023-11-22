@@ -2,12 +2,13 @@
 
 namespace CmsTool\Session;
 
+use Odan\Session\FlashInterface as Flash;
 use Odan\Session\SessionInterface as Session;
 use Takemo101\Chubby\Http\Support\AbstractContext;
 
 final class SessionContext extends AbstractContext
 {
-    public const ContextKey = '__session__';
+    public const ContextKey = self::class;
 
     /**
      * constructor
@@ -28,5 +29,18 @@ final class SessionContext extends AbstractContext
     public function getSession(): Session
     {
         return $this->session;
+    }
+
+    /**
+     * Get contextual data.
+     *
+     * @return array<string,mixed>
+     */
+    protected function getServerRequestAttributes(): array
+    {
+        return [
+            Session::class => $this->getSession(),
+            Flash::class => $this->getSession()->getFlash(),
+        ];
     }
 }

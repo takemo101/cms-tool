@@ -8,7 +8,7 @@ use Tests\TestCase;
 use Twig\Environment;
 
 describe(
-    'twig-template-renderer',
+    'TwigTemplateRenderer',
     function () {
         test(
             'Rendering from a template path',
@@ -40,7 +40,7 @@ describe(
             },
         )->with('template-renderer-data');
     }
-)->group('twig-template-renderer');
+)->group('twig-template-renderer', 'twig');
 
 dataset(
     'template-renderer-data',

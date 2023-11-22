@@ -2,16 +2,10 @@
 
 namespace Takemo101\CmsTool\Support;
 
-use Takemo101\Chubby\Filesystem\PathHelper;
 use Takemo101\Chubby\Support\ApplicationPath;
 
 final class SystemPath
 {
-    /**
-     * @var PathHelper
-     */
-    private PathHelper $helper;
-
     /**
      * constructor
      *
@@ -24,7 +18,7 @@ final class SystemPath
         private string $publicPath = 'public',
         private string $themePath = 'themes',
     ) {
-        $this->helper = new PathHelper();
+        //
     }
 
     /**
@@ -33,14 +27,11 @@ final class SystemPath
      * @param string|null $path
      * @return string
      */
-    public function getPublicPath(?string $path = null): string
+    public function getPublicPath(string ...$paths): string
     {
-        $extendPath = $path
-            ? [$this->publicPath, $path]
-            : [$this->publicPath];
-
         return $this->path->getBasePath(
-            $this->helper->join(...$extendPath),
+            $this->publicPath,
+            ...$paths,
         );
     }
 
@@ -50,14 +41,11 @@ final class SystemPath
      * @param string|null $path
      * @return string
      */
-    public function getThemePath(?string $path = null): string
+    public function getThemePath(string ...$paths): string
     {
-        $extendPath = $path
-            ? [$this->themePath, $path]
-            : [$this->themePath];
-
         return $this->path->getBasePath(
-            $this->helper->join(...$extendPath),
+            $this->themePath,
+            ...$paths,
         );
     }
 }

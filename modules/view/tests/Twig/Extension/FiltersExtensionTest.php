@@ -4,10 +4,10 @@ use CmsTool\View\Twig\Extension\FiltersExtension;
 use Tests\TestCase;
 
 describe(
-    'extension-filters',
+    'FiltersExtension',
     function () {
         test(
-            'Register the twig filters',
+            'should register filters Twig functions',
             function () {
                 /** @var TestCase $this */
 
@@ -23,4 +23,4 @@ describe(
             },
         );
     }
-)->group('extension-filters');
+)->group('filters-extension', 'extension');

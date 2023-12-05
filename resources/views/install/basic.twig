@@ -1,0 +1,33 @@
+<div>
+    <h1>root</h1>
+    {{ form_open({route: 'install.basic.save', method: 'post'}) }}
+        <input
+            type="text"
+            name="site_name"
+            value="{{ old('site_name', setting.meta.name) }}"
+            placeholder="site_name"/>
+
+        <hr/>
+
+        <input
+            type="text"
+            name="root[name]"
+            value="{{ old('root.name', setting.root.name) }}"
+            placeholder="name"/>
+        <input
+            type="email"
+            name="root[email]"
+            value="{{ old('root.email', setting.root.email) }}"
+            placeholder="email"/>
+        <input
+            type="password"
+            name="root[password]"
+            placeholder="password"/>
+        {% for errs in error_all() %}
+            {% for e in errs %}
+                <p>{{ e }}</p>
+            {% endfor %}
+        {% endfor %}
+        <input type="submit" value="Submit"/>
+    {{ form_close() }}
+</div>

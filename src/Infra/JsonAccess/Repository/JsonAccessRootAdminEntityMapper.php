@@ -3,6 +3,7 @@
 namespace Takemo101\CmsTool\Infra\JsonAccess\Repository;
 
 use Takemo101\CmsTool\Domain\Admin\RootAdmin;
+use Takemo101\CmsTool\Domain\Shared\EmailAddress;
 use Takemo101\CmsTool\Domain\Shared\HashedPassword;
 
 class JsonAccessRootAdminEntityMapper
@@ -15,6 +16,7 @@ class JsonAccessRootAdminEntityMapper
     {
         return [
             'name' => $root->name,
+            'email' => (string) $root->email,
             'password' => (string) $root->password,
         ];
     }
@@ -22,6 +24,7 @@ class JsonAccessRootAdminEntityMapper
     /**
      * @param array{
      *  name: string,
+     *  email: string,
      *  password: string,
      * } $data
      * @return RootAdmin
@@ -30,6 +33,7 @@ class JsonAccessRootAdminEntityMapper
     {
         return new RootAdmin(
             name: $data['name'],
+            email: new EmailAddress($data['email']),
             password: new HashedPassword($data['password']),
         );
     }

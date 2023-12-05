@@ -9,29 +9,22 @@ use Takemo101\CmsTool\Domain\Shared\PlainPassword;
 class DefaultPasswordHasher implements PasswordHasher
 {
     /**
-     * Hash the password
-     *
-     * @param PlainPassword $plain
-     * @return HashedPassword
+     * {@inheritDoc}
      */
     public function hash(PlainPassword $plain): HashedPassword
     {
         return new HashedPassword(
-            password_hash($plain->value, PASSWORD_DEFAULT)
+            password_hash($plain->value(), PASSWORD_DEFAULT)
         );
     }
 
     /**
-     * Verify the matching of the password
-     *
-     * @param PlainPassword $plain
-     * @param HashedPassword $hashed
-     * @return boolean
+     * {@inheritDoc}
      */
     public function verify(
         PlainPassword $plain,
         HashedPassword $hashed
     ): bool {
-        return password_verify($plain->value, $hashed->value);
+        return password_verify($plain->value(), $hashed->value());
     }
 }

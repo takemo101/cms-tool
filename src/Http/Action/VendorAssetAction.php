@@ -8,7 +8,7 @@ use Takemo101\Chubby\Filesystem\LocalFilesystem;
 use Takemo101\Chubby\Http\Renderer\StaticRenderer;
 use Takemo101\CmsTool\Support\VendorPath;
 
-readonly class VendorAssetAction
+class VendorAssetAction
 {
     /**
      * constructor

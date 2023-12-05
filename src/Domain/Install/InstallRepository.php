@@ -12,6 +12,7 @@ interface InstallRepository
     /**
      * Save the installation status
      *
+     * @param boolean $installed
      * @return void
      */
     public function save(bool $installed): void;

@@ -3,18 +3,32 @@
 namespace Takemo101\CmsTool\Domain\Shared;
 
 use Stringable;
+use Takemo101\CmsTool\Domain\Shared\Trait\ValueObjectEquatable;
 
-readonly class HashedPassword implements Stringable
+/**
+ * @implements ValueObject<string>
+ */
+readonly class HashedPassword implements ValueObject, Stringable
 {
+    use ValueObjectEquatable;
+
     /**
      * constructor
      *
      * @param string $value
      */
     public function __construct(
-        public string $value,
+        private string $value,
     ) {
         assert(!empty($value), 'value is empty');
+    }
+
+    /**
+     * @return string
+     */
+    public function value()
+    {
+        return $this->value;
     }
 
     /**

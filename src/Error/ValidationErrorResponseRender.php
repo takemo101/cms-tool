@@ -8,7 +8,6 @@ use Psr\Http\Message\ServerRequestInterface;
 use Takemo101\Chubby\Http\ErrorHandler\AbstractErrorResponseRender;
 use Takemo101\Chubby\Http\ErrorHandler\ErrorSetting;
 use Takemo101\Chubby\Http\Renderer\JsonRenderer;
-use Takemo101\Chubby\Http\Renderer\RedirectRenderer;
 use Takemo101\Chubby\Http\Renderer\ResponseRenderer;
 use Takemo101\CmsTool\Support\Session\FlashErrorMessages;
 use Throwable;
@@ -72,9 +71,7 @@ class ValidationErrorResponseRender extends AbstractErrorResponseRender
             $exception->getErrorMessages(),
         );
 
-        return new RedirectRenderer(
-            $request->getHeaderLine('Referer'),
-        );
+        return redirect()->back();
     }
 
     /**

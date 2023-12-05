@@ -1,0 +1,20 @@
+<div>
+    <h1>dashboard</h1>
+    {{ form_open({route: 'admin.logout', method: 'post'}) }}
+        <input type="submit" value="Logout"/>
+    {{ form_close() }}
+    <ul>
+        <li>
+            <a href="{{ route('admin.phpinfo') }}">phpinfo</a>
+        </li>
+        <li>
+            <a href="{{ route('admin.account.edit') }}">Account</a>
+        </li>
+        <li>
+            <a href="{{ route('admin.basic.edit') }}">Basic</a>
+        </li>
+        <li>
+            <a href="{{ route('admin.seo.edit') }}">Seo</a>
+        </li>
+    </ul>
+</div>

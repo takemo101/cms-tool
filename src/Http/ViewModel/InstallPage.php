@@ -2,7 +2,7 @@
 
 namespace Takemo101\CmsTool\Http\ViewModel;
 
-use Takemo101\CmsTool\UseCase\Shared\QueryService\InstallSettingData;
+use Takemo101\CmsTool\UseCase\Install\QueryService\InstallSettingData;
 
 class InstallPage extends ViewModel
 {

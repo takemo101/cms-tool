@@ -10,6 +10,11 @@ interface SiteMetaRepository
     public function exists(): bool;
 
     /**
+     * @return SiteMeta|null
+     */
+    public function find(): ?SiteMeta;
+
+    /**
      * @param SiteMeta $meta
      * @return void
      */

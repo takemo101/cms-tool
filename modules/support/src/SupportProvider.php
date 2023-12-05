@@ -10,6 +10,8 @@ use CmsTool\Support\JsonAccess\JsonArrayAccessor;
 use CmsTool\Support\JsonAccess\JsonArrayLoader;
 use CmsTool\Support\JsonAccess\JsonArraySaver;
 use CmsTool\Support\JsonAccess\DefaultJsonAccessor;
+use EventSauce\ObjectHydrator\ObjectMapper;
+use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
 use Psr\Container\ContainerInterface;
 use Takemo101\Chubby\ApplicationContainer;
 use Takemo101\Chubby\Bootstrap\Definitions;
@@ -182,6 +184,7 @@ class SupportProvider implements Provider
                     ->enableAnnotationMapping()
                     ->getValidator();
             },
+            ObjectMapper::class => fn () => new ObjectMapperUsingReflection(),
         ]);
     }
 

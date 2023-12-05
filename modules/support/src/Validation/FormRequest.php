@@ -2,22 +2,72 @@
 
 namespace CmsTool\Support\Validation;
 
+use EventSauce\ObjectHydrator\ObjectMapper;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
+use Takemo101\Chubby\Contract\Arrayable;
+use Illuminate\Support\Arr;
 use RuntimeException;
 
-abstract class FormRequest extends FormRequestObject
+/**
+ * @template T of object
+ *
+ * @implements Arrayable<string,mixed>
+ *
+ * @mixin T
+ */
+class FormRequest implements Arrayable
 {
     /**
-     * Properties that exclude array
+     * constructor
      *
-     * @var string[]
+     * @param ObjectMapper $_mapper
+     * @param T $_object
+     * @param array<string,mixed> $_inputs
      */
-    public const ExcludeArrayProperties = ['errors'];
+    public function __construct(
+        private ObjectMapper $_mapper,
+        private object $_object,
+        private array $_inputs = [],
+    ) {
+        //
+    }
+
+    /**
+     * Get input
+     *
+     * @param string $key
+     * @param mixed $default
+     * @return mixed
+     */
+    public function input(string $key, mixed $default = null): mixed
+    {
+        return Arr::get($this->_inputs, $key, $default);
+    }
+
+    /**
+     * Get all inputs
+     *
+     * @return array<string,mixed>
+     */
+    public function inputs(): array
+    {
+        return $this->_inputs;
+    }
+
+    /**
+     * Get the hydrated object.
+     *
+     * @return T
+     */
+    public function getHydratedObject(): object
+    {
+        return $this->_object;
+    }
 
     /**
      * @var ConstraintViolationListInterface|null
      */
-    private ?ConstraintViolationListInterface $errors = null;
+    private ?ConstraintViolationListInterface $_errors = null;
 
     /**
      * Check if the form request has passed validation.
@@ -46,7 +96,7 @@ abstract class FormRequest extends FormRequestObject
      */
     public function isValidated(): bool
     {
-        return $this->errors !== null;
+        return $this->_errors !== null;
     }
 
     /**
@@ -57,7 +107,7 @@ abstract class FormRequest extends FormRequestObject
      */
     public function setErrors(ConstraintViolationListInterface $errors): void
     {
-        $this->errors = $errors;
+        $this->_errors = $errors;
     }
 
     /**
@@ -68,6 +118,50 @@ abstract class FormRequest extends FormRequestObject
      */
     public function getErrors(): ConstraintViolationListInterface
     {
-        return $this->errors ?? throw new RuntimeException('errors is not set');
+        return $this->_errors ?? throw new RuntimeException('errors is not set');
+    }
+
+    /**
+     * Get _object property value
+     *
+     * @return mixed
+     */
+    public function __get(string $name): mixed
+    {
+        if (property_exists($this->_object, $name)) {
+            return $this->_object->{$name};
+        }
+
+        throw new RuntimeException("property {$name} is not found");
+    }
+
+    /**
+     * Call the method of the _object property
+     *
+     * @param string $name
+     * @param mixed[] $arguments
+     * @return mixed
+     * @throws RuntimeException
+     */
+    public function __call(string $name, array $arguments): mixed
+    {
+        if (method_exists($this->_object, $name)) {
+            return $this->_object->{$name}(...$arguments);
+        }
+
+        throw new RuntimeException("method {$name} is not found");
+    }
+
+    /**
+     * Convert the object to its array representation.
+     *
+     * @return array<string,mixed>
+     */
+    public function toArray(): array
+    {
+        /** @var array<string,mixed> */
+        $serialized = $this->_mapper->serializeObject($this->_object);
+
+        return $serialized;
     }
 }

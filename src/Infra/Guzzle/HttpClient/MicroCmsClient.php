@@ -44,7 +44,7 @@ class MicroCmsClient
 
         $contents = $response->getBody()->getContents();
 
-        return !empty($contents);
+        return $contents === '{}';
     }
 
     /**

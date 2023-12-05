@@ -15,7 +15,7 @@ class ValidationErrorException extends Exception
      * constructor
      *
      * @param ConstraintViolationListInterface $errors
-     * @param string|null $message
+     * @param string $message
      * @param integer $code
      * @param Throwable|null $previous
      */
@@ -27,6 +27,7 @@ class ValidationErrorException extends Exception
     ) {
         parent::__construct(
             message: $message,
+            code: $code,
             previous: $previous,
         );
     }

@@ -12,6 +12,12 @@ readonly class CsrfToken
     /** @var string */
     public const ValueKey = CsrfGuard::TokenValueKey;
 
+    /** @var string */
+    public const HeaderNameKey = CsrfGuard::HeaderTokenNameKey;
+
+    /** @var string */
+    public const HeaderValueKey = CsrfGuard::HeaderTokenValueKey;
+
     /**
      * constructor
      *
@@ -33,6 +39,37 @@ readonly class CsrfToken
         return empty($this->name) || empty($this->value);
     }
 
+    /**
+     * @return string
+     */
+    public function getTokenNameKey(): string
+    {
+        return self::NameKey;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTokenValueKey(): string
+    {
+        return self::ValueKey;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHeaderNameKey(): string
+    {
+        return self::HeaderNameKey;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHeaderValueKey(): string
+    {
+        return self::HeaderValueKey;
+    }
 
     /**
      * Create a new instance of CsrfToken from a ServerRequestInterface object.

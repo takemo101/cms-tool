@@ -4,11 +4,10 @@ namespace Takemo101\CmsTool\Infra\JsonAccess\Repository;
 
 use Takemo101\CmsTool\Domain\Install\InstallRepository;
 use Takemo101\CmsTool\Infra\JsonAccess\SettingJsonAccessObjectCreator;
+use Takemo101\CmsTool\Infra\JsonAccess\SettingJsonObjectKeys;
 
 class JsonAccessInstallRepository implements InstallRepository
 {
-    public const ObjectKey = 'installed';
-
     /**
      * constructor
      *
@@ -21,32 +20,30 @@ class JsonAccessInstallRepository implements InstallRepository
     }
 
     /**
-     * @return boolean
+     * {@inheritDoc}
      */
     public function isInstalled(): bool
     {
         $object = $this->creator->create();
 
-        if (!$object->has(self::ObjectKey)) {
+        if (!$object->has(SettingJsonObjectKeys::InstalledKey)) {
             return false;
         }
 
         /** @var boolean */
-        $installed = $object->get(self::ObjectKey);
+        $installed = $object->get(SettingJsonObjectKeys::InstalledKey);
 
         return (bool) $installed;
     }
 
     /**
-     * Save the installation status
-     *
-     * @return void
+     * {@inheritDoc}
      */
     public function save(bool $installed): void
     {
         $object = $this->creator->create();
 
-        $object->set(self::ObjectKey, $installed);
+        $object->set(SettingJsonObjectKeys::InstalledKey, $installed);
 
         $object->save();
     }

@@ -8,11 +8,15 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 /**
  * reference: https://dev.to/beganovich/validating-requests-in-the-symfony-app-2g0a
  */
-class TestChild extends FormRequestObject
+readonly class TestChild
 {
-    #[NotBlank]
-    public string $title;
+    public function __construct(
+        #[NotBlank]
+        public string $title,
 
-    #[NotBlank]
-    public string $body;
+        #[NotBlank]
+        public string $body = 'body',
+    ) {
+        //
+    }
 }

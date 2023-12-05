@@ -5,11 +5,10 @@ namespace Takemo101\CmsTool\Infra\JsonAccess\Repository;
 use Takemo101\CmsTool\Domain\MicroCms\MicroCmsApi;
 use Takemo101\CmsTool\Domain\MicroCms\MicroCmsApiRepository;
 use Takemo101\CmsTool\Infra\JsonAccess\SettingJsonAccessObjectCreator;
+use Takemo101\CmsTool\Infra\JsonAccess\SettingJsonObjectKeys;
 
 readonly class JsonAccessMicroCmsApiRepository implements MicroCmsApiRepository
 {
-    public const ObjectKey = 'api';
-
     /**
      * constructor
      *
@@ -24,24 +23,24 @@ readonly class JsonAccessMicroCmsApiRepository implements MicroCmsApiRepository
     }
 
     /**
-     * @return boolean
+     * {@inheritDoc}
      */
     public function exists(): bool
     {
         $object = $this->creator->create();
 
-        return $object->has(self::ObjectKey);
+        return $object->has(SettingJsonObjectKeys::MicroCmsApiKey);
     }
 
     /**
-     * @return MicroCmsApi|null
+     * {@inheritDoc}
      */
     public function find(): ?MicroCmsApi
     {
         $object = $this->creator->create();
 
         /** @var array<string,mixed>|null */
-        $data = $object->get(self::ObjectKey);
+        $data = $object->get(SettingJsonObjectKeys::MicroCmsApiKey);
 
         return empty($data)
             ? null
@@ -49,14 +48,16 @@ readonly class JsonAccessMicroCmsApiRepository implements MicroCmsApiRepository
     }
 
     /**
-     * @param MicroCmsApi $api
-     * @return void
+     * {@inheritDoc}
      */
     public function save(MicroCmsApi $api): void
     {
         $object = $this->creator->create();
 
-        $object->set(self::ObjectKey, $this->mapper->toArray($api));
+        $object->set(
+            SettingJsonObjectKeys::MicroCmsApiKey,
+            $this->mapper->toArray($api),
+        );
 
         $object->save();
     }

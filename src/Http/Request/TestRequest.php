@@ -2,21 +2,24 @@
 
 namespace Takemo101\CmsTool\Http\Request;
 
-use CmsTool\Support\Validation\FormRequest;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Valid;
 
 /**
  * reference: https://dev.to/beganovich/validating-requests-in-the-symfony-app-2g0a
  */
-class TestRequest extends FormRequest
+readonly class TestRequest
 {
-    #[NotBlank(message: 'title is required')]
-    public string $title;
+    public function __construct(
+        #[NotBlank(message: 'title is required')]
+        public string $mainTitle,
 
-    #[NotBlank]
-    public string $body;
+        #[NotBlank]
+        public string $body,
 
-    #[Valid]
-    public TestChild $child;
+        #[Valid]
+        public TestChild $child,
+    ) {
+        //
+    }
 }

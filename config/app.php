@@ -3,6 +3,9 @@
 // Application basic settings
 
 return [
+    // Application base url
+    'url' => env('APP_URL', 'http://localhost:8080'),
+
     // Application name
     'name' => env('APP_NAME', 'CmsTool'),
 
@@ -14,4 +17,7 @@ return [
 
     // Timezone
     'timezone' => 'Asia/Tokyo',
+
+    // Locale
+    'locale' => 'ja',
 ];

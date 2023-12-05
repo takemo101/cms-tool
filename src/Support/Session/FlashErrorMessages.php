@@ -4,8 +4,6 @@ namespace Takemo101\CmsTool\Support\Session;
 
 use CmsTool\Session\Flash\AbstractFlashSession;
 
-
-
 class FlashErrorMessages extends AbstractFlashSession
 {
     /**

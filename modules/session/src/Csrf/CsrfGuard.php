@@ -17,6 +17,12 @@ class CsrfGuard extends Guard
     /** @var string */
     public const TokenValueKey = '_CSRF_VALUE';
 
+    /** @var string */
+    public const HeaderTokenNameKey = 'X-CSRF-TOKEN-NAME';
+
+    /** @var string */
+    public const HeaderTokenValueKey = 'X-CSRF-TOKEN-VALUE';
+
     /**
      * constructor
      *
@@ -60,6 +66,22 @@ class CsrfGuard extends Guard
     public function getTokenValueKey(): string
     {
         return self::TokenValueKey;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHeaderTokenNameKey(): string
+    {
+        return self::HeaderTokenNameKey;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHeaderTokenValueKey(): string
+    {
+        return self::HeaderTokenValueKey;
     }
 
     /**

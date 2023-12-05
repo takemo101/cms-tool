@@ -3,8 +3,8 @@
 namespace Takemo101\CmsTool\Infra\JsonAccess\QueryService;
 
 use Takemo101\CmsTool\Infra\JsonAccess\SettingJsonAccessObjectCreator;
-use Takemo101\CmsTool\UseCase\Shared\QueryService\InstallSettingData;
-use Takemo101\CmsTool\UseCase\Shared\QueryService\InstallSettingQueryService;
+use Takemo101\CmsTool\UseCase\Install\QueryService\InstallSettingData;
+use Takemo101\CmsTool\UseCase\Install\QueryService\InstallSettingQueryService;
 
 readonly class JsonAccessInstallSettingQueryService implements InstallSettingQueryService
 {
@@ -22,12 +22,12 @@ readonly class JsonAccessInstallSettingQueryService implements InstallSettingQue
     }
 
     /**
-     * @return InstallSettingData
+     * {@inheritDoc}
      */
     public function get(): InstallSettingData
     {
         $object = $this->creator->create();
 
-        return $this->mapper->toData($object->toArray());
+        return $this->mapper->toData($object->all());
     }
 }

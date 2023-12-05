@@ -2,6 +2,7 @@
 
 namespace CmsTool\Session\Middleware;
 
+use CmsTool\Session\Csrf\CsrfGuard;
 use CmsTool\Session\Csrf\CsrfGuardContext;
 use CmsTool\Session\Csrf\CsrfGuardFactory;
 use CmsTool\Session\SessionContext;
@@ -45,9 +46,29 @@ class Csrf implements MiddlewareInterface
 
         $context = new CsrfGuardContext($guard);
 
+        $request = $this->withToken($request, $guard);
+
         return $guard->process(
             $context->withContext($request),
             $handler,
         );
+    }
+
+    private function withToken(
+        ServerRequestInterface $request,
+        CsrfGuard $guard,
+    ): ServerRequestInterface {
+
+        $tokenName = $request->getHeader($guard->getHeaderTokenNameKey())[0] ?? false;
+        $tokenValue = $request->getHeader($guard->getHeaderTokenValueKey())[0] ?? false;
+
+        if ($tokenName && $tokenValue) {
+            return $request->withParsedBody([
+                $guard->getTokenNameKey() => $tokenName,
+                $guard->getTokenValueKey() => $tokenValue,
+            ]);
+        }
+
+        return $request;
     }
 }

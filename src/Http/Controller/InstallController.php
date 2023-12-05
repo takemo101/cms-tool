@@ -4,22 +4,21 @@ namespace Takemo101\CmsTool\Http\Controller;
 
 use CmsTool\Support\Validation\HttpValidationErrorException;
 use CmsTool\Support\Validation\RequestValidator;
+use CmsTool\View\View;
 use Psr\Http\Message\ServerRequestInterface;
-use Takemo101\Chubby\Http\Renderer\RedirectRenderer;
+use Takemo101\Chubby\Http\Renderer\RouteRedirectRenderer;
 use Takemo101\CmsTool\Domain\Install\InstallationNotPossibleException;
 use Takemo101\CmsTool\Domain\MicroCms\MicroCmsApiAccessException;
-use Takemo101\CmsTool\Http\Request\Install\SaveAccountRequest;
-use Takemo101\CmsTool\Http\Request\Install\SaveApiRequest;
-use Takemo101\CmsTool\Http\Request\Install\SaveMetaRequest;
+use Takemo101\CmsTool\Http\Request\Install\SaveMicroCmsApiRequest;
+use Takemo101\CmsTool\Http\Request\Install\SaveBasicSettingRequest;
 use Takemo101\CmsTool\Http\ViewModel\InstallPage;
-use Takemo101\CmsTool\UseCase\Admin\Handler\SaveRootAdminCommand;
-use Takemo101\CmsTool\UseCase\Admin\Handler\SaveRootAdminHandler;
+use Takemo101\CmsTool\UseCase\BasicSetting\Handler\RootAdminForSaveBasicSettingCommand;
+use Takemo101\CmsTool\UseCase\BasicSetting\Handler\SaveBasicSettingCommand;
+use Takemo101\CmsTool\UseCase\BasicSetting\Handler\SaveBasicSettingHandler;
 use Takemo101\CmsTool\UseCase\Install\Handler\InstalledHandler;
+use Takemo101\CmsTool\UseCase\Install\QueryService\InstallSettingQueryService;
 use Takemo101\CmsTool\UseCase\MicroCms\Handler\SaveMicroCmsApiCommand;
 use Takemo101\CmsTool\UseCase\MicroCms\Handler\SaveMicroCmsApiHandler;
-use Takemo101\CmsTool\UseCase\Shared\QueryService\InstallSettingQueryService;
-use Takemo101\CmsTool\UseCase\SiteMeta\Handler\SaveSiteMetaCommand;
-use Takemo101\CmsTool\UseCase\SiteMeta\Handler\SaveSiteMetaHandler;
 
 class InstallController
 {
@@ -34,7 +33,12 @@ class InstallController
         //
     }
 
-    public function apiPage()
+    /**
+     * microCMS Api page
+     *
+     * @return View
+     */
+    public function apiPage(): View
     {
         $data = $this->queryService->get();
 
@@ -44,14 +48,22 @@ class InstallController
         );
     }
 
+    /**
+     * Save microCMS Api
+     *
+     * @param ServerRequestInterface $request
+     * @param RequestValidator $validator
+     * @param SaveMicroCmsApiHandler $handler
+     * @return RouteRedirectRenderer
+     */
     public function saveApi(
         ServerRequestInterface $request,
         RequestValidator $validator,
         SaveMicroCmsApiHandler $handler,
-    ) {
+    ): RouteRedirectRenderer {
         $form = $validator->throwIfFailed(
             $request,
-            SaveApiRequest::class,
+            SaveMicroCmsApiRequest::class,
         );
 
         try {
@@ -64,7 +76,7 @@ class InstallController
         } catch (MicroCmsApiAccessException $e) {
             throw HttpValidationErrorException::fromMessages(
                 messages: [
-                    'api' => [
+                    'key' => [
                         'The access key or service ID is incorrect',
                     ],
                 ],
@@ -72,71 +84,62 @@ class InstallController
             );
         }
 
-        return new RedirectRenderer(route('install.meta'));
+        return redirect()->route('install.basic');
     }
 
-    public function metaPage()
+    /**
+     * Site basic setting page
+     *
+     * @return View
+     */
+    public function basicSettingPage(): View
     {
         $data = $this->queryService->get();
 
         return view(
-            'cms-tool::install.meta',
+            'cms-tool::install.basic',
             new InstallPage($data),
         );
     }
 
-    public function saveMeta(
+    /**
+     * Save site meta
+     *
+     * @param ServerRequestInterface $request
+     * @param RequestValidator $validator
+     * @param SaveBasicSettingHandler $handler
+     * @return RouteRedirectRenderer
+     */
+    public function saveBasicSetting(
         ServerRequestInterface $request,
         RequestValidator $validator,
-        SaveSiteMetaHandler $handler
-    ) {
+        SaveBasicSettingHandler $handler
+    ): RouteRedirectRenderer {
         $form = $validator->throwIfFailed(
             $request,
-            SaveMetaRequest::class,
+            SaveBasicSettingRequest::class,
         );
 
         $handler->handle(
-            new SaveSiteMetaCommand(
-                name: $form->name,
-                title: $form->title,
-                description: $form->description,
+            new SaveBasicSettingCommand(
+                siteName: $form->siteName,
+                root: new RootAdminForSaveBasicSettingCommand(
+                    name: $form->root->name,
+                    email: $form->root->email,
+                    password: $form->root->password,
+                ),
             ),
         );
 
-        return new RedirectRenderer(route('install.account'));
+        return redirect()->route('install.confirm');
     }
 
-    public function accountPage()
-    {
-        $data = $this->queryService->get();
-
-        return view(
-            'cms-tool::install.account',
-            new InstallPage($data),
-        );
-    }
-
-    public function saveAccount(
-        ServerRequestInterface $request,
-        RequestValidator $validator,
-        SaveRootAdminHandler $handler,
-    ) {
-        $form = $validator->throwIfFailed(
-            $request,
-            SaveAccountRequest::class,
-        );
-
-        $handler->handle(
-            new SaveRootAdminCommand(
-                name: $form->name,
-                password: $form->password,
-            ),
-        );
-
-        return new RedirectRenderer(route('install.confirm'));
-    }
-
-    public function confirmPage()
+    /**
+     * Confirm page
+     *
+     * @return View
+     */
+    public function confirmPage(): View
     {
         $data = $this->queryService->get();
 
@@ -146,10 +149,17 @@ class InstallController
         );
     }
 
+    /**
+     * Installed
+     *
+     * @param ServerRequestInterface $request
+     * @param InstalledHandler $handler
+     * @return RouteRedirectRenderer
+     */
     public function installed(
         ServerRequestInterface $request,
         InstalledHandler $handler,
-    ) {
+    ): RouteRedirectRenderer {
         try {
             $handler->handle();
         } catch (InstallationNotPossibleException $e) {
@@ -163,6 +173,6 @@ class InstallController
             );
         }
 
-        return new RedirectRenderer(route('home'));
+        return redirect()->route('home');
     }
 }

@@ -5,11 +5,10 @@ namespace Takemo101\CmsTool\Infra\JsonAccess\Repository;
 use Takemo101\CmsTool\Domain\Admin\RootAdmin;
 use Takemo101\CmsTool\Domain\Admin\RootAdminRepository;
 use Takemo101\CmsTool\Infra\JsonAccess\SettingJsonAccessObjectCreator;
+use Takemo101\CmsTool\Infra\JsonAccess\SettingJsonObjectKeys;
 
 readonly class JsonAccessRootAdminRepository implements RootAdminRepository
 {
-    public const ObjectKey = 'root';
-
     /**
      * constructor
      *
@@ -24,24 +23,24 @@ readonly class JsonAccessRootAdminRepository implements RootAdminRepository
     }
 
     /**
-     * @return boolean
+     * {@inheritDoc}
      */
     public function exists(): bool
     {
         $object = $this->creator->create();
 
-        return $object->has(self::ObjectKey);
+        return $object->has(SettingJsonObjectKeys::RootAdminKey);
     }
 
     /**
-     * @return RootAdmin|null
+     * {@inheritDoc}
      */
     public function find(): ?RootAdmin
     {
         $object = $this->creator->create();
 
         /** @var array<string,mixed>|null */
-        $data = $object->get(self::ObjectKey);
+        $data = $object->get(SettingJsonObjectKeys::RootAdminKey);
 
         return empty($data)
             ? null
@@ -49,14 +48,16 @@ readonly class JsonAccessRootAdminRepository implements RootAdminRepository
     }
 
     /**
-     * @param RootAdmin $root
-     * @return void
+     * {@inheritDoc}
      */
     public function save(RootAdmin $root): void
     {
         $object = $this->creator->create();
 
-        $object->set(self::ObjectKey, $this->mapper->toArray($root));
+        $object->set(
+            SettingJsonObjectKeys::RootAdminKey,
+            $this->mapper->toArray($root),
+        );
 
         $object->save();
     }

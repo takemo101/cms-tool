@@ -1,0 +1,86 @@
+{% extends 'cms-tool::layout.master' %}
+
+{% block title %}Seo{% endblock %}
+
+{% block content %}
+    <div>
+        <h1>seo</h1>
+        {{ form_open({
+            route: 'admin.seo.update',
+            method: 'put',
+            enctype: 'multipart/form-data',
+        }) }}
+            <input
+                type="text"
+                name="title"
+                value="{{ old('title', seo.title) }}"
+                placeholder="title"/>
+            <br/>
+            <input
+                type="text"
+                name="description"
+                value="{{ old('description', seo.description) }}"
+                placeholder="description"/>
+            <br/>
+            <input
+                type="text"
+                name="keywords"
+                value="{{ old('keywords', seo.keywords) }}"
+                placeholder="keywords"/>
+            <br/>
+            {% block favicon_input %}
+                <div id="favicon-input" hx-swap-oob="true">
+                    <input
+                        type="file"
+                        name="favicon"
+                        placeholder="favicon"/>
+                    {% if seo.favicon %}
+                         <button
+                            type="button"
+                            hx-delete="{{ route('admin.seo.delete.image', {target: 'favicon'}) }}">
+                            削除
+                        </button>
+                    {% endif %}
+                    {{ seo.favicon }}
+                </div>
+            {% endblock %}
+            {% block icon_input %}
+                <div id="icon-input" hx-swap-oob="true">
+                    <input
+                        type="file"
+                        name="icon"
+                        placeholder="icon"/>
+                    {% if seo.icon %}
+                        <button
+                            type="button"
+                            hx-delete="{{ route('admin.seo.delete.image', {target: 'icon'}) }}">
+                            削除
+                        </button>
+                    {% endif %}
+                    {{ seo.icon }}
+                </div>
+            {% endblock %}
+            <input
+                type="text"
+                name="robots"
+                value="{{ old('robots', seo.robots) }}"
+                placeholder="robots"/>
+            <br/>
+            <input type="submit" value="Submit"/>
+        {{ form_close() }}
+        {{ form_open({
+            route: ['admin.seo.delete.image', {target: 'favicon'}],
+            method: 'delete',
+            id: 'delete-favicon',
+        }) }}
+        {{ form_close() }}
+
+        <hr/>
+
+        {% for errs in error_all() %}
+            {% for e in errs %}
+                <p>{{ e }}</p>
+            {% endfor %}
+        {% endfor %}
+    </div>
+{% endblock %}

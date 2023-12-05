@@ -4,9 +4,10 @@ use Takemo101\CmsTool\Domain\Admin\RootAdmin;
 use Takemo101\CmsTool\Domain\Admin\RootAdminRepository;
 use Takemo101\CmsTool\Domain\Shared\HashedPassword;
 use Takemo101\CmsTool\Domain\Shared\PasswordHasher;
-use Takemo101\CmsTool\UseCase\Admin\Handler\SaveRootAdminCommand;
-use Takemo101\CmsTool\UseCase\Admin\Handler\SaveRootAdminHandler;
+use Takemo101\CmsTool\UseCase\Admin\Handler\Save\SaveRootAdminCommand;
+use Takemo101\CmsTool\UseCase\Admin\Handler\Save\SaveRootAdminHandler;
 use Mockery as m;
+use Takemo101\CmsTool\Domain\Shared\EmailAddress;
 
 it(
     'should save a RootAdmin',
@@ -27,14 +28,19 @@ it(
         $handler = new SaveRootAdminHandler($repository, $hasher);
 
         // Create a mock for the SaveRootAdminCommand
-        $command = new SaveRootAdminCommand('John Doe', 'password');
+        $command = new SaveRootAdminCommand(
+            name: 'John Doe',
+            email: 'test@test.com',
+            password: 'password',
+        );
 
         // Call the handle method
         $actual = $handler->handle($command);
 
         // Assert that the RootAdmin object is created correctly
         $expectedRootAdmin = new RootAdmin(
-            name: 'John Doe',
+            name: $command->name,
+            email: new EmailAddress($command->email),
             password: $hashedPassword,
         );
 

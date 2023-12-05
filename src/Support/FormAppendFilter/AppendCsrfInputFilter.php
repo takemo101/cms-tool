@@ -36,10 +36,7 @@ class AppendCsrfInputFilter implements FormAppendFilter
     }
 
     /**
-     * Filter the elements to be added to the form by attributes
-     *
-     * @param array<string,mixed> $attributes
-     * @return string|null
+     * {@inheritDoc}
      */
     public function filter(array $attributes): ?string
     {

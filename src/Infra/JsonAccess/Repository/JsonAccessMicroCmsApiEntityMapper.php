@@ -2,20 +2,32 @@
 
 namespace Takemo101\CmsTool\Infra\JsonAccess\Repository;
 
+use EventSauce\ObjectHydrator\ObjectMapper;
 use Takemo101\CmsTool\Domain\MicroCms\MicroCmsApi;
 
 class JsonAccessMicroCmsApiEntityMapper
 {
+    /**
+     * constructor
+     *
+     * @param ObjectMapper $mapper
+     */
+    public function __construct(
+        private ObjectMapper $mapper,
+    ) {
+        //
+    }
+
     /**
      * @param MicroCmsApi $api
      * @return array<string,mixed>
      */
     public function toArray(MicroCmsApi $api): array
     {
-        return [
-            'key' => $api->key,
-            'service_id' => $api->serviceId,
-        ];
+        /** @var array<string,mixed> */
+        $serialized = $this->mapper->serializeObject($api);
+
+        return $serialized;
     }
 
     /**
@@ -27,9 +39,9 @@ class JsonAccessMicroCmsApiEntityMapper
      */
     public function toEntity(array $data): MicroCmsApi
     {
-        return new MicroCmsApi(
-            key: $data['key'],
-            serviceId: $data['service_id'],
+        return $this->mapper->hydrateObject(
+            MicroCmsApi::class,
+            $data,
         );
     }
 }

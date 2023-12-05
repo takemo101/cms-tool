@@ -2,15 +2,13 @@
 
 namespace Takemo101\CmsTool\Infra\JsonAccess\Repository;
 
-use Takemo101\CmsTool\Domain\Admin\RootAdmin;
 use Takemo101\CmsTool\Domain\SiteMeta\SiteMeta;
 use Takemo101\CmsTool\Domain\SiteMeta\SiteMetaRepository;
 use Takemo101\CmsTool\Infra\JsonAccess\SettingJsonAccessObjectCreator;
+use Takemo101\CmsTool\Infra\JsonAccess\SettingJsonObjectKeys;
 
 readonly class JsonAccessSiteMetaRepository implements SiteMetaRepository
 {
-    public const ObjectKey = 'meta';
-
     /**
      * constructor
      *
@@ -25,24 +23,41 @@ readonly class JsonAccessSiteMetaRepository implements SiteMetaRepository
     }
 
     /**
-     * @return boolean
+     * {@inheritDoc}
      */
     public function exists(): bool
     {
         $object = $this->creator->create();
 
-        return $object->has(self::ObjectKey);
+        return $object->has(SettingJsonObjectKeys::SiteMetaKey);
     }
 
     /**
-     * @param SiteMeta $meta
-     * @return void
+     * {@inheritDoc}
+     */
+    public function find(): ?SiteMeta
+    {
+        $object = $this->creator->create();
+
+        /** @var array<string,mixed>|null */
+        $data = $object->get(SettingJsonObjectKeys::SiteMetaKey);
+
+        return empty($data)
+            ? null
+            : $this->mapper->toEntity($data);
+    }
+
+    /**
+     * {@inheritDoc}
      */
     public function save(SiteMeta $meta): void
     {
         $object = $this->creator->create();
 
-        $object->set(self::ObjectKey, $this->mapper->toArray($meta));
+        $object->set(
+            SettingJsonObjectKeys::SiteMetaKey,
+            $this->mapper->toArray($meta),
+        );
 
         $object->save();
     }

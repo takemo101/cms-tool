@@ -6,6 +6,7 @@ use CmsTool\Session\Csrf\CsrfGuardContext;
 use CmsTool\Session\Flash\FlashSessionsContext;
 use CmsTool\Session\SessionContext;
 use CmsTool\View\Html\Filter\FormAppendFilters;
+use CmsTool\View\ViewCreator;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Takemo101\Chubby\ApplicationContainer;
@@ -14,7 +15,8 @@ use Takemo101\Chubby\Bootstrap\Provider\Provider;
 use Takemo101\Chubby\Config\ConfigRepository;
 use Takemo101\Chubby\Filesystem\LocalFilesystem;
 use Takemo101\Chubby\Hook\Hook;
-use Takemo101\Chubby\Support\ApplicationPath;
+use Takemo101\CmsTool\Http\Session\AdminSessionFactory;
+use Takemo101\CmsTool\Http\Session\DefaultAdminSessionFactory;
 use Takemo101\CmsTool\Support\FormAppendFilter\AppendCsrfInputFilter;
 use Takemo101\CmsTool\Support\Session\FlashErrorMessages;
 use Takemo101\CmsTool\Support\Session\FlashOldInputs;
@@ -58,6 +60,18 @@ class CmsToolProvider implements Provider
                 'config' . DIRECTORY_SEPARATOR . 'vendor',
                 'resources',
             ),
+            AdminSessionFactory::class => function (
+                ContainerInterface $container,
+                ConfigRepository $config,
+            ) {
+                /** @var class-string<AdminSessionFactory> */
+                $class = $config->get(
+                    'auth.admin.session.factory',
+                    DefaultAdminSessionFactory::class,
+                );
+
+                return $container->get($class);
+            },
         ]);
 
         $definitions->add(
@@ -113,11 +127,19 @@ class CmsToolProvider implements Provider
                     /** @var AppendCsrfInputFilter */
                     $filter = $container->get(AppendCsrfInputFilter::class);
 
+                    /** @var ViewCreator */
+                    $viewCreator = $container->get(ViewCreator::class);
+
                     $guard = CsrfGuardContext::fromServerRequest(
                         $request,
                     )->getGuard();
 
                     $filter->setCsrfToken(
+                        $guard->getToken(),
+                    );
+
+                    $viewCreator->share(
+                        'csrf',
                         $guard->getToken(),
                     );
 

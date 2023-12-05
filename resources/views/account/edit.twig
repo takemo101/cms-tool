@@ -1,0 +1,30 @@
+<div>
+    <h1>edit</h1>
+    {{ form_open({route: 'admin.account.update', method: 'put'}) }}
+        <p>{{ admin.id }}</p>
+        <input
+            type="text"
+            name="name"
+            value="{{ old('name', admin.name) }}"
+            placeholder="name"/>
+        <input
+            type="email"
+            name="email"
+            value="{{ old('email', admin.email) }}"
+            placeholder="email"/>
+        <input
+            type="password"
+            name="password"
+            placeholder="password"/>
+        <input
+            type="password"
+            name="password_confirmation"
+            placeholder="password"/>
+        {% for errs in error_all() %}
+            {% for e in errs %}
+                <p>{{ e }}</p>
+            {% endfor %}
+        {% endfor %}
+        <input type="submit" value="Submit"/>
+    {{ form_close() }}
+</div>

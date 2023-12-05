@@ -1,0 +1,50 @@
+<div>
+    <h1>basic</h1>
+
+    {{ form_open({
+        route: [
+            'admin.publish',
+            {status: isSitePublished ? 'unpublished' : 'published'},
+        ],
+        method: 'patch',
+    }) }}
+        {% if isSitePublished %}
+            <input type="submit" value="Unpublish"/>
+        {% else %}
+            <input type="submit" value="Publish"/>
+        {% endif %}
+    {{ form_close() }}
+
+    <hr/>
+
+    {{ form_open({route: 'admin.meta.update', method: 'put'}) }}
+        <input
+            type="text"
+            name="name"
+            value="{{ old('name', meta.name) }}"
+            placeholder="name"/>
+        <input type="submit" value="Submit"/>
+    {{ form_close() }}
+
+    <hr/>
+
+    {{ form_open({route: 'admin.api.update', method: 'put'}) }}
+        <input
+            type="text"
+            name="key"
+            value="{{ old('key', api.key) }}"
+            placeholder="key"/>
+        <input
+            type="text"
+            name="service_id"
+            value="{{ old('service_id', api.serviceId) }}"
+            placeholder="service_id"/>
+        <input type="submit" value="Submit"/>
+    {{ form_close() }}
+
+    {% for errs in error_all() %}
+        {% for e in errs %}
+            <p>{{ e }}</p>
+        {% endfor %}
+    {% endfor %}
+</div>

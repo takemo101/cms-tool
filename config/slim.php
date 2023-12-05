@@ -2,18 +2,35 @@
 
 // Slim framework related settings
 
+use Takemo101\Chubby\Http\ErrorHandler\ErrorHandler;
+use Takemo101\Chubby\Http\Factory\DefaultSlimFactory;
+use Takemo101\CmsTool\Http\Support\CmsToolConfigurer;
+
 return [
 
     // Base path
     'base_path' => env('BASE_PATH'),
 
+    // Specify a class that implements Slimfactory, a factor class that generates Slim
+    'factory' => DefaultSlimFactory::class,
+
+    // Specify a class that implements Slimconfigurer to perform setting processing before executing Slim
+    'configurer' => CmsToolConfigurer::class,
+
     // Error output settings
     'error' => [
 
-        'display_error_details' => true,
+        // Slim error handling specified classes that implement Error HandlerInterface
+        'handler' => ErrorHandler::class,
 
-        'log_errors' => true,
+        // ErrorMiddleware error display setting
+        'setting' => [
 
-        'log_error_details' => true,
+            'display_error_details' => true,
+
+            'log_errors' => true,
+
+            'log_error_details' => true,
+        ],
     ],
 ];

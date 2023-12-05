@@ -4,16 +4,19 @@ namespace Takemo101\CmsTool\UseCase\Install\Handler;
 
 use Takemo101\CmsTool\Domain\Install\InstallationNotPossibleException;
 use Takemo101\CmsTool\Domain\Install\InstalledService;
+use Takemo101\CmsTool\Domain\Publish\SitePublishService;
 
 class InstalledHandler
 {
     /**
      * constructor
      *
-     * @param InstalledService $service
+     * @param InstalledService $installedService
+     * @param SitePublishService $publishService
      */
     public function __construct(
-        private InstalledService $service,
+        private InstalledService $installedService,
+        private SitePublishService $publishService,
     ) {
         //
     }
@@ -26,6 +29,9 @@ class InstalledHandler
      */
     public function handle(): void
     {
-        $this->service->installed();
+        $this->installedService->installed();
+
+        // After installation, make the site private
+        $this->publishService->unpublished();
     }
 }

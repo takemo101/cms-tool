@@ -4,11 +4,8 @@ use Takemo101\CmsTool\Domain\Install\InstallationNotPossibleException;
 use Takemo101\CmsTool\Domain\Install\InstalledService;
 use Takemo101\CmsTool\UseCase\Install\Handler\InstalledHandler;
 use Mockery as m;
-use Takemo101\CmsTool\Domain\Admin\RootAdminRepository;
 use Takemo101\CmsTool\Domain\Install\InstalledSpec;
 use Takemo101\CmsTool\Domain\Install\InstallRepository;
-use Takemo101\CmsTool\Domain\MicroCms\MicroCmsApiRepository;
-use Takemo101\CmsTool\Domain\SiteMeta\SiteMetaRepository;
 
 describe(
     'InstalledHandler',

@@ -180,3 +180,4 @@ class DefaultTemplateFinder implements TemplateFinder
         return $this->extensions;
     }
 }
+

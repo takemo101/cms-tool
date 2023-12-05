@@ -4,7 +4,10 @@
 /phpunit.xml
 /vendor/
 
-/storage/logs/*.log
-/storage/cache/
+/storage/logs/*
+/storage/cache/*
+/storage/public/*
 /.env
 /setting.json
+
+!.gitkeep

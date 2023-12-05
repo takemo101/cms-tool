@@ -2,9 +2,11 @@
 
 namespace CmsTool\Support\Validation;
 
+use EventSauce\ObjectHydrator\ObjectMapper;
 use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use InvalidArgumentException;
+use Psr\Http\Message\UploadedFileInterface;
 
 class RequestValidator
 {
@@ -12,9 +14,11 @@ class RequestValidator
      * constructor
      *
      * @param ValidatorInterface $validator
+     * @param ObjectMapper $mapper
      */
     public function __construct(
         private ValidatorInterface $validator,
+        private ObjectMapper $mapper,
     ) {
         //
     }
@@ -22,65 +26,51 @@ class RequestValidator
     /**
      * Create form request
      *
-     * @template T of FormRequest
+     * @template T of object
      *
      * @param ServerRequestInterface $request
      * @param class-string<T>|T $classOrObject
-     * @return T
-     * @throws InvalidArgumentException
+     * @return FormRequest<T>&T
      */
     public function validate(
         ServerRequestInterface $request,
-        string|FormRequest $classOrObject,
+        string|object $classOrObject,
     ): FormRequest {
 
-        if (!is_subclass_of($classOrObject, FormRequest::class)) {
-            throw new InvalidArgumentException(
-                sprintf(
-                    'The class %s must be a subclass of %s',
-                    is_string($classOrObject)
-                        ? $classOrObject
-                        : get_class($classOrObject),
-                    FormRequest::class,
-                ),
-            );
-        }
+        $inputs = $this->extractInputs($request);
 
-        $properties = [
-            ...$request->getQueryParams(),
-            ...(array)$request->getParsedBody(),
-            ...$request->getUploadedFiles(),
-        ];
-
-        if (is_string($classOrObject)) {
-            /** @var T */
-            $formRequest = new $classOrObject($properties);
-        } else {
-            $classOrObject->populate($properties);
-
-            $formRequest = $classOrObject;
-        }
-
-        $formRequest->setErrors(
-            $this->validator->validate($formRequest),
+        /** @var FormRequest<T> */
+        $formRequest = new FormRequest(
+            $this->mapper,
+            is_string($classOrObject)
+                ? $this->mapper->hydrateObject(
+                    $classOrObject,
+                    $inputs,
+                )
+                : $classOrObject,
+            $inputs,
         );
 
-        return $formRequest;
+        $formRequest->setErrors(
+            $this->validator->validate($formRequest->getHydratedObject()),
+        );
+
+        return $formRequest; // @phpstan-ignore-line
     }
 
     /**
      * Create FormRequest from the request and perform validation
      *
-     * @template T of FormRequest
+     * @template T of object
      *
      * @param ServerRequestInterface $request
      * @param class-string<T>|T $classOrObject
-     * @return T
+     * @return FormRequest<T>&T
      * @throws InvalidArgumentException|HttpValidationErrorException
      */
     public function throwIfFailed(
         ServerRequestInterface $request,
-        string|FormRequest $classOrObject,
+        string|object $classOrObject,
     ): FormRequest {
         $formRequest = $this->validate(
             $request,
@@ -95,5 +85,23 @@ class RequestValidator
         }
 
         return $formRequest;
+    }
+
+    /**
+     * Extract inputs from the request
+     *
+     * @param ServerRequestInterface $request
+     * @return array<string,mixed>
+     */
+    private function extractInputs(ServerRequestInterface $request): array
+    {
+        /** @var array<string,mixed> */
+        $params = [
+            ...$request->getQueryParams(),
+            ...(array)$request->getParsedBody(),
+            ...$request->getUploadedFiles(),
+        ];
+
+        return $params;
     }
 }

@@ -3,9 +3,15 @@
 namespace Takemo101\CmsTool\Domain\Shared;
 
 use Stringable;
+use Takemo101\CmsTool\Domain\Shared\Trait\ValueObjectEquatable;
 
-readonly class PlainPassword implements Stringable
+/**
+ * @implements ValueObject<string>
+ */
+readonly class PlainPassword implements ValueObject, Stringable
 {
+    use ValueObjectEquatable;
+
     public const MaxLength = 50;
 
     public const MinLenth = 3;
@@ -16,7 +22,7 @@ readonly class PlainPassword implements Stringable
      * @param string $value
      */
     public function __construct(
-        public string $value,
+        private string $value,
     ) {
         $length = strlen($value);
 
@@ -24,6 +30,14 @@ readonly class PlainPassword implements Stringable
             $length >= self::MinLenth && $length <= self::MaxLength,
             sprintf('password length must be between %d and %d', self::MinLenth, self::MaxLength),
         );
+    }
+
+    /**
+     * @return string
+     */
+    public function value()
+    {
+        return $this->value;
     }
 
     /**

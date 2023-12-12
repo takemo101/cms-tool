@@ -29,16 +29,6 @@ class LocalSiteAssetStorage implements SiteAssetStorage
     /**
      * {@inheritDoc}
      */
-    public function url(string $path): string
-    {
-        return $this->path->getUrl(
-            $path,
-        );
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function store(UploadedFileInterface $file): ?string
     {
         if ($file->getError() !== UPLOAD_ERR_OK) {

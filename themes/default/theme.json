@@ -1,0 +1,15 @@
+{
+    "uid": "dfb7b9a5-09d4-79ce-1e13-2bda4aad6fe7",
+    "name": "Simply",
+    "version": "1.0.0",
+    "content": "A simple theme for Ghost",
+    "images": [
+        "screenshot.png"
+    ],
+    "tags": ["simple", "minimal"],
+    "link": null,
+    "author": {
+        "name": "Takemo101",
+        "link": "https://github.com/takemo101"
+    }
+}

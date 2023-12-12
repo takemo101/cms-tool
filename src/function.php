@@ -100,7 +100,7 @@ hook()
                         $form->mainTitle;
 
                         return redirect()->route(
-                            'vendor-asset',
+                            VendorAssetAction::RouteName,
                             ['path' => 'example.jpeg'],
                         );
                     },
@@ -108,9 +108,9 @@ hook()
             })->add(GuideToInstallation::class);
 
             $http->get(
-                '/assets/{path:.*}',
+                '/vendor/assets/{path:.+}',
                 VendorAssetAction::class,
-            )->setName('vendor-asset');
+            )->setName(VendorAssetAction::RouteName);
 
             $http->group(
                 '/system',

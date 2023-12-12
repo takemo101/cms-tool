@@ -10,6 +10,7 @@ use CmsTool\View\Twig\Extension\FunctionsExtension;
 use CmsTool\View\Twig\Extension\RouteExtension;
 use CmsTool\View\Twig\TwigTemplateRenderer;
 use Takemo101\Chubby\Contract\Renderable;
+use Takemo101\CmsTool\Support\Twig\AssetExtension;
 use Takemo101\CmsTool\Support\Twig\ErrorExtension;
 use Takemo101\CmsTool\Support\Twig\FlashExtension;
 use Takemo101\CmsTool\Support\Twig\OldExtension;
@@ -90,6 +91,7 @@ return [
             FlashExtension::class,
             OldExtension::class,
             SessionExtension::class,
+            AssetExtension::class,
         ],
 
         // Set up functions to be used in Twig

@@ -10,6 +10,8 @@ use Takemo101\CmsTool\Support\VendorPath;
 
 class VendorAssetAction
 {
+    public const RouteName = 'vendor.assets';
+
     /**
      * constructor
      *

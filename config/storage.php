@@ -5,7 +5,7 @@ return [
     'public' => [
 
         // URL to open the storage externally
-        'url' => env('APP_URL', 'http://localhost:8080') . '/storage',
+        'url' => '/storage',
 
         // Directory path to create symbolic links to public storage
         'link_path' => base_path('public/storage'),

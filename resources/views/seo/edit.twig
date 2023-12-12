@@ -41,7 +41,7 @@
                             削除
                         </button>
                     {% endif %}
-                    {{ seo.favicon }}
+                    {{ seo.favicon ? storage(seo.favicon) : 'empty' }}
                 </div>
             {% endblock %}
             {% block icon_input %}
@@ -57,7 +57,7 @@
                             削除
                         </button>
                     {% endif %}
-                    {{ seo.icon }}
+                    {{ seo.icon ? storage(seo.icon) : 'empty' }}
                 </div>
             {% endblock %}
             <input

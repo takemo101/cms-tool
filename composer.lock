@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "801eb965a361056671f967f1b2b858cd",
+    "content-hash": "b7f2684293fbdae19f22d80720b83e4e",
     "packages": [
         {
             "name": "cms-module/session",
@@ -12,7 +12,7 @@
             "dist": {
                 "type": "path",
                 "url": "modules/session",
-                "reference": "78160c5c08f9c99442422f83c70075f0837e0fcf"
+                "reference": "fbb54a1e62968f8f63666977fa6004e85daf82ed"
             },
             "require": {
                 "odan/session": "^6.1",
@@ -25,7 +25,7 @@
                 "pestphp/pest": "^2.24",
                 "phpstan/phpstan": "^1.10",
                 "symfony/var-dumper": "^6.3",
-                "takemo101/chubby": "^0.0.15"
+                "takemo101/chubby": "^0.0.16"
             },
             "type": "library",
             "autoload": {
@@ -68,7 +68,7 @@
             "dist": {
                 "type": "path",
                 "url": "modules/support",
-                "reference": "78e9c63ed7fe078455c6897638ed73e35ff9128c"
+                "reference": "85dcb243802f2fa9b2381cb036c770451a547c98"
             },
             "require": {
                 "eventsauce/object-hydrator": "^1.4",
@@ -89,7 +89,7 @@
                 "pestphp/pest": "^2.24",
                 "phpstan/phpstan": "^1.10",
                 "symfony/var-dumper": "^6.3",
-                "takemo101/chubby": "^0.0.15"
+                "takemo101/chubby": "^0.0.16"
             },
             "type": "library",
             "autoload": {
@@ -132,7 +132,7 @@
             "dist": {
                 "type": "path",
                 "url": "modules/view",
-                "reference": "c8174fa1456e0687a17f1b778a356134b7c04c3f"
+                "reference": "925de464299d468b1be4b59e856126cb32d7cdbd"
             },
             "require": {
                 "php": "^8.2",
@@ -144,7 +144,7 @@
                 "pestphp/pest": "^2.24",
                 "phpstan/phpstan": "^1.10",
                 "symfony/var-dumper": "^6.3",
-                "takemo101/chubby": "^0.0.15"
+                "takemo101/chubby": "^0.0.16"
             },
             "type": "library",
             "autoload": {
@@ -2298,30 +2298,31 @@
         },
         {
             "name": "symfony/error-handler",
-            "version": "v6.3.5",
+            "version": "v6.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/error-handler.git",
-                "reference": "1f69476b64fb47105c06beef757766c376b548c4"
+                "reference": "c873490a1c97b3a0a4838afc36ff36c112d02788"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/error-handler/zipball/1f69476b64fb47105c06beef757766c376b548c4",
-                "reference": "1f69476b64fb47105c06beef757766c376b548c4",
+                "url": "https://api.github.com/repos/symfony/error-handler/zipball/c873490a1c97b3a0a4838afc36ff36c112d02788",
+                "reference": "c873490a1c97b3a0a4838afc36ff36c112d02788",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.1",
                 "psr/log": "^1|^2|^3",
-                "symfony/var-dumper": "^5.4|^6.0"
+                "symfony/var-dumper": "^5.4|^6.0|^7.0"
             },
             "conflict": {
-                "symfony/deprecation-contracts": "<2.5"
+                "symfony/deprecation-contracts": "<2.5",
+                "symfony/http-kernel": "<6.4"
             },
             "require-dev": {
                 "symfony/deprecation-contracts": "^2.5|^3",
-                "symfony/http-kernel": "^5.4|^6.0",
-                "symfony/serializer": "^5.4|^6.0"
+                "symfony/http-kernel": "^6.4|^7.0",
+                "symfony/serializer": "^5.4|^6.0|^7.0"
             },
             "bin": [
                 "Resources/bin/patch-type-declarations"
@@ -2352,7 +2353,7 @@
             "description": "Provides tools to manage errors and ease debugging PHP code",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/error-handler/tree/v6.3.5"
+                "source": "https://github.com/symfony/error-handler/tree/v6.4.0"
             },
             "funding": [
                 {
@@ -2368,20 +2369,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-09-12T06:57:20+00:00"
+            "time": "2023-10-18T09:43:34+00:00"
         },
         {
             "name": "symfony/filesystem",
-            "version": "v6.3.1",
+            "version": "v6.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
-                "reference": "edd36776956f2a6fcf577edb5b05eb0e3bdc52ae"
+                "reference": "952a8cb588c3bc6ce76f6023000fb932f16a6e59"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/edd36776956f2a6fcf577edb5b05eb0e3bdc52ae",
-                "reference": "edd36776956f2a6fcf577edb5b05eb0e3bdc52ae",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/952a8cb588c3bc6ce76f6023000fb932f16a6e59",
+                "reference": "952a8cb588c3bc6ce76f6023000fb932f16a6e59",
                 "shasum": ""
             },
             "require": {
@@ -2415,7 +2416,7 @@
             "description": "Provides basic utilities for the filesystem",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/filesystem/tree/v6.3.1"
+                "source": "https://github.com/symfony/filesystem/tree/v6.4.0"
             },
             "funding": [
                 {
@@ -2431,7 +2432,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-06-01T08:30:39+00:00"
+            "time": "2023-07-26T17:27:13+00:00"
         },
         {
             "name": "symfony/http-foundation",
@@ -3799,16 +3800,16 @@
         },
         {
             "name": "symfony/uid",
-            "version": "v6.3.8",
+            "version": "v6.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/uid.git",
-                "reference": "819fa5ac210fb7ddda4752b91a82f50be7493dd9"
+                "reference": "8092dd1b1a41372110d06374f99ee62f7f0b9a92"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/uid/zipball/819fa5ac210fb7ddda4752b91a82f50be7493dd9",
-                "reference": "819fa5ac210fb7ddda4752b91a82f50be7493dd9",
+                "url": "https://api.github.com/repos/symfony/uid/zipball/8092dd1b1a41372110d06374f99ee62f7f0b9a92",
+                "reference": "8092dd1b1a41372110d06374f99ee62f7f0b9a92",
                 "shasum": ""
             },
             "require": {
@@ -3816,7 +3817,7 @@
                 "symfony/polyfill-uuid": "^1.15"
             },
             "require-dev": {
-                "symfony/console": "^5.4|^6.0"
+                "symfony/console": "^5.4|^6.0|^7.0"
             },
             "type": "library",
             "autoload": {
@@ -3853,7 +3854,7 @@
                 "uuid"
             ],
             "support": {
-                "source": "https://github.com/symfony/uid/tree/v6.3.8"
+                "source": "https://github.com/symfony/uid/tree/v6.4.0"
             },
             "funding": [
                 {
@@ -3869,7 +3870,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-10-31T08:07:48+00:00"
+            "time": "2023-10-31T08:18:17+00:00"
         },
         {
             "name": "symfony/validator",
@@ -4053,16 +4054,16 @@
         },
         {
             "name": "takemo101/chubby",
-            "version": "v0.0.15",
+            "version": "v0.0.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/takemo101/chubby.git",
-                "reference": "db18dee9329a648d0c32e62da98c83a957292dcb"
+                "reference": "70e7e50e8ebe33b674b24d6b46be952b226ee520"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/takemo101/chubby/zipball/db18dee9329a648d0c32e62da98c83a957292dcb",
-                "reference": "db18dee9329a648d0c32e62da98c83a957292dcb",
+                "url": "https://api.github.com/repos/takemo101/chubby/zipball/70e7e50e8ebe33b674b24d6b46be952b226ee520",
+                "reference": "70e7e50e8ebe33b674b24d6b46be952b226ee520",
                 "shasum": ""
             },
             "require": {
@@ -4113,9 +4114,9 @@
             ],
             "support": {
                 "issues": "https://github.com/takemo101/chubby/issues",
-                "source": "https://github.com/takemo101/chubby/tree/v0.0.15"
+                "source": "https://github.com/takemo101/chubby/tree/v0.0.16"
             },
-            "time": "2023-11-28T06:00:24+00:00"
+            "time": "2023-12-13T03:02:52+00:00"
         },
         {
             "name": "twig/twig",

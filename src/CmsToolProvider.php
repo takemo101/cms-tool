@@ -98,16 +98,16 @@ class CmsToolProvider implements Provider
             $path->getConfigPath(),
         );
 
+        $hook = $container->get(Hook::class);
+
+        $this->bootHtml($hook);
+        $this->bootTwig($hook);
+
         // Load helper functions.
         require $path->getSourcePath('helper.php');
 
         // Load functions.php
         require $path->getSourcePath('function.php');
-
-        $hook = $container->get(Hook::class);
-
-        $this->bootHtml($hook);
-        $this->bootTwig($hook);
     }
 
     /**

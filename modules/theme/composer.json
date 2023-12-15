@@ -1,16 +1,15 @@
 {
-    "name": "cms-module/view",
+    "name": "cms-module/theme",
     "description": "CmsTool Module",
     "type": "library",
     "version": "1.0",
     "license": "proprietary",
     "require": {
-        "php": "^8.2",
-		"twig/twig": "^3.7"
+        "php": "^8.2"
 	},
     "autoload": {
         "psr-4": {
-            "CmsTool\\View\\": "src/",
+            "CmsTool\\Theme\\": "src/",
             "Tests\\": "tests/"
         }
     },

@@ -4,6 +4,7 @@ namespace Takemo101\CmsTool;
 
 use CmsTool\Session\SessionProvider;
 use CmsTool\Support\SupportProvider;
+use CmsTool\Theme\ThemeProvider;
 use CmsTool\View\ViewProvider;
 use Takemo101\Chubby\Application;
 use Takemo101\Chubby\ApplicationBuilder;
@@ -25,6 +26,7 @@ class CmsToolApplicationBuilder
             new ViewProvider(),
             new SessionProvider(),
             new SupportProvider(),
+            new ThemeProvider(),
         );
     }
 }

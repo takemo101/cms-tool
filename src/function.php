@@ -7,6 +7,7 @@ use CmsTool\Session\Flash\FlashSessionsContext;
 use CmsTool\Session\Middleware\Csrf;
 use CmsTool\Session\Middleware\SessionStart;
 use CmsTool\Support\Validation\RequestValidator;
+use CmsTool\Theme\ActiveThemeId;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Interfaces\RouteCollectorProxyInterface as Proxy;
@@ -16,6 +17,7 @@ use Takemo101\Chubby\Http\ErrorHandler\ErrorResponseRenders;
 use Takemo101\Chubby\Http\SlimHttpAdapter;
 use Takemo101\Chubby\Support\ApplicationSummary;
 use Takemo101\CmsTool\Console\StorageLinkCommand;
+use Takemo101\CmsTool\Domain\Theme\ActiveThemeIdRepository;
 use Takemo101\CmsTool\Http\Action\VendorAssetAction;
 use Takemo101\CmsTool\Http\Controller\InstallController;
 use Takemo101\CmsTool\Http\Request\TestRequest;
@@ -55,6 +57,16 @@ hook()
                 );
             }
         },
+    )
+    ->onByType(
+        function (ActiveThemeId $id, ContainerInterface $container) {
+            /** @var ActiveThemeIdRepository */
+            $repository = $container->get(ActiveThemeIdRepository::class);
+
+            if ($savedId = $repository->find()) {
+                $id->change($savedId);
+            }
+        }
     )
     ->onByType(
         function (ServerRequestInterface $request) {
@@ -108,12 +120,12 @@ hook()
             })->add(GuideToInstallation::class);
 
             $http->get(
-                '/vendor/assets/{path:.+}',
+                '/__vendor/assets/{path:.+}',
                 VendorAssetAction::class,
             )->setName(VendorAssetAction::RouteName);
 
             $http->group(
-                '/system',
+                '/__system',
                 function (Proxy $proxy) {
 
                     $proxy->group(

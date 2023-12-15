@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5a6121d2a48cc1031e0b9eede4fe6bc0",
+    "content-hash": "e53b02f60e329e1879c10d90d505f554",
     "packages": [
         {
             "name": "eventsauce/object-hydrator",
@@ -6270,16 +6270,16 @@
         },
         {
             "name": "takemo101/chubby",
-            "version": "v0.0.16",
+            "version": "v0.0.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/takemo101/chubby.git",
-                "reference": "70e7e50e8ebe33b674b24d6b46be952b226ee520"
+                "reference": "af6eb3285ff0d5fbe44f143afaf761ad2ac9bd9b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/takemo101/chubby/zipball/70e7e50e8ebe33b674b24d6b46be952b226ee520",
-                "reference": "70e7e50e8ebe33b674b24d6b46be952b226ee520",
+                "url": "https://api.github.com/repos/takemo101/chubby/zipball/af6eb3285ff0d5fbe44f143afaf761ad2ac9bd9b",
+                "reference": "af6eb3285ff0d5fbe44f143afaf761ad2ac9bd9b",
                 "shasum": ""
             },
             "require": {
@@ -6330,9 +6330,9 @@
             ],
             "support": {
                 "issues": "https://github.com/takemo101/chubby/issues",
-                "source": "https://github.com/takemo101/chubby/tree/v0.0.16"
+                "source": "https://github.com/takemo101/chubby/tree/v0.0.17"
             },
-            "time": "2023-12-13T03:02:52+00:00"
+            "time": "2023-12-14T07:56:33+00:00"
         },
         {
             "name": "theseer/tokenizer",

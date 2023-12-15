@@ -97,7 +97,10 @@ class DefaultEncrypter implements Encrypter
         /** @var array<string,mixed> */
         $payload = json_decode(base64_decode($value), true);
 
-        if (!is_array($payload)) {
+        if (
+            !is_array($payload)
+            || json_last_error() !== JSON_ERROR_NONE
+        ) {
             throw DecryptException::decodeJsonFailedError();
         }
 

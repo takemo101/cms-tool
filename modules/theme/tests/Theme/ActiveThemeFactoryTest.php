@@ -39,11 +39,10 @@ describe(
                 ]),
             );
 
-            $this->id->shouldReceive('__toString')
+            $this->id->shouldReceive('value')
                 ->andReturn('theme');
 
             $this->finder->shouldReceive('find')
-                ->with('theme')
                 ->andReturn($path);
 
             $this->loader->shouldReceive('load')

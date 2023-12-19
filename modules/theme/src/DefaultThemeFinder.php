@@ -61,7 +61,7 @@ class DefaultThemeFinder implements ThemeFinder
         }
 
         if ($path = $this->findInLocations($id)) {
-            return $this->themes[$id] = $path;
+            return $this->themes[$id->value()] = $path;
         }
 
         throw new NotFoundThemeException($id);

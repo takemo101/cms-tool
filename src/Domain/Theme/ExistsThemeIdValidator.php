@@ -26,6 +26,6 @@ class ExistsThemeIdValidator
      */
     public function validate(ThemeId $id): bool
     {
-        return $this->finder->exists($id->value());
+        return $this->finder->exists($id);
     }
 }

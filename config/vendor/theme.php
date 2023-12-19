@@ -1,5 +1,6 @@
 <?php
 
+use CmsTool\Theme\DefaultThemeAssetFinfoFactory;
 use CmsTool\Theme\DefaultThemeFinder;
 use CmsTool\Theme\DefaultThemeLoader;
 
@@ -10,6 +11,9 @@ return [
 
     // ThemeLoader implementation class name
     'loader' => DefaultThemeLoader::class,
+
+    // ThemeAssetFileReader implementation class name
+    'reader' => DefaultThemeAssetFinfoFactory::class,
 
     // Directory to place themes
     'locations' => [

@@ -3,11 +3,9 @@
 // Executed after DI container dependency settings are completed.
 // Here, mainly configure routing and middleware.
 
-use CmsTool\Session\Flash\FlashSessionsContext;
 use CmsTool\Session\Middleware\Csrf;
 use CmsTool\Session\Middleware\SessionStart;
 use CmsTool\Support\Validation\RequestValidator;
-use CmsTool\Theme\ActiveThemeId;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Interfaces\RouteCollectorProxyInterface as Proxy;
@@ -17,14 +15,13 @@ use Takemo101\Chubby\Http\ErrorHandler\ErrorResponseRenders;
 use Takemo101\Chubby\Http\SlimHttpAdapter;
 use Takemo101\Chubby\Support\ApplicationSummary;
 use Takemo101\CmsTool\Console\StorageLinkCommand;
-use Takemo101\CmsTool\Domain\Theme\ActiveThemeIdRepository;
 use Takemo101\CmsTool\Http\Action\VendorAssetAction;
 use Takemo101\CmsTool\Http\Controller\InstallController;
 use Takemo101\CmsTool\Http\Request\TestRequest;
-use Takemo101\CmsTool\Support\Session\FlashOldInputs;
 use Takemo101\CmsTool\Error\ValidationErrorResponseRender;
 use Takemo101\CmsTool\Http\Action\PhpInfoAction;
 use Takemo101\CmsTool\Http\Action\SitePublishAction;
+use Takemo101\CmsTool\Http\Action\ThemeAssetAction;
 use Takemo101\CmsTool\Http\Controller\Admin\AdminAccountController;
 use Takemo101\CmsTool\Http\Controller\Admin\BasicSettingController;
 use Takemo101\CmsTool\Http\Controller\Admin\DashboardController;
@@ -57,33 +54,6 @@ hook()
                 );
             }
         },
-    )
-    ->onByType(
-        function (ActiveThemeId $id, ContainerInterface $container) {
-            /** @var ActiveThemeIdRepository */
-            $repository = $container->get(ActiveThemeIdRepository::class);
-
-            if ($savedId = $repository->find()) {
-                $id->change($savedId);
-            }
-        }
-    )
-    ->onByType(
-        function (ServerRequestInterface $request) {
-            $inputs = FlashSessionsContext::fromServerRequest($request)
-                ->getFlashSessions()
-                ->get(FlashOldInputs::class);
-
-            /** @var array<string,mixed> */
-            $params = [
-                ...$request->getQueryParams(),
-                ...(array) $request->getParsedBody(),
-            ];
-
-            if (!empty($params)) {
-                $inputs->put($params);
-            }
-        }
     )
     ->onByType(
         function (SlimHttpAdapter $http) {
@@ -120,12 +90,12 @@ hook()
             })->add(GuideToInstallation::class);
 
             $http->get(
-                '/__vendor/assets/{path:.+}',
+                '/vendor/assets/{path:.+}',
                 VendorAssetAction::class,
             )->setName(VendorAssetAction::RouteName);
 
             $http->group(
-                '/__system',
+                '/system',
                 function (Proxy $proxy) {
 
                     $proxy->group(
@@ -164,6 +134,13 @@ hook()
                     $proxy->group('', function (Proxy $proxy) {
 
                         $proxy->group('', function (Proxy $proxy) {
+
+                            $proxy->group('/theme', function (Proxy $proxy) {
+                                $proxy->get(
+                                    '/{id}/assets/{path:.+}',
+                                    ThemeAssetAction::class,
+                                )->setName(ThemeAssetAction::RouteName);
+                            });
 
                             $proxy->get(
                                 'phpinfo',

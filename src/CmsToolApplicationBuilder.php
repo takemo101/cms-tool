@@ -9,6 +9,8 @@ use CmsTool\View\ViewProvider;
 use Takemo101\Chubby\Application;
 use Takemo101\Chubby\ApplicationBuilder;
 use Takemo101\Chubby\ApplicationOption;
+use Takemo101\Chubby\Bootstrap\Provider\DependencyProvider;
+use Takemo101\Chubby\Bootstrap\Provider\FunctionProvider;
 
 class CmsToolApplicationBuilder
 {
@@ -21,12 +23,18 @@ class CmsToolApplicationBuilder
     ): Application {
         $app = ApplicationBuilder::buildStandard($option);
 
+        $app->getProvider(DependencyProvider::class)
+            ->setDependencyPath(__DIR__ . '/dependency.php');
+
+        $app->getProvider(FunctionProvider::class)
+            ->setFunctionPath(__DIR__ . '/function.php');
+
         return $app->addProvider(
-            new CmsToolProvider($app->getFilesystem()),
-            new ViewProvider(),
-            new SessionProvider(),
-            new SupportProvider(),
-            new ThemeProvider(),
+            ViewProvider::class,
+            SessionProvider::class,
+            SupportProvider::class,
+            ThemeProvider::class,
+            CmsToolProvider::class,
         );
     }
 }

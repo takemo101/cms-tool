@@ -5,6 +5,7 @@ namespace Takemo101\CmsTool;
 use CmsTool\Session\Csrf\CsrfGuardContext;
 use CmsTool\Session\Flash\FlashSessionsContext;
 use CmsTool\Session\SessionContext;
+use CmsTool\Theme\ActiveThemeId;
 use CmsTool\View\Html\Filter\FormAppendFilters;
 use CmsTool\View\ViewCreator;
 use Psr\Container\ContainerInterface;
@@ -15,6 +16,7 @@ use Takemo101\Chubby\Bootstrap\Provider\Provider;
 use Takemo101\Chubby\Config\ConfigRepository;
 use Takemo101\Chubby\Filesystem\LocalFilesystem;
 use Takemo101\Chubby\Hook\Hook;
+use Takemo101\CmsTool\Domain\Theme\ActiveThemeIdRepository;
 use Takemo101\CmsTool\Http\Session\AdminSessionFactory;
 use Takemo101\CmsTool\Http\Session\DefaultAdminSessionFactory;
 use Takemo101\CmsTool\Support\FormAppendFilter\AppendCsrfInputFilter;
@@ -73,10 +75,6 @@ class CmsToolProvider implements Provider
                 return $container->get($class);
             },
         ]);
-
-        $definitions->add(
-            require __DIR__ . DIRECTORY_SEPARATOR . 'dependency.php',
-        );
     }
 
     /**
@@ -96,18 +94,17 @@ class CmsToolProvider implements Provider
         // Load default config files.
         $config->load(
             $path->getConfigPath(),
+            true,
         );
 
         $hook = $container->get(Hook::class);
 
         $this->bootHtml($hook);
         $this->bootTwig($hook);
+        $this->bootTheme($hook);
 
         // Load helper functions.
-        require $path->getSourcePath('helper.php');
-
-        // Load functions.php
-        require $path->getSourcePath('function.php');
+        $this->filesystem->require($path->getSourcePath('helper.php'));
     }
 
     /**
@@ -142,6 +139,20 @@ class CmsToolProvider implements Provider
                         'csrf',
                         $guard->getToken(),
                     );
+
+                    // Put old inputs to flash session.
+                    /** @var array<string,mixed> */
+                    $params = [
+                        ...$request->getQueryParams(),
+                        ...(array) $request->getParsedBody(),
+                    ];
+
+                    if (!empty($params)) {
+                        FlashSessionsContext::fromServerRequest($request)
+                            ->getFlashSessions()
+                            ->get(FlashOldInputs::class)
+                            ->put($params);
+                    }
 
                     return $request;
                 }
@@ -197,6 +208,27 @@ class CmsToolProvider implements Provider
 
 
                     return $request;
+                }
+            );
+    }
+
+    /**
+     * Boot theme.
+     *
+     * @param Hook $hook
+     * @return void
+     */
+    private function bootTheme(Hook $hook): void
+    {
+        $hook
+            ->onByType(
+                function (ActiveThemeId $id, ContainerInterface $container) {
+                    /** @var ActiveThemeIdRepository */
+                    $repository = $container->get(ActiveThemeIdRepository::class);
+
+                    if ($savedId = $repository->find()) {
+                        $id->change($savedId);
+                    }
                 }
             );
     }

@@ -29,7 +29,7 @@ class ActiveThemeFactory
      */
     public function create(): ActiveTheme
     {
-        $path = $this->finder->find((string) $this->id);
+        $path = $this->finder->find($this->id);
 
         $theme = $this->loader->load($path);
 

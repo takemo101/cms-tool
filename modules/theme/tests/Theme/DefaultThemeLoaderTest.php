@@ -23,14 +23,12 @@ describe(
         it('loads a theme successfully', function () {
             $path = '/path/to/theme/theme.json';
             $content = '{"uid": "uid", "name": "My Theme", "version": "1.0", "content": "content", "author": {"name": "name"}}';
-            $id = new ThemeId('theme');
 
             $this->filesystem->shouldReceive('read')
                 ->with($path)
                 ->andReturn($content);
 
-            $this->id->shouldReceive('isMatch')
-                ->with($id)
+            $this->id->shouldReceive('equals')
                 ->andReturnTrue();
 
             $theme = $this->loader->load($path);
@@ -56,7 +54,7 @@ describe(
                 ->with($path)
                 ->andReturn($content);
 
-            $this->id->shouldReceive('isMatch')
+            $this->id->shouldReceive('equals')
                 ->andReturnFalse();
 
             expect(fn () => $this->loader->load($path))->toThrow(ThemeLoadException::class);

@@ -2,6 +2,7 @@
 
 namespace CmsTool\Theme;
 
+use CmsTool\Theme\Contract\ThemeAssetFinfoFactory;
 use CmsTool\Theme\Contract\ThemeFinder;
 use CmsTool\Theme\Contract\ThemeLoader;
 use Psr\Container\ContainerInterface;
@@ -74,6 +75,28 @@ class ThemeProvider implements Provider
                 );
 
                 return $loader;
+            },
+            ThemeAssetFinfoFactory::class => function (
+                ContainerInterface $container,
+                ConfigRepository $config,
+                Hook $hook,
+            ) {
+                /** @var class-string<ThemeAssetFinfoFactory> */
+                $class = $config->get(
+                    'theme.factory',
+                    DefaultThemeAssetFinfoFactory::class,
+                );
+
+                /** @var ThemeAssetFinfoFactory */
+                $factory = $container->get($class);
+
+                /** @var ThemeAssetFinfoFactory */
+                $factory = $hook->filter(
+                    ThemeAssetFinfoFactory::class,
+                    $factory,
+                );
+
+                return $factory;
             },
             ActiveThemeId::class => function (
                 DefaultThemeId $defaultThemeId,

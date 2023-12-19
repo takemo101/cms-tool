@@ -12,6 +12,8 @@ class VendorAssetAction
 {
     public const RouteName = 'vendor.assets';
 
+    public const AssetDirectoryPath = 'assets';
+
     /**
      * constructor
      *

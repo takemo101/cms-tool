@@ -5,6 +5,8 @@ namespace CmsTool\Theme;
 use CmsTool\Theme\Contract\ThemeAssetFinfoFactory;
 use CmsTool\Theme\Contract\ThemeFinder;
 use CmsTool\Theme\Contract\ThemeLoader;
+use CmsTool\Theme\Routing\ThemeRoute;
+use CmsTool\Theme\Routing\ThemeRoutePresets;
 use Psr\Container\ContainerInterface;
 use Takemo101\Chubby\ApplicationContainer;
 use Takemo101\Chubby\Bootstrap\Definitions;
@@ -109,6 +111,19 @@ class ThemeProvider implements Provider
                 return $activeThemeId;
             },
             ActiveTheme::class => factory([ActiveThemeFactory::class, 'create']),
+            ThemeRoutePresets::class => function (
+                ConfigRepository $config,
+                Hook $hook,
+            ) {
+                /** @var array<string,class-string<ThemeRoute>> */
+                $routes = $config->get('theme.routes', []);
+
+                $presets = new ThemeRoutePresets($routes);
+
+                $hook->doByObject($presets);
+
+                return $presets;
+            }
         ]);
     }
 

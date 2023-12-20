@@ -5,9 +5,7 @@
 
 use CmsTool\Session\Middleware\Csrf;
 use CmsTool\Session\Middleware\SessionStart;
-use CmsTool\Support\Validation\RequestValidator;
 use Psr\Container\ContainerInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use Slim\Interfaces\RouteCollectorProxyInterface as Proxy;
 use Takemo101\Chubby\Console\CommandCollection;
 use Takemo101\CmsTool\Error\ErrorPageRender;
@@ -17,10 +15,12 @@ use Takemo101\Chubby\Support\ApplicationSummary;
 use Takemo101\CmsTool\Console\StorageLinkCommand;
 use Takemo101\CmsTool\Http\Action\VendorAssetAction;
 use Takemo101\CmsTool\Http\Controller\InstallController;
-use Takemo101\CmsTool\Http\Request\TestRequest;
 use Takemo101\CmsTool\Error\ValidationErrorResponseRender;
 use Takemo101\CmsTool\Http\Action\PhpInfoAction;
 use Takemo101\CmsTool\Http\Action\SitePublishAction;
+use Takemo101\CmsTool\Http\Action\Theme\AssetAction;
+use Takemo101\CmsTool\Http\Action\Theme\HomeAction;
+use Takemo101\CmsTool\Http\Action\Theme\FixedPageAction;
 use Takemo101\CmsTool\Http\Action\ThemeAssetAction;
 use Takemo101\CmsTool\Http\Controller\Admin\AdminAccountController;
 use Takemo101\CmsTool\Http\Controller\Admin\BasicSettingController;
@@ -33,6 +33,8 @@ use Takemo101\CmsTool\Http\Middleware\AdminAuth;
 use Takemo101\CmsTool\Http\Middleware\AdminSessionStart;
 use Takemo101\CmsTool\Http\Middleware\GuideToInstallation;
 use Takemo101\CmsTool\Http\Middleware\ValidForUninstallation;
+use Takemo101\CmsTool\Support\Theme\ActiveThemeFunctionLoader;
+use Takemo101\CmsTool\Support\Theme\ActiveThemeRouteRegister;
 
 hook()
     ->onByType(
@@ -56,38 +58,13 @@ hook()
         },
     )
     ->onByType(
-        function (SlimHttpAdapter $http) {
+        function (SlimHttpAdapter $http, ContainerInterface $container) {
+
+            /** @var ActiveThemeRouteRegister */
+            $register = $container->get(ActiveThemeRouteRegister::class);
+
             $http->add(Csrf::class);
             $http->add(SessionStart::class);
-
-            $http->group('', function (Proxy $proxy) {
-                $proxy->get(
-                    '/',
-                    function () {
-                        return view('cms-tool::home');
-                    },
-                )->setName('home');
-
-                $proxy->post(
-                    '/create',
-                    function (
-                        ServerRequestInterface $request,
-                        RequestValidator $validator,
-                    ) {
-                        $form = $validator->throwIfFailed(
-                            $request,
-                            TestRequest::class,
-                        );
-
-                        $form->mainTitle;
-
-                        return redirect()->route(
-                            VendorAssetAction::RouteName,
-                            ['path' => 'example.jpeg'],
-                        );
-                    },
-                )->setName('create');
-            })->add(GuideToInstallation::class);
 
             $http->get(
                 '/vendor/assets/{path:.+}',
@@ -218,5 +195,25 @@ hook()
                         ->add(GuideToInstallation::class);
                 }
             );
+
+            $http->group('', function (Proxy $proxy) use ($register) {
+                $proxy->get(
+                    '/assets/{path:.+}',
+                    AssetAction::class,
+                )->setName(AssetAction::RouteName);
+
+                $proxy->get(
+                    '/',
+                    HomeAction::class,
+                )->setName('home');
+
+                // Set routing for theme
+                $register->register($proxy);
+
+                $proxy->get(
+                    '/{path:.+}',
+                    FixedPageAction::class,
+                )->setName('fixed-page');
+            })->add(GuideToInstallation::class);
         }
     );

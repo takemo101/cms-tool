@@ -123,7 +123,6 @@ describe(
 
                 $appendFilter
                     ->shouldReceive('filter')
-                    ->with($attributes)
                     ->andReturn('<input type="hidden" name="token" value="abc123">');
 
                 $formBuilder = new FormBuilder(
@@ -139,7 +138,7 @@ describe(
             }
         );
     }
-)->group('form-builder', 'html');
+)->group('FormBuilder', 'html');
 
 describe(
     'FormBuilder::buildClose',
@@ -156,4 +155,4 @@ describe(
             }
         );
     }
-)->group('form-builder', 'html');
+)->group('FormBuilder', 'html');

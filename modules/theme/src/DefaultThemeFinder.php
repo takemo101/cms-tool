@@ -38,17 +38,13 @@ class DefaultThemeFinder implements ThemeFinder
      */
     public function exists(ThemeId $id): bool
     {
-        if (isset($this->themes[$id->value()])) {
-            return true;
+        try {
+            $this->find($id);
+        } catch (NotFoundThemeException) {
+            return false;
         }
 
-        if ($path = $this->findInLocations($id)) {
-            $this->themes[$id->value()] = $path;
-
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
     /**

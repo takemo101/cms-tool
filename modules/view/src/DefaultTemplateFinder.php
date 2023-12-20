@@ -37,6 +37,23 @@ class DefaultTemplateFinder implements TemplateFinder
     }
 
     /**
+     * Determine if a given template exists.
+     *
+     * @param string $name
+     * @return bool
+     */
+    public function exists(string $name): bool
+    {
+        try {
+            $this->find($name);
+        } catch (NotFoundTemplateException) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * Get the path to the template file from the name.
      *
      * @param string $name
@@ -180,4 +197,3 @@ class DefaultTemplateFinder implements TemplateFinder
         return $this->extensions;
     }
 }
-

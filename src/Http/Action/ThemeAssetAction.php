@@ -30,6 +30,8 @@ class ThemeAssetAction
     /**
      * Hello to you
      *
+     * @param ServerRequestInterface $request
+     * @param string $id
      * @param string $path
      * @return StaticRenderer
      */

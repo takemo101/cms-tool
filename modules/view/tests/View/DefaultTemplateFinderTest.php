@@ -9,6 +9,77 @@ describe(
     'DefaultTemplateFinder',
     function () {
         test(
+            'Check if template exists',
+            function () {
+                /** @var TestCase $this */
+
+                $templateLocation = dirname(__DIR__, 1) . '/resources/views';
+
+                $finder = new DefaultTemplateFinder(
+                    $this->getContainer()->get(LocalFilesystem::class),
+                    new PathHelper(),
+                    [],
+                    [],
+                    ['twig'],
+                );
+
+                $finder->addLocation($templateLocation);
+
+                $templateExists = $finder->exists('test');
+
+                expect($templateExists)->toBeTrue();
+            },
+        );
+
+        test(
+            'Check if template with namespace exists',
+            function () {
+                /** @var TestCase $this */
+
+                $templateLocation = dirname(__DIR__, 1) . '/resources/views';
+
+                $finder = new DefaultTemplateFinder(
+                    $this->getContainer()->get(LocalFilesystem::class),
+                    new PathHelper(),
+                    [],
+                    [],
+                    ['twig'],
+                );
+
+                $namespace = 'test';
+
+                $finder->addNamespace($namespace, $templateLocation);
+
+                $templateExists = $finder->exists($namespace . '::test');
+
+                expect($templateExists)->toBeTrue();
+            },
+        );
+
+        test(
+            'Check if non-existent template does not exist',
+            function () {
+                /** @var TestCase $this */
+
+                $templateLocation = dirname(__DIR__, 1) . '/resources/views';
+
+                $finder = new DefaultTemplateFinder(
+                    $this->getContainer()->get(LocalFilesystem::class),
+                    new PathHelper(),
+                    [],
+                    [],
+                    ['twig'],
+                );
+
+                $finder->addLocation($templateLocation);
+
+                $templateExists = $finder->exists('nonexistent');
+
+                expect($templateExists)->toBeFalse();
+            },
+        );
+
+        test(
             'Get path from template name',
             function () {
                 /** @var TestCase $this */
@@ -56,4 +127,4 @@ describe(
             },
         );
     }
-)->group('default-template-finder', 'view');
+)->group('DefaultTemplateFinder', 'view');

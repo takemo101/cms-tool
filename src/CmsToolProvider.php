@@ -5,7 +5,10 @@ namespace Takemo101\CmsTool;
 use CmsTool\Session\Csrf\CsrfGuardContext;
 use CmsTool\Session\Flash\FlashSessionsContext;
 use CmsTool\Session\SessionContext;
+use CmsTool\Theme\ActiveTheme;
 use CmsTool\Theme\ActiveThemeId;
+use CmsTool\Theme\ThemePathHelper;
+use CmsTool\View\Contract\TemplateFinder;
 use CmsTool\View\Html\Filter\FormAppendFilters;
 use CmsTool\View\ViewCreator;
 use Psr\Container\ContainerInterface;
@@ -22,6 +25,7 @@ use Takemo101\CmsTool\Http\Session\DefaultAdminSessionFactory;
 use Takemo101\CmsTool\Support\FormAppendFilter\AppendCsrfInputFilter;
 use Takemo101\CmsTool\Support\Session\FlashErrorMessages;
 use Takemo101\CmsTool\Support\Session\FlashOldInputs;
+use Takemo101\CmsTool\Support\Theme\ActiveThemeFunctionLoader;
 use Takemo101\CmsTool\Support\Twig\ErrorExtension;
 use Takemo101\CmsTool\Support\Twig\FlashExtension;
 use Takemo101\CmsTool\Support\Twig\OldExtension;
@@ -97,14 +101,21 @@ class CmsToolProvider implements Provider
             true,
         );
 
+        // Load helper functions.
+        $this->filesystem->require($path->getSourcePath('helper.php'));
+        // Load hook tags.
+        $this->filesystem->require($path->getSourcePath('tags.php'));
+
         $hook = $container->get(Hook::class);
 
         $this->bootHtml($hook);
         $this->bootTwig($hook);
         $this->bootTheme($hook);
 
-        // Load helper functions.
-        $this->filesystem->require($path->getSourcePath('helper.php'));
+        /** @var ActiveThemeFunctionLoader */
+        $functionLoader = $container->get(ActiveThemeFunctionLoader::class);
+
+        $functionLoader->load();
     }
 
     /**
@@ -229,6 +240,21 @@ class CmsToolProvider implements Provider
                     if ($savedId = $repository->find()) {
                         $id->change($savedId);
                     }
+                }
+            )
+            ->onByType(
+                function (TemplateFinder $finder, ContainerInterface $container) {
+                    /** @var ActiveTheme */
+                    $activeTheme = $container->get(ActiveTheme::class);
+
+                    /** @var ThemePathHelper */
+                    $pathHelper = $container->get(ThemePathHelper::class);
+
+                    $finder->addLocation(
+                        $pathHelper->getTemplatePath($activeTheme),
+                    );
+
+                    return $finder;
                 }
             );
     }

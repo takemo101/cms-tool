@@ -24,6 +24,7 @@ readonly class ThemeSetting
         public array $images,
         public array $tags,
         public ?string $link,
+        public ?string $preset,
         public ThemeAuthor $author,
     ) {
         //
@@ -40,6 +41,7 @@ readonly class ThemeSetting
      *  images?:string[],
      *  tags?:string[],
      *  link?:?string,
+     *  preset?:?string,
      *  author:array{
      *   name:string,
      *   link?:?string,
@@ -57,6 +59,7 @@ readonly class ThemeSetting
             images: $data['images'] ?? [],
             tags: $data['tags'] ?? [],
             link: $data['link'] ?? null,
+            preset: $data['preset'] ?? null,
             author: ThemeAuthor::fromArray($data['author']),
         );
     }

@@ -4,6 +4,20 @@ namespace CmsTool\View\Contract;
 
 interface TemplateFinder
 {
+    /** @var string */
+    public const DirectorySeparator = '.';
+
+    /** @var string */
+    public const NamespaceSeparator = '::';
+
+    /**
+     * Determine if a given template exists.
+     *
+     * @param string $name
+     * @return bool
+     */
+    public function exists(string $name): bool;
+
     /**
      * Get the path to the template file from the name.
      *

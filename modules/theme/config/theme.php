@@ -20,4 +20,9 @@ return [
 
     // ID of the theme used by default
     'default' => 'simply',
+
+    // ThemeRoute implementation class name
+    'routes' => [
+        // string => class-string<ThemeRoute>
+    ],
 ];

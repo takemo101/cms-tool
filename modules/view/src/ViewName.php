@@ -2,6 +2,7 @@
 
 namespace CmsTool\View;
 
+use CmsTool\View\Contract\TemplateFinder;
 use Stringable;
 
 use InvalidArgumentException;
@@ -12,12 +13,12 @@ readonly class ViewName implements Stringable
     /**
      * @var string
      */
-    public const NamespaceSeparator = '::';
+    public const NamespaceSeparator = TemplateFinder::NamespaceSeparator;
 
     /**
      * @var string
      */
-    public const DirectorySeparator = '.';
+    public const DirectorySeparator = TemplateFinder::DirectorySeparator;
 
     /**
      * constructor

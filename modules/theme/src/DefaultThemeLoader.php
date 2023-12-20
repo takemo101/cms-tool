@@ -51,6 +51,7 @@ class DefaultThemeLoader implements ThemeLoader
          *  images?:string[],
          *  tags?:string[],
          *  link?:?string,
+         *  preset?:?string,
          *  author:array{
          *   name:string,
          *   link?:?string,

@@ -33,7 +33,7 @@ class AssetExtension extends AbstractExtension
     {
         return [
             new TwigFunction('asset', [$this, 'getAssetUrl']),
-            new TwigFunction('theme_asset', [$this, 'getThemeAssetUrl']),
+            new TwigFunction('theme', [$this, 'getThemeAssetUrl']),
             new TwigFunction('vendor', [$this, 'getVendorAssetUrl']),
             new TwigFunction('storage', [$this, 'getLocalPublicStorageUrl']),
         ];

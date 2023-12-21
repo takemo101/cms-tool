@@ -17,11 +17,12 @@ class AdminAuth implements MiddlewareInterface
     /**
      * constructor
      *
+     * @param bool $isRequiredLogin
      * @param ResponseRenderer|null $renderer
      */
     public function __construct(
         private $isRequiredLogin = true,
-        private ?ResponseRenderer $renderer,
+        private ?ResponseRenderer $renderer = null,
     ) {
         //
     }

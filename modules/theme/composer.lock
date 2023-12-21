@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2345839128990fd067e978c67ada2f32",
+    "content-hash": "7b70070e3faad8d7ff6fb874fe76b863",
     "packages": [],
     "packages-dev": [
         {
@@ -452,16 +452,16 @@
         },
         {
             "name": "illuminate/collections",
-            "version": "v10.37.3",
+            "version": "v10.38.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/collections.git",
-                "reference": "8e4c4f97ea066cd6aec962ef8a6abc09dfd5e754"
+                "reference": "2677b3962a88640f92dba8a1f4ed38dcaaf13dad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/collections/zipball/8e4c4f97ea066cd6aec962ef8a6abc09dfd5e754",
-                "reference": "8e4c4f97ea066cd6aec962ef8a6abc09dfd5e754",
+                "url": "https://api.github.com/repos/illuminate/collections/zipball/2677b3962a88640f92dba8a1f4ed38dcaaf13dad",
+                "reference": "2677b3962a88640f92dba8a1f4ed38dcaaf13dad",
                 "shasum": ""
             },
             "require": {
@@ -503,11 +503,11 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2023-11-27T14:46:52+00:00"
+            "time": "2023-12-15T18:25:00+00:00"
         },
         {
             "name": "illuminate/conditionable",
-            "version": "v10.37.3",
+            "version": "v10.38.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/conditionable.git",
@@ -553,7 +553,7 @@
         },
         {
             "name": "illuminate/contracts",
-            "version": "v10.37.3",
+            "version": "v10.38.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
@@ -601,7 +601,7 @@
         },
         {
             "name": "illuminate/macroable",
-            "version": "v10.37.3",
+            "version": "v10.38.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/macroable.git",
@@ -5479,16 +5479,16 @@
         },
         {
             "name": "takemo101/chubby",
-            "version": "v0.0.17",
+            "version": "v0.0.19",
             "source": {
                 "type": "git",
                 "url": "https://github.com/takemo101/chubby.git",
-                "reference": "af6eb3285ff0d5fbe44f143afaf761ad2ac9bd9b"
+                "reference": "41b0d97aa6a7c07ca2a905234468cca71c895582"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/takemo101/chubby/zipball/af6eb3285ff0d5fbe44f143afaf761ad2ac9bd9b",
-                "reference": "af6eb3285ff0d5fbe44f143afaf761ad2ac9bd9b",
+                "url": "https://api.github.com/repos/takemo101/chubby/zipball/41b0d97aa6a7c07ca2a905234468cca71c895582",
+                "reference": "41b0d97aa6a7c07ca2a905234468cca71c895582",
                 "shasum": ""
             },
             "require": {
@@ -5539,9 +5539,9 @@
             ],
             "support": {
                 "issues": "https://github.com/takemo101/chubby/issues",
-                "source": "https://github.com/takemo101/chubby/tree/v0.0.17"
+                "source": "https://github.com/takemo101/chubby/tree/v0.0.19"
             },
-            "time": "2023-12-14T07:56:33+00:00"
+            "time": "2023-12-20T14:19:38+00:00"
         },
         {
             "name": "theseer/tokenizer",

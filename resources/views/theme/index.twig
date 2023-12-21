@@ -1,0 +1,23 @@
+{% extends 'cms-tool::layouts.master' %}
+
+{% block title %}Theme{% endblock %}
+
+{% block content %}
+    <div>
+        <h1>Theme</h1>
+        {% for theme in themes %}
+            <div>
+                <h2>{{ theme.setting.name }}</h2>
+                {% if theme.setting.thumbnail() %}
+                <p>
+                    <img src="{{ theme(theme.id, theme.setting.thumbnail()) }}" alt="{{ theme.setting.name }}" />
+                </p>
+                {% endif %}
+                <a href="{{ route('admin.theme.detail', {
+                    id: theme.id
+                }) }}">Detail</a>
+                <p>{{ theme.isActive() ? 'Active' : 'NotActive' }}</p>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

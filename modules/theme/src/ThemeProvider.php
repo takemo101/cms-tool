@@ -49,7 +49,7 @@ class ThemeProvider implements Provider
                 $finder = $container->get($class);
 
                 /** @var ThemeFinder */
-                $finder = $hook->filter(
+                $finder = $hook->do(
                     ThemeFinder::class,
                     $finder,
                 );
@@ -71,7 +71,7 @@ class ThemeProvider implements Provider
                 $loader = $container->get($class);
 
                 /** @var ThemeLoader */
-                $loader = $hook->filter(
+                $loader = $hook->do(
                     ThemeLoader::class,
                     $loader,
                 );
@@ -93,7 +93,7 @@ class ThemeProvider implements Provider
                 $factory = $container->get($class);
 
                 /** @var ThemeAssetFinfoFactory */
-                $factory = $hook->filter(
+                $factory = $hook->do(
                     ThemeAssetFinfoFactory::class,
                     $factory,
                 );
@@ -106,7 +106,7 @@ class ThemeProvider implements Provider
             ) {
                 $activeThemeId = ActiveThemeId::fromThemeId($defaultThemeId);
 
-                $hook->doByObject($activeThemeId);
+                $hook->doByType($activeThemeId);
 
                 return $activeThemeId;
             },
@@ -120,7 +120,7 @@ class ThemeProvider implements Provider
 
                 $presets = new ThemeRoutePresets($routes);
 
-                $hook->doByObject($presets);
+                $hook->doByType($presets);
 
                 return $presets;
             }

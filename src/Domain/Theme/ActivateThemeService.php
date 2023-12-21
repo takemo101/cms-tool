@@ -24,15 +24,19 @@ class ActivateThemeService
      * Activate the specified theme ID
      *
      * @param ThemeId $id
-     * @return void
-     * @throws ThemeIdException
+     * @return ActiveThemeId
+     * @throws NotFoundThemeIdException
      */
-    public function activate(ThemeId $id): void
+    public function activate(ThemeId $id): ActiveThemeId
     {
         if (!$this->validator->validate($id)) {
-            throw ThemeIdException::notExists($id);
+            throw new NotFoundThemeIdException($id);
         }
 
-        $this->repository->save(ActiveThemeId::fromThemeId($id));
+        $activeThemeId = ActiveThemeId::fromThemeId($id);
+
+        $this->repository->save($activeThemeId);
+
+        return $activeThemeId;
     }
 }

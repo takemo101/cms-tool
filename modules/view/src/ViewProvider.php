@@ -63,7 +63,7 @@ class ViewProvider implements Provider
                 $finder = $container->get($class);
 
                 /** @var TemplateFinder */
-                $finder = $hook->filter(
+                $finder = $hook->do(
                     TemplateFinder::class,
                     $finder,
                 );
@@ -85,7 +85,7 @@ class ViewProvider implements Provider
                 $renderer = $container->get($class);
 
                 /** @var TemplateRenderer */
-                $renderer = $hook->filter(
+                $renderer = $hook->do(
                     TemplateRenderer::class,
                     $renderer,
                 );
@@ -113,7 +113,7 @@ class ViewProvider implements Provider
                     extensions: $extensions,
                 );
 
-                $hook->doByObject($factory);
+                $hook->doByType($factory);
 
                 return $factory;
             },
@@ -123,7 +123,7 @@ class ViewProvider implements Provider
             ) {
                 $twig = $factory->create();
 
-                $hook->doByObject($twig);
+                $hook->doByType($twig);
 
                 return $twig;
             },
@@ -138,7 +138,7 @@ class ViewProvider implements Provider
                     renderer: $renderer,
                 );
 
-                $hook->doByObject($creator);
+                $hook->doByType($creator);
 
                 return $creator;
             },
@@ -150,7 +150,7 @@ class ViewProvider implements Provider
                     new BooleanAttrTransformer(),
                 );
 
-                $hook->doByObject($transformers);
+                $hook->doByType($transformers);
 
                 return $transformers;
             },
@@ -161,7 +161,7 @@ class ViewProvider implements Provider
                     new AppendMethodOverrideInputFilter(),
                 );
 
-                $hook->doByObject($filters);
+                $hook->doByType($filters);
 
                 return $filters;
             },

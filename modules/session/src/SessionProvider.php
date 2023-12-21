@@ -46,7 +46,7 @@ class SessionProvider implements Provider
                 $factory = $container->get($class);
 
                 /** @var SessionFactory */
-                $factory = $hook->filter(
+                $factory = $hook->do(
                     SessionFactory::class,
                     $factory,
                 );
@@ -62,7 +62,7 @@ class SessionProvider implements Provider
 
                 $factory = new FlashSessionsFactory(...$flashes);
 
-                $hook->doByObject($factory);
+                $hook->doByType($factory);
 
                 return $factory;
             },

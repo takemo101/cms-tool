@@ -31,6 +31,14 @@ readonly class ThemeSetting
     }
 
     /**
+     * Get the value of thumbnail
+     */
+    public function thumbnail(): ?string
+    {
+        return $this->images[0] ?? null;
+    }
+
+    /**
      * Create a new instance from an array of data.
      *
      * @param array{

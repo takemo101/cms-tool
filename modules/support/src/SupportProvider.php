@@ -102,7 +102,7 @@ class SupportProvider implements Provider
                 $accessor = $container->get($class);
 
                 /** @var JsonArrayAccessor */
-                $accessor = $hook->filter(
+                $accessor = $hook->do(
                     JsonArrayAccessor::class,
                     $accessor,
                 );
@@ -160,7 +160,7 @@ class SupportProvider implements Provider
                 $encrypter = $container->get($class);
 
                 /** @var Encrypter */
-                $encrypter = $hook->filter(
+                $encrypter = $hook->do(
                     Encrypter::class,
                     $encrypter,
                 );

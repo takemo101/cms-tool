@@ -10,5 +10,6 @@
 /storage/public/*
 /.env
 /setting.json
+/themes/*
 
 !.gitkeep

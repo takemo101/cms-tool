@@ -18,8 +18,14 @@ return [
     // Directory to place themes
     'locations' => [
         base_path('resources/themes'),
+        base_path('themes'),
     ],
 
     // ID of the theme used by default
     'default' => 'simply',
+
+    // ThemeRoute implementation class name
+    'routes' => [
+        // string => class-string<ThemeRoute>
+    ],
 ];

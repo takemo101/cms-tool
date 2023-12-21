@@ -49,7 +49,7 @@ class ActiveThemeRouteRegister
         if ($name = $activeTheme->setting->preset) {
             $route = $this->resolver->resolve($name);
 
-            $route->route($proxy);
+            $route->route($activeTheme, $proxy);
         }
 
         // Register the route of the theme

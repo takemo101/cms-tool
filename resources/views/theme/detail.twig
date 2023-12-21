@@ -1,0 +1,21 @@
+{% extends 'cms-tool::layouts.master' %}
+
+{% block title %}Theme {{ theme.id }}{% endblock %}
+
+{% block content %}
+    <div>
+        <h1>Theme {{ theme.id }}</h1>
+        {% for image in theme.setting.images %}
+            <img src="{{ theme(theme.id, image) }}" />
+        {% endfor %}
+        <div>
+            {% if theme.isActive() %}
+                <span>Active</span>
+            {% else %}
+                {{ form_open({route: ['admin.theme.activate', {id: theme.id}], method: 'put'}) }}
+                    <input type="submit" value="ToActive"/>
+                {{ form_close() }}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

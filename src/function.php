@@ -29,11 +29,11 @@ use Takemo101\CmsTool\Http\Controller\Admin\LoginController;
 use Takemo101\CmsTool\Http\Controller\Admin\MicroCmsApiController;
 use Takemo101\CmsTool\Http\Controller\Admin\SiteMetaController;
 use Takemo101\CmsTool\Http\Controller\Admin\SiteSeoController;
+use Takemo101\CmsTool\Http\Controller\Admin\ThemeController;
 use Takemo101\CmsTool\Http\Middleware\AdminAuth;
 use Takemo101\CmsTool\Http\Middleware\AdminSessionStart;
 use Takemo101\CmsTool\Http\Middleware\GuideToInstallation;
 use Takemo101\CmsTool\Http\Middleware\ValidForUninstallation;
-use Takemo101\CmsTool\Support\Theme\ActiveThemeFunctionLoader;
 use Takemo101\CmsTool\Support\Theme\ActiveThemeRouteRegister;
 
 hook()
@@ -169,6 +169,19 @@ hook()
                                 '/publish/{status:published|unpublished}',
                                 SitePublishAction::class,
                             )->setName('admin.publish');
+
+                            $proxy->get(
+                                '/theme',
+                                [ThemeController::class, 'indexPage'],
+                            )->setName('admin.theme.index');
+                            $proxy->get(
+                                '/theme/{id}',
+                                [ThemeController::class, 'detailPage'],
+                            )->setName('admin.theme.detail');
+                            $proxy->put(
+                                '/theme/{id}',
+                                [ThemeController::class, 'activate'],
+                            )->setName('admin.theme.activate');
 
                             $proxy->post(
                                 '/logout',

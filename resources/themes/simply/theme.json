@@ -4,7 +4,8 @@
     "version": "1.0.0",
     "content": "A simple theme for Ghost",
     "images": [
-        "screenshot.png"
+        "example.jpeg",
+        "example.jpeg"
     ],
     "tags": ["simple", "minimal"],
     "link": null,

@@ -42,7 +42,7 @@ class ThemeAssetAction
         try {
             $theme = $this->queryService->getOne($themeId);
         } catch (NotFoundThemeException $e) {
-            throw new HttpNotFoundException($request, " Theme not found: {$id}");
+            throw new HttpNotFoundException($request, $e->getMessage(), $e);
         }
 
         $finfo = $this->factory->create($theme, $path);

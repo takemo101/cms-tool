@@ -29,6 +29,13 @@ class ThemeRoutePresetResolver
     {
         $class = $this->presets->find($name);
 
-        return $this->factory->make($class);
+        if (!is_string($class)) {
+            return $class;
+        }
+
+        /** @var ThemeRoute */
+        $route = $this->factory->make($class);
+
+        return $route;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace CmsTool\Theme\Exception;
 
+use CmsTool\Theme\ThemeId;
 use RuntimeException;
 
 class NotFoundThemeException extends RuntimeException
@@ -9,10 +10,10 @@ class NotFoundThemeException extends RuntimeException
     /**
      * constructor
      *
-     * @param string $id
+     * @param ThemeId $id
      */
     public function __construct(
-        private readonly string $id,
+        private readonly ThemeId $id,
     ) {
         parent::__construct("Theme not found: {$id}");
     }
@@ -20,9 +21,9 @@ class NotFoundThemeException extends RuntimeException
     /**
      * Get the id of the theme that was not found.
      *
-     * @return string
+     * @return ThemeId
      */
-    public function getId(): string
+    public function getId(): ThemeId
     {
         return $this->id;
     }

@@ -2,11 +2,6 @@
 
 namespace Takemo101\CmsTool\Preset\Shared\Action;
 
-use CmsTool\View\View;
-use Psr\Http\Message\ServerRequestInterface;
-use Takemo101\CmsTool\Preset\Shared\ViewModel\ContentIndexPage;
-use Takemo101\CmsTool\UseCase\MicroCms\QueryService\Content\MicroCmsContentGetListQuery;
-use Takemo101\CmsTool\UseCase\MicroCms\QueryService\Content\MicroCmsContentQueryService;
 use Takemo101\CmsTool\UseCase\Shared\QueryService\Pager;
 
 abstract class AbstractIndexAction
@@ -15,7 +10,7 @@ abstract class AbstractIndexAction
     public const PageKey = 'page';
 
     /** @var string */
-    public const LimitKey = 'per';
+    public const LimitKey = 'limit';
 
     /** @var string */
     public const OrderKey = 'order';

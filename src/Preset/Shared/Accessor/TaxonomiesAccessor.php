@@ -9,6 +9,9 @@ use Takemo101\CmsTool\UseCase\Shared\QueryService\Pager;
 
 class TaxonomiesAccessor
 {
+    /** @var integer */
+    public const DefaultLimit = 50;
+
     /**
      * constructor
      *
@@ -28,7 +31,7 @@ class TaxonomiesAccessor
      * @param integer $limit
      * @return ArrayObject[]
      */
-    public function __invoke(int $limit = 50): array
+    public function __invoke(int $limit = self::DefaultLimit): array
     {
         return $this->queryService->getList(
             endpoint: $this->endpoint,

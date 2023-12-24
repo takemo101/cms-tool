@@ -2,9 +2,26 @@
 <script src="{{ theme('simply', 'app.js') }}"></script>
 <div>
     <h1>dashboard</h1>
+    <h2>{{ meta.name }}</h2>
     {{ form_open({route: 'admin.logout', method: 'post'}) }}
         <input type="submit" value="Logout"/>
     {{ form_close() }}
+    <a target="_blank" href="{{ microCmsLink }}">microCMSの管理画面へ</a>
+
+    {{ form_open({
+        route: [
+            'admin.publish',
+            {status: isPublished ? 'unpublished' : 'published'},
+        ],
+        method: 'patch',
+    }) }}
+        {% if isPublished %}
+            <input type="submit" value="サイトを非公開にする"/>
+        {% else %}
+            <input type="submit" value="サイトを公開する"/>
+        {% endif %}
+    {{ form_close() }}
+
     <ul>
         <li>
             <a href="{{ route('admin.phpinfo') }}">phpinfo</a>

@@ -18,7 +18,7 @@ class TaxonomyIndexAction extends AbstractIndexAction
      * @param string $taxonomyEndpoint
      * @param string $contentEndpoint
      * @param string $relation
-     * @param string $view
+     * @param string $signature
      * @param integer $limit
      * @param string|null $order
      * @param boolean $multiple
@@ -27,7 +27,7 @@ class TaxonomyIndexAction extends AbstractIndexAction
         private readonly string $taxonomyEndpoint,
         private readonly string $contentEndpoint,
         private readonly string $relation,
-        private readonly string $view,
+        private readonly string $signature,
         private readonly int $limit = 10,
         private readonly ?string $order = null,
         private readonly bool $multiple = false,
@@ -74,6 +74,6 @@ class TaxonomyIndexAction extends AbstractIndexAction
             )
         );
 
-        return view($this->view, new ContentIndexPage($result));
+        return view("pages.{$this->signature}", new ContentIndexPage($result));
     }
 }

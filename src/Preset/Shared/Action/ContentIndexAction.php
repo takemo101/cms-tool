@@ -15,14 +15,14 @@ class ContentIndexAction extends AbstractIndexAction
      * constructor
      *
      * @param string $endpoint
-     * @param string $view
+     * @param string $signature
      * @param integer $limit
      * @param string|null $order
      * @param string|null $filter
      */
     public function __construct(
         private readonly string $endpoint,
-        private readonly string $view,
+        private readonly string $signature,
         private readonly int $limit = 10,
         private readonly ?string $order = null,
         private readonly ?string $filter = null,
@@ -54,6 +54,6 @@ class ContentIndexAction extends AbstractIndexAction
             )
         );
 
-        return view($this->view, new ContentIndexPage($result));
+        return view("pages.{$this->signature}.index", new ContentIndexPage($result));
     }
 }

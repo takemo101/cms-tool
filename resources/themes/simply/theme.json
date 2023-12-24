@@ -13,5 +13,21 @@
     "author": {
         "name": "Takemo101",
         "link": "https://github.com/takemo101"
+    },
+    "extension": {
+        "endpoints": {
+            "blog": "blogs",
+            "category": "categories",
+            "tag": "tags"
+        },
+        "signatures": {
+            "blog": "blog",
+            "category": "category",
+            "tag": "tag"
+        },
+        "fields": {
+            "category": "category",
+            "tag": "tag"
+        }
     }
 }

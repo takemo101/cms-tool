@@ -13,7 +13,7 @@ class DataAccessors
     /**
      * Value access processing
      *
-     * @var array<string,DataAccessor>
+     * @var DataAccessor[]
      */
     private array $accessors = [];
 
@@ -96,18 +96,21 @@ class DataAccessors
     /**
      * Add access processing to keys
      *
-     * @param string $key
+     * @param string|string[] $key
      * @param Closure|class-string<object&callable> $callable
      * @param array<string,mixed> $parameters
      * @return self
      */
     public function add(
-        string $key,
+        string|array $key,
         Closure|string $accessor,
         array $parameters = [],
     ): self {
-        $this->accessors[$key] = new DataAccessor(
-            new DataAccessKey($key),
+
+        $keys = is_array($key) ? $key : [$key];
+
+        $this->accessors[] = new DataAccessor(
+            DataAccessKeys::fromStrings(...$keys),
             $accessor,
             $parameters,
         );

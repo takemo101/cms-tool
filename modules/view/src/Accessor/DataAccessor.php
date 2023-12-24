@@ -12,12 +12,12 @@ class DataAccessor
     /**
      * constructor
      *
-     * @param DataAccessKey $key
+     * @param DataAccessKeys $keys
      * @param Closure|class-string<object&callable> $accessor
      * @param array<string,mixed> $parameters
      */
     public function __construct(
-        private readonly DataAccessKey $key,
+        private readonly DataAccessKeys $keys,
         private readonly Closure|string $accessor,
         private readonly array $parameters = [],
     ) {
@@ -33,7 +33,7 @@ class DataAccessor
      */
     public function extractArguments(string $key): array|false
     {
-        return $this->key->extractArguments($key);
+        return $this->keys->extractArguments($key);
     }
 
     /**

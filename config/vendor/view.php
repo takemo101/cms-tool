@@ -11,6 +11,7 @@ use CmsTool\View\Twig\Extension\FunctionsExtension;
 use CmsTool\View\Twig\Extension\RouteExtension;
 use CmsTool\View\Twig\TwigTemplateRenderer;
 use Takemo101\Chubby\Contract\Renderable;
+use Takemo101\CmsTool\Support\Accessor\SiteMetaAccessor;
 use Takemo101\CmsTool\Support\Twig\AssetExtension;
 use Takemo101\CmsTool\Support\Twig\ErrorExtension;
 use Takemo101\CmsTool\Support\Twig\FlashExtension;
@@ -119,6 +120,8 @@ return [
     // Set up data accessors
     'accessors' => [
         // 'key' => class-string<object&callable>,
+
+        'meta' => SiteMetaAccessor::class,
     ],
 
 ];

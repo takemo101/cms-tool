@@ -15,25 +15,24 @@ class TaxonomiesAccessor
      * @param MicroCmsContentQueryService $queryService
      * @param Theme $theme
      * @param string $endpoint
-     * @param int $limit
      */
     public function __construct(
         private MicroCmsContentQueryService $queryService,
         private Theme $theme,
         private string $endpoint,
-        private int $limit = 50,
     ) {
         //
     }
 
     /**
+     * @param integer $limit
      * @return ArrayObject[]
      */
-    public function __invoke(): array
+    public function __invoke(int $limit = 50): array
     {
         return $this->queryService->getList(
             endpoint: $this->endpoint,
-            pager: new Pager(limit: $this->limit),
+            pager: new Pager(limit: $limit),
         )->contents;
     }
 }

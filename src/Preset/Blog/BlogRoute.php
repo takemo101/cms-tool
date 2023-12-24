@@ -19,65 +19,81 @@ class BlogRoute implements ThemeRoute
         Theme $theme,
         RouteCollectorProxyInterface $proxy,
     ): void {
+        $object = ImmutableArrayObject::of(
+            $theme->setting->extension,
+        );
 
-        $extension = ImmutableArrayObject::of($theme->setting->extension);
-
-        /** @var string */
-        $blogSignature = $extension->get('blog.signature', 'blog');
-        /** @var string */
-        $blogEndpoint = $extension->get('blog.endpoint', 'blogs');
-
-        /** @var string */
-        $categorySignature = $extension->get('category.signature', 'category');
-        /** @var string */
-        $categoryEndpoint = $extension->get('category.endpoint', 'categories');
-        /** @var string */
-        $categoryContentField = $extension->get('category.content_field', 'category');
-
-        /** @var string */
-        $tagSignature = $extension->get('tag.signature', 'tag');
-        /** @var string */
-        $tagEndpoint = $extension->get('tag.endpoint', 'tags');
-        /** @var string */
-        $tagContentField = $extension->get('tag.content_field', 'tags');
-
+        /**
+         * @var object{
+         *  endpoints: object{
+         *   blog: string,
+         *   category: string,
+         *   tag: string,
+         *  },
+         *  signatures: object{
+         *   blog: string,
+         *   category: string,
+         *   tag: string,
+         *  }
+         *  fields: object{
+         *   category: string,
+         *   tag: string,
+         *  }
+         * }
+         */
+        $ext = ImmutableArrayObject::of([
+            'endpoints' => [
+                'blog' => $object->get('endpoints.blog', 'blogs'),
+                'category' => $object->get('endpoints.category', 'categories'),
+                'tag' => $object->get('endpoints.tag', 'tags'),
+            ],
+            'signatures' => [
+                'blog' => $object->get('signatures.blog', 'blog'),
+                'category' => $object->get('signatures.category', 'category'),
+                'tag' => $object->get('signatures.tag', 'tag'),
+            ],
+            'fields' => [
+                'category' => $object->get('fields.category', 'category'),
+                'tag' => $object->get('fields.tag', 'tags'),
+            ],
+        ]);
 
         $proxy->get(
-            "/{$blogSignature}",
+            "/{$ext->signatures->blog}",
             new ContentIndexAction(
-                endpoint: $blogEndpoint,
-                view: "pages.{$blogSignature}.index",
+                endpoint: $ext->endpoints->blog,
+                signature: $ext->signatures->blog,
             ),
         )
             ->setName('blog.index');
 
         $proxy->get(
-            "/{$blogSignature}/{id}",
+            "/{$ext->signatures->blog}/{id}",
             new ContentDetailAction(
-                endpoint: $blogEndpoint,
-                view: "pages.{$blogSignature}.detail",
+                endpoint: $ext->endpoints->blog,
+                signature: $ext->signatures->blog,
             ),
         )
             ->setName('blog.detail');
 
         $proxy->get(
-            "/{$categorySignature}/{id}",
+            "/{$ext->signatures->category}/{id}",
             new TaxonomyIndexAction(
-                taxonomyEndpoint: $categoryEndpoint,
-                contentEndpoint: $blogEndpoint,
-                relation: $categoryContentField,
-                view: "pages.{$categorySignature}",
+                taxonomyEndpoint: $ext->endpoints->category,
+                contentEndpoint: $ext->endpoints->blog,
+                relation: $ext->fields->category,
+                signature: $ext->signatures->category,
             ),
         )
             ->setName('blog.category');
 
         $proxy->get(
-            "/{$tagSignature}/{id}",
+            "/{$ext->signatures->tag}/{id}",
             new TaxonomyIndexAction(
-                taxonomyEndpoint: $tagEndpoint,
-                contentEndpoint: $blogEndpoint,
-                relation: $tagContentField,
-                view: "pages.{$tagSignature}",
+                taxonomyEndpoint: $ext->endpoints->tag,
+                contentEndpoint: $ext->endpoints->blog,
+                relation: $ext->fields->tag,
+                signature: $ext->signatures->tag,
                 multiple: true,
             ),
         )

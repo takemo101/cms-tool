@@ -17,11 +17,11 @@ class ContentDetailAction
      * constructor
      *
      * @param string $endpoint
-     * @param string $view
+     * @param string $signature
      */
     public function __construct(
         private readonly string $endpoint,
-        private readonly string $view,
+        private readonly string $signature,
     ) {
         //
     }
@@ -61,7 +61,7 @@ class ContentDetailAction
             );
         }
 
-        return view($this->view, new ContentDetailPage(
+        return view("pages.{$this->signature}.detail", new ContentDetailPage(
             content: $content,
             isDraft: !empty($draftKey),
         ));

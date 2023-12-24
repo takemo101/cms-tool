@@ -32,7 +32,10 @@ class BlogHook implements ThemeHook
 
                 $accessors
                     ->add(
-                        'categories',
+                        [
+                            'categories',
+                            'categories_*',
+                        ],
                         TaxonomiesAccessor::class,
                         [
                             'theme' => $theme,
@@ -40,7 +43,10 @@ class BlogHook implements ThemeHook
                         ]
                     )
                     ->add(
-                        'tags',
+                        [
+                            'tags',
+                            'tags_*',
+                        ],
                         TaxonomiesAccessor::class,
                         [
                             'theme' => $theme,

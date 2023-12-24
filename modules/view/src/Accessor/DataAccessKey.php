@@ -26,7 +26,7 @@ class DataAccessKey implements Stringable
         $value = trim($value);
 
         assert(
-            preg_match('/^[a-zA-Z0-9_' . self::Placeholder . ']+$/', $value) !== false,
+            (bool) preg_match('/^[a-zA-Z0-9_' . self::Placeholder . ']+$/', $value),
             "Invalid key: {$value}",
         );
 

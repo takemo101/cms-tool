@@ -3,7 +3,7 @@
 namespace Takemo101\CmsTool\UseCase\Install\QueryService;
 
 use Takemo101\CmsTool\UseCase\Admin\QueryService\RootAdminAccountData;
-use Takemo101\CmsTool\UseCase\MicroCms\QueryService\MicroCmsApiData;
+use Takemo101\CmsTool\UseCase\MicroCms\QueryService\Api\MicroCmsApiData;
 use Takemo101\CmsTool\UseCase\SiteMeta\QueryService\SiteMetaData;
 
 readonly class InstallSettingData

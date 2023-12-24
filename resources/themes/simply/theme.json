@@ -9,6 +9,7 @@
     ],
     "tags": ["simple", "minimal"],
     "link": null,
+    "preset": "blog",
     "author": {
         "name": "Takemo101",
         "link": "https://github.com/takemo101"

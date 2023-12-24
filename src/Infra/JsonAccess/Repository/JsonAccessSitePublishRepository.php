@@ -26,12 +26,8 @@ class JsonAccessSitePublishRepository implements SitePublishRepository
     {
         $object = $this->creator->create();
 
-        if (!$object->has(SettingJsonObjectKeys::PublishedKey)) {
-            return false;
-        }
-
         /** @var boolean */
-        $published = $object->get(SettingJsonObjectKeys::PublishedKey);
+        $published = $object->get(SettingJsonObjectKeys::PublishedKey, false);
 
         return (bool) $published;
     }

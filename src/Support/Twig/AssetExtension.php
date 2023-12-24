@@ -6,7 +6,7 @@ use CmsTool\Theme\ThemeId;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 use Slim\Interfaces\RouteParserInterface;
-use Takemo101\CmsTool\Http\Action\Theme\AssetAction;
+use Takemo101\CmsTool\Http\Action\Theme\ActiveThemeAssetAction;
 use Takemo101\CmsTool\Http\Action\ThemeAssetAction;
 use Takemo101\CmsTool\Http\Action\VendorAssetAction;
 use Takemo101\CmsTool\Infra\Storage\LocalPublicStoragePath;
@@ -42,7 +42,7 @@ class AssetExtension extends AbstractExtension
     public function getAssetUrl(string $path = ''): string
     {
         return $this->routeParser->urlFor(
-            AssetAction::RouteName,
+            ActiveThemeAssetAction::RouteName,
             [
                 'path' => $path,
             ]

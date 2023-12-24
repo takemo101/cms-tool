@@ -1,5 +1,6 @@
 <?php
 
+use CmsTool\Theme\DefaultActiveThemeIdMatcher;
 use CmsTool\Theme\DefaultThemeAssetFinfoFactory;
 use CmsTool\Theme\DefaultThemeFinder;
 use CmsTool\Theme\DefaultThemeLoader;
@@ -15,6 +16,9 @@ return [
     // ThemeAssetFinfoFactory implementation class name
     'factory' => DefaultThemeAssetFinfoFactory::class,
 
+    // ActiveThemeIdMatcher implementation class name
+    'matcher' => DefaultActiveThemeIdMatcher::class,
+
     // Directory to place themes
     'locations' => [],
 
@@ -24,5 +28,10 @@ return [
     // ThemeRoute implementation class name
     'routes' => [
         // string => class-string<ThemeRoute>
+    ],
+
+    // ThemeHook implementation class name
+    'hooks' => [
+        // string => class-string<ThemeHook>
     ],
 ];

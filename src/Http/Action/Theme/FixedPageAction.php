@@ -4,6 +4,7 @@ namespace Takemo101\CmsTool\Http\Action\Theme;
 
 use CmsTool\View\Contract\TemplateFinder;
 use CmsTool\View\View;
+use DI\Attribute\Inject;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
 
@@ -16,6 +17,8 @@ class FixedPageAction
      */
     public function __construct(
         private TemplateFinder $finder,
+        #[Inject('config.system.route')]
+        private string $systemPath = '/system',
     ) {
         //
     }
@@ -23,9 +26,15 @@ class FixedPageAction
      * @param ServerRequestInterface $request
      * @param string $path
      * @return View
+     * @throws HttpNotFoundException
      */
     public function __invoke(ServerRequestInterface $request, string $path): View
     {
+        // 404 if it matches the route path of the system
+        if (str_starts_with("/{$path}", $this->systemPath)) {
+            throw new HttpNotFoundException($request);
+        }
+
         $directorySeparator = TemplateFinder::DirectorySeparator;
         $namespaceSeparator = TemplateFinder::NamespaceSeparator;
 

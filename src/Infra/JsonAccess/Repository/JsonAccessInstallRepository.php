@@ -26,12 +26,8 @@ class JsonAccessInstallRepository implements InstallRepository
     {
         $object = $this->creator->create();
 
-        if (!$object->has(SettingJsonObjectKeys::InstalledKey)) {
-            return false;
-        }
-
         /** @var boolean */
-        $installed = $object->get(SettingJsonObjectKeys::InstalledKey);
+        $installed = $object->get(SettingJsonObjectKeys::InstalledKey, false);
 
         return (bool) $installed;
     }

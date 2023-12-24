@@ -1,4 +1,4 @@
-# Chubby Skeleton
+# MicroCms Tool
 
 This is a skeleton for a [Chubby](https://github.com/takemo101/chubby)
 

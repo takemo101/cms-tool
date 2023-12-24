@@ -6,8 +6,8 @@ use CmsTool\Session\Csrf\CsrfGuardContext;
 use CmsTool\Session\Flash\FlashSessionsContext;
 use CmsTool\Session\SessionContext;
 use CmsTool\Theme\ActiveTheme;
-use CmsTool\Theme\ActiveThemeId;
 use CmsTool\Theme\ThemePathHelper;
+use CmsTool\View\Accessor\DataAccessors;
 use CmsTool\View\Contract\TemplateFinder;
 use CmsTool\View\Html\Filter\FormAppendFilters;
 use CmsTool\View\ViewCreator;
@@ -19,7 +19,7 @@ use Takemo101\Chubby\Bootstrap\Provider\Provider;
 use Takemo101\Chubby\Config\ConfigRepository;
 use Takemo101\Chubby\Filesystem\LocalFilesystem;
 use Takemo101\Chubby\Hook\Hook;
-use Takemo101\CmsTool\Domain\Theme\ActiveThemeIdRepository;
+use Takemo101\CmsTool\Domain\Theme\ActiveThemeRepository;
 use Takemo101\CmsTool\Http\Session\AdminSessionFactory;
 use Takemo101\CmsTool\Http\Session\DefaultAdminSessionFactory;
 use Takemo101\CmsTool\Support\FormAppendFilter\AppendCsrfInputFilter;
@@ -110,7 +110,6 @@ class CmsToolProvider implements Provider
 
         $this->bootHtml($hook);
         $this->bootTwig($hook);
-        $this->bootTheme($hook);
 
         /** @var ActiveThemeFunctionLoader */
         $functionLoader = $container->get(ActiveThemeFunctionLoader::class);
@@ -138,6 +137,9 @@ class CmsToolProvider implements Provider
                     /** @var ViewCreator */
                     $viewCreator = $container->get(ViewCreator::class);
 
+                    /** @var DataAccessors */
+                    $dataAccessors = $container->get(DataAccessors::class);
+
                     $guard = CsrfGuardContext::fromServerRequest(
                         $request,
                     )->getGuard();
@@ -164,6 +166,11 @@ class CmsToolProvider implements Provider
                             ->get(FlashOldInputs::class)
                             ->put($params);
                     }
+
+                    $dataAccessors->add(
+                        'request',
+                        fn () => $request,
+                    );
 
                     return $request;
                 }
@@ -219,42 +226,6 @@ class CmsToolProvider implements Provider
 
 
                     return $request;
-                }
-            );
-    }
-
-    /**
-     * Boot theme.
-     *
-     * @param Hook $hook
-     * @return void
-     */
-    private function bootTheme(Hook $hook): void
-    {
-        $hook
-            ->onByType(
-                function (ActiveThemeId $id, ContainerInterface $container) {
-                    /** @var ActiveThemeIdRepository */
-                    $repository = $container->get(ActiveThemeIdRepository::class);
-
-                    if ($savedId = $repository->find()) {
-                        $id->change($savedId);
-                    }
-                }
-            )
-            ->onByType(
-                function (TemplateFinder $finder, ContainerInterface $container) {
-                    /** @var ActiveTheme */
-                    $activeTheme = $container->get(ActiveTheme::class);
-
-                    /** @var ThemePathHelper */
-                    $pathHelper = $container->get(ThemePathHelper::class);
-
-                    $finder->addLocation(
-                        $pathHelper->getTemplatePath($activeTheme),
-                    );
-
-                    return $finder;
                 }
             );
     }

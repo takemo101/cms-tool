@@ -2,10 +2,18 @@
 
 namespace Takemo101\CmsTool\Support\Theme;
 
-use CmsTool\Theme\ActiveThemeFactory;
+use CmsTool\Theme\ActiveTheme;
+use CmsTool\Theme\Hook\ThemeHookPresetResolver;
 use CmsTool\Theme\ThemePathHelper;
+use CmsTool\View\Accessor\DataAccessors;
+use CmsTool\View\Contract\TemplateFinder;
+use Psr\Container\ContainerInterface;
+use Takemo101\Chubby\ApplicationContainer;
 use Takemo101\Chubby\Filesystem\LocalFilesystem;
-use Takemo101\CmsTool\Domain\Install\InstallRepository;
+use Takemo101\Chubby\Hook\Hook;
+use Takemo101\CmsTool\Domain\Theme\ActiveThemeRepository;
+
+use const Takemo101\CmsTool\HookTags\LoadActiveTheme;
 
 class ActiveThemeFunctionLoader
 {
@@ -15,14 +23,18 @@ class ActiveThemeFunctionLoader
     /**
      * constructor
      *
-     * @param InstallRepository $repository
-     * @param ActiveThemeFactory $factory
+     * @param ApplicationContainer $container
+     * @param ActiveThemeRepository $repository
+     * @param ThemeHookPresetResolver $resolver
+     * @param Hook $hook
      * @param ThemePathHelper $path
      * @param LocalFilesystem $filesystem
      */
     public function __construct(
-        private InstallRepository $repository,
-        private ActiveThemeFactory $factory,
+        private ApplicationContainer $container,
+        private ActiveThemeRepository $repository,
+        private ThemeHookPresetResolver $resolver,
+        private Hook $hook,
         private ThemePathHelper $path,
         private LocalFilesystem $filesystem,
     ) {
@@ -36,16 +48,62 @@ class ActiveThemeFunctionLoader
      */
     public function load(): void
     {
-        if (!$this->repository->isInstalled()) {
+        $activeTheme = $this->repository->find();
+
+        if (!$activeTheme) {
             return;
         }
 
-        $activeTheme = $this->factory->create();
+        $this->container->set(ActiveTheme::class, $activeTheme);
+
+        $this->beforeHook($activeTheme);
+
+        // If there is a preset setting, register the preset route
+        if ($name = $activeTheme->setting->preset) {
+            $hook = $this->resolver->resolve($name);
+
+            $hook?->hook($activeTheme, $this->hook);
+        }
 
         $functionPath = $this->path->getThemePath($activeTheme, self::FunctionPath);
 
         if ($this->filesystem->exists($functionPath)) {
             $this->filesystem->require($functionPath);
         }
+
+        $this->hook->doByType($activeTheme);
+        $this->hook->do(LoadActiveTheme, $activeTheme);
+    }
+
+    /**
+     * Executes the "before" hook for the active theme.
+     *
+     * @param ActiveTheme $activeTheme The active theme object.
+     * @return void
+     */
+    public function beforeHook(ActiveTheme $activeTheme): void
+    {
+        $this->hook
+            ->onByType(
+                function (
+                    TemplateFinder $finder,
+                    ContainerInterface $container
+                ) use ($activeTheme) {
+                    /** @var ThemePathHelper */
+                    $pathHelper = $container->get(ThemePathHelper::class);
+
+                    $finder->addLocation(
+                        $pathHelper->getTemplatePath($activeTheme),
+                    );
+
+                    return $finder;
+                }
+            )
+            ->onByType(
+                fn (DataAccessors $accessors) => $accessors->add(
+                    'theme',
+                    fn () => $activeTheme,
+                ),
+            );
     }
 }

@@ -3,7 +3,7 @@
 namespace Takemo101\CmsTool\Infra\JsonAccess\QueryService;
 
 use EventSauce\ObjectHydrator\ObjectMapper;
-use Takemo101\CmsTool\UseCase\MicroCms\QueryService\MicroCmsApiData;
+use Takemo101\CmsTool\UseCase\MicroCms\QueryService\Api\MicroCmsApiData;
 
 class JsonAccessMicroCmsApiDataMapper
 {

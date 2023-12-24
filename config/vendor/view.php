@@ -1,5 +1,6 @@
 <?php
 
+use CmsTool\View\Accessor\DefaultDataAccessInvoker;
 use CmsTool\View\Contract\Htmlable;
 use CmsTool\View\DefaultTemplateFinder;
 use CmsTool\View\Twig\Extension\ConfigExtension;
@@ -23,6 +24,9 @@ return [
 
     // TemplateRenderer implementation class name
     'renderer' => TwigTemplateRenderer::class,
+
+    // DataAccessInvoker implementation class name
+    'invoker' => DefaultDataAccessInvoker::class,
 
     'locations' => [],
 
@@ -110,6 +114,11 @@ return [
 
             'get' => 'data_get',
         ],
-    ]
+    ],
+
+    // Set up data accessors
+    'accessors' => [
+        // 'key' => class-string<object&callable>,
+    ],
 
 ];

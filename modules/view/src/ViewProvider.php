@@ -2,6 +2,11 @@
 
 namespace CmsTool\View;
 
+use CmsTool\View\Accessor\DataAccessAdapter;
+use CmsTool\View\Accessor\DataAccessInvoker;
+use CmsTool\View\Accessor\DataAccessors;
+use CmsTool\View\Accessor\DataAccessorsFactory;
+use CmsTool\View\Accessor\DefaultDataAccessInvoker;
 use CmsTool\View\Contract\TemplateFinder;
 use CmsTool\View\Contract\TemplateRenderer;
 use CmsTool\View\Html\Filter\AppendMethodOverrideInputFilter;
@@ -92,6 +97,39 @@ class ViewProvider implements Provider
 
                 return $renderer;
             },
+            DataAccessInvoker::class =>
+            function (
+                ContainerInterface $container,
+                ConfigRepository $config,
+                Hook $hook,
+            ) {
+                /** @var class-string<DataAccessInvoker> */
+                $class = $config->get(
+                    'view.invoker',
+                    DefaultDataAccessInvoker::class,
+                );
+
+                /** @var DataAccessInvoker */
+                $invoker = $container->get($class);
+
+                /** @var TemplateRenderer */
+                $invoker = $hook->do(
+                    DataAccessInvoker::class,
+                    $invoker,
+                );
+
+                return $invoker;
+            },
+            DataAccessors::class => function (
+                DataAccessorsFactory $factory,
+                Hook $hook,
+            ) {
+                $accessors = $factory->create();
+
+                $hook->doByType($accessors);
+
+                return $accessors;
+            },
             TwigFactory::class => function (
                 ContainerInterface $container,
                 LoaderInterface $loader,
@@ -131,12 +169,15 @@ class ViewProvider implements Provider
             ViewCreator::class => function (
                 TemplateFinder $finder,
                 TemplateRenderer $renderer,
+                DataAccessAdapter $adapter,
                 Hook $hook,
             ) {
                 $creator = new ViewCreator(
                     finder: $finder,
                     renderer: $renderer,
                 );
+
+                $creator->share('share', $adapter);
 
                 $hook->doByType($creator);
 

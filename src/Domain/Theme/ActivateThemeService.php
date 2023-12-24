@@ -2,7 +2,6 @@
 
 namespace Takemo101\CmsTool\Domain\Theme;
 
-use CmsTool\Theme\ActiveThemeId;
 use CmsTool\Theme\ThemeId;
 
 class ActivateThemeService
@@ -10,11 +9,11 @@ class ActivateThemeService
     /**
      * constructor
      *
-     * @param ActiveThemeIdRepository $repository
+     * @param ActiveThemeRepository $repository
      * @param ExistsThemeIdValidator $validator
      */
     public function __construct(
-        private ActiveThemeIdRepository $repository,
+        private ActiveThemeRepository $repository,
         private ExistsThemeIdValidator $validator,
     ) {
         //
@@ -24,19 +23,15 @@ class ActivateThemeService
      * Activate the specified theme ID
      *
      * @param ThemeId $id
-     * @return ActiveThemeId
+     * @return void
      * @throws NotFoundThemeIdException
      */
-    public function activate(ThemeId $id): ActiveThemeId
+    public function activate(ThemeId $id): void
     {
         if (!$this->validator->validate($id)) {
             throw new NotFoundThemeIdException($id);
         }
 
-        $activeThemeId = ActiveThemeId::fromThemeId($id);
-
-        $this->repository->save($activeThemeId);
-
-        return $activeThemeId;
+        $this->repository->activate($id);
     }
 }

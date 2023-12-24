@@ -2,6 +2,7 @@
 
 namespace Takemo101\CmsTool\Http\Middleware;
 
+use Fig\Http\Message\StatusCodeInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -38,7 +39,8 @@ class GuideToInstallation implements MiddlewareInterface
     ): ResponseInterface {
         if (!$this->repository->isInstalled()) {
             return (new HtmlRenderer(
-                view('cms-tool::install.not-installed')
+                view('cms-tool::error.uninstalled'),
+                StatusCodeInterface::STATUS_UNAUTHORIZED,
             ))->render(
                 $request,
                 $this->responseFactory->createResponse(),

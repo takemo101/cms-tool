@@ -1,16 +1,15 @@
 <?php
 
-use CmsTool\Theme\ActiveThemeId;
+use CmsTool\Theme\Contract\ActiveThemeIdMatcher;
 use CmsTool\Theme\DefaultThemeLoader;
 use CmsTool\Theme\Exception\ThemeLoadException;
 use CmsTool\Theme\Theme;
-use CmsTool\Theme\ThemeId;
 use Takemo101\Chubby\Filesystem\LocalFilesystem;
 use Takemo101\Chubby\Filesystem\PathHelper;
 use Mockery as m;
 
 beforeEach(function () {
-    $this->id = m::mock(ActiveThemeId::class);
+    $this->matcher = m::mock(ActiveThemeIdMatcher::class);
     $this->filesystem = m::mock(LocalFilesystem::class);
 
     $this->loader = new DefaultThemeLoader($this->id, $this->filesystem, new PathHelper());
@@ -28,7 +27,7 @@ describe(
                 ->with($path)
                 ->andReturn($content);
 
-            $this->id->shouldReceive('equals')
+            $this->matcher->shouldReceive('isMatch')
                 ->andReturnTrue();
 
             $theme = $this->loader->load($path);
@@ -54,7 +53,7 @@ describe(
                 ->with($path)
                 ->andReturn($content);
 
-            $this->id->shouldReceive('equals')
+            $this->matcher->shouldReceive('isMatch')
                 ->andReturnFalse();
 
             expect(fn () => $this->loader->load($path))->toThrow(ThemeLoadException::class);

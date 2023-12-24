@@ -14,7 +14,9 @@ readonly class ThemeSetting
      * @param string[] $images
      * @param string[] $tags
      * @param string|null $link
+     * @param string|null $preset
      * @param ThemeAuthor $author
+     * @param array<string,mixed> $extension
      */
     public function __construct(
         public string $uid,
@@ -26,6 +28,7 @@ readonly class ThemeSetting
         public ?string $link,
         public ?string $preset,
         public ThemeAuthor $author,
+        public array $extension = [],
     ) {
         //
     }
@@ -53,7 +56,8 @@ readonly class ThemeSetting
      *  author:array{
      *   name:string,
      *   link?:?string,
-     *  }
+     *  },
+     *  extension?:array<string,mixed>,
      * } $data
      * @return self
      */
@@ -69,6 +73,7 @@ readonly class ThemeSetting
             link: $data['link'] ?? null,
             preset: $data['preset'] ?? null,
             author: ThemeAuthor::fromArray($data['author']),
+            extension: $data['extension'] ?? [],
         );
     }
 }

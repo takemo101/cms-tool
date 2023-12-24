@@ -3,7 +3,7 @@
 use CmsTool\Theme\Routing\ThemeRoutePresetResolver;
 use CmsTool\Theme\Routing\ThemeRoutePresets;
 use CmsTool\Theme\Routing\ThemeRoute;
-use CmsTool\Theme\Routing\NotFoundThemePresetException;
+use CmsTool\Theme\Exception\NotFoundThemePresetException;
 use DI\FactoryInterface;
 use Mockery as m;
 
@@ -31,20 +31,21 @@ describe(
                 ->with($class)
                 ->andReturn($route);
 
-            $result = $this->resolver->resolve($name);
+            $actual = $this->resolver->resolve($name);
 
-            expect($result)->toBe($route);
+            expect($actual)->toBe($route);
         });
 
-        it('should throw exception when theme route preset is not found', function () {
+        it('should return null when theme route preset is not found', function () {
             $name = 'non_existing_preset';
 
             $this->presets->shouldReceive('find')
                 ->with($name)
-                ->andThrow(NotFoundThemePresetException::class);
+                ->andReturn(false);
 
-            expect(fn () => $this->resolver->resolve($name))
-                ->toThrow(NotFoundThemePresetException::class);
+            $actual = $this->resolver->resolve($name);
+
+            expect($actual)->toBeNull();
         });
     }
 )->group('ThemeRoutePresetResolver', 'routing');

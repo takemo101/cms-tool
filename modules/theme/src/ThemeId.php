@@ -18,17 +18,6 @@ class ThemeId implements Stringable
     }
 
     /**
-     * Set the id of the active theme.
-     *
-     * @param string $value
-     * @return void
-     */
-    protected function set(string $value): void
-    {
-        $this->value = $value;
-    }
-
-    /**
      * Check if the id matches the specified id.
      *
      * @param self $id

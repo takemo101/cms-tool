@@ -1,0 +1,32 @@
+{% from 'components.pager' import pager %}
+
+<ul>
+{% for category in share.categories %}
+    <li>{{ category.name }}</li>
+{% endfor %}
+</ul>
+<ul>
+{% for tag in share.tags %}
+    <li>{{ tag.name }}</li>
+{% endfor %}
+</ul>
+{% for content in contents %}
+    <p>
+        {{ content.title }}
+        <a href="{{ route('blog.detail', {id: content.id}) }}">{{ content.id }}</a>
+        <a href="{{ route('blog.category', {id: content.category.id}) }}">{{ content.category.id }}</a>
+        <p>
+            <small>
+                {% for tag in content.tags %}
+                    <a href="{{ route('blog.tag', {id: tag.id}) }}">{{ tag.id }}</a>
+                {% endfor %}
+            </small>
+        </p>
+    </p>
+{% endfor %}
+
+{{ pager(
+    paginator,
+    share.request.getUri().getPath(),
+    share.request.getQueryParams()
+) }}

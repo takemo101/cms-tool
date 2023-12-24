@@ -4,7 +4,7 @@ namespace Takemo101\CmsTool\Http\ViewModel;
 
 use Takemo101\CmsTool\Domain\MicroCms\MicroCmsApiAccessValidator;
 use Takemo101\CmsTool\Domain\Publish\SitePublishRepository;
-use Takemo101\CmsTool\UseCase\MicroCms\QueryService\MicroCmsApiData;
+use Takemo101\CmsTool\UseCase\MicroCms\QueryService\Api\MicroCmsApiData;
 use Takemo101\CmsTool\UseCase\SiteMeta\QueryService\SiteMetaData;
 
 class BasicSettingPage extends ViewModel

@@ -2,7 +2,7 @@
 
 use CmsTool\Theme\Routing\ThemeRoutePresets;
 use CmsTool\Theme\Routing\ThemeRoute;
-use CmsTool\Theme\Routing\NotFoundThemePresetException;
+use CmsTool\Theme\Exception\NotFoundThemePresetException;
 use Mockery as m;
 
 beforeEach(function () {
@@ -53,11 +53,12 @@ describe(
             expect($result)->toBe($this->preset1);
         });
 
-        it('throws an exception when finding a non-existing route preset', function () {
+        it('return false when finding a non-existing route preset', function () {
             $name = 'nonExistingPreset';
 
-            expect(fn () => $this->themeRoutePresets->find($name))
-                ->toThrow(NotFoundThemePresetException::class);
+            $result = $this->themeRoutePresets->find($name);
+
+            expect($result)->toBeFalse();
         });
 
         it('returns all route presets', function () {

@@ -4,8 +4,8 @@ namespace Takemo101\CmsTool\Infra\JsonAccess\QueryService;
 
 use Takemo101\CmsTool\Infra\JsonAccess\SettingJsonAccessObjectCreator;
 use Takemo101\CmsTool\Infra\JsonAccess\SettingJsonObjectKeys;
-use Takemo101\CmsTool\UseCase\MicroCms\QueryService\MicroCmsApiData;
-use Takemo101\CmsTool\UseCase\MicroCms\QueryService\MicroCmsApiQueryService;
+use Takemo101\CmsTool\UseCase\MicroCms\QueryService\Api\MicroCmsApiData;
+use Takemo101\CmsTool\UseCase\MicroCms\QueryService\Api\MicroCmsApiQueryService;
 
 readonly class JsonAccessMicroCmsApiQueryService implements MicroCmsApiQueryService
 {

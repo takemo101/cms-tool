@@ -1,0 +1,46 @@
+{% macro pager(paginator, path, params = {}) %}
+    {% set uri = path ~ '?' %}
+    <ul>
+        <li>
+            {% if paginator.onFirstPage %}
+            <a href="javascript:void(0)">
+                前のページへ
+            </a>
+            {% else %}
+            <a href="{{ uri ~ params|merge({page: paginator.previousPage})|url_encode }}">
+                前のページへ
+            </a>
+            {% endif %}
+        </li>
+
+        {% for page in 1..paginator.lastPage %}
+            {% if page == paginator.currentPage %}
+            <li>
+                <a href="javascript:void(0)">
+                    <strong>
+                        {{ page }}
+                    </strong>
+                </a>
+            </li>
+            {% else %}
+            <li>
+                <a href="{{ uri ~ params|merge({page: page})|url_encode }}" class="py-1 mr-1 text-black">
+                    {{ page }}
+                </a>
+            </li>
+            {% endif %}
+        {% endfor %}
+
+        <li>
+            {% if paginator.hasMorePages %}
+            <a href="{{ uri ~ params|merge({page: paginator.nextPage})|url_encode }}">
+                次のページへ
+            </a>
+            {% else %}
+            <a href="javascript:void(0)">
+                次のページへ
+            </a>
+            {% endif %}
+        </li>
+    </ul>
+{% endmacro %}

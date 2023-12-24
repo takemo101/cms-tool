@@ -1,0 +1,9 @@
+<h1>{{ content.name }}</h1>
+
+{% for content in contents %}
+    <p>
+        {{ content.title }}
+        <a href="{{ route('blog.detail', {id: content.id}) }}">{{ content.id }}</a>
+        <a href="{{ route('blog.category', {id: content.category.id}) }}">{{ content.category.id }}</a>
+    </p>
+{% endfor %}

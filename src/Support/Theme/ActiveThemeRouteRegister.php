@@ -2,12 +2,11 @@
 
 namespace Takemo101\CmsTool\Support\Theme;
 
-use CmsTool\Theme\ActiveThemeFactory;
 use CmsTool\Theme\Routing\NotFoundThemePresetException;
 use CmsTool\Theme\Routing\ThemeRoutePresetResolver;
 use Slim\Interfaces\RouteCollectorProxyInterface;
 use Takemo101\Chubby\Hook\Hook;
-use Takemo101\CmsTool\Domain\Install\InstallRepository;
+use Takemo101\CmsTool\Domain\Theme\ActiveThemeRepository;
 
 use const Takemo101\CmsTool\HookTags\RegisterThemeRoute;
 
@@ -16,14 +15,12 @@ class ActiveThemeRouteRegister
     /**
      * constructor
      *
-     * @param InstallRepository $repository
-     * @param ActiveThemeFactory $factory
-     * @param ThemeRoutePresets $presets
+     * @param ActiveThemeRepository $repository
+     * @param ThemeRoutePresetResolver $resolver
      * @param Hook $hook
      */
     public function __construct(
-        private InstallRepository $repository,
-        private ActiveThemeFactory $factory,
+        private ActiveThemeRepository $repository,
         private ThemeRoutePresetResolver $resolver,
         private Hook $hook,
     ) {
@@ -39,17 +36,17 @@ class ActiveThemeRouteRegister
      */
     public function register(RouteCollectorProxyInterface $proxy): void
     {
-        if (!$this->repository->isInstalled()) {
+        $activeTheme = $this->repository->find();
+
+        if (!$activeTheme) {
             return;
         }
-
-        $activeTheme = $this->factory->create();
 
         // If there is a preset setting, register the preset route
         if ($name = $activeTheme->setting->preset) {
             $route = $this->resolver->resolve($name);
 
-            $route->route($activeTheme, $proxy);
+            $route?->route($activeTheme, $proxy);
         }
 
         // Register the route of the theme

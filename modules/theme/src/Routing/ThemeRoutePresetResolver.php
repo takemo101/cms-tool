@@ -2,40 +2,24 @@
 
 namespace CmsTool\Theme\Routing;
 
+use CmsTool\Theme\ThemePresetResolver;
 use DI\FactoryInterface;
 
-class ThemeRoutePresetResolver
+/**
+ * @extends ThemePresetResolver<ThemeRoute>
+ */
+class ThemeRoutePresetResolver extends ThemePresetResolver
 {
     /**
      * constructor
      *
      * @param FactoryInterface $factory
+     * @param ThemeRoutePresets $presets
      */
     public function __construct(
-        private readonly FactoryInterface $factory,
-        private readonly ThemeRoutePresets $presets,
+        FactoryInterface $factory,
+        ThemeRoutePresets $presets,
     ) {
-        //
-    }
-
-    /**
-     * Resolve theme route preset
-     *
-     * @param string $name
-     * @return ThemeRoute
-     * @throws NotFoundThemePresetException
-     */
-    public function resolve(string $name): ThemeRoute
-    {
-        $class = $this->presets->find($name);
-
-        if (!is_string($class)) {
-            return $class;
-        }
-
-        /** @var ThemeRoute */
-        $route = $this->factory->make($class);
-
-        return $route;
+        parent::__construct($factory, $presets);
     }
 }

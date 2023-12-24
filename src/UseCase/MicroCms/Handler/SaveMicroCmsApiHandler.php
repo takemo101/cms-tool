@@ -4,7 +4,6 @@ namespace Takemo101\CmsTool\UseCase\MicroCms\Handler;
 
 use Takemo101\CmsTool\Domain\MicroCms\MicroCmsApi;
 use Takemo101\CmsTool\Domain\MicroCms\MicroCmsApiAccessException;
-use Takemo101\CmsTool\Domain\MicroCms\MicroCmsApiAccessValidator;
 use Takemo101\CmsTool\Domain\MicroCms\MicroCmsApiFactory;
 use Takemo101\CmsTool\Domain\MicroCms\MicroCmsApiRepository;
 

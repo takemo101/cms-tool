@@ -2,10 +2,9 @@
 
 namespace Takemo101\CmsTool\UseCase\Theme\Handler;
 
-use CmsTool\Theme\ActiveThemeId;
 use CmsTool\Theme\ThemeId;
 use Takemo101\CmsTool\Domain\Theme\ActivateThemeService;
-use Takemo101\CmsTool\Domain\Theme\ActiveThemeIdRepository;
+use Takemo101\CmsTool\Domain\Theme\ActiveThemeRepository;
 use Takemo101\CmsTool\Domain\Theme\NotFoundThemeIdException;
 use Takemo101\CmsTool\UseCase\Shared\Exception\InstallSettingException;
 
@@ -14,11 +13,11 @@ class ActivateThemeHandler
     /**
      * constructor
      *
-     * @param ActiveThemeIdRepository $repository
+     * @param ActiveThemeRepository $repository
      * @param ActivateThemeService $activateThemeService
      */
     public function __construct(
-        private ActiveThemeIdRepository $repository,
+        private ActiveThemeRepository $repository,
         private ActivateThemeService $activateThemeService,
     ) {
         //
@@ -27,23 +26,25 @@ class ActivateThemeHandler
     /**
      * Execute the processing the processing
      *
-     * @return ActiveThemeId
+     * @return ThemeId
      * @throws NotFoundThemeIdException|InstallSettingException
      */
-    public function handle(string $id): ActiveThemeId
+    public function handle(string $id): ThemeId
     {
-        $activeThemeId = $this->repository->find();
+        $theme = $this->repository->find();
 
-        if (!$activeThemeId) {
+        if (!$theme) {
             throw InstallSettingException::notExistsSetting();
         }
 
         $themeId = new ThemeId($id);
 
-        if ($activeThemeId->equals($themeId)) {
-            return $activeThemeId;
+        if ($theme->id->equals($themeId)) {
+            return $themeId;
         }
 
-        return $this->activateThemeService->activate($themeId);
+        $this->activateThemeService->activate($themeId);
+
+        return $themeId;
     }
 }

@@ -3,6 +3,9 @@
 use CmsTool\Theme\DefaultThemeAssetFinfoFactory;
 use CmsTool\Theme\DefaultThemeFinder;
 use CmsTool\Theme\DefaultThemeLoader;
+use Takemo101\CmsTool\Infra\JsonAccess\JsonAccessActiveThemeIdMatcher;
+use Takemo101\CmsTool\Preset\Blog\BlogHook;
+use Takemo101\CmsTool\Preset\Blog\BlogRoute;
 
 return [
 
@@ -12,8 +15,11 @@ return [
     // ThemeLoader implementation class name
     'loader' => DefaultThemeLoader::class,
 
-    // ThemeAssetFileReader implementation class name
-    'reader' => DefaultThemeAssetFinfoFactory::class,
+    // ThemeAssetFinfoFactory implementation class name
+    'factory' => DefaultThemeAssetFinfoFactory::class,
+
+    // ActiveThemeIdMatcher implementation class name
+    'matcher' => JsonAccessActiveThemeIdMatcher::class,
 
     // Directory to place themes
     'locations' => [
@@ -27,5 +33,12 @@ return [
     // ThemeRoute implementation class name
     'routes' => [
         // string => class-string<ThemeRoute>
+        'blog' => BlogRoute::class,
+    ],
+
+    // ThemeHook implementation class name
+    'hooks' => [
+        // string => class-string<ThemeHook>
+        'blog' => BlogHook::class,
     ],
 ];

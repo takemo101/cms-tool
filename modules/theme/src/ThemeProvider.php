@@ -2,9 +2,12 @@
 
 namespace CmsTool\Theme;
 
+use CmsTool\Theme\Contract\ActiveThemeIdMatcher;
 use CmsTool\Theme\Contract\ThemeAssetFinfoFactory;
 use CmsTool\Theme\Contract\ThemeFinder;
 use CmsTool\Theme\Contract\ThemeLoader;
+use CmsTool\Theme\Hook\ThemeHook;
+use CmsTool\Theme\Hook\ThemeHookPresets;
 use CmsTool\Theme\Routing\ThemeRoute;
 use CmsTool\Theme\Routing\ThemeRoutePresets;
 use Psr\Container\ContainerInterface;
@@ -15,8 +18,6 @@ use Takemo101\Chubby\Config\ConfigRepository;
 use Takemo101\Chubby\Filesystem\PathHelper;
 use Takemo101\Chubby\Config\ConfigPhpRepository;
 use Takemo101\Chubby\Hook\Hook;
-
-use function DI\factory;
 
 class ThemeProvider implements Provider
 {
@@ -100,17 +101,28 @@ class ThemeProvider implements Provider
 
                 return $factory;
             },
-            ActiveThemeId::class => function (
-                DefaultThemeId $defaultThemeId,
+            ActiveThemeIdMatcher::class => function (
+                ContainerInterface $container,
+                ConfigRepository $config,
                 Hook $hook,
             ) {
-                $activeThemeId = ActiveThemeId::fromThemeId($defaultThemeId);
+                /** @var class-string<ActiveThemeIdMatcher> */
+                $class = $config->get(
+                    'theme.matcher',
+                    DefaultActiveThemeIdMatcher::class,
+                );
 
-                $hook->doByType($activeThemeId);
+                /** @var ActiveThemeIdMatcher */
+                $matcher = $container->get($class);
 
-                return $activeThemeId;
+                /** @var ActiveThemeIdMatcher */
+                $matcher = $hook->do(
+                    ActiveThemeIdMatcher::class,
+                    $matcher,
+                );
+
+                return $matcher;
             },
-            ActiveTheme::class => factory([ActiveThemeFactory::class, 'create']),
             ThemeRoutePresets::class => function (
                 ConfigRepository $config,
                 Hook $hook,
@@ -123,7 +135,20 @@ class ThemeProvider implements Provider
                 $hook->doByType($presets);
 
                 return $presets;
-            }
+            },
+            ThemeHookPresets::class => function (
+                ConfigRepository $config,
+                Hook $hook,
+            ) {
+                /** @var array<string,class-string<ThemeHook>> */
+                $hooks = $config->get('theme.hooks', []);
+
+                $presets = new ThemeHookPresets($hooks);
+
+                $hook->doByType($presets);
+
+                return $presets;
+            },
         ]);
     }
 

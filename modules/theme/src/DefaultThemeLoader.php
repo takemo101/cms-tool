@@ -2,6 +2,7 @@
 
 namespace CmsTool\Theme;
 
+use CmsTool\Theme\Contract\ActiveThemeIdMatcher;
 use CmsTool\Theme\Contract\ThemeLoader;
 use CmsTool\Theme\Exception\ThemeLoadException;
 use Takemo101\Chubby\Filesystem\LocalFilesystem;
@@ -17,11 +18,12 @@ class DefaultThemeLoader implements ThemeLoader
     /**
      * constructor
      *
-     * @param ActiveThemeId $id
+     * @param ActiveThemeIdMatcher $matcher
      * @param LocalFilesystem $filesystem
+     * @param PathHelper $helper
      */
     public function __construct(
-        private readonly ActiveThemeId $id,
+        private readonly ActiveThemeIdMatcher $matcher,
         private readonly LocalFilesystem $filesystem,
         private readonly PathHelper $helper = new PathHelper(),
     ) {
@@ -55,7 +57,8 @@ class DefaultThemeLoader implements ThemeLoader
          *  author:array{
          *   name:string,
          *   link?:?string,
-         *  }
+         *  },
+         *  extension?:array<string,mixed>,
          * }
          */
         $data = json_decode($content, true);
@@ -76,7 +79,7 @@ class DefaultThemeLoader implements ThemeLoader
         $theme = new Theme(
             id: $themeId,
             directory: $directory,
-            active: $this->id->equals($themeId),
+            active: $this->matcher->isMatch($themeId),
             setting: ThemeSetting::fromArray($data),
         );
 

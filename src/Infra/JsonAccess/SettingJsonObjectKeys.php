@@ -12,4 +12,5 @@ class SettingJsonObjectKeys
     public const MicroCmsApiKey = 'api';
     public const RootAdminKey = 'root';
     public const ActiveThemeIdKey = 'theme';
+    public const WebhookTokenKey = 'webhook';
 }

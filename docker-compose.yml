@@ -1,4 +1,4 @@
-version: "3.8"
+version: '3.8'
 
 services:
   chubby-app:
@@ -30,6 +30,17 @@ services:
     environment:
       - PHP_VERSION=8.2.11
     working_dir: /var/www/html
+
+  ngrok:
+    image: 'wernight/ngrok:latest'
+    ports:
+      - ${NGROK_PORT:-4040}:4040
+    environment:
+      NGROK_AUTH: ${NGROK_AUTH_TOKEN}
+      NGROK_PROTOCOL: ${NGROK_PROTOCOL}
+      NGROK_PORT: chubby-app:80
+    networks:
+      - chubby
 
 networks:
   chubby:

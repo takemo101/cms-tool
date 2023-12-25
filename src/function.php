@@ -22,7 +22,7 @@ use Takemo101\CmsTool\Http\Action\SitePublishAction;
 use Takemo101\CmsTool\Http\Action\Theme\ActiveThemeAssetAction;
 use Takemo101\CmsTool\Http\Action\Theme\HomeAction;
 use Takemo101\CmsTool\Http\Action\Theme\FixedPageAction;
-use Takemo101\CmsTool\Http\Action\Theme\MicroCmsWebhookAction;
+use Takemo101\CmsTool\Http\Action\WebhookAction;
 use Takemo101\CmsTool\Http\Action\ThemeAssetAction;
 use Takemo101\CmsTool\Http\Controller\Admin\AdminAccountController;
 use Takemo101\CmsTool\Http\Controller\Admin\BasicSettingController;
@@ -32,6 +32,7 @@ use Takemo101\CmsTool\Http\Controller\Admin\MicroCmsApiController;
 use Takemo101\CmsTool\Http\Controller\Admin\SiteMetaController;
 use Takemo101\CmsTool\Http\Controller\Admin\SiteSeoController;
 use Takemo101\CmsTool\Http\Controller\Admin\ThemeController;
+use Takemo101\CmsTool\Http\Controller\Admin\WebhookController;
 use Takemo101\CmsTool\Http\Middleware\AdminAuth;
 use Takemo101\CmsTool\Http\Middleware\AdminSessionStart;
 use Takemo101\CmsTool\Http\Middleware\GuideToInstallation;
@@ -69,186 +70,204 @@ hook()
         },
     )
     ->onByType(
-        function (SlimHttpAdapter $http, ContainerInterface $container) {
-
-            /** @var ActiveThemeRouteRegister */
-            $register = $container->get(ActiveThemeRouteRegister::class);
+        function (SlimHttpAdapter $http) {
 
             /** @var string */
-            $systemRoutePath = config('system.route', '/system');
+            $webhookRoutePath = config('system.webhook.route', '/webhook');
 
-            $http->add(Csrf::class);
             $http->add(SessionStart::class);
 
-            $http->get(
-                '/vendor/assets/{path:.+}',
-                VendorAssetAction::class,
-            )->setName(VendorAssetAction::RouteName);
+            $http->post(
+                $webhookRoutePath,
+                WebhookAction::class,
+            )->setName('webhook');
 
             $http->group(
-                $systemRoutePath,
+                '',
                 function (Proxy $proxy) {
 
+                    /** @var string */
+                    $systemRoutePath = config('system.route', '/system');
+
+                    $proxy->get(
+                        '/vendor/assets/{path:.+}',
+                        VendorAssetAction::class,
+                    )->setName(VendorAssetAction::RouteName);
+
                     $proxy->group(
-                        '/install',
+                        $systemRoutePath,
                         function (Proxy $proxy) {
 
-                            $proxy->get(
-                                '/api',
-                                [InstallController::class, 'apiPage'],
-                            )->setName('install.api');
-                            $proxy->post(
-                                '/api',
-                                [InstallController::class, 'saveApi'],
-                            )->setName('install.api.save');
+                            $proxy->group(
+                                '/install',
+                                function (Proxy $proxy) {
 
-                            $proxy->get(
-                                '/basic',
-                                [InstallController::class, 'basicSettingPage'],
-                            )->setName('install.basic');
-                            $proxy->post(
-                                '/basic',
-                                [InstallController::class, 'saveBasicSetting'],
-                            )->setName('install.basic.save');
+                                    $proxy->get(
+                                        '/api',
+                                        [InstallController::class, 'apiPage'],
+                                    )->setName('install.api');
+                                    $proxy->post(
+                                        '/api',
+                                        [InstallController::class, 'saveApi'],
+                                    )->setName('install.api.save');
 
-                            $proxy->get(
-                                '',
-                                [InstallController::class, 'confirmPage'],
-                            )->setName('install.confirm');
-                            $proxy->post(
-                                '',
-                                [InstallController::class, 'installed'],
-                            )->setName('installed');
+                                    $proxy->get(
+                                        '/basic',
+                                        [InstallController::class, 'basicSettingPage'],
+                                    )->setName('install.basic');
+                                    $proxy->post(
+                                        '/basic',
+                                        [InstallController::class, 'saveBasicSetting'],
+                                    )->setName('install.basic.save');
+
+                                    $proxy->get(
+                                        '',
+                                        [InstallController::class, 'confirmPage'],
+                                    )->setName('install.confirm');
+                                    $proxy->post(
+                                        '',
+                                        [InstallController::class, 'installed'],
+                                    )->setName('installed');
+                                }
+                            )->add(WhenUninstalled::class);
+
+                            $proxy->group('', function (Proxy $proxy) {
+
+                                $proxy->group('', function (Proxy $proxy) {
+
+                                    $proxy->group('/theme', function (Proxy $proxy) {
+                                        $proxy->get(
+                                            '/{id}/assets/{path:.+}',
+                                            ThemeAssetAction::class,
+                                        )->setName(ThemeAssetAction::RouteName);
+                                    });
+
+                                    $proxy->get(
+                                        'phpinfo',
+                                        PhpInfoAction::class,
+                                    )->setName('admin.phpinfo');
+
+                                    $proxy->get(
+                                        '',
+                                        [DashboardController::class, 'dashboardPage'],
+                                    )->setName('admin.dashboard');
+
+                                    $proxy->get(
+                                        '/account',
+                                        [AdminAccountController::class, 'editPage'],
+                                    )->setName('admin.account.edit');
+                                    $proxy->put(
+                                        '/account',
+                                        [AdminAccountController::class, 'update'],
+                                    )->setName('admin.account.update');
+
+                                    $proxy->get(
+                                        '/basic',
+                                        [BasicSettingController::class, 'editPage'],
+                                    )->setName('admin.basic.edit');
+
+                                    $proxy->put(
+                                        '/api',
+                                        [MicroCmsApiController::class, 'update'],
+                                    )->setName('admin.api.update');
+                                    $proxy->put(
+                                        '/meta',
+                                        [SiteMetaController::class, 'update'],
+                                    )->setName('admin.meta.update');
+
+                                    $proxy->get(
+                                        '/seo',
+                                        [SiteSeoController::class, 'editPage'],
+                                    )->setName('admin.seo.edit');
+                                    $proxy->put(
+                                        '/seo',
+                                        [SiteSeoController::class, 'update'],
+                                    )->setName('admin.seo.update');
+                                    $proxy->delete(
+                                        '/seo/{target:favicon|icon}',
+                                        [SiteSeoController::class, 'deleteImage'],
+                                    )->setName('admin.seo.delete.image');
+
+                                    $proxy->patch(
+                                        '/publish/{status:published|unpublished}',
+                                        SitePublishAction::class,
+                                    )->setName('admin.publish');
+
+                                    $proxy->get(
+                                        '/theme',
+                                        [ThemeController::class, 'indexPage'],
+                                    )->setName('admin.theme.index');
+                                    $proxy->get(
+                                        '/theme/{id}',
+                                        [ThemeController::class, 'detailPage'],
+                                    )->setName('admin.theme.detail');
+                                    $proxy->put(
+                                        '/theme/{id}',
+                                        [ThemeController::class, 'activate'],
+                                    )->setName('admin.theme.activate');
+
+                                    $proxy->get(
+                                        '/webhook',
+                                        [WebhookController::class, 'editPage'],
+                                    )->setName('admin.webhook.edit');
+                                    $proxy->patch(
+                                        '/webhook/regenerate',
+                                        [WebhookController::class, 'regenerate'],
+                                    )->setName('admin.webhook.regenerate');
+
+                                    $proxy->post(
+                                        '/logout',
+                                        [LoginController::class, 'logout'],
+                                    )->setName('admin.logout');
+                                })->add(AdminAuth::auth(
+                                    redirect()->route('admin.login'),
+                                ));
+
+                                $proxy->group('', function (Proxy $proxy) {
+
+                                    $proxy->get(
+                                        '/login',
+                                        [LoginController::class, 'loginPage'],
+                                    )->setName('admin.login');
+                                    $proxy->post(
+                                        '/login',
+                                        [LoginController::class, 'login'],
+                                    )->setName('admin.login.post');
+                                })->add(AdminAuth::guest(
+                                    redirect()->route('admin.dashboard'),
+                                ));
+                            })->add(AdminSessionStart::class)
+                                ->add(GuideToInstallation::class);
                         }
-                    )->add(WhenUninstalled::class);
+                    );
 
                     $proxy->group('', function (Proxy $proxy) {
 
-                        $proxy->group('', function (Proxy $proxy) {
+                        /** @var ActiveThemeRouteRegister */
+                        $register = container()->get(ActiveThemeRouteRegister::class);
 
-                            $proxy->group('/theme', function (Proxy $proxy) {
-                                $proxy->get(
-                                    '/{id}/assets/{path:.+}',
-                                    ThemeAssetAction::class,
-                                )->setName(ThemeAssetAction::RouteName);
-                            });
+                        $proxy->get(
+                            '/',
+                            HomeAction::class,
+                        )->setName('home');
 
-                            $proxy->get(
-                                'phpinfo',
-                                PhpInfoAction::class,
-                            )->setName('admin.phpinfo');
+                        $proxy->get(
+                            '/assets/{path:.+}',
+                            ActiveThemeAssetAction::class,
+                        )->setName(ActiveThemeAssetAction::RouteName);
 
-                            $proxy->get(
-                                '',
-                                [DashboardController::class, 'dashboardPage'],
-                            )->setName('admin.dashboard');
+                        // Set routing for theme
+                        $register->register($proxy);
 
-                            $proxy->get(
-                                '/account',
-                                [AdminAccountController::class, 'editPage'],
-                            )->setName('admin.account.edit');
-                            $proxy->put(
-                                '/account',
-                                [AdminAccountController::class, 'update'],
-                            )->setName('admin.account.update');
-
-                            $proxy->get(
-                                '/basic',
-                                [BasicSettingController::class, 'editPage'],
-                            )->setName('admin.basic.edit');
-
-                            $proxy->put(
-                                '/api',
-                                [MicroCmsApiController::class, 'update'],
-                            )->setName('admin.api.update');
-                            $proxy->put(
-                                '/meta',
-                                [SiteMetaController::class, 'update'],
-                            )->setName('admin.meta.update');
-
-                            $proxy->get(
-                                '/seo',
-                                [SiteSeoController::class, 'editPage'],
-                            )->setName('admin.seo.edit');
-                            $proxy->put(
-                                '/seo',
-                                [SiteSeoController::class, 'update'],
-                            )->setName('admin.seo.update');
-                            $proxy->delete(
-                                '/seo/{target:favicon|icon}',
-                                [SiteSeoController::class, 'deleteImage'],
-                            )->setName('admin.seo.delete.image');
-
-                            $proxy->patch(
-                                '/publish/{status:published|unpublished}',
-                                SitePublishAction::class,
-                            )->setName('admin.publish');
-
-                            $proxy->get(
-                                '/theme',
-                                [ThemeController::class, 'indexPage'],
-                            )->setName('admin.theme.index');
-                            $proxy->get(
-                                '/theme/{id}',
-                                [ThemeController::class, 'detailPage'],
-                            )->setName('admin.theme.detail');
-                            $proxy->put(
-                                '/theme/{id}',
-                                [ThemeController::class, 'activate'],
-                            )->setName('admin.theme.activate');
-
-                            $proxy->post(
-                                '/logout',
-                                [LoginController::class, 'logout'],
-                            )->setName('admin.logout');
-                        })->add(AdminAuth::auth(
-                            redirect()->route('admin.login'),
-                        ));
-
-                        $proxy->group('', function (Proxy $proxy) {
-
-                            $proxy->get(
-                                '/login',
-                                [LoginController::class, 'loginPage'],
-                            )->setName('admin.login');
-                            $proxy->post(
-                                '/login',
-                                [LoginController::class, 'login'],
-                            )->setName('admin.login.post');
-                        })->add(AdminAuth::guest(
-                            redirect()->route('admin.dashboard'),
-                        ));
-                    })->add(AdminSessionStart::class)
+                        $proxy->get(
+                            '/{path:.+}',
+                            FixedPageAction::class,
+                        )->setName('fixed-page');
+                    })
+                        ->add(WhenUnpublished::class)
                         ->add(GuideToInstallation::class);
                 }
-            );
-
-            $http->group('', function (Proxy $proxy) use ($register) {
-
-                $proxy->get(
-                    '/',
-                    HomeAction::class,
-                )->setName('home');
-
-                $proxy->get(
-                    '/assets/{path:.+}',
-                    ActiveThemeAssetAction::class,
-                )->setName(ActiveThemeAssetAction::RouteName);
-
-                $proxy->get(
-                    '/webhook',
-                    MicroCmsWebhookAction::class,
-                )->setName('webhook');
-
-                // Set routing for theme
-                $register->register($proxy);
-
-                $proxy->get(
-                    '/{path:.+}',
-                    FixedPageAction::class,
-                )->setName('fixed-page');
-            })
-                ->add(WhenUnpublished::class)
-                ->add(GuideToInstallation::class);
-        }
+            )
+                ->add(Csrf::class);
+        },
     );

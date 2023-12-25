@@ -50,6 +50,14 @@ tasks:
     cmds:
       - docker-compose stop chubby-app
 
+  ngrok-start:
+    cmds:
+      - docker-compose up -d ngrok
+
+  ngrok-stop:
+    cmds:
+      - docker-compose stop ngrok
+
   pint:
     cmds:
       - docker-compose run --rm php {{.PINT_BIN}} --preset psr12 -v

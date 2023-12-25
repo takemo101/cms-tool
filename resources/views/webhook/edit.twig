@@ -1,0 +1,19 @@
+{% extends 'cms-tool::layouts.master' %}
+
+{% block title %}Webhook{% endblock %}
+
+{% block content %}
+    <div>
+        <h1>Webhook</h1>
+        <div>
+            <p>WebhookURL：{{ url }}</p>
+            <p>{{ header }}：{{ token }}</p>
+            {{ form_open({
+                route: 'admin.webhook.regenerate',
+                method: 'patch',
+            }) }}
+                <input type="submit" value="Regenerate"/>
+            {{ form_close() }}
+        </div>
+    </div>
+{% endblock %}

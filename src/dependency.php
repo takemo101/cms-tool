@@ -8,6 +8,7 @@ use Takemo101\CmsTool\Domain\Publish\SitePublishRepository;
 use Takemo101\CmsTool\Domain\Shared\PasswordHasher;
 use Takemo101\CmsTool\Domain\SiteMeta\SiteMetaRepository;
 use Takemo101\CmsTool\Domain\Theme\ActiveThemeRepository;
+use Takemo101\CmsTool\Domain\Webhook\WebhookTokenRepository;
 use Takemo101\CmsTool\Infra\Hash\DefaultPasswordHasher;
 use Takemo101\CmsTool\Infra\JsonAccess\QueryService\JsonAccessAdminAccountQueryService;
 use Takemo101\CmsTool\Infra\JsonAccess\QueryService\JsonAccessInstallSettingQueryService;
@@ -19,6 +20,7 @@ use Takemo101\CmsTool\Infra\JsonAccess\Repository\JsonAccessMicroCmsApiRepositor
 use Takemo101\CmsTool\Infra\JsonAccess\Repository\JsonAccessRootAdminRepository;
 use Takemo101\CmsTool\Infra\JsonAccess\Repository\JsonAccessSiteMetaRepository;
 use Takemo101\CmsTool\Infra\JsonAccess\Repository\JsonAccessSitePublishRepository;
+use Takemo101\CmsTool\Infra\JsonAccess\Repository\JsonAccessWebhookTokenRepository;
 use Takemo101\CmsTool\Infra\Saloon\QueryService\SaloonMicroCmsContentQueryService;
 use Takemo101\CmsTool\Infra\Saloon\Validator\SaloonMicroCmsApiAccessValidator;
 use Takemo101\CmsTool\Infra\Storage\Local\LocalSiteAssetStorage;
@@ -39,6 +41,7 @@ return [
     InstallRepository::class => get(JsonAccessInstallRepository::class),
     SitePublishRepository::class => get(JsonAccessSitePublishRepository::class),
     ActiveThemeRepository::class => get(JsonAccessActiveThemeRepository::class),
+    WebhookTokenRepository::class => get(JsonAccessWebhookTokenRepository::class),
 
     // QueryService
     InstallSettingQueryService::class => get(JsonAccessInstallSettingQueryService::class),

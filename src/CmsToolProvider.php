@@ -31,6 +31,8 @@ use Takemo101\CmsTool\Support\Twig\FlashExtension;
 use Takemo101\CmsTool\Support\Twig\OldExtension;
 use Takemo101\CmsTool\Support\Twig\SessionExtension;
 use Takemo101\CmsTool\Support\VendorPath;
+use Takemo101\CmsTool\Support\Webhook\WebhookHandler;
+use Takemo101\CmsTool\Support\Webhook\WebhookHandlers;
 use Twig\Environment;
 
 class CmsToolProvider implements Provider
@@ -77,6 +79,22 @@ class CmsToolProvider implements Provider
                 );
 
                 return $container->get($class);
+            },
+            WebhookHandlers::class => function (
+                ConfigRepository $config,
+                Hook $hook,
+            ) {
+                /** @var class-string<WebhookHandler>[] */
+                $classes = $config->get(
+                    'system.webhook.handlers',
+                    [],
+                );
+
+                $handlers = new WebhookHandlers(...$classes);
+
+                $hook->doByType($handlers);
+
+                return $handlers;
             },
         ]);
     }
@@ -140,8 +158,10 @@ class CmsToolProvider implements Provider
                     /** @var DataAccessors */
                     $dataAccessors = $container->get(DataAccessors::class);
 
+                    // CsrfGuardContext generation processing is set in consideration of when the CSRF middleware is not executed.
                     $guard = CsrfGuardContext::fromServerRequest(
                         $request,
+                        fn () => $container->get(CsrfGuardContext::class),
                     )->getGuard();
 
                     $filter->setCsrfToken(

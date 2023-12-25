@@ -1,10 +1,10 @@
 <?php
 
 use Takemo101\CmsTool\Domain\Install\InstallationNotPossibleException;
-use Takemo101\CmsTool\Domain\Install\InstalledService;
-use Takemo101\CmsTool\UseCase\Install\Handler\InstalledHandler;
+use Takemo101\CmsTool\Domain\Install\InstallService;
+use Takemo101\CmsTool\UseCase\Install\Handler\InstallationHandler;
 use Mockery as m;
-use Takemo101\CmsTool\Domain\Install\InstalledSpec;
+use Takemo101\CmsTool\Domain\Install\InstallSpec;
 use Takemo101\CmsTool\Domain\Install\InstallRepository;
 
 describe(
@@ -21,14 +21,14 @@ describe(
                     ->andReturn(false);
 
                 // Create an instance of the InstalledSpec
-                $spec = m::mock(InstalledSpec::class, [
+                $spec = m::mock(InstallSpec::class, [
                     'isSatisfiedBy' => true,
                 ])->makePartial();
 
-                $service = new InstalledService($repository, $spec);
+                $service = new InstallService($repository, $spec);
 
                 // Create an instance of the InstalledHandler
-                $handler = new InstalledHandler($service);
+                $handler = new InstallationHandler($service);
 
                 // Call the handle method
                 expect(fn () => $handler->handle())
@@ -43,14 +43,14 @@ describe(
                 $repository = m::mock(InstallRepository::class);
 
                 // Create an instance of the InstalledSpec
-                $spec = m::mock(InstalledSpec::class, [
+                $spec = m::mock(InstallSpec::class, [
                     'isSatisfiedBy' => false,
                 ])->makePartial();
 
-                $service = new InstalledService($repository, $spec);
+                $service = new InstallService($repository, $spec);
 
                 // Create an instance of the InstalledHandler
-                $handler = new InstalledHandler($service);
+                $handler = new InstallationHandler($service);
 
                 // Expect an exception to be thrown when calling the handle method
                 expect(fn () => $handler->handle())

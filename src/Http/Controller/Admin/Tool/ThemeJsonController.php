@@ -16,7 +16,7 @@ class ThemeJsonController
      *
      * @return View
      */
-    public function editPage(): View
+    public function edit(): View
     {
         return view('cms-tool::tool.theme-json');
     }

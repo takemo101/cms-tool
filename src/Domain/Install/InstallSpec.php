@@ -6,7 +6,7 @@ use Takemo101\CmsTool\Domain\Admin\RootAdminRepository;
 use Takemo101\CmsTool\Domain\MicroCms\MicroCmsApiRepository;
 use Takemo101\CmsTool\Domain\SiteMeta\SiteMetaRepository;
 
-class InstalledSpec
+class InstallSpec
 {
     /**
      * constructor

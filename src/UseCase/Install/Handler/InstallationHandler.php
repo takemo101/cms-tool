@@ -4,25 +4,25 @@ namespace Takemo101\CmsTool\UseCase\Install\Handler;
 
 use CmsTool\Theme\DefaultThemeId;
 use Takemo101\CmsTool\Domain\Install\InstallationNotPossibleException;
-use Takemo101\CmsTool\Domain\Install\InstalledService;
+use Takemo101\CmsTool\Domain\Install\InstallService;
 use Takemo101\CmsTool\Domain\Publish\SitePublishService;
 use Takemo101\CmsTool\Domain\Theme\ActivateThemeService;
 use Takemo101\CmsTool\Domain\Webhook\WebhookToken;
 use Takemo101\CmsTool\Domain\Webhook\WebhookTokenRepository;
 
-class InstalledHandler
+class InstallationHandler
 {
     /**
      * constructor
      *
-     * @param InstalledService $installedService
+     * @param InstallService $installService
      * @param SitePublishService $publishService
      * @param ActivateThemeService $activateThemeService
      * @param DefaultThemeId $defaultThemeId
      * @param WebhookTokenRepository $tokenRepository
      */
     public function __construct(
-        private InstalledService $installedService,
+        private InstallService $installService,
         private SitePublishService $publishService,
         private ActivateThemeService $activateThemeService,
         private DefaultThemeId $defaultThemeId,
@@ -48,8 +48,8 @@ class InstalledHandler
         $this->activateThemeService->activate($this->defaultThemeId);
 
         // After installation, make the site private
-        $this->publishService->unpublished();
+        $this->publishService->unpublish();
 
-        $this->installedService->installed();
+        $this->installService->install();
     }
 }

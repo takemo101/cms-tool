@@ -20,8 +20,8 @@ class SitePublishAction
         string $status,
     ): RedirectBackRenderer {
         match ($status) {
-            'published' => $service->published(),
-            'unpublished' => $service->unpublished(),
+            'published' => $service->publish(),
+            'unpublished' => $service->unpublish(),
             default => throw new HttpNotFoundException($request),
         };
 

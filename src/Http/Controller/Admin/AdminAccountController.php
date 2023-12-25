@@ -21,7 +21,7 @@ class AdminAccountController
      *
      * @return View
      */
-    public function editPage(
+    public function edit(
         ServerRequestInterface $request,
         AdminAccountQueryService $queryService,
         AdminSession $session,

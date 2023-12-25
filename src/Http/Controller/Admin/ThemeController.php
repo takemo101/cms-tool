@@ -20,7 +20,7 @@ class ThemeController
      * @param ThemeQueryService $queryService
      * @return View
      */
-    public function indexPage(
+    public function index(
         ServerRequestInterface $request,
         ThemeQueryService $queryService,
     ): View {
@@ -38,7 +38,7 @@ class ThemeController
      * @param string $id
      * @return View
      */
-    public function detailPage(
+    public function detail(
         ServerRequestInterface $request,
         ThemeQueryService $queryService,
         string $id,

@@ -15,7 +15,7 @@ use Takemo101\CmsTool\Http\ViewModel\InstallPage;
 use Takemo101\CmsTool\UseCase\BasicSetting\Handler\RootAdminForSaveBasicSettingCommand;
 use Takemo101\CmsTool\UseCase\BasicSetting\Handler\SaveBasicSettingCommand;
 use Takemo101\CmsTool\UseCase\BasicSetting\Handler\SaveBasicSettingHandler;
-use Takemo101\CmsTool\UseCase\Install\Handler\InstalledHandler;
+use Takemo101\CmsTool\UseCase\Install\Handler\InstallationHandler;
 use Takemo101\CmsTool\UseCase\Install\QueryService\InstallSettingQueryService;
 use Takemo101\CmsTool\UseCase\MicroCms\Handler\SaveMicroCmsApiCommand;
 use Takemo101\CmsTool\UseCase\MicroCms\Handler\SaveMicroCmsApiHandler;
@@ -38,7 +38,7 @@ class InstallController
      *
      * @return View
      */
-    public function apiPage(): View
+    public function api(): View
     {
         $data = $this->queryService->get();
 
@@ -92,7 +92,7 @@ class InstallController
      *
      * @return View
      */
-    public function basicSettingPage(): View
+    public function basicSetting(): View
     {
         $data = $this->queryService->get();
 
@@ -139,7 +139,7 @@ class InstallController
      *
      * @return View
      */
-    public function confirmPage(): View
+    public function confirm(): View
     {
         $data = $this->queryService->get();
 
@@ -153,12 +153,12 @@ class InstallController
      * Installed
      *
      * @param ServerRequestInterface $request
-     * @param InstalledHandler $handler
+     * @param InstallationHandler $handler
      * @return RouteRedirectRenderer
      */
-    public function installed(
+    public function install(
         ServerRequestInterface $request,
-        InstalledHandler $handler,
+        InstallationHandler $handler,
     ): RouteRedirectRenderer {
         try {
             $handler->handle();

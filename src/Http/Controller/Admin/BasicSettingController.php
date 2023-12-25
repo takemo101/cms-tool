@@ -14,7 +14,7 @@ class BasicSettingController
      * @param MicroCmsApiQueryService $microCmsApiQueryService
      * @return View
      */
-    public function editPage(
+    public function edit(
         SiteMetaQueryService $siteMetaQueryService,
         MicroCmsApiQueryService $microCmsApiQueryService,
     ): View {

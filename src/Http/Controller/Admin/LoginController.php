@@ -20,7 +20,7 @@ class LoginController
      *
      * @return View
      */
-    public function loginPage(): View
+    public function form(): View
     {
         return view('cms-tool::auth.login');
     }

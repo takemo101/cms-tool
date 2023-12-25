@@ -16,7 +16,7 @@ class WebhookController
      * @param WebhookTokenRepository $repository
      * @return View
      */
-    public function editPage(
+    public function edit(
         ServerRequestInterface $request,
         WebhookTokenRepository $repository,
     ): View {

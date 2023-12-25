@@ -105,7 +105,7 @@ hook()
 
                                     $proxy->get(
                                         '/api',
-                                        [InstallController::class, 'apiPage'],
+                                        [InstallController::class, 'api'],
                                     )->setName('install.api');
                                     $proxy->post(
                                         '/api',
@@ -114,7 +114,7 @@ hook()
 
                                     $proxy->get(
                                         '/basic',
-                                        [InstallController::class, 'basicSettingPage'],
+                                        [InstallController::class, 'basicSetting'],
                                     )->setName('install.basic');
                                     $proxy->post(
                                         '/basic',
@@ -123,11 +123,11 @@ hook()
 
                                     $proxy->get(
                                         '',
-                                        [InstallController::class, 'confirmPage'],
+                                        [InstallController::class, 'confirm'],
                                     )->setName('install.confirm');
                                     $proxy->post(
                                         '',
-                                        [InstallController::class, 'installed'],
+                                        [InstallController::class, 'install'],
                                     )->setName('installed');
                                 }
                             )->add(WhenUninstalled::class);
@@ -150,12 +150,12 @@ hook()
 
                                     $proxy->get(
                                         '',
-                                        [DashboardController::class, 'dashboardPage'],
+                                        [DashboardController::class, 'dashboard'],
                                     )->setName('admin.dashboard');
 
                                     $proxy->get(
                                         '/account',
-                                        [AdminAccountController::class, 'editPage'],
+                                        [AdminAccountController::class, 'edit'],
                                     )->setName('admin.account.edit');
                                     $proxy->put(
                                         '/account',
@@ -164,7 +164,7 @@ hook()
 
                                     $proxy->get(
                                         '/basic',
-                                        [BasicSettingController::class, 'editPage'],
+                                        [BasicSettingController::class, 'edit'],
                                     )->setName('admin.basic.edit');
 
                                     $proxy->put(
@@ -178,7 +178,7 @@ hook()
 
                                     $proxy->get(
                                         '/seo',
-                                        [SiteSeoController::class, 'editPage'],
+                                        [SiteSeoController::class, 'edit'],
                                     )->setName('admin.seo.edit');
                                     $proxy->put(
                                         '/seo',
@@ -196,11 +196,11 @@ hook()
 
                                     $proxy->get(
                                         '/theme',
-                                        [ThemeController::class, 'indexPage'],
+                                        [ThemeController::class, 'index'],
                                     )->setName('admin.theme.index');
                                     $proxy->get(
                                         '/theme/{id}',
-                                        [ThemeController::class, 'detailPage'],
+                                        [ThemeController::class, 'detail'],
                                     )->setName('admin.theme.detail');
                                     $proxy->put(
                                         '/theme/{id}',
@@ -209,7 +209,7 @@ hook()
 
                                     $proxy->get(
                                         '/webhook',
-                                        [WebhookController::class, 'editPage'],
+                                        [WebhookController::class, 'edit'],
                                     )->setName('admin.webhook.edit');
                                     $proxy->patch(
                                         '/webhook/regenerate',
@@ -221,7 +221,7 @@ hook()
                                         function (Proxy $proxy) {
                                             $proxy->get(
                                                 '/theme-json',
-                                                [ThemeJsonController::class, 'editPage'],
+                                                [ThemeJsonController::class, 'edit'],
                                             )->setName('admin.tool.theme-json.edit');
 
                                             $proxy->post(
@@ -243,7 +243,7 @@ hook()
 
                                     $proxy->get(
                                         '/login',
-                                        [LoginController::class, 'loginPage'],
+                                        [LoginController::class, 'form'],
                                     )->setName('admin.login');
                                     $proxy->post(
                                         '/login',

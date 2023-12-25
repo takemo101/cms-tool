@@ -20,7 +20,7 @@ class SitePublishService
      *
      * @return void
      */
-    public function published(): void
+    public function publish(): void
     {
         $this->repository->save(true);
     }
@@ -30,7 +30,7 @@ class SitePublishService
      *
      * @return void
      */
-    public function unpublished(): void
+    public function unpublish(): void
     {
         $this->repository->save(false);
     }

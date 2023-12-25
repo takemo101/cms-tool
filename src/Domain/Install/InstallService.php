@@ -2,17 +2,17 @@
 
 namespace Takemo101\CmsTool\Domain\Install;
 
-class InstalledService
+class InstallService
 {
     /**
      * constructor
      *
      * @param InstallRepository $repository
-     * @param InstalledSpec $spec
+     * @param InstallSpec $spec
      */
     public function __construct(
         private InstallRepository $repository,
-        private InstalledSpec $spec,
+        private InstallSpec $spec,
     ) {
         //
     }
@@ -21,7 +21,7 @@ class InstalledService
      * @return void
      * @throws InstallationNotPossibleException
      */
-    public function installed(): void
+    public function install(): void
     {
         if (!$this->spec->isSatisfiedBy()) {
             throw new InstallationNotPossibleException();

@@ -20,7 +20,7 @@ class SiteSeoController
      * @param SiteMetaQueryService $queryService
      * @return View
      */
-    public function editPage(
+    public function edit(
         SiteMetaQueryService $queryService,
     ): View {
         $meta = $queryService->get();

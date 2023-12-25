@@ -22,6 +22,7 @@ use Takemo101\CmsTool\Http\Action\SitePublishAction;
 use Takemo101\CmsTool\Http\Action\Theme\ActiveThemeAssetAction;
 use Takemo101\CmsTool\Http\Action\Theme\HomeAction;
 use Takemo101\CmsTool\Http\Action\Theme\FixedPageAction;
+use Takemo101\CmsTool\Http\Action\Theme\MicroCmsWebhookAction;
 use Takemo101\CmsTool\Http\Action\ThemeAssetAction;
 use Takemo101\CmsTool\Http\Controller\Admin\AdminAccountController;
 use Takemo101\CmsTool\Http\Controller\Admin\BasicSettingController;
@@ -233,6 +234,11 @@ hook()
                     '/assets/{path:.+}',
                     ActiveThemeAssetAction::class,
                 )->setName(ActiveThemeAssetAction::RouteName);
+
+                $proxy->get(
+                    '/webhook',
+                    MicroCmsWebhookAction::class,
+                )->setName('webhook');
 
                 // Set routing for theme
                 $register->register($proxy);

@@ -28,10 +28,14 @@ class CacheCleanCommand extends Command
         OutputInterface $output,
         CacheItemPoolInterface $cache,
     ) {
-        $cache->clear();
+        if ($cache->clear()) {
+            $output->writeln('<info>Cache cleared successfully.</info>');
 
-        $output->writeln('<info>Cache cleared successfully.</info>');
+            return self::SUCCESS;
+        }
 
-        return self::SUCCESS;
+        $output->writeln('<error>Failed to clear cache.</error>');
+
+        return self::FAILURE;
     }
 }

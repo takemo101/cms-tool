@@ -3,8 +3,11 @@
 namespace Takemo101\CmsTool\Preset\Shared\Action;
 
 use CmsTool\View\View;
+use CmsTool\View\ViewCreator;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
+use Takemo101\CmsTool\Preset\Shared\Exception\NotFoundThemeTemplateException;
+use Takemo101\CmsTool\Preset\Shared\LayeredTemplateNamesCreator;
 use Takemo101\CmsTool\Preset\Shared\ViewModel\ContentDetailPage;
 use Takemo101\CmsTool\UseCase\MicroCms\QueryService\Content\MicroCmsContentQueryService;
 
@@ -29,13 +32,17 @@ class ContentDetailAction
     /**
      * @param ServerRequestInterface $request
      * @param MicroCmsContentQueryService $queryService
+     * @param ViewCreator $creator
+     * @param LayeredTemplateNamesCreator $names
      * @param string $id
      * @return View
-     * @throws HttpNotFoundException
+     * @throws HttpNotFoundException|NotFoundThemeTemplateException
      */
     public function __invoke(
         ServerRequestInterface $request,
         MicroCmsContentQueryService $queryService,
+        ViewCreator $creator,
+        LayeredTemplateNamesCreator $names,
         string $id,
     ): View {
         $params = $request->getQueryParams();
@@ -61,9 +68,14 @@ class ContentDetailAction
             );
         }
 
-        return view("pages.{$this->signature}.detail", new ContentDetailPage(
-            content: $content,
-            isDraft: !empty($draftKey),
-        ));
+        $templateNames = $names->detail($this->signature, $id);
+
+        return $creator->createIfExists(
+            $templateNames,
+            new ContentDetailPage(
+                content: $content,
+                isDraft: !empty($draftKey),
+            )
+        ) ?? throw new NotFoundThemeTemplateException($templateNames);
     }
 }

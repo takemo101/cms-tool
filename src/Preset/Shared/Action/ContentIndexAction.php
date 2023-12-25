@@ -3,7 +3,11 @@
 namespace Takemo101\CmsTool\Preset\Shared\Action;
 
 use CmsTool\View\View;
+use CmsTool\View\ViewCreator;
 use Psr\Http\Message\ServerRequestInterface;
+use Slim\Exception\HttpNotFoundException;
+use Takemo101\CmsTool\Preset\Shared\Exception\NotFoundThemeTemplateException;
+use Takemo101\CmsTool\Preset\Shared\LayeredTemplateNamesCreator;
 use Takemo101\CmsTool\Preset\Shared\ViewModel\ContentIndexPage;
 use Takemo101\CmsTool\UseCase\MicroCms\QueryService\Content\MicroCmsContentGetListQuery;
 use Takemo101\CmsTool\UseCase\MicroCms\QueryService\Content\MicroCmsContentQueryService;
@@ -33,11 +37,16 @@ class ContentIndexAction extends AbstractIndexAction
     /**
      * @param ServerRequestInterface $request
      * @param MicroCmsContentQueryService $queryService
+     * @param ViewCreator $creator
+     * @param LayeredTemplateNamesCreator $names
      * @return View
+     * @throws NotFoundThemeTemplateException
      */
     public function __invoke(
         ServerRequestInterface $request,
         MicroCmsContentQueryService $queryService,
+        ViewCreator $creator,
+        LayeredTemplateNamesCreator $names,
     ): View {
         $params = $request->getQueryParams();
 
@@ -54,6 +63,11 @@ class ContentIndexAction extends AbstractIndexAction
             )
         );
 
-        return view("pages.{$this->signature}.index", new ContentIndexPage($result));
+        $templateNames = $names->index($this->signature);
+
+        return $creator->createIfExists(
+            $templateNames,
+            new ContentIndexPage($result),
+        ) ?? throw new NotFoundThemeTemplateException($templateNames);
     }
 }

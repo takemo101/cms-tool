@@ -6,7 +6,6 @@ use Takemo101\CmsTool\UseCase\MicroCms\QueryService\Content\MicroCmsContentGetLi
 use Takemo101\CmsTool\UseCase\MicroCms\QueryService\Content\MicroCmsContentGetListResult;
 use Takemo101\CmsTool\UseCase\MicroCms\QueryService\Content\MicroCmsContentGetOneQuery;
 use Takemo101\CmsTool\UseCase\MicroCms\QueryService\Content\MicroCmsContentQueryService;
-use ArrayObject;
 use Takemo101\CmsTool\Infra\Saloon\HttpClient\Get\MicroCmsGetListQuery;
 use Takemo101\CmsTool\Infra\Saloon\HttpClient\Get\MicroCmsGetListRequest;
 use Takemo101\CmsTool\Infra\Saloon\HttpClient\Get\MicroCmsGetOneQuery;
@@ -16,6 +15,7 @@ use Takemo101\CmsTool\Infra\Shared\Exception\InfraException;
 use Takemo101\CmsTool\Support\Shared\ImmutableArrayObject;
 use Takemo101\CmsTool\UseCase\Shared\QueryService\ContentPaginator;
 use Takemo101\CmsTool\UseCase\Shared\QueryService\Pager;
+use ArrayObject;
 
 class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
 {
@@ -33,6 +33,67 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
     /**
      * {@inheritDoc}
      */
+    public function getSingle(
+        string $endpoint,
+        MicroCmsContentGetOneQuery $query = new MicroCmsContentGetOneQuery(),
+
+    ): ?ArrayObject {
+        $connector = $this->factory->create();
+
+        $response = $connector->send(
+            MicroCmsGetOneRequest::createSingle(
+                endpoint: $endpoint,
+                apiQuery: new MicroCmsGetOneQuery(
+                    fields: $query->fields,
+                    depth: $query->depth,
+                ),
+            ),
+        );
+
+        if ($response->status() !== 200) {
+            return null;
+        }
+
+        /** @var ImmutableArrayObject */
+        $dto = $response->dto();
+
+        return $dto;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getSingleDraft(
+        string $endpoint,
+        string $draftKey,
+        MicroCmsContentGetOneQuery $query = new MicroCmsContentGetOneQuery(),
+    ): ?ArrayObject {
+        $connector = $this->factory->create();
+
+        $response = $connector->send(
+            MicroCmsGetOneRequest::createSingle(
+                endpoint: $endpoint,
+                apiQuery: new MicroCmsGetOneQuery(
+                    draftKey: $draftKey,
+                    fields: $query->fields,
+                    depth: $query->depth,
+                ),
+            ),
+        );
+
+        if ($response->status() !== 200) {
+            return null;
+        }
+
+        /** @var ImmutableArrayObject */
+        $dto = $response->dto();
+
+        return $dto;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getOne(
         string $endpoint,
         string $id,
@@ -41,7 +102,7 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
         $connector = $this->factory->create();
 
         $response = $connector->send(
-            new MicroCmsGetOneRequest(
+            MicroCmsGetOneRequest::createOne(
                 endpoint: $endpoint,
                 id: $id,
                 apiQuery: new MicroCmsGetOneQuery(
@@ -73,7 +134,7 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
         $connector = $this->factory->create();
 
         $response = $connector->send(
-            new MicroCmsGetOneRequest(
+            MicroCmsGetOneRequest::createOne(
                 endpoint: $endpoint,
                 id: $id,
                 apiQuery: new MicroCmsGetOneQuery(

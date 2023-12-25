@@ -18,8 +18,26 @@ class ErrorPage extends ViewModel
         public readonly Throwable $e,
     ) {
         $this->message = $e->getMessage();
-        $this->code = $e instanceof HttpException
-            ? $e->getCode()
+    }
+
+    public function title(): string
+    {
+        return $this->e instanceof HttpException
+            ? $this->e->getTitle()
+            : '500 Internal Server Error';
+    }
+
+    public function description(): string
+    {
+        return $this->e instanceof HttpException
+            ? $this->e->getDescription()
+            : 'Unexpected condition encountered preventing server from fulfilling request.';
+    }
+
+    public function code(): int
+    {
+        return $this->e instanceof HttpException
+            ? $this->e->getCode()
             : 500;
     }
 }

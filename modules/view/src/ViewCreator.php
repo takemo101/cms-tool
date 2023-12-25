@@ -27,6 +27,29 @@ class ViewCreator
     }
 
     /**
+     * Create a new view by giving priority to existing templates.
+     * If there is no template, return null.
+     *
+     * @param string|string[] $name
+     * @param array<string,mixed>|Arrayable<string,mixed> $data
+     * @return View|null
+     */
+    public function createIfExists(
+        string|array $name,
+        array|Arrayable $data = []
+    ): ?View {
+        $names = is_array($name) ? $name : [$name];
+
+        foreach ($names as $name) {
+            if ($this->finder->exists($name)) {
+                return $this->create($name, $data);
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Create a new view instance from the given arguments.
      *
      * @param string $name

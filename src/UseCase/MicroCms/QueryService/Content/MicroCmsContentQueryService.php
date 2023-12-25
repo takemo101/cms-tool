@@ -8,7 +8,35 @@ use Takemo101\CmsTool\UseCase\Shared\QueryService\Pager;
 interface MicroCmsContentQueryService
 {
     /**
-     * Get the published content
+     * Get the published content of a single object.
+     *
+     * @param string $endpoint
+     * @param string $id
+     * @param MicroCmsContentGetOneQuery $query
+     * @return ArrayObject|null
+     */
+    public function getSingle(
+        string $endpoint,
+        MicroCmsContentGetOneQuery $query = new MicroCmsContentGetOneQuery(),
+    ): ?ArrayObject;
+
+    /**
+     * Get a draft of a single object
+     *
+     * @param string $endpoint
+     * @param string $draftKey
+     * @param MicroCmsContentGetOneQuery $query
+     * @return ArrayObject|null
+     */
+    public function getSingleDraft(
+        string $endpoint,
+        string $draftKey,
+        MicroCmsContentGetOneQuery $query = new MicroCmsContentGetOneQuery(),
+    ): ?ArrayObject;
+
+    /**
+     * Get the published content.
+     * Acquired by specifying id from the list.
      *
      * @param string $endpoint
      * @param string $id

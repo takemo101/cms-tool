@@ -128,7 +128,7 @@ hook()
                                     $proxy->post(
                                         '',
                                         [InstallController::class, 'install'],
-                                    )->setName('installed');
+                                    )->setName('install');
                                 }
                             )->add(WhenUninstalled::class);
 

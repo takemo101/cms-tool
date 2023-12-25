@@ -8,7 +8,7 @@
         <h3>basic</h3>
         <p>{{ setting.isArrangedBasicSetting() ? '済み' : '未' }}</p>
     </div>
-    {{ form_open({route: 'installed', method: 'post'}) }}
+    {{ form_open({route: 'install', method: 'post'}) }}
         <input type="submit" value="Submit"/>
     {{ form_close() }}
 </div>

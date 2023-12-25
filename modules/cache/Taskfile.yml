@@ -1,0 +1,39 @@
+version: '3'
+
+# please install Taskfile => https://taskfile.dev/ja-JP/installation/
+
+# template => https://go-task.github.io/slim-sprig/
+
+vars:
+  PINT_BIN: ./vendor/bin/pint
+  PEST_BIN: ./vendor/bin/pest
+  PHPSTAN_BIN: ./vendor/bin/phpstan
+
+tasks:
+  # ex: task composer -- install
+  composer:
+    cmds:
+      - docker-compose run --rm composer {{default "--version" .CLI_ARGS}}
+
+  pkg-update:
+    cmds:
+      - docker-compose run --rm composer remove --dev takemo101/chubby
+      - docker-compose run --rm composer require --dev takemo101/chubby
+
+  pint:
+    cmds:
+      - docker-compose run --rm php {{.PINT_BIN}} --preset psr12 -v
+
+  lint:
+    cmds:
+      - docker-compose run --rm php {{.PINT_BIN}} --test --preset psr12 -v
+
+  analyze:
+    cmds:
+      - docker-compose run --rm php {{.PHPSTAN_BIN}} analyse --ansi --memory-limit=1G
+
+  # ex: task test GROUP=xxx
+  test:
+    cmds:
+      - docker-compose run --rm php {{.PEST_BIN}} --colors=always
+        {{if .GROUP}}--group={{.GROUP}}{{end}}

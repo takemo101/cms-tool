@@ -3,6 +3,7 @@
 use CmsTool\Session\NativePhpSessionFactory;
 
 return [
+    // SessionFactory implementation class name
     'factory' => NativePhpSessionFactory::class,
 
     // FlashSession classes

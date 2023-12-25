@@ -8,7 +8,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
 use Takemo101\CmsTool\Preset\Shared\Exception\NotFoundThemeTemplateException;
 use Takemo101\CmsTool\Preset\Shared\LayeredTemplateNamesCreator;
-use Takemo101\CmsTool\Preset\Shared\ViewModel\ContentIndexPage;
+use Takemo101\CmsTool\Preset\Shared\ViewModel\TaxonomyIndexPage;
 use Takemo101\CmsTool\UseCase\MicroCms\QueryService\Content\MicroCmsContentGetListQuery;
 use Takemo101\CmsTool\UseCase\MicroCms\QueryService\Content\MicroCmsContentQueryService;
 use Takemo101\CmsTool\UseCase\Shared\QueryService\Pager;
@@ -87,7 +87,10 @@ class TaxonomyIndexAction extends AbstractIndexAction
 
         return $creator->createIfExists(
             $templateNames,
-            new ContentIndexPage($result),
+            new TaxonomyIndexPage(
+                taxonomy: $taxonomy,
+                result: $result,
+            ),
         ) ?? throw new NotFoundThemeTemplateException($templateNames);
     }
 }

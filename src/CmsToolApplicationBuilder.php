@@ -2,6 +2,7 @@
 
 namespace Takemo101\CmsTool;
 
+use CmsTool\Cache\CacheProvider;
 use CmsTool\Session\SessionProvider;
 use CmsTool\Support\SupportProvider;
 use CmsTool\Theme\ThemeProvider;
@@ -30,6 +31,7 @@ class CmsToolApplicationBuilder
             ->setFunctionPath(__DIR__ . '/function.php');
 
         return $app->addProvider(
+            CacheProvider::class,
             ViewProvider::class,
             SessionProvider::class,
             SupportProvider::class,

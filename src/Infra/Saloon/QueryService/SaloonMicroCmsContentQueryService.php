@@ -15,6 +15,7 @@ use Takemo101\CmsTool\Infra\Shared\Exception\InfraException;
 use Takemo101\CmsTool\Support\Shared\ImmutableArrayObject;
 use Takemo101\CmsTool\UseCase\Shared\QueryService\ContentPaginator;
 use Takemo101\CmsTool\UseCase\Shared\QueryService\Pager;
+use Symfony\Contracts\Cache\CacheInterface;
 use ArrayObject;
 
 class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
@@ -23,9 +24,11 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
      * constructor
      *
      * @param MicroCmsApiConnectorFactory $factory
+     * @param CacheInterface $cache
      */
     public function __construct(
         private MicroCmsApiConnectorFactory $factory,
+        private CacheInterface $cache,
     ) {
         //
     }
@@ -38,26 +41,42 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
         MicroCmsContentGetOneQuery $query = new MicroCmsContentGetOneQuery(),
 
     ): ?ArrayObject {
-        $connector = $this->factory->create();
 
-        $response = $connector->send(
-            MicroCmsGetOneRequest::createSingle(
-                endpoint: $endpoint,
-                apiQuery: new MicroCmsGetOneQuery(
-                    fields: $query->fields,
-                    depth: $query->depth,
-                ),
-            ),
+        $apiQuery = new MicroCmsGetOneQuery(
+            fields: $query->fields,
+            depth: $query->depth,
         );
 
-        if ($response->status() !== 200) {
-            return null;
-        }
+        $key = $this->buildCacheKey([
+            ...$apiQuery->toQuery(),
+            'endpoint' => $endpoint,
+        ]);
 
-        /** @var ImmutableArrayObject */
-        $dto = $response->dto();
+        /** @var array<string,mixed> */
+        $json = $this->cache->get(
+            key: $key,
+            callback: function () use (
+                $endpoint,
+                $apiQuery,
+            ): array {
+                $connector = $this->factory->create();
 
-        return $dto;
+                $response = $connector->send(
+                    MicroCmsGetOneRequest::createSingle(
+                        endpoint: $endpoint,
+                        apiQuery: $apiQuery,
+                    ),
+                );
+
+                if ($response->status() !== 200) {
+                    return null;
+                }
+
+                return $response->json();
+            },
+        );
+
+        return ImmutableArrayObject::of($json);
     }
 
     /**
@@ -99,27 +118,45 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
         string $id,
         MicroCmsContentGetOneQuery $query = new MicroCmsContentGetOneQuery(),
     ): ?ArrayObject {
-        $connector = $this->factory->create();
 
-        $response = $connector->send(
-            MicroCmsGetOneRequest::createOne(
-                endpoint: $endpoint,
-                id: $id,
-                apiQuery: new MicroCmsGetOneQuery(
-                    fields: $query->fields,
-                    depth: $query->depth,
-                )
-            ),
+        $apiQuery = new MicroCmsGetOneQuery(
+            fields: $query->fields,
+            depth: $query->depth,
         );
 
-        if ($response->status() !== 200) {
-            return null;
-        }
+        $key = $this->buildCacheKey([
+            ...$apiQuery->toQuery(),
+            'endpoint' => $endpoint,
+            'id' => $id,
+        ]);
 
-        /** @var ImmutableArrayObject */
-        $dto = $response->dto();
+        /** @var array<string,mixed> */
+        $json = $this->cache->get(
+            key: $key,
+            callback: function () use (
+                $endpoint,
+                $id,
+                $apiQuery,
+            ): array {
+                $connector = $this->factory->create();
 
-        return $dto;
+                $response = $connector->send(
+                    MicroCmsGetOneRequest::createOne(
+                        endpoint: $endpoint,
+                        id: $id,
+                        apiQuery: $apiQuery,
+                    ),
+                );
+
+                if ($response->status() !== 200) {
+                    return null;
+                }
+
+                return $response->json();
+            },
+        );
+
+        return ImmutableArrayObject::of($json);
     }
 
     /**
@@ -131,6 +168,7 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
         string $draftKey,
         MicroCmsContentGetOneQuery $query = new MicroCmsContentGetOneQuery(),
     ): ?ArrayObject {
+
         $connector = $this->factory->create();
 
         $response = $connector->send(
@@ -164,30 +202,46 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
         Pager $pager = new Pager(),
         MicroCmsContentGetListQuery $query = new MicroCmsContentGetListQuery(),
     ): MicroCmsContentGetListResult {
-        $connector = $this->factory->create();
-
-        $response = $connector->send(
-            new MicroCmsGetListRequest(
-                endpoint: $endpoint,
-                apiQuery: new MicroCmsGetListQuery(
-                    limit: $pager->limit,
-                    offset: $pager->offset,
-                    orders: $query->orders,
-                    q: $query->q,
-                    fields: $query->fields,
-                    ids: $query->ids,
-                    filters: $query->filters,
-                    depth: $query->depth,
-                ),
-            ),
+        $apiQuery = new MicroCmsGetListQuery(
+            limit: $pager->limit,
+            offset: $pager->offset,
+            orders: $query->orders,
+            q: $query->q,
+            fields: $query->fields,
+            ids: $query->ids,
+            filters: $query->filters,
+            depth: $query->depth,
         );
 
-        if ($response->status() !== 200) {
-            throw new InfraException('failed to get list');
-        }
+        $key = $this->buildCacheKey([
+            ...$apiQuery->toQuery(),
+            'endpoint' => $endpoint,
+        ]);
 
         /** @var array<string,mixed> */
-        $json = $response->json();
+        $json = $this->cache->get(
+            key: $key,
+            callback: function () use (
+                $endpoint,
+                $apiQuery,
+            ): array {
+
+                $connector = $this->factory->create();
+
+                $response = $connector->send(
+                    new MicroCmsGetListRequest(
+                        endpoint: $endpoint,
+                        apiQuery: $apiQuery,
+                    ),
+                );
+
+                if ($response->status() !== 200) {
+                    throw new InfraException('failed to get list');
+                }
+
+                return $response->json();
+            },
+        );
 
         /** @var array<string,mixed> */
         $contents = $json['contents'] ?? [];
@@ -212,5 +266,15 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
                 perPage: $pager->limit,
             ),
         );
+    }
+
+    /**
+     * @param array<string,mixed> $query
+     * @return string
+     */
+    private function buildCacheKey(
+        array $query,
+    ): string {
+        return http_build_query($query);
     }
 }

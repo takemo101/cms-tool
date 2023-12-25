@@ -8,6 +8,7 @@
 /storage/logs/*
 /storage/cache/*
 /storage/public/*
+/storage/dump/*
 /.env
 /setting.json
 /themes/*

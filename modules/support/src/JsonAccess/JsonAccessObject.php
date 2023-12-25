@@ -62,6 +62,17 @@ class JsonAccessObject implements Arrayable
     }
 
     /**
+     * Change all data
+     *
+     * @param array<string,mixed> $data
+     * @return void
+     */
+    public function change(array $data): void
+    {
+        $this->data = $data;
+    }
+
+    /**
      * Delete the data of the specified key
      *
      * @param string $key

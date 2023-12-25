@@ -1,0 +1,77 @@
+<div>
+    <h1>テーマJson作成</h1>
+    {{ form_open({route: 'admin.tool.theme-json.generate', method: 'post'}) }}
+        <p>
+            <label>uid</label>
+            <input
+                style="width: 100%"
+                type="text"
+                name="uid" />
+            <a href="https://uuid.doratool.com/" target="_blank">uuid生成</a>
+        </p>
+        <p>
+            <label>name</label>
+            <input
+                style="width: 100%"
+                type="text"
+                name="name" />
+        </p>
+        <p>
+            <label>version</label>
+            <input
+                style="width: 100%"
+                type="text"
+                name="version" />
+        </p>
+        <p>
+            <label>content</label>
+            <textarea
+                style="width: 100%"
+                rows="30"
+                name="content"></textarea>
+        </p>
+        <p>
+            <label>images</label>
+            <input
+                style="width: 100%"
+                type="text"
+                name="images" />
+        </p>
+        <p>
+            <label>tags</label>
+            <input
+                style="width: 100%"
+                type="text"
+                name="tags" />
+        </p>
+        <p>
+            <label>link</label>
+            <input
+                style="width: 100%"
+                type="text"
+                name="link" />
+        </p>
+        <p>
+            <label>preset</label>
+            <input
+                style="width: 100%"
+                type="text"
+                name="preset" />
+        </p>
+        <p>
+            <label>author.name</label>
+            <input
+                style="width: 100%"
+                type="text"
+                name="author[name]" />
+        </p>
+        <p>
+            <label>author.link</label>
+            <input
+                style="width: 100%"
+                type="text"
+                name="author[link]" />
+        </p>
+        <input type="submit" value="作成する"/>
+    {{ form_close() }}
+</div>

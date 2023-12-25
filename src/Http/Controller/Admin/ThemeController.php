@@ -10,6 +10,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
 use Takemo101\CmsTool\Domain\Theme\NotFoundThemeIdException;
 use Takemo101\CmsTool\Http\Renderer\RedirectBackRenderer;
+use Takemo101\CmsTool\Http\ViewModel\ThemeDetailPage;
 use Takemo101\CmsTool\UseCase\Theme\Handler\ActivateThemeHandler;
 
 class ThemeController
@@ -50,7 +51,7 @@ class ThemeController
 
         return view(
             'cms-tool::theme.detail',
-            compact('theme'),
+            new ThemeDetailPage($theme),
         );
     }
 

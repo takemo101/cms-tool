@@ -32,6 +32,7 @@ use Takemo101\CmsTool\Http\Controller\Admin\MicroCmsApiController;
 use Takemo101\CmsTool\Http\Controller\Admin\SiteMetaController;
 use Takemo101\CmsTool\Http\Controller\Admin\SiteSeoController;
 use Takemo101\CmsTool\Http\Controller\Admin\ThemeController;
+use Takemo101\CmsTool\Http\Controller\Admin\Tool\ThemeJsonController;
 use Takemo101\CmsTool\Http\Controller\Admin\WebhookController;
 use Takemo101\CmsTool\Http\Middleware\AdminAuth;
 use Takemo101\CmsTool\Http\Middleware\AdminSessionStart;
@@ -214,6 +215,21 @@ hook()
                                         '/webhook/regenerate',
                                         [WebhookController::class, 'regenerate'],
                                     )->setName('admin.webhook.regenerate');
+
+                                    $proxy->group(
+                                        '/tool',
+                                        function (Proxy $proxy) {
+                                            $proxy->get(
+                                                '/theme-json',
+                                                [ThemeJsonController::class, 'editPage'],
+                                            )->setName('admin.tool.theme-json.edit');
+
+                                            $proxy->post(
+                                                '/theme-json',
+                                                [ThemeJsonController::class, 'generate'],
+                                            )->setName('admin.tool.theme-json.generate');
+                                        }
+                                    );
 
                                     $proxy->post(
                                         '/logout',

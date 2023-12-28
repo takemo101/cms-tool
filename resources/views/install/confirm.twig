@@ -11,9 +11,9 @@
         <h2 class="center-card__title">
             インストール確認
         </h2>
-        <p class="cenger-card__minititle">
+        <p class="center-card__minititle">
             設定内容を確認して「利用開始する」を押してください。<br/>
-            なお、設定内容は管理画面から変更できます。
+            なお、設定内容はインストール後に管理画面から変更できます。
         </p>
     </div>
     {{ alerts.error() }}
@@ -24,12 +24,12 @@
                     API設定
                 </h4>
                 {% if not setting.api.isArrangedApi() %}
-                    <ul class="f:12px mb:16px">
+                    <ul class="f:13px mb:16px">
                         <li class="flex jc:space-between mb:8px bb:1|solid|gray-82 py:8px">
                             <span class="f:bold">
                                 APIキー
                             </span>
-                            <span>
+                            <span class="t:right">
                                 {{ setting.api.key }}
                             </span>
                         </li>
@@ -37,7 +37,7 @@
                             <span class="f:bold">
                                 サービスID
                             </span>
-                            <span>
+                            <span class="t:right">
                                 {{ setting.api.serviceId }}
                             </span>
                         </li>
@@ -53,29 +53,29 @@
                     基本設定
                 </h4>
                 {% if not setting.api.isArrangedBasicSetting() %}
-                    <ul class="f:12px">
+                    <ul class="f:13px">
                         <li class="flex jc:space-between mb:8px bb:1|solid|gray-82 py:8px">
                             <span class="f:bold">サイト名</span>
-                            <span>
+                            <span class="t:right">
                                 {{ setting.meta.name }}
                             </span>
                         </li>
                         <li class="flex jc:space-between mb:8px bb:1|solid|gray-82 py:8px">
                             <span class="f:bold">アカウント名</span>
-                            <span>
+                            <span class="t:right">
                                 {{ setting.root.name }}
                             </span>
                         </li>
                         <li class="flex jc:space-between mb:8px bb:1|solid|gray-82 py:8px">
                             <span class="f:bold">メールアドレス</span>
-                            <span>
+                            <span class="t:right">
                                 {{ setting.root.email }}
                             </span>
                         </li>
                         <li class="flex jc:space-between mb:8px bb:1|solid|gray-82 py:8px">
                             <span class="f:bold">パスワード</span>
-                            <span>
-                                （設定頂いた文字列）
+                            <span class="t:right">
+                                設定頂いた文字列
                             </span>
                         </li>
                     </ul>

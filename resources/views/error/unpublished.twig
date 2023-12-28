@@ -1,6 +1,20 @@
-<div>
-    <h1>非公開</h1>
-    <div>
-        現在サイトは非公開です。
+{% extends 'cms-tool::layouts.default' %}
+
+{% block title %}インストール{% endblock %}
+
+{% import "cms-tool::components.forms" as forms %}
+{% import "cms-tool::components.alerts" as alerts %}
+
+{% block content %}
+<div class="center-card">
+    <div class="mb:1rem">
+        <h2 class="center-card__title">
+            サイトは非公開です
+        </h2>
+        <p class="center-card__minititle">
+            サイトは現在非公開になっております。<br/>
+            公開されるまで、しばらくお待ちください。
+        </p>
     </div>
 </div>
+{% endblock %}

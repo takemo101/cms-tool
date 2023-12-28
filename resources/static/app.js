@@ -154,8 +154,11 @@ ${r?'Expression: "'+r+`"
     w:full h:max"
     bg:white
     box:border
-  `,"center-card__title":"f:30px m:0","center-card__subtitle":"f:20px mt:10px","cenger-card__minititle":`
-    f:14px mt:10px lh:1.2rem
+  `,"center-card__title":"f:30px m:0","center-card__subtitle":`
+    f:20px mt:10px lh:1.6rem
+    f:gray-52
+  `,"center-card__minititle":`
+    f:15px mt:10px lh:1.4rem
     f:gray-52
   `},Xp={header:`
     w:full

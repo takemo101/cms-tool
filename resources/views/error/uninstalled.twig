@@ -1,6 +1,26 @@
-<div>
-    <h1>インストールを未完了</h1>
+{% extends 'cms-tool::layouts.default' %}
+
+{% block title %}インストール{% endblock %}
+
+{% import "cms-tool::components.forms" as forms %}
+{% import "cms-tool::components.alerts" as alerts %}
+
+{% block content %}
+<div class="center-card">
+    <div class="mb:1rem">
+        <h2 class="center-card__title">
+            インストールを始めましょう！
+        </h2>
+        <p class="center-card__minititle">
+            インストールを完了して、管理画面にログインすると、サイト設定やテーマの変更ができるようになります。
+        </p>
+    </div>
     <div>
-        <a href="{{ route('install.api') }}">インストールを始める</a>
+        <a
+            class="link-btn link-btn--primary"
+            href="{{ route('install.api') }}">
+            インストールを始める
+        </a>
     </div>
 </div>
+{% endblock %}

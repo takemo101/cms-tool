@@ -1,50 +1,88 @@
-<div>
-    <h1>basic</h1>
+{% extends 'cms-tool::layouts.dashboard' %}
 
-    {{ form_open({
-        route: [
-            'admin.publish',
-            {status: isSitePublished ? 'unpublished' : 'published'},
-        ],
-        method: 'patch',
-    }) }}
-        {% if isSitePublished %}
-            <input type="submit" value="Unpublish"/>
-        {% else %}
-            <input type="submit" value="Publish"/>
-        {% endif %}
-    {{ form_close() }}
+{% block title %}基本設定{% endblock %}
 
-    <hr/>
+{% block current %}basic{% endblock %}
 
-    {{ form_open({route: 'admin.meta.update', method: 'put'}) }}
-        <input
-            type="text"
-            name="name"
-            value="{{ old('name', meta.name) }}"
-            placeholder="name"/>
-        <input type="submit" value="Submit"/>
-    {{ form_close() }}
+{% import "cms-tool::components.forms" as forms %}
+{% import "cms-tool::components.alerts" as alerts %}
 
-    <hr/>
+{% block content_right %}
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-header__title">基本設定</h2>
+        <hr class="divider" />
+    </div>
+    <div class="card-body">
+        {{ alerts.error() }}
 
-    {{ form_open({route: 'admin.api.update', method: 'put'}) }}
-        <input
-            type="text"
-            name="key"
-            value="{{ old('key', api.key) }}"
-            placeholder="key"/>
-        <input
-            type="text"
-            name="service_id"
-            value="{{ old('service_id', api.serviceId) }}"
-            placeholder="service_id"/>
-        <input type="submit" value="Submit"/>
-    {{ form_close() }}
+        <div class="mb:20px">
+            {{ form_open({
+                route: 'admin.meta.update',
+                method: 'put',
+            }) }}
+                <div class="mb:30">
+                    <div class="form-column">
+                        {{ forms.input({
+                            name: 'name',
+                            label:'サイト名',
+                            value: meta.name,
+                            required: true,
+                        }) }}
+                    </div>
+                </div>
+                <div class="t:right">
+                    {{ forms.submit({
+                        label: '更新',
+                        class: 'form-btn--primary',
+                    }) }}
+                </div>
+            {{ form_close() }}
+        </div>
 
-    {% for errs in error_all() %}
-        {% for e in errs %}
-            <p>{{ e }}</p>
-        {% endfor %}
-    {% endfor %}
+        <h3 class="f:18px f:bold mt:0 mb:16px">microCMS API設定</h3>
+        <div>
+            {{ form_open({
+                route: 'admin.api.update',
+                method: 'put',
+            }) }}
+
+                {% if not isEnabledApi %}
+                    {{ alerts.info({
+                        title: 'Info',
+                        message: 'APIにアクセスできません。<br/>microCMS管理画面からAPIの内容を確認して、以下フォームに設定し直して下さい。',
+                    }) }}
+                {% endif %}
+
+                <div class="mb:30">
+                    <div class="form-column">
+                        {{ forms.input({
+                            name: 'key',
+                            label:'APIキー',
+                            value: api.key,
+                            placeholder: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
+                            required: true,
+                            hint: 'microCMS管理画面の「サービス設定 > APIキー」からキーを作成できます',
+                        }) }}
+                    </div>
+                    <div class="form-column">
+                        {{ forms.input({
+                            name: 'service_id',
+                            label:'サービスID',
+                            value: api.serviceId,
+                            required: true,
+                            hint: 'microCMS管理画面の「重要な操作 > サービスIDの変更」から確認できます',
+                        }) }}
+                    </div>
+                </div>
+                <div class="t:right">
+                    {{ forms.submit({
+                        label: '更新',
+                        class: 'form-btn--primary',
+                    }) }}
+                </div>
+            {{ form_close() }}
+        </div>
+    </div>
 </div>
+{% endblock %}

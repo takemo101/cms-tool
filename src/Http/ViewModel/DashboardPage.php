@@ -23,16 +23,6 @@ class DashboardPage extends ViewModel
     }
 
     /**
-     * Get microCMS link
-     *
-     * @return string
-     */
-    public function microCmsLink(): string
-    {
-        return "https://{$this->api->serviceId}.microcms.io/";
-    }
-
-    /**
      * @return boolean
      */
     public function isPublished(

@@ -1,0 +1,27 @@
+<nav class="header">
+    <div class="header__inner">
+        <div class="flex flex:row">
+            <div class="header__logo">
+                <a href="{{ route('admin.dashboard') }}">
+                    <img class="header__logo-img" src="{{ vendor('logo.png') }}" />
+                </a>
+            </div>
+            <h1 class="header__title">{{ config('app.name') }}</h1>
+        </div>
+
+        <div class="as:center" x-data>
+            <button
+                class="header__btn"
+                @click.prevent="$refs.form.submit()">
+                ログアウト
+            </button>
+            {{ form_open({
+                route: 'admin.logout',
+                method: 'post',
+                'x-ref': 'form',
+            }) }}
+            {{ form_close() }}
+
+        </div>
+    </div>
+</nav>

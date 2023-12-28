@@ -45,7 +45,7 @@ describe(
                     ->withAttribute(CsrfToken::NameKey, $name)
                     ->withAttribute(CsrfToken::ValueKey, $value);
 
-                $token = CsrfToken::fromServerRequest($request);
+                $token = CsrfToken::fromRequest($request);
 
                 expect($token)->toBeInstanceOf(CsrfToken::class);
                 expect($token->name)->toBe($name);

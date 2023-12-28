@@ -1,86 +1,196 @@
-{% extends 'cms-tool::layouts.master' %}
+{% extends 'cms-tool::layouts.dashboard' %}
 
-{% block title %}Seo{% endblock %}
+{% block title %}SEO設定{% endblock %}
 
-{% block content %}
-    <div>
-        <h1>seo</h1>
+{% block current %}seo{% endblock %}
+
+{% import "cms-tool::components.forms" as forms %}
+{% import "cms-tool::components.alerts" as alerts %}
+
+{% block content_right %}
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-header__title">SEO設定</h2>
+        <hr class="divider" />
+    </div>
+    <div class="card-body">
+        {{ alerts.error() }}
+
         {{ form_open({
             route: 'admin.seo.update',
             method: 'put',
             enctype: 'multipart/form-data',
         }) }}
-            <input
-                type="text"
-                name="title"
-                value="{{ old('title', seo.title) }}"
-                placeholder="title"/>
-            <br/>
-            <input
-                type="text"
-                name="description"
-                value="{{ old('description', seo.description) }}"
-                placeholder="description"/>
-            <br/>
-            <input
-                type="text"
-                name="keywords"
-                value="{{ old('keywords', seo.keywords) }}"
-                placeholder="keywords"/>
-            <br/>
-            {% block favicon_input %}
-                <div id="favicon-input" hx-swap-oob="true">
-                    <input
-                        type="file"
-                        name="favicon"
-                        placeholder="favicon"/>
-                    {% if seo.favicon %}
-                         <button
-                            type="button"
-                            hx-delete="{{ route('admin.seo.delete.image', {target: 'favicon'}) }}">
-                            削除
-                        </button>
-                    {% endif %}
-                    {{ seo.favicon ? storage(seo.favicon) : 'empty' }}
+
+            <div class="mb:30">
+                <div class="form-column">
+                    {{ forms.input({
+                        name: 'title',
+                        label:'サイトタイトル',
+                        value: seo.title,
+                        hint: 'metaタグのtitleに使用されます',
+                    }) }}
                 </div>
-            {% endblock %}
-            {% block icon_input %}
-                <div id="icon-input" hx-swap-oob="true">
-                    <input
-                        type="file"
-                        name="icon"
-                        placeholder="icon"/>
-                    {% if seo.icon %}
+                <div class="form-column">
+                    {{ forms.input({
+                        name: 'description',
+                        label:'サイト説明',
+                        value: seo.description,
+                        hint: 'metaタグのdescriptionに使用されます',
+                    }) }}
+                </div>
+                <div class="form-column">
+                    {{ forms.input({
+                        name: 'keywords',
+                        label:'サイトキーワード',
+                        value: seo.keywords,
+                        hint: 'キーワードはカンマ区切りで入力してください',
+                        placeholder: 'ビジネス,情報,IT',
+                    }) }}
+                </div>
+                <div class="form-column" x-data="files">
+                    {{ forms.label({
+                        name: 'icon',
+                        label: 'ファビコン画像',
+                    }) }}
+
+                    <div class="form-file">
+                        <div class="form-file__text">
+                            <span x-text="src || 'ファイルを選択して下さい'"></span>
+                        </div>
                         <button
-                            type="button"
-                            hx-delete="{{ route('admin.seo.delete.image', {target: 'icon'}) }}">
-                            削除
+                            x-on:click="select"
+                            class="form-file__btn form-file__btn--ref"
+                            type="button">
+                            参照
                         </button>
-                    {% endif %}
-                    {{ seo.icon ? storage(seo.icon) : 'empty' }}
+                        <button
+                            x-on:click="reset"
+                            class="form-file__btn form-file__btn--clear"
+                            type="button">
+                            クリア
+                        </button>
+                    </div>
+
+                    {{ forms.file({
+                        name: 'favicon',
+                        id: 'favicon',
+                        accept: 'image/png, image/jpeg, image/jpg',
+                        ref: 'input',
+                        change: 'change',
+                    }) }}
+
+                    {{ forms.hint({
+                        hint: 'png, jpg, jpeg をアップロードできます',
+                    }) }}
+
+                    {% block favicon_input %}
+                        <div
+                            class="mt:10px"
+                            id="favicon-input"
+                            hx-swap-oob="true">
+                            {% if seo.favicon %}
+                                <div class="form-prev">
+                                    <a
+                                        href="{{ storage(seo.favicon) }}"
+                                        target="_blank"
+                                        class="form-prev__img">
+                                        <img src="{{ storage(seo.favicon) }}">
+                                    </a>
+                                    <button
+                                        class="form-prev__btn-del"
+                                        type="button"
+                                        hx-delete="{{ route('admin.seo.delete.image', {target: 'favicon'}) }}">
+                                        削除
+                                    </button>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endblock %}
                 </div>
-            {% endblock %}
-            <input
-                type="text"
-                name="robots"
-                value="{{ old('robots', seo.robots) }}"
-                placeholder="robots"/>
-            <br/>
-            <input type="submit" value="Submit"/>
-        {{ form_close() }}
-        {{ form_open({
-            route: ['admin.seo.delete.image', {target: 'favicon'}],
-            method: 'delete',
-            id: 'delete-favicon',
-        }) }}
-        {{ form_close() }}
+                <div class="form-column" x-data="files">
+                    {{ forms.label({
+                        name: 'icon',
+                        label: 'アイコン画像',
+                    }) }}
 
-        <hr/>
+                    <div class="form-file">
+                        <div class="form-file__text">
+                            <span x-text="src || 'ファイルを選択して下さい'"></span>
+                        </div>
+                        <button
+                            x-on:click="select"
+                            class="form-file__btn form-file__btn--ref"
+                            type="button">
+                            参照
+                        </button>
+                        <button
+                            x-on:click="reset"
+                            class="form-file__btn form-file__btn--clear"
+                            type="button">
+                            クリア
+                        </button>
+                    </div>
 
-        {% for errs in error_all() %}
-            {% for e in errs %}
-                <p>{{ e }}</p>
-            {% endfor %}
-        {% endfor %}
+                    {{ forms.file({
+                        name: 'icon',
+                        id: 'icon',
+                        accept: 'image/png, image/jpeg, image/jpg',
+                        ref: 'input',
+                        change: 'change',
+                    }) }}
+
+                    {{ forms.hint({
+                        hint: 'png, jpg, jpeg をアップロードできます',
+                    }) }}
+
+                    {% block icon_input %}
+                        <div
+                            class="mt:10px"
+                            id="icon-input"
+                            hx-swap-oob="true">
+                            {% if seo.icon %}
+                                <div class="form-prev">
+                                    <a
+                                        href="{{ storage(seo.icon) }}"
+                                        target="_blank"
+                                        class="form-prev__img">
+                                        <img src="{{ storage(seo.icon) }}">
+                                    </a>
+                                    <button
+                                        class="form-prev__btn-del"
+                                        type="button"
+                                        hx-delete="{{ route('admin.seo.delete.image', {target: 'icon'}) }}">
+                                        削除
+                                    </button>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endblock %}
+                </div>
+                <div class="form-column">
+                    {{ forms.select({
+                        name: 'robots',
+                        data: {
+                            '': '未設定',
+                            'index,follow': 'index/follow',
+                            'noindex,follow': 'noindex/follow',
+                            'index,nofollow': 'index/nofollow',
+                            'noindex,nofollow': 'noindex/nofollow',
+                        },
+                        label:'robots',
+                        value: seo.robots,
+                        hint: 'metaタグのrobotsに使用されます',
+                    }) }}
+                </div>
+            </div>
+            <div class="t:right">
+                {{ forms.submit({
+                    label: '更新',
+                    class: 'form-btn--primary',
+                }) }}
+            </div>
+        {{ form_close() }}
     </div>
+</div>
 {% endblock %}

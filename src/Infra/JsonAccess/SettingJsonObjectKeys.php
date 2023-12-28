@@ -2,8 +2,6 @@
 
 namespace Takemo101\CmsTool\Infra\JsonAccess;
 
-use CmsTool\Theme\ActiveThemeId;
-
 class SettingJsonObjectKeys
 {
     public const InstalledKey = 'installed';
@@ -13,4 +11,5 @@ class SettingJsonObjectKeys
     public const RootAdminKey = 'root';
     public const ActiveThemeIdKey = 'theme';
     public const WebhookTokenKey = 'webhook';
+    public const ManagementTypeKey = 'management';
 }

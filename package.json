@@ -1,0 +1,24 @@
+{
+  "name": "simply",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "tsc && vite build",
+    "watch": "tsc && vite build --watch"
+  },
+  "devDependencies": {
+    "@types/alpinejs": "^3.13.5",
+    "@types/alpinejs__intersect": "^3.13.3",
+    "@types/node": "^20.10.5",
+    "typescript": "^5.2.2",
+    "vite": "^5.0.8"
+  },
+  "dependencies": {
+    "@alpinejs/intersect": "^3.13.3",
+    "@master/css": "^1.37.8",
+    "@master/normal.css": "^2.0.0-beta.84",
+    "@splidejs/splide": "^4.1.4",
+    "alpinejs": "^3.13.3"
+  }
+}

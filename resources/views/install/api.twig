@@ -1,21 +1,64 @@
-<div>
-    <h1>Api</h1>
-    {{ form_open({route: 'install.api.save', method: 'post'}) }}
-        <input
-            type="text"
-            name="key"
-            value="{{ old('key', setting.api.key) }}"
-            placeholder="key"/>
-        <input
-            type="text"
-            name="service_id"
-            value="{{ old('service_id', setting.api.serviceId) }}"
-            placeholder="service_id"/>
-        {% for errs in error_all() %}
-            {% for e in errs %}
-                <p>{{ e }}</p>
-            {% endfor %}
-        {% endfor %}
-        <input type="submit" value="Submit"/>
-    {{ form_close() }}
+{% extends 'cms-tool::layouts.default' %}
+
+{% block title %}インストール{% endblock %}
+
+{% import "cms-tool::components.forms" as forms %}
+{% import "cms-tool::components.alerts" as alerts %}
+
+{% block content %}
+<div class="center-card">
+    <div class="mb:1rem">
+        <h2 class="center-card__title">
+            API設定
+        </h2>
+        <p class="cenger-card__minititle">
+            microCMSのAPI設定を行います。<br/>
+            microCMSのAPIキーの取得ついては、以下リンクを参照して下さい。
+        </p>
+        <ul class="list-style:circle f:14 pl:16px mt:10px">
+            <li>
+                <a class="link" href="https://document.microcms.io/content-api/x-microcms-api-key" target="_blank">
+                    microCMSのAPIキーの取得
+                </a>
+            </li>
+            <li>
+                <a class="link" href="https://document.microcms.io/manual/create-service" target="_blank">
+                    microCMSのサービス作成
+                </a>
+            </li>
+        </ul>
+    </div>
+    {{ alerts.error() }}
+    <div>
+        {{ form_open({route: 'install.api.save', method: 'post'}) }}
+            <div class="mb:30">
+                <div class="form-column">
+                    {{ forms.input({
+                        name: 'key',
+                        label:'APIキー',
+                        value: setting.api.key,
+                        placeholder:'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
+                        required: true,
+                        hint: 'microCMS管理画面の「サービス設定 > APIキー」からキーを作成できます',
+                    }) }}
+                </div>
+                <div class="form-column">
+                    {{ forms.input({
+                        name: 'service_id',
+                        label:'サービスID',
+                        value: setting.api.serviceId,
+                        required: true,
+                        hint: 'microCMS管理画面の「重要な操作 > サービスIDの変更」から確認できます',
+                    }) }}
+                </div>
+            </div>
+            <div>
+                {{ forms.submit({
+                    label: '次へ',
+                    class: 'form-btn--primary w:full',
+                }) }}
+            </div>
+        {{ form_close() }}
+    </div>
 </div>
+{% endblock %}

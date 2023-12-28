@@ -5,10 +5,7 @@ namespace Takemo101\CmsTool;
 use CmsTool\Session\Csrf\CsrfGuardContext;
 use CmsTool\Session\Flash\FlashSessionsContext;
 use CmsTool\Session\SessionContext;
-use CmsTool\Theme\ActiveTheme;
-use CmsTool\Theme\ThemePathHelper;
 use CmsTool\View\Accessor\DataAccessors;
-use CmsTool\View\Contract\TemplateFinder;
 use CmsTool\View\Html\Filter\FormAppendFilters;
 use CmsTool\View\ViewCreator;
 use Psr\Container\ContainerInterface;
@@ -19,9 +16,11 @@ use Takemo101\Chubby\Bootstrap\Provider\Provider;
 use Takemo101\Chubby\Config\ConfigRepository;
 use Takemo101\Chubby\Filesystem\LocalFilesystem;
 use Takemo101\Chubby\Hook\Hook;
-use Takemo101\CmsTool\Domain\Theme\ActiveThemeRepository;
+use Takemo101\CmsTool\Domain\Admin\RootAdminRepository;
+use Takemo101\CmsTool\Http\Session\AdminSessionContext;
 use Takemo101\CmsTool\Http\Session\AdminSessionFactory;
 use Takemo101\CmsTool\Http\Session\DefaultAdminSessionFactory;
+use Takemo101\CmsTool\Support\Accessor\ServerRequestAccessor;
 use Takemo101\CmsTool\Support\FormAppendFilter\AppendCsrfInputFilter;
 use Takemo101\CmsTool\Support\Session\FlashErrorMessages;
 use Takemo101\CmsTool\Support\Session\FlashOldInputs;
@@ -153,25 +152,39 @@ class CmsToolProvider implements Provider
                     $filter = $container->get(AppendCsrfInputFilter::class);
 
                     /** @var ViewCreator */
-                    $viewCreator = $container->get(ViewCreator::class);
+                    $view = $container->get(ViewCreator::class);
 
                     /** @var DataAccessors */
                     $dataAccessors = $container->get(DataAccessors::class);
 
                     // CsrfGuardContext generation processing is set in consideration of when the CSRF middleware is not executed.
-                    $guard = CsrfGuardContext::fromServerRequest(
+                    if ($token = CsrfGuardContext::fromRequest(
                         $request,
                         fn () => $container->get(CsrfGuardContext::class),
-                    )->getGuard();
+                    )
+                        ?->getGuard()
+                        ->getToken()
+                    ) {
+                        $filter->setCsrfToken($token);
 
-                    $filter->setCsrfToken(
-                        $guard->getToken(),
-                    );
+                        $view->share('csrf', $token);
+                    }
 
-                    $viewCreator->share(
-                        'csrf',
-                        $guard->getToken(),
-                    );
+                    // If there is an administrator session, pass the administrator information to the view
+                    if ($adminSession = AdminSessionContext::fromRequest($request)
+                        ?->getAdminSession()
+                    ) {
+                        /** @var RootAdminRepository */
+                        $repository = $container->get(RootAdminRepository::class);
+
+                        $view
+                            ->share(
+                                'auth',
+                                $adminSession->isLoggedIn()
+                                    ? $repository->find($adminSession->getId())
+                                    : null,
+                            );
+                    }
 
                     // Put old inputs to flash session.
                     /** @var array<string,mixed> */
@@ -181,15 +194,18 @@ class CmsToolProvider implements Provider
                     ];
 
                     if (!empty($params)) {
-                        FlashSessionsContext::fromServerRequest($request)
-                            ->getFlashSessions()
+                        FlashSessionsContext::fromRequest($request)
+                            ?->getFlashSessions()
                             ->get(FlashOldInputs::class)
                             ->put($params);
                     }
 
                     $dataAccessors->add(
                         'request',
-                        fn () => $request,
+                        ServerRequestAccessor::class,
+                        [
+                            'request' => $request,
+                        ]
                     );
 
                     return $request;
@@ -222,28 +238,29 @@ class CmsToolProvider implements Provider
                     /** @var Environment */
                     $twig = $container->get(Environment::class);
 
-                    $flashSessions = FlashSessionsContext::fromServerRequest($request)
-                        ->getFlashSessions();
+                    if ($flashSessions = FlashSessionsContext::fromRequest($request)
+                        ?->getFlashSessions()
+                    ) {
+                        $twig->getExtension(ErrorExtension::class)
+                            ->setErrors(
+                                $flashSessions->get(FlashErrorMessages::class),
+                            );
 
-                    $twig->getExtension(ErrorExtension::class)
-                        ->setErrors(
-                            $flashSessions->get(FlashErrorMessages::class),
-                        );
+                        $twig->getExtension(OldExtension::class)
+                            ->setOldInputs(
+                                $flashSessions->get(FlashOldInputs::class),
+                            );
+                    }
 
-                    $twig->getExtension(OldExtension::class)
-                        ->setOldInputs(
-                            $flashSessions->get(FlashOldInputs::class),
-                        );
+                    if ($session = SessionContext::fromRequest($request)
+                        ?->getSession()
+                    ) {
+                        $twig->getExtension(SessionExtension::class)
+                            ->setSession($session);
 
-                    $session = SessionContext::fromServerRequest($request)
-                        ->getSession();
-
-                    $twig->getExtension(SessionExtension::class)
-                        ->setSession($session);
-
-                    $twig->getExtension(FlashExtension::class)
-                        ->setFlash($session->getFlash());
-
+                        $twig->getExtension(FlashExtension::class)
+                            ->setFlash($session->getFlash());
+                    }
 
                     return $request;
                 }

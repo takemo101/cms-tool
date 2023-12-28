@@ -1,7 +1,9 @@
 <?php
 
 use Takemo101\CmsTool\Domain\Admin\RootAdminRepository;
+use Takemo101\CmsTool\Domain\Install\Installer;
 use Takemo101\CmsTool\Domain\Install\InstallRepository;
+use Takemo101\CmsTool\Domain\Install\Uninstaller;
 use Takemo101\CmsTool\Domain\MicroCms\MicroCmsApiAccessValidator;
 use Takemo101\CmsTool\Domain\MicroCms\MicroCmsApiRepository;
 use Takemo101\CmsTool\Domain\Publish\SitePublishRepository;
@@ -15,11 +17,13 @@ use Takemo101\CmsTool\Infra\JsonAccess\QueryService\JsonAccessInstallSettingQuer
 use Takemo101\CmsTool\Infra\JsonAccess\QueryService\JsonAccessMicroCmsApiQueryService;
 use Takemo101\CmsTool\Infra\JsonAccess\QueryService\JsonAccessSiteMetaQueryService;
 use Takemo101\CmsTool\Infra\JsonAccess\Repository\JsonAccessActiveThemeRepository;
+use Takemo101\CmsTool\Infra\JsonAccess\Repository\JsonAccessInstaller;
 use Takemo101\CmsTool\Infra\JsonAccess\Repository\JsonAccessInstallRepository;
 use Takemo101\CmsTool\Infra\JsonAccess\Repository\JsonAccessMicroCmsApiRepository;
 use Takemo101\CmsTool\Infra\JsonAccess\Repository\JsonAccessRootAdminRepository;
 use Takemo101\CmsTool\Infra\JsonAccess\Repository\JsonAccessSiteMetaRepository;
 use Takemo101\CmsTool\Infra\JsonAccess\Repository\JsonAccessSitePublishRepository;
+use Takemo101\CmsTool\Infra\JsonAccess\Repository\JsonAccessUninstaller;
 use Takemo101\CmsTool\Infra\JsonAccess\Repository\JsonAccessWebhookTokenRepository;
 use Takemo101\CmsTool\Infra\Saloon\QueryService\SaloonMicroCmsContentQueryService;
 use Takemo101\CmsTool\Infra\Saloon\Validator\SaloonMicroCmsApiAccessValidator;
@@ -43,6 +47,7 @@ return [
     ActiveThemeRepository::class => get(JsonAccessActiveThemeRepository::class),
     WebhookTokenRepository::class => get(JsonAccessWebhookTokenRepository::class),
 
+
     // QueryService
     InstallSettingQueryService::class => get(JsonAccessInstallSettingQueryService::class),
     AdminAccountQueryService::class => get(JsonAccessAdminAccountQueryService::class),
@@ -54,4 +59,7 @@ return [
     MicroCmsApiAccessValidator::class => get(SaloonMicroCmsApiAccessValidator::class),
     PasswordHasher::class => get(DefaultPasswordHasher::class),
     SiteAssetStorage::class => get(LocalSiteAssetStorage::class),
+
+    Installer::class => get(JsonAccessInstaller::class),
+    Uninstaller::class => get(JsonAccessUninstaller::class),
 ];

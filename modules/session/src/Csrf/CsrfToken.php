@@ -77,7 +77,7 @@ readonly class CsrfToken
      * @param ServerRequestInterface $request The server request object.
      * @return self A new instance of CsrfToken.
      */
-    public static function fromServerRequest(
+    public static function fromRequest(
         ServerRequestInterface $request,
     ): self {
         /** @var string|null */

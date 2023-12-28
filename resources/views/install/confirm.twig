@@ -1,14 +1,105 @@
-<div>
-    <h1>インストールを完了</h1>
-    <div>
-        <h3>api</h3>
-        <p>{{ setting.isArrangedApi() ? '済み' : '未' }}</p>
+{% extends 'cms-tool::layouts.default' %}
+
+{% block title %}インストール確認{% endblock %}
+
+{% import "cms-tool::components.forms" as forms %}
+{% import "cms-tool::components.alerts" as alerts %}
+
+{% block content %}
+<div class="center-card">
+    <div class="mb:1rem">
+        <h2 class="center-card__title">
+            インストール確認
+        </h2>
+        <p class="cenger-card__minititle">
+            設定内容を確認して「利用開始する」を押してください。<br/>
+            なお、設定内容は管理画面から変更できます。
+        </p>
     </div>
+    {{ alerts.error() }}
     <div>
-        <h3>basic</h3>
-        <p>{{ setting.isArrangedBasicSetting() ? '済み' : '未' }}</p>
+        {{ form_open({route: 'install', method: 'post'}) }}
+            <div class="mb:30">
+                <h4 class="f:16px f:bold mt:0 mb:16px">
+                    API設定
+                </h4>
+                {% if not setting.api.isArrangedApi() %}
+                    <ul class="f:12px mb:16px">
+                        <li class="flex jc:space-between mb:8px bb:1|solid|gray-82 py:8px">
+                            <span class="f:bold">
+                                APIキー
+                            </span>
+                            <span>
+                                {{ setting.api.key }}
+                            </span>
+                        </li>
+                        <li class="flex jc:space-between mb:8px bb:1|solid|gray-82 py:8px">
+                            <span class="f:bold">
+                                サービスID
+                            </span>
+                            <span>
+                                {{ setting.api.serviceId }}
+                            </span>
+                        </li>
+                    </ul>
+                {% else %}
+                    {{ alerts.info({
+                        title: 'Info',
+                        message: 'API設定が未完了です。',
+                        class: 'mb:16px',
+                    }) }}
+                {% endif %}
+                <h4 class="f:16px f:bold mt:0 mb:16px">
+                    基本設定
+                </h4>
+                {% if not setting.api.isArrangedBasicSetting() %}
+                    <ul class="f:12px">
+                        <li class="flex jc:space-between mb:8px bb:1|solid|gray-82 py:8px">
+                            <span class="f:bold">サイト名</span>
+                            <span>
+                                {{ setting.meta.name }}
+                            </span>
+                        </li>
+                        <li class="flex jc:space-between mb:8px bb:1|solid|gray-82 py:8px">
+                            <span class="f:bold">アカウント名</span>
+                            <span>
+                                {{ setting.root.name }}
+                            </span>
+                        </li>
+                        <li class="flex jc:space-between mb:8px bb:1|solid|gray-82 py:8px">
+                            <span class="f:bold">メールアドレス</span>
+                            <span>
+                                {{ setting.root.email }}
+                            </span>
+                        </li>
+                        <li class="flex jc:space-between mb:8px bb:1|solid|gray-82 py:8px">
+                            <span class="f:bold">パスワード</span>
+                            <span>
+                                （設定頂いた文字列）
+                            </span>
+                        </li>
+                    </ul>
+                {% else %}
+                    {{ alerts.info({
+                        title: 'Info',
+                        message: '基本設定が未完了です。',
+                        class: 'mb:16px',
+                    }) }}
+                {% endif %}
+            </div>
+            <div class="flex flex:row gap:10">
+                <a
+                    class="link-btn link-btn--primary-line w:full"
+                    href="{{ route('install.basic') }}">
+                    戻る
+                </a>
+                {{ forms.submit({
+                    label: '利用開始する',
+                    class: 'form-btn--primary w:full',
+                    disabled: not setting.canBeInstalled(),
+                }) }}
+            </div>
+        {{ form_close() }}
     </div>
-    {{ form_open({route: 'install', method: 'post'}) }}
-        <input type="submit" value="Submit"/>
-    {{ form_close() }}
 </div>
+{% endblock %}

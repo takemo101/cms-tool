@@ -30,6 +30,6 @@
 
 {{ pager(
     paginator,
-    share.request.getUri().getPath(),
-    share.request.getQueryParams()
+    share.request.uri.path,
+    share.request.query
 ) }}

@@ -1,19 +1,84 @@
-{% extends 'cms-tool::layouts.master' %}
+{% extends 'cms-tool::layouts.dashboard' %}
 
 {% block title %}Webhook{% endblock %}
 
-{% block content %}
-    <div>
-        <h1>Webhook</h1>
+{% block current %}webhook{% endblock %}
+
+{% import "cms-tool::components.forms" as forms %}
+
+{% block content_right %}
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-header__title">Webhook</h2>
+        <hr class="divider" />
+    </div>
+    <div class="card-body">
+        <h3 class="f:18px f:bold mt:0 mb:16px">Webhookの設定</h3>
         <div>
-            <p>WebhookURL：{{ url }}</p>
-            <p>{{ header }}：{{ token }}</p>
-            {{ form_open({
-                route: 'admin.webhook.regenerate',
-                method: 'patch',
-            }) }}
-                <input type="submit" value="Regenerate"/>
-            {{ form_close() }}
+            <p class="f:16 lh:1.6rem mt:0 mb:16px">
+                以下の内容をmicroCMSのWebhook設定に入力してください。<br/>
+                Webhookを設定することで、コンテンツの更新をトリガーに、表示内容が即座に更新されます。<br/>
+                設定していなくても、コンテンツの更新は反映されますが、キャッシュの有効期限が切れるまで表示内容は更新されません。<br/>
+                <br/>
+                設定方法については、
+                <a class="link"
+                    href="https://document.microcms.io/manual/webhook-setting"
+                    target="_blank">
+                    microCMSの公式ブログ
+                </a>
+                をご確認ください。
+            <p>
+
+            <div class="overflow-x:scroll mb:16px">
+                <table class="border:separate border-spacing:0">
+                    <thead>
+                        <tr class="f:bold">
+                            <th class="p:10 b:1|solid|gray-82">設定対象</th>
+                            <th class="p:10 b:1|solid|gray-82 bl:0">値</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="p:10 b:1|solid|gray-82 bt:0">基本設定：URL</td>
+                            <td class="p:10 b:1|solid|gray-82 bt:0 bl:0">
+                                <code class="f:16 bg:gray-92">
+                                    {{ url }}
+                                </code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="p:10 b:1|solid|gray-82 bt:0">リクエストヘッダー：Key</td>
+                            <td class="p:10 b:1|solid|gray-82 bt:0 bl:0">
+                                <code class="f:16 bg:gray-92">
+                                    {{ header }}
+                                </code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="p:10 b:1|solid|gray-82 bt:0">リクエストヘッダー：Value</td>
+                            <td class="p:10 b:1|solid|gray-82 bt:0 bl:0">
+                                <code class="f:16 bg:gray-92">
+                                    {{ token }}
+                                </code>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p class="f:16 mt:0 mb:16px">
+                リクエストヘッダー：Valueは、以下のボタンを押すことで再生成できます。<br/>
+                {{ form_open({
+                    route: 'admin.webhook.regenerate',
+                    method: 'patch',
+                }) }}
+                    {{ forms.submit({
+                        label: '再生成する',
+                        class: 'form-btn--primary',
+                    }) }}
+                {{ form_close() }}
+            </p>
         </div>
     </div>
+</div>
 {% endblock %}

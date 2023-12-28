@@ -31,16 +31,4 @@ class JsonAccessInstallRepository implements InstallRepository
 
         return (bool) $installed;
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function save(bool $installed): void
-    {
-        $object = $this->creator->create();
-
-        $object->set(SettingJsonObjectKeys::InstalledKey, $installed);
-
-        $object->save();
-    }
 }

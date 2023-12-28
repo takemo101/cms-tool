@@ -28,6 +28,7 @@ tasks:
           - ./modules/support
           - ./modules/session
           - ./modules/theme
+          - ./modules/cache
         cmd: |
           cd {{.ITEM}} &&
           task pkg-update

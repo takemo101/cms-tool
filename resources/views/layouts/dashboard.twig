@@ -1,0 +1,17 @@
+{% extends 'cms-tool::layouts.master' %}
+
+{% block header %}
+    {% include 'cms-tool::components.header' %}
+{% endblock %}
+
+{% block content %}
+   {% set current = block('current') is defined ? block('current') : '' %}
+    <div class="half-column">
+        <div class="half-column__left">
+            {% include 'cms-tool::components.sidebar' with {'current': current} %}
+        </div>
+        <div class="half-column__right">
+            {% block content_right %}{% endblock %}
+        </div>
+    </div>
+{% endblock %}

@@ -9,10 +9,12 @@ class InstallService
      *
      * @param InstallRepository $repository
      * @param InstallSpec $spec
+     * @param Installer $installer
      */
     public function __construct(
         private InstallRepository $repository,
         private InstallSpec $spec,
+        private Installer $installer,
     ) {
         //
     }
@@ -28,7 +30,7 @@ class InstallService
         }
 
         if (!$this->repository->isInstalled()) {
-            $this->repository->save(true);
+            $this->installer->install();
         }
     }
 }

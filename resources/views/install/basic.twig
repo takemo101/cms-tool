@@ -1,33 +1,76 @@
-<div>
-    <h1>root</h1>
-    {{ form_open({route: 'install.basic.save', method: 'post'}) }}
-        <input
-            type="text"
-            name="site_name"
-            value="{{ old('site_name', setting.meta.name) }}"
-            placeholder="site_name"/>
+{% extends 'cms-tool::layouts.default' %}
 
-        <hr/>
+{% block title %}基本設定{% endblock %}
 
-        <input
-            type="text"
-            name="root[name]"
-            value="{{ old('root.name', setting.root.name) }}"
-            placeholder="name"/>
-        <input
-            type="email"
-            name="root[email]"
-            value="{{ old('root.email', setting.root.email) }}"
-            placeholder="email"/>
-        <input
-            type="password"
-            name="root[password]"
-            placeholder="password"/>
-        {% for errs in error_all() %}
-            {% for e in errs %}
-                <p>{{ e }}</p>
-            {% endfor %}
-        {% endfor %}
-        <input type="submit" value="Submit"/>
-    {{ form_close() }}
+{% import "cms-tool::components.forms" as forms %}
+{% import "cms-tool::components.alerts" as alerts %}
+
+{% block content %}
+<div class="center-card">
+    <div class="mb:1rem">
+        <h2 class="center-card__title">
+            基本設定
+        </h2>
+        <p class="cenger-card__minititle">
+            サイト名と管理者アカウントを設定します。
+        </p>
+    </div>
+    {{ alerts.error() }}
+    <div>
+        {{ form_open({route: 'install.basic.save', method: 'post'}) }}
+            <div class="mb:30">
+
+                <div class="form-column">
+                    {{ forms.input({
+                        name: 'site_name',
+                        label:'サイト名',
+                        value: setting.meta.name,
+                        required: true,
+                    }) }}
+                </div>
+
+                <hr class="divider"/>
+
+                <div class="form-column">
+                    {{ forms.input({
+                        name: 'root[name]',
+                        key: 'root.name',
+                        label:'アカウント名',
+                        value: setting.root.name,
+                        required: true,
+                    }) }}
+                </div>
+                <div class="form-column">
+                    {{ forms.input({
+                        name: 'root[email]',
+                        key: 'root.email',
+                        type: 'email',
+                        label:'メールアドレス',
+                        value: setting.root.email,
+                        required: true,
+                    }) }}
+                </div>
+                <div class="form-column">
+                    {{ forms.input({
+                        name: 'root[password]',
+                        type: 'password',
+                        label:'パスワード',
+                        required: true,
+                    }) }}
+                </div>
+            </div>
+            <div class="flex flex:row gap:10">
+                <a
+                    class="link-btn link-btn--primary-line w:full"
+                    href="{{ route('install.api') }}">
+                    戻る
+                </a>
+                {{ forms.submit({
+                    label: '次へ',
+                    class: 'form-btn--primary w:full',
+                }) }}
+            </div>
+        {{ form_close() }}
+    </div>
 </div>
+{% endblock %}

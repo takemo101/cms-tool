@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html lang="{{ config('app.locale') }}">
     <head>
-        {% set metaTitle = block('title') is defined ? block('title') : share.meta.title %}
-        {% set metaDescription = block('description') is defined ? block('description') : share.meta.description %}
+        <base href="{{ share.request.uri.base }}">
+
+        {% set metaTitle = block('title') is defined ? block('title') : config('app.name') %}
+        {% set metaDescription = block('description') is defined ? block('description') : '' %}
+
         {# meta tag #}
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,47 +17,43 @@
         <meta property="og:title" content="{{ metaTitle }}" />
         <meta property="og:description" content="{{ metaDescription }}" />
         <meta property="og:site_name" content="{{ config('app.name') }}" />
-        <meta property="og:image" content="{% block image %}{% endblock %}" />
 
-        <link rel="icon" href="{{ share.meta.favicon.url }}">
+        <link rel="icon" href="{{ vendor('favicon.ico') }}">
 
-        <title>{{ metaTitle }}{% block title_separator %}｜{% endblock %}{% block title_suffix %}{{ share.meta.title }}{% endblock %}</title>
+        <title>{{ metaTitle }}{% block title_separator %}｜{% endblock %}{% block title_suffix %}{{ config('app.name') }}{% endblock %}</title>
 
         {# css #}
         {% block css %}{% endblock %}
+        <link rel="stylesheet" href="{{ vendor('app.css') }}">
 
         {# header js #}
-        <!-- alpinejs intersect -->
-        <script defer src="//unpkg.com/@alpinejs/intersect@3.x.x/dist/cdn.min.js"></script>
-        <!-- alpinejs -->
-        <script src="//unpkg.com/alpinejs" defer></script> <!-- alpinejs core -->
         <!-- htmx -->
 	    <script src="//unpkg.com/htmx.org@1.9.9"></script>
+        <!-- main -->
+        <script src="{{ vendor('app.js') }}"></script>
         {% block header_js %}{% endblock %}
     </head>
     <body
-        class="{% block body_class %}{% endblock %}"
-        hx-headers='{
-            "{{ csrf.getHeaderNameKey() }}": "{{ csrf.name }}",
-            "{{ csrf.getHeaderValueKey() }}": "{{ csrf.value }}"
-        }'>
+        class="body {% block body_class %}{% endblock %}"
+        hx-headers="{
+            '{{ csrf.getHeaderNameKey() }}': '{{ csrf.name }}',
+            '{{ csrf.getHeaderValueKey() }}': '{{ csrf.value }}'
+        }">
 
-        {# header #}
-        {% block header %}{% endblock %}
+        <div class="layout {% block layout_class %}{% endblock %}">
+            {# header #}
+            {% block header %}{% endblock %}
 
-        {# main content #}
-        {% block content %}{% endblock %}
+            {# main content #}
+            <div class="container">
+                {% block content %}{% endblock %}
+            </div>
 
-        {# footer #}
-        {% block footer %}{% endblock %}
+            {# footer #}
+            {% block footer %}{% endblock %}
 
-        {# footer js #}
-        {% block footer_js %}{% endblock %}
-        <script>
-            document.body.addEventListener('htmx:configRequest', (event) => {
-                event.detail.headers['{{ csrf.getHeaderNameKey() }}'] = '{{ csrf.name }}';
-                event.detail.headers['{{ csrf.getHeaderValueKey() }}'] = '{{ csrf.value }}';
-            })
-        </script>
+            {# footer js #}
+            {% block footer_js %}{% endblock %}
+        </div>
     </body>
 </html>

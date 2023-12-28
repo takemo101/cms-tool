@@ -39,8 +39,12 @@ class AssetExtension extends AbstractExtension
         ];
     }
 
-    public function getAssetUrl(string $path = ''): string
+    public function getAssetUrl(?string $path = null): string
     {
+        if (empty($path)) {
+            return '';
+        }
+
         return $this->routeParser->urlFor(
             ActiveThemeAssetAction::RouteName,
             [
@@ -49,8 +53,12 @@ class AssetExtension extends AbstractExtension
         );
     }
 
-    public function getThemeAssetUrl(string|ThemeId $id, string $path = ''): string
+    public function getThemeAssetUrl(string|ThemeId $id, ?string $path = null): string
     {
+        if (empty($path)) {
+            return '';
+        }
+
         return $this->routeParser->urlFor(
             ThemeAssetAction::RouteName,
             [
@@ -60,8 +68,12 @@ class AssetExtension extends AbstractExtension
         );
     }
 
-    public function getVendorAssetUrl(string $path = ''): string
+    public function getVendorAssetUrl(?string $path = null): string
     {
+        if (empty($path)) {
+            return '';
+        }
+
         return $this->routeParser->urlFor(
             VendorAssetAction::RouteName,
             [
@@ -70,8 +82,12 @@ class AssetExtension extends AbstractExtension
         );
     }
 
-    public function getLocalPublicStorageUrl(string $path = ''): string
+    public function getLocalPublicStorageUrl(?string $path = null): string
     {
+        if (empty($path)) {
+            return '';
+        }
+
         return $this->localPublicStoragePath->getUrl($path);
     }
 }

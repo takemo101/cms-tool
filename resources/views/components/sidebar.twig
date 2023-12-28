@@ -1,0 +1,53 @@
+<div class="sidebar">
+    <div class="sidebar__inner">
+        {% for key, link in {
+            dashboard: {
+                label: 'ダッシュボード',
+                route: 'admin.dashboard',
+            },
+            microcms: {
+                label: 'microCMS',
+                url: 'https://' ~ share.api.serviceId ~ '.microcms.io/',
+            },
+            account: {
+                label: 'アカウント',
+                route: 'admin.account.edit',
+            },
+            basic: {
+                label: '基本設定',
+                route: 'admin.basic.edit',
+            },
+            seo: {
+                label: 'SEO',
+                route: 'admin.seo.edit',
+            },
+            theme: {
+                label: 'テーマ',
+                route: 'admin.theme.index',
+            },
+            webhook: {
+                label: 'Webhook',
+                route: 'admin.webhook.edit',
+            },
+            phpinfo: {
+                divider: true,
+                label: 'phpinfo',
+                route: 'admin.phpinfo',
+            },
+        }  %}
+            {% if link.divider %}
+                <hr class="divider my:8 block@sm hide" />
+            {% endif %}
+            {% if link.url %}
+                <a href="{{ link.url }}" class="nav-link" target="_blank">
+                    {{ link.label }}
+                </a>
+            {% else %}
+                <a href="{{ route(link.route) }}"
+                    class="nav-link {{ key == current ? 'nav-link--active' : '' }}">
+                    {{ link.label }}
+                </a>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>

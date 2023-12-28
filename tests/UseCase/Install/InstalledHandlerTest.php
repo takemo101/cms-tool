@@ -2,7 +2,7 @@
 
 use Takemo101\CmsTool\Domain\Install\InstallationNotPossibleException;
 use Takemo101\CmsTool\Domain\Install\InstallService;
-use Takemo101\CmsTool\UseCase\Install\Handler\InstallationHandler;
+use Takemo101\CmsTool\UseCase\Install\Handler\InstallHandler;
 use Mockery as m;
 use Takemo101\CmsTool\Domain\Install\InstallSpec;
 use Takemo101\CmsTool\Domain\Install\InstallRepository;
@@ -28,7 +28,7 @@ describe(
                 $service = new InstallService($repository, $spec);
 
                 // Create an instance of the InstalledHandler
-                $handler = new InstallationHandler($service);
+                $handler = new InstallHandler($service);
 
                 // Call the handle method
                 expect(fn () => $handler->handle())
@@ -50,7 +50,7 @@ describe(
                 $service = new InstallService($repository, $spec);
 
                 // Create an instance of the InstalledHandler
-                $handler = new InstallationHandler($service);
+                $handler = new InstallHandler($service);
 
                 // Expect an exception to be thrown when calling the handle method
                 expect(fn () => $handler->handle())

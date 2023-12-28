@@ -19,7 +19,7 @@ return [
 
         'name' => 'app',
 
-        'lifetime' => 7200,
+        'lifetime' => 21600,
     ],
 
     // Csrf options

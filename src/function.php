@@ -33,6 +33,7 @@ use Takemo101\CmsTool\Http\Controller\Admin\SiteMetaController;
 use Takemo101\CmsTool\Http\Controller\Admin\SiteSeoController;
 use Takemo101\CmsTool\Http\Controller\Admin\ThemeController;
 use Takemo101\CmsTool\Http\Controller\Admin\Tool\ThemeJsonController;
+use Takemo101\CmsTool\Http\Controller\Admin\UninstallController;
 use Takemo101\CmsTool\Http\Controller\Admin\WebhookController;
 use Takemo101\CmsTool\Http\Middleware\AdminAuth;
 use Takemo101\CmsTool\Http\Middleware\AdminSessionStart;
@@ -215,6 +216,15 @@ hook()
                                         '/webhook/regenerate',
                                         [WebhookController::class, 'regenerate'],
                                     )->setName('admin.webhook.regenerate');
+
+                                    $proxy->get(
+                                        '/uninstall',
+                                        [UninstallController::class, 'confirm'],
+                                    )->setName('admin.uninstall.confirm');
+                                    $proxy->post(
+                                        '/uninstall',
+                                        [UninstallController::class, 'uninstall'],
+                                    )->setName('admin.uninstall');
 
                                     $proxy->group(
                                         '/tool',

@@ -1,45 +1,108 @@
-<link rel="stylesheet" href="{{ theme('simply', 'app.css') }}"/>
-<script src="{{ theme('simply', 'app.js') }}"></script>
-<div>
-    <h1>dashboard</h1>
-    <h2>{{ meta.name }}</h2>
-    {{ form_open({route: 'admin.logout', method: 'post'}) }}
-        <input type="submit" value="Logout"/>
-    {{ form_close() }}
-    <a target="_blank" href="{{ microCmsLink }}">microCMSの管理画面へ</a>
+{% extends 'cms-tool::layouts.dashboard' %}
 
-    {{ form_open({
-        route: [
-            'admin.publish',
-            {status: isPublished ? 'unpublished' : 'published'},
-        ],
-        method: 'patch',
-    }) }}
-        {% if isPublished %}
-            <input type="submit" value="サイトを非公開にする"/>
-        {% else %}
-            <input type="submit" value="サイトを公開する"/>
-        {% endif %}
-    {{ form_close() }}
+{% block title %}ダッシュボード{% endblock %}
 
-    <ul>
-        <li>
-            <a href="{{ route('admin.phpinfo') }}">phpinfo</a>
-        </li>
-        <li>
-            <a href="{{ route('admin.account.edit') }}">Account</a>
-        </li>
-        <li>
-            <a href="{{ route('admin.basic.edit') }}">Basic</a>
-        </li>
-        <li>
-            <a href="{{ route('admin.seo.edit') }}">Seo</a>
-        </li>
-        <li>
-            <a href="{{ route('admin.theme.index') }}">Theme</a>
-        </li>
-        <li>
-            <a href="{{ route('admin.webhook.edit') }}">Webhook</a>
-        </li>
-    </ul>
+{% block current %}dashboard{% endblock %}
+
+{% import "cms-tool::components.forms" as forms %}
+
+{% block content_right %}
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-header__title">ダッシュボード</h2>
+        <hr class="divider" />
+    </div>
+    <div class="card-body">
+        <div>
+            <p class="mt:0 mb:16px">
+                {{ auth.name }}さん、こんにちは！
+            </p>
+        </div>
+        <h3 class="f:18px f:bold mt:0 mb:16px">サイトの公開状態</h3>
+        <div>
+            <p class="f:16 lh:1.6rem mt:0 mb:16px">
+                {% if isPublished %}
+                    サイトは公開されています。<br/>
+                    <a
+                        class="link"
+                        target="_blank"
+                        href="{{ route('home') }}">
+                        コチラから
+                    </a>
+                    サイトを確認できます。
+                {% else %}
+                    サイトは非公開です。<br/>
+                    以下のボタンをクリックするとサイトを公開できます。
+                {% endif %}
+            </p>
+            <div class="mb:16px">
+                {{ form_open({
+                    route: [
+                        'admin.publish',
+                        {status: isPublished ? 'unpublished' : 'published'},
+                    ],
+                    method: 'patch',
+                }) }}
+                    {% if isPublished %}
+                        {{ forms.submit({
+                            label: 'サイトを非公開にする',
+                            class: 'form-btn--secondary',
+                        }) }}
+                    {% else %}
+                        {{ forms.submit({
+                            label: 'サイトを公開する',
+                            class: 'form-btn--primary',
+                        }) }}
+                    {% endif %}
+                {{ form_close() }}
+            </div>
+        </div>
+        <h3 class="f:18px f:bold mt:0 mb:16px">操作方法</h3>
+        <div>
+            <ul class="f:16px list-style:circle pl:18px lh:1.6rem">
+                <li>
+                    <a
+                        class="link"
+                        href="https://document.microcms.io/manual/create-api"
+                        target="_blank">
+                        APIスキーマ作成
+                    </a>
+                </li>
+                <li>
+                    <a
+                        class="link"
+                        href="https://document.microcms.io/manual/create-content"
+                        target="_blank">
+                        コンテンツ作成
+                    </a>
+                </li>
+                <li>
+                    <a class="link" href="{{ route('admin.basic.edit') }}">
+                        基本設定
+                    </a>
+                </li>
+                <li>
+                    <a class="link" href="{{ route('admin.seo.edit') }}">
+                        SEOの設定
+                    </a>
+                </li>
+                <li>
+                    <a class="link" href="{{ route('admin.theme.index') }}">
+                        テーマの変更
+                    </a>
+                </li>
+                <li>
+                    <a class="link" href="{{ route('admin.webhook.edit') }}">
+                        Webhookの設定
+                    </a>
+                </li>
+                <li>
+                    <a class="link" href="{{ route('admin.uninstall.confirm') }}">
+                        アンインストール
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'cms-tool::layouts.dashboard' %}
+
+{% block title %}アンインストール{% endblock %}
+
+{% import "cms-tool::components.forms" as forms %}
+
+{% block content_right %}
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-header__title">アンインストール</h2>
+        <hr class="divider" />
+    </div>
+    <div class="card-body">
+        <h3 class="f:18px f:bold mt:0 mb:16px">アンインストールの注意点</h3>
+        <div>
+            <p class="f:16 lh:1.6rem mt:0 mb:16px">
+                一番下の「アンインストールする」ボタンを押すと、アンインストールが実行され、インストールをやり直すことが出来ます。<br/>
+                アンインストールしても、microCMSに登録したデータが削除されることはありません。<br/>
+                ただし、以下の点に注意して実行して下さい。
+            </p>
+            <ul class="f:16px list-style:decimal pl:18px lh:1.6rem">
+                <li>
+                    アンインストールすると、API設定・基本設定・Webhookトークン情報などのシステム設定情報が削除されます。
+                </li>
+                <li>
+                    アンインストールすると、テーマ自体は削除されませんが、再度インストールする際には、選択テーマはデフォルトのものが選択されます。
+                </li>
+                <li>
+                    アンインストール実行後は、ログアウトされますので、再度ログインすることは出来ません。
+                </li>
+            </ul>
+            <div class="mt:30">
+                {{ form_open({
+                    route: 'admin.uninstall',
+                    method: 'post',
+                }) }}
+                    {{ forms.submit({
+                        label: 'アンインストールする',
+                        class: 'form-btn--secondary',
+                    }) }}
+                {{ form_close() }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

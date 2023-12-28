@@ -19,13 +19,13 @@ readonly class ChangeSiteSeoRequest
         public string $keywords,
 
         #[File(mimeTypes: ['image/png', 'image/jpeg'])]
-        public UploadedFileInterface $favicon,
+        public ?UploadedFileInterface $favicon = null,
 
         #[File(mimeTypes: ['image/png', 'image/jpeg'])]
-        public UploadedFileInterface $icon,
+        public ?UploadedFileInterface $icon = null,
 
         #[Length(max: 50)]
-        public string $robots,
+        public string $robots = '',
     ) {
         //
     }
@@ -35,7 +35,7 @@ readonly class ChangeSiteSeoRequest
      */
     public function getFaviconOr(): ?UploadedFileInterface
     {
-        return $this->favicon->getError() == UPLOAD_ERR_NO_FILE
+        return $this->favicon?->getError() == UPLOAD_ERR_NO_FILE
             ? null
             : $this->favicon;
     }
@@ -45,7 +45,7 @@ readonly class ChangeSiteSeoRequest
      */
     public function getIconOr(): ?UploadedFileInterface
     {
-        return $this->icon->getError() == UPLOAD_ERR_NO_FILE
+        return $this->icon?->getError() == UPLOAD_ERR_NO_FILE
             ? null
             : $this->icon;
     }

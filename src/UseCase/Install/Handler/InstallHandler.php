@@ -10,7 +10,7 @@ use Takemo101\CmsTool\Domain\Theme\ActivateThemeService;
 use Takemo101\CmsTool\Domain\Webhook\WebhookToken;
 use Takemo101\CmsTool\Domain\Webhook\WebhookTokenRepository;
 
-class InstallationHandler
+class InstallHandler
 {
     /**
      * constructor

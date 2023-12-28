@@ -63,13 +63,10 @@ class ValidationErrorResponseRender extends AbstractErrorResponseRender
         HttpValidationErrorException $exception,
     ): ResponseRenderer {
 
-        $flashErrorMessages = FlashSessionsContext::fromServerRequest($request)
-            ->getFlashSessions()
-            ->get(FlashErrorMessages::class);
-
-        $flashErrorMessages->put(
-            $exception->getErrorMessages(),
-        );
+        FlashSessionsContext::fromRequest($request)
+            ?->getFlashSessions()
+            ->get(FlashErrorMessages::class)
+            ->put($exception->getErrorMessages());
 
         return redirect()->back();
     }

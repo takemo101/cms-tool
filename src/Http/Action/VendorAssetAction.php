@@ -12,7 +12,7 @@ class VendorAssetAction
 {
     public const RouteName = 'vendor.assets';
 
-    public const AssetDirectoryPath = 'assets';
+    public const AssetDirectoryPath = 'static';
 
     /**
      * constructor
@@ -36,7 +36,7 @@ class VendorAssetAction
     public function __invoke(ServerRequestInterface $request, string $path): StaticRenderer
     {
         $assetPath = $this->vendorPath->getResourcePath(
-            'assets',
+            self::AssetDirectoryPath,
             $path,
         );
 

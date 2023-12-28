@@ -1,0 +1,37 @@
+{% macro error(options = {
+    class: '',
+}) %}
+
+{% if is_error() %}
+<div
+    x-data="{ show: true }"
+    x-show="show"
+    class="alert bg:red-90 b:2|solid|red">
+    <div class="w:full">
+        <p class="alert__title f:red">入力内容を確認してください</p>
+        <ul class="m:0 pl:18">
+            {% for errs in error_all() %}
+                {% for e in errs %}
+                    <li>{{ e }}</li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="alert__close">
+        <svg xmlns="http://www.w3.org/2000/svg"
+            width="100%"
+            height="100%"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="alert__close-icon f:red"
+            x-on:click="show = false">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+    </div>
+</div>
+{% endif %}

@@ -1,30 +1,67 @@
-<div>
-    <h1>edit</h1>
-    {{ form_open({route: 'admin.account.update', method: 'put'}) }}
-        <p>{{ admin.id }}</p>
-        <input
-            type="text"
-            name="name"
-            value="{{ old('name', admin.name) }}"
-            placeholder="name"/>
-        <input
-            type="email"
-            name="email"
-            value="{{ old('email', admin.email) }}"
-            placeholder="email"/>
-        <input
-            type="password"
-            name="password"
-            placeholder="password"/>
-        <input
-            type="password"
-            name="password_confirmation"
-            placeholder="password"/>
-        {% for errs in error_all() %}
-            {% for e in errs %}
-                <p>{{ e }}</p>
-            {% endfor %}
-        {% endfor %}
-        <input type="submit" value="Submit"/>
-    {{ form_close() }}
+{% extends 'cms-tool::layouts.dashboard' %}
+
+{% block title %}アカウント{% endblock %}
+
+{% block current %}account{% endblock %}
+
+{% import "cms-tool::components.forms" as forms %}
+{% import "cms-tool::components.alerts" as alerts %}
+
+{% block content_right %}
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-header__title">アカウント編集</h2>
+        <hr class="divider" />
+    </div>
+    <div class="card-body">
+        {{ alerts.error() }}
+
+        {{ form_open({
+            route: 'admin.account.update',
+            method: 'put',
+        }) }}
+            <div class="mb:30">
+                <div class="form-column">
+                    {{ forms.input({
+                        name: 'name',
+                        label:'名前',
+                        value: admin.name,
+                        required: true,
+                    }) }}
+                </div>
+                <div class="form-column">
+                    {{ forms.input({
+                        name: 'email',
+                        type: 'email',
+                        label:'メールアドレス',
+                        value: admin.email,
+                        placeholder: 'mail@example.com',
+                        required: true,
+                    }) }}
+                </div>
+                <div class="form-column">
+                    {{ forms.input({
+                        name: 'password',
+                        type: 'password',
+                        label:'パスワード',
+                        hint: '変更する場合のみ入力してください',
+                    }) }}
+                </div>
+                <div class="form-column">
+                    {{ forms.input({
+                        name: 'password_confirmation',
+                        type: 'password',
+                        label:'パスワード（確認）',
+                    }) }}
+                </div>
+            </div>
+            <div class="t:right">
+                {{ forms.submit({
+                    label: '更新',
+                    class: 'form-btn--primary',
+                }) }}
+            </div>
+        {{ form_close() }}
+    </div>
 </div>
+{% endblock %}

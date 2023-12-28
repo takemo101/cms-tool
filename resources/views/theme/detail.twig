@@ -1,24 +1,122 @@
-{% extends 'cms-tool::layouts.master' %}
+{% extends 'cms-tool::layouts.dashboard' %}
 
-{% block title %}Theme {{ theme.id }}{% endblock %}
+{% block title %}テーマ {{ theme.setting.name }}{% endblock %}
 
-{% block content %}
-    <div>
-        <h1>Theme {{ theme.id }}</h1>
-        {% for image in theme.setting.images %}
-            <img src="{{ theme(theme.id, image) }}" />
-        {% endfor %}
-        <div>
-            {% if theme.isActive() %}
-                <span>Active</span>
-            {% else %}
-                {{ form_open({route: ['admin.theme.activate', {id: theme.id}], method: 'put'}) }}
-                    <input type="submit" value="ToActive"/>
-                {{ form_close() }}
-            {% endif %}
-        </div>
-        <p>
-            {{ content|nl2br|raw }}
-        </p>
+{% block current %}theme{% endblock %}
+
+{% import "cms-tool::components.forms" as forms %}
+
+{% block content_right %}
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-header__title">テーマ</h2>
+        <hr class="divider" />
     </div>
+    <div class="card-body">
+        <div class="flex flex:col">
+            <h3 class="f:18px f:bold mt:0 mb:16px">
+                {{ theme.setting.name }}
+            </h3>
+            {% if theme.setting.images is not empty %}
+                <div class="splide overflow:hidden r:5px mb:16px">
+                    <div class="splide__track">
+                        <ul class="splide__list">
+                            {% for image in theme.setting.images %}
+                                <li class="splide__slide">
+                                    <img
+                                        class="obj:contain bg:gray-82 w:full h:full"
+                                        src="{{ theme(theme.id, image) }}" />
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            {% endif %}
+            <div class="flex:col mb:16px">
+                {% if theme.isActive() %}
+                    {{ forms.submit({
+                        label: '選択中のテーマです',
+                        class: 'form-btn--primary',
+                        disabled: true,
+                    }) }}
+                {% else %}
+                    {{ form_open({route: ['admin.theme.activate', {id: theme.id}], method: 'put', class: 'inline-block'}) }}
+                        {{ forms.submit({
+                            label: 'このテーマを選択する',
+                            class: 'form-btn--secondary',
+                        }) }}
+                    {{ form_close() }}
+                {% endif %}
+                {% if theme.setting.link %}
+                    <a
+                        class="link-btn link-btn--primary-line ml:10px"
+                        href="{{ theme.setting.link }}"
+                        target="_blank">
+                        詳細を見る
+                    </a>
+                {% endif %}
+            </div>
+
+            <p class="f:16px lh:1.4rem mb:16px ">
+                {{ content|nl2br|raw }}
+            </p>
+
+            <div class="flex flex:row@sm flex:col gap:20px">
+                <div class="w:full">
+                    <h4 class="f:16px f:bold mt:0 mb:16px">
+                        テーマ情報
+                    </h4>
+                    <ul class="f:14px">
+                        <li class="flex jc:space-between mb:8px bb:1|solid|gray-82 py:8px">
+                            <span class="f:bold">Version</span>
+                            <span>
+                                {{ theme.setting.version }}
+                            </span>
+                        </li>
+                        {% if theme.setting.author.name %}
+                        <li class="flex jc:space-between mb:8px bb:1|solid|gray-82 py:8px">
+                            <span class="f:bold">作者</span>
+                            <span>
+                                {% if theme.setting.author.link %}
+                                    <a
+                                        class="link"
+                                        href="{{ theme.setting.author.link }}"
+                                        target="_blank">
+                                        {{ theme.setting.author.name }}
+                                    </a>
+                                {% else %}
+                                    {{ theme.setting.author.name }}
+                                {% endif %}
+
+                            </span>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+                <div class="w:full">
+                    <h4 class="f:16px f:bold mt:0 mb:16px">
+                        機能タグ
+                    </h4>
+                    <div class="theme-tags">
+                        {% for tag in theme.setting.tags %}
+                            <span class="theme-tags__item">
+                                {{ tag }}
+                            </span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer_js %}
+<script>
+    new Splide('.splide', {
+        loop: true,
+        height: '400px',
+        lazyLoad: true,
+    }).mount();
+</script>
 {% endblock %}

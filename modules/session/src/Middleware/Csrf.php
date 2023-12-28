@@ -39,8 +39,14 @@ class Csrf implements MiddlewareInterface
         RequestHandlerInterface $handler,
     ): ResponseInterface {
 
-        $session = SessionContext::fromServerRequest($request)
-            ->getSession();
+        $sessionContext = SessionContext::fromRequest($request);
+
+        // If there is no session, do not check the CSRF
+        if (!$sessionContext) {
+            return $handler->handle($request);
+        }
+
+        $session = $sessionContext->getSession();
 
         $guard = $this->factory->create($session);
 

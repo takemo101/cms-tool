@@ -1,20 +1,47 @@
-<div>
-    <h1>login</h1>
-    {{ form_open({route: 'admin.login.post', method: 'post'}) }}
-        <input
-            type="email"
-            name="email"
-            value="{{ old('email') }}"
-            placeholder="email"/>
-        <input
-            type="password"
-            name="password"
-            placeholder="password"/>
-        {% for errs in error_all() %}
-            {% for e in errs %}
-                <p>{{ e }}</p>
-            {% endfor %}
-        {% endfor %}
-        <input type="submit" value="Submit"/>
-    {{ form_close() }}
+{% extends 'cms-tool::layouts.default' %}
+
+{% block title %}Login{% endblock %}
+
+{% import "cms-tool::components.forms" as forms %}
+{% import "cms-tool::components.alerts" as alerts %}
+
+{% block content %}
+<div class="center-card">
+    <div class="mb:1rem">
+        <h2 class="center-card__title">
+            Login
+        </h2>
+        <p class="center-card__subtitle">
+            Welcome back!
+        </p>
+    </div>
+    {{ alerts.error() }}
+    <div>
+        {{ form_open({route: 'admin.login.post', method: 'post'}) }}
+            <div class="mb:30">
+                <div class="form-column">
+                    {{ forms.input({
+                        name: 'email',
+                        label:'メールアドレス',
+                        type: 'email',
+                        placeholder:'mail@example.com'
+                    }) }}
+                </div>
+                <div class="form-column">
+                    {{ forms.input({
+                        type: 'password',
+                        name: 'password',
+                        label:'パスワード',
+                    }) }}
+                </div>
+            </div>
+            <div>
+                {{ forms.submit({
+                    label: 'ログイン',
+                    class: 'form-btn--primary w:full',
+                }) }}
+            </div>
+        {{ form_close() }}
+    </div>
 </div>
+{% endblock %}

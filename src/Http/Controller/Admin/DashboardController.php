@@ -15,7 +15,7 @@ class DashboardController
      * @param SiteMetaQueryService $siteMetaQueryService
      * @return View
      */
-    public function dashboardPage(
+    public function dashboard(
         MicroCmsApiQueryService $microCmsApiQueryService,
         SiteMetaQueryService $siteMetaQueryService,
     ) {

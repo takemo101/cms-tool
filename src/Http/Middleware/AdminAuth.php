@@ -38,10 +38,13 @@ class AdminAuth implements MiddlewareInterface
         ServerRequestInterface $request,
         RequestHandlerInterface $handler,
     ): ResponseInterface {
-        $session = AdminSessionContext::fromServerRequest($request)
-            ->getAdminSession();
+        $session = AdminSessionContext::fromRequest($request)
+            ?->getAdminSession();
 
-        if ($this->isRequiredLogin && !$session->isLoggedIn()) {
+        if (
+            !$session
+            || ($this->isRequiredLogin && !$session->isLoggedIn())
+        ) {
             $this->notLoggedInError($request);
         }
 

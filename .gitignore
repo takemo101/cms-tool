@@ -13,7 +13,6 @@
 /storage/dump/*
 /.env
 /setting.json
-/themes/*
 /memo.txt
 
 # for vite

@@ -3,6 +3,7 @@
 namespace Takemo101\CmsTool\Infra\Saloon\HttpClient;
 
 use DI\Attribute\Inject;
+use Takemo101\CmsTool\Domain\MicroCms\MicroCmsApi;
 use Takemo101\CmsTool\Domain\MicroCms\MicroCmsApiRepository;
 use Takemo101\CmsTool\Infra\Shared\Exception\InfraException;
 
@@ -35,6 +36,17 @@ class MicroCmsApiConnectorFactory
             throw new InfraException('MicroCmsApi is not set');
         }
 
+        return $this->createFromEntity($api);
+    }
+
+    /**
+     * Create a MicroCmsClient instance from entity
+     *
+     * @param MicroCmsApi $api
+     * @return MicroCmsApiConnector
+     */
+    public function createFromEntity(MicroCmsApi $api): MicroCmsApiConnector
+    {
         return MicroCmsApiConnector::fromEntity(
             $api,
             $this->guzzleOptions,

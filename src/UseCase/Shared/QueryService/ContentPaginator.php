@@ -14,6 +14,8 @@ use Takemo101\CmsTool\Support\Shared\HasMethodAccessor;
  * @property-read integer $offset
  * @property-read integer $firstPage
  * @property-read integer $lastPage
+ * @property-read integer $startCount
+ * @property-read integer $endCount
  */
 readonly class ContentPaginator
 {
@@ -111,18 +113,24 @@ readonly class ContentPaginator
     /**
      * @return integer
      */
-    public function fromCount(): int
+    public function startCount(): int
     {
+        $fromCount = $this->offset() + 1;
+
         return $this->totalCount
-            ? $this->offset() + 1
+            ? ($fromCount > $this->totalCount ? $this->totalCount : $fromCount)
             : 0;
     }
 
     /**
      * @return integer
      */
-    public function toCount(): int
+    public function endCount(): int
     {
-        return $this->offset() + $this->perPage;
+        $toCount = $this->offset() + $this->perPage;
+
+        return $this->totalCount
+            ? ($toCount > $this->totalCount ? $this->totalCount : $toCount)
+            : 0;
     }
 }

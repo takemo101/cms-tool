@@ -29,6 +29,7 @@ return [
     // referrer: https://docs.guzzlephp.org/en/stable/request-options.html
     'guzzle' => [
 
-        RequestOptions::TIMEOUT => 60,
+        RequestOptions::CRYPTO_METHOD => null, // default: STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT
+        RequestOptions::TIMEOUT => 60, // default: 30
     ],
 ];

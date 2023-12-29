@@ -5,6 +5,7 @@
 /vendor
 /docs
 /.vscode
+/.ssh
 
 /storage/logs/*
 /storage/cache/*
@@ -13,6 +14,7 @@
 /.env
 /setting.json
 /themes/*
+/memo.txt
 
 # for vite
 /*.log

@@ -1,5 +1,6 @@
 <?php
 
+use GuzzleHttp\RequestOptions;
 use Takemo101\CmsTool\Support\Webhook\CacheCleanWebhookHandler;
 
 return [
@@ -22,5 +23,12 @@ return [
         'handlers' => [
             CacheCleanWebhookHandler::class,
         ],
+    ],
+
+    // GuzzleHttp client options
+    // referrer: https://docs.guzzlephp.org/en/stable/request-options.html
+    'guzzle' => [
+
+        RequestOptions::TIMEOUT => 60,
     ],
 ];

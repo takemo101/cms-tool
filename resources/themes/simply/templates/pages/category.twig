@@ -1,9 +1,19 @@
-<h1>{{ content.name }}</h1>
+{% extends 'layouts.master' %}
 
-{% for content in contents %}
-    <p>
-        {{ content.title }}
-        <a href="{{ route('blog.detail', {id: content.id}) }}">{{ content.id }}</a>
-        <a href="{{ route('blog.category', {id: content.category.id}) }}">{{ content.category.id }}</a>
-    </p>
-{% endfor %}
+{% block title %}{{ taxonomy.name }}{% endblock %}
+
+{% from 'components.pager' import pager %}
+
+{% block content %}
+    {% include 'components.contents' with {
+        contents: contents
+    } %}
+
+    <div class="mt-8">
+        {{ pager(
+            paginator,
+            share.request.uri.path,
+            share.request.query
+        ) }}
+    </div>
+{% endblock %}

@@ -107,4 +107,22 @@ readonly class ContentPaginator
     {
         return $this->totalPage;
     }
+
+    /**
+     * @return integer
+     */
+    public function fromCount(): int
+    {
+        return $this->totalCount
+            ? $this->offset() + 1
+            : 0;
+    }
+
+    /**
+     * @return integer
+     */
+    public function toCount(): int
+    {
+        return $this->offset() + $this->perPage;
+    }
 }

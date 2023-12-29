@@ -25,12 +25,26 @@ class BlogHook implements ThemeHook
                 $extension = ImmutableArrayObject::of($theme->setting->extension);
 
                 /** @var string */
-                $categoryEndpoint = $extension->get('category.endpoint', 'categories');
+                $blogEndpoint = $extension->get('endpoints.blog', 'blogs');
 
                 /** @var string */
-                $tagEndpoint = $extension->get('tag.endpoint', 'tags');
+                $categoryEndpoint = $extension->get('endpoints.category', 'categories');
+
+                /** @var string */
+                $tagEndpoint = $extension->get('endpoints.tag', 'tags');
 
                 $accessors
+                    ->add(
+                        [
+                            'contents',
+                            'contents_*',
+                        ],
+                        TaxonomiesAccessor::class,
+                        [
+                            'theme' => $theme,
+                            'endpoint' => $blogEndpoint,
+                        ]
+                    )
                     ->add(
                         [
                             'categories',

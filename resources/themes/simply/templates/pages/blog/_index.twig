@@ -1,35 +1,19 @@
+{% extends 'layouts.master' %}
+
+{% block title %}ブログ一覧{% endblock %}
+
 {% from 'components.pager' import pager %}
 
-{{ share.meta.name }}
-{{ share.meta.seo.favicon ? storage(share.meta.seo.favicon) : '' }}
+{% block content %}
+    {% include 'components.contents' with {
+        contents: contents
+    } %}
 
-<ul>
-{% for category in share.categories %}
-    <li>{{ category.name }}</li>
-{% endfor %}
-</ul>
-<ul>
-{% for tag in share.tags %}
-    <li>{{ tag.name }}</li>
-{% endfor %}
-</ul>
-{% for content in contents %}
-    <p>
-        {{ content.title }}
-        <a href="{{ route('blog.detail', {id: content.id}) }}">{{ content.id }}</a>
-        <a href="{{ route('blog.category', {id: content.category.id}) }}">{{ content.category.id }}</a>
-        <p>
-            <small>
-                {% for tag in content.tags %}
-                    <a href="{{ route('blog.tag', {id: tag.id}) }}">{{ tag.id }}</a>
-                {% endfor %}
-            </small>
-        </p>
-    </p>
-{% endfor %}
-
-{{ pager(
-    paginator,
-    share.request.uri.path,
-    share.request.query
-) }}
+    <div class="mt-8">
+        {{ pager(
+            paginator,
+            share.request.uri.path,
+            share.request.query
+        ) }}
+    </div>
+{% endblock %}

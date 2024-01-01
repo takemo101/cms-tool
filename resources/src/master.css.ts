@@ -1,5 +1,10 @@
 // Definition of MasterCSS custom style
 
+type RGB = `rgb(${number},${number},${number})`;
+type HEX = `#${string}`;
+
+type StyleColor = RGB | HEX;
+
 const Colors = {
   Background: "#f8f9fd",
   Primary: "#563bff",
@@ -8,7 +13,7 @@ const Colors = {
   Link: "#7979b4",
   ActiveLinkBackground: "#e9e7fd",
   ActiveLink: "#563bff",
-} as const;
+} as const satisfies Record<string, StyleColor>;
 
 const generalStyle = {
   // layout styles

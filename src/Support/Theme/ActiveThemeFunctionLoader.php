@@ -71,7 +71,7 @@ class ActiveThemeFunctionLoader
             $this->filesystem->require($functionPath);
         }
 
-        $this->hook->doByType($activeTheme);
+        $this->hook->doTyped($activeTheme);
         $this->hook->do(LoadActiveTheme, $activeTheme);
     }
 
@@ -84,7 +84,7 @@ class ActiveThemeFunctionLoader
     public function beforeHook(ActiveTheme $activeTheme): void
     {
         $this->hook
-            ->onByType(
+            ->onTyped(
                 function (
                     TemplateFinder $finder,
                     ContainerInterface $container
@@ -99,7 +99,7 @@ class ActiveThemeFunctionLoader
                     return $finder;
                 }
             )
-            ->onByType(
+            ->onTyped(
                 fn (DataAccessors $accessors) => $accessors->add(
                     'theme',
                     fn () => $activeTheme,

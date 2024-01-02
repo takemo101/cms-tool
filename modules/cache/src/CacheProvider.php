@@ -122,7 +122,7 @@ class CacheProvider implements Provider
         /** @var Hook */
         $hook = $container->get(Hook::class);
 
-        $hook->onByType(
+        $hook->onTyped(
             fn (CommandCollection $commands) => $commands->add(
                 CacheCleanCommand::class,
             ),

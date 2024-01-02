@@ -126,7 +126,7 @@ class ViewProvider implements Provider
             ) {
                 $accessors = $factory->create();
 
-                $hook->doByType($accessors);
+                $hook->doTyped($accessors);
 
                 return $accessors;
             },
@@ -151,7 +151,7 @@ class ViewProvider implements Provider
                     extensions: $extensions,
                 );
 
-                $hook->doByType($factory);
+                $hook->doTyped($factory);
 
                 return $factory;
             },
@@ -161,7 +161,7 @@ class ViewProvider implements Provider
             ) {
                 $twig = $factory->create();
 
-                $hook->doByType($twig);
+                $hook->doTyped($twig);
 
                 return $twig;
             },
@@ -179,7 +179,7 @@ class ViewProvider implements Provider
 
                 $creator->share('share', $adapter);
 
-                $hook->doByType($creator);
+                $hook->doTyped($creator);
 
                 return $creator;
             },
@@ -191,7 +191,7 @@ class ViewProvider implements Provider
                     new BooleanAttrTransformer(),
                 );
 
-                $hook->doByType($transformers);
+                $hook->doTyped($transformers);
 
                 return $transformers;
             },
@@ -202,7 +202,7 @@ class ViewProvider implements Provider
                     new AppendMethodOverrideInputFilter(),
                 );
 
-                $hook->doByType($filters);
+                $hook->doTyped($filters);
 
                 return $filters;
             },
@@ -235,7 +235,7 @@ class ViewProvider implements Provider
         $hook = $container->get(Hook::class);
 
         $hook
-            ->onByType(
+            ->onTyped(
                 function (ServerRequestInterface $request, ContainerInterface $container) {
                     /** @var Environment */
                     $twig = $container->get(Environment::class);
@@ -245,7 +245,7 @@ class ViewProvider implements Provider
 
                     return $request;
                 }
-            )->onByType(
+            )->onTyped(
                 fn (CommandCollection $commands) => $commands->add(
                     TwigCleanCommand::class,
                 ),

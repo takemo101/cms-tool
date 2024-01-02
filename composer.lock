@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3f41060b8f73274ad82c0c16d90664f1",
+    "content-hash": "d116823fd5d923aa4cf3153d2ac3cb6f",
     "packages": [
         {
             "name": "cms-module/cache",
@@ -12,7 +12,7 @@
             "dist": {
                 "type": "path",
                 "url": "modules/cache",
-                "reference": "b4f7fe882d1a6e120ed9db3a675f535c598255a1"
+                "reference": "8533e35ea1481eed47caa18881fa89d3553c56dd"
             },
             "require": {
                 "php": "^8.2",
@@ -24,7 +24,7 @@
                 "pestphp/pest": "^2.24",
                 "phpstan/phpstan": "^1.10",
                 "symfony/var-dumper": "^6.3",
-                "takemo101/chubby": "^0.0.21"
+                "takemo101/chubby": "^0.0.22"
             },
             "type": "library",
             "autoload": {
@@ -67,7 +67,7 @@
             "dist": {
                 "type": "path",
                 "url": "modules/session",
-                "reference": "02570af3e9f82e95d52c4f8c474fefdce5b3e02b"
+                "reference": "54c019b76b2b18db244099abd51f8fd2a4c7bfbb"
             },
             "require": {
                 "odan/session": "^6.1",
@@ -80,7 +80,7 @@
                 "pestphp/pest": "^2.24",
                 "phpstan/phpstan": "^1.10",
                 "symfony/var-dumper": "^6.3",
-                "takemo101/chubby": "^0.0.21"
+                "takemo101/chubby": "^0.0.22"
             },
             "type": "library",
             "autoload": {
@@ -123,7 +123,7 @@
             "dist": {
                 "type": "path",
                 "url": "modules/support",
-                "reference": "e2e48d0e632aa76a85daffce4931891c039e8dc6"
+                "reference": "c0733766899356a2a31ae77953431a7c1668465b"
             },
             "require": {
                 "eventsauce/object-hydrator": "^1.4",
@@ -143,7 +143,7 @@
                 "pestphp/pest": "^2.24",
                 "phpstan/phpstan": "^1.10",
                 "symfony/var-dumper": "^6.3",
-                "takemo101/chubby": "^0.0.21"
+                "takemo101/chubby": "^0.0.22"
             },
             "type": "library",
             "autoload": {
@@ -186,7 +186,7 @@
             "dist": {
                 "type": "path",
                 "url": "modules/theme",
-                "reference": "7dd8c92e7698516d0651ef06d5a496cbf0bb3a56"
+                "reference": "6c76bb3fdd80ea59b3141692e20a3a836c3c6d10"
             },
             "require": {
                 "php": "^8.2"
@@ -197,7 +197,7 @@
                 "pestphp/pest": "^2.24",
                 "phpstan/phpstan": "^1.10",
                 "symfony/var-dumper": "^6.3",
-                "takemo101/chubby": "^0.0.21"
+                "takemo101/chubby": "^0.0.22"
             },
             "type": "library",
             "autoload": {
@@ -240,7 +240,7 @@
             "dist": {
                 "type": "path",
                 "url": "modules/view",
-                "reference": "8e06797f5a32f00c42b08241878813705440b0d7"
+                "reference": "dd1d8b362217c4fa60417d40c4ba7f351b8f6c4a"
             },
             "require": {
                 "php": "^8.2",
@@ -252,7 +252,7 @@
                 "pestphp/pest": "^2.24",
                 "phpstan/phpstan": "^1.10",
                 "symfony/var-dumper": "^6.3",
-                "takemo101/chubby": "^0.0.21"
+                "takemo101/chubby": "^0.0.22"
             },
             "type": "library",
             "autoload": {
@@ -1704,6 +1704,56 @@
                 "source": "https://github.com/php-fig/container/tree/2.0.2"
             },
             "time": "2021-11-05T16:47:00+00:00"
+        },
+        {
+            "name": "psr/event-dispatcher",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/event-dispatcher.git",
+                "reference": "dbefd12671e8a14ec7f180cab83036ed26714bb0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/event-dispatcher/zipball/dbefd12671e8a14ec7f180cab83036ed26714bb0",
+                "reference": "dbefd12671e8a14ec7f180cab83036ed26714bb0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\EventDispatcher\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Standard interfaces for event handling.",
+            "keywords": [
+                "events",
+                "psr",
+                "psr-14"
+            ],
+            "support": {
+                "issues": "https://github.com/php-fig/event-dispatcher/issues",
+                "source": "https://github.com/php-fig/event-dispatcher/tree/1.0.0"
+            },
+            "time": "2019-01-08T18:20:26+00:00"
         },
         {
             "name": "psr/http-client",
@@ -4541,16 +4591,16 @@
         },
         {
             "name": "takemo101/chubby",
-            "version": "v0.0.21",
+            "version": "v0.0.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/takemo101/chubby.git",
-                "reference": "9dd2afa68fea97b5e4282b819f02c79bb4d88d6e"
+                "reference": "787b5429a06153086475a8cb477d23830d87a5c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/takemo101/chubby/zipball/9dd2afa68fea97b5e4282b819f02c79bb4d88d6e",
-                "reference": "9dd2afa68fea97b5e4282b819f02c79bb4d88d6e",
+                "url": "https://api.github.com/repos/takemo101/chubby/zipball/787b5429a06153086475a8cb477d23830d87a5c1",
+                "reference": "787b5429a06153086475a8cb477d23830d87a5c1",
                 "shasum": ""
             },
             "require": {
@@ -4562,6 +4612,7 @@
                 "php": "^8.2",
                 "php-di/invoker": "^2.3",
                 "php-di/php-di": "^7.0",
+                "psr/event-dispatcher": "^1.0",
                 "slim/slim": "4.*",
                 "symfony/console": "^6.3",
                 "symfony/error-handler": "^6.3",
@@ -4602,9 +4653,9 @@
             ],
             "support": {
                 "issues": "https://github.com/takemo101/chubby/issues",
-                "source": "https://github.com/takemo101/chubby/tree/v0.0.21"
+                "source": "https://github.com/takemo101/chubby/tree/v0.0.22"
             },
-            "time": "2023-12-28T03:10:56+00:00"
+            "time": "2024-01-01T23:35:41+00:00"
         },
         {
             "name": "twig/twig",

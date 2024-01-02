@@ -43,11 +43,11 @@ use Takemo101\CmsTool\Http\Middleware\WhenUnpublished;
 use Takemo101\CmsTool\Support\Theme\ActiveThemeRouteRegister;
 
 hook()
-    ->onByType(
+    ->onTyped(
         fn (CommandCollection $commands) => $commands
             ->add(StorageLinkCommand::class),
     )
-    ->onByType(
+    ->onTyped(
         function (ErrorResponseRenders $renders, ContainerInterface $container) {
             /** @var ApplicationSummary */
             $summary = $container->get(ApplicationSummary::class);
@@ -71,7 +71,7 @@ hook()
             }
         },
     )
-    ->onByType(
+    ->onTyped(
         function (SlimHttpAdapter $http) {
 
             /** @var string */

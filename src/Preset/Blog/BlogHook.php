@@ -18,7 +18,7 @@ class BlogHook implements ThemeHook
         Theme $theme,
         Hook $hook,
     ): void {
-        $hook->onByType(
+        $hook->onTyped(
             function (
                 DataAccessors $accessors,
             ) use ($theme) {

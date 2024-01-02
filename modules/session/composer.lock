@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "87c24893c10cdb9b9c9ac87d0ba86411",
+    "content-hash": "bb2338047f603c7e499ef2be8bbc6c96",
     "packages": [
         {
             "name": "odan/session",
@@ -3150,6 +3150,56 @@
             "time": "2021-11-05T16:47:00+00:00"
         },
         {
+            "name": "psr/event-dispatcher",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/event-dispatcher.git",
+                "reference": "dbefd12671e8a14ec7f180cab83036ed26714bb0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/event-dispatcher/zipball/dbefd12671e8a14ec7f180cab83036ed26714bb0",
+                "reference": "dbefd12671e8a14ec7f180cab83036ed26714bb0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\EventDispatcher\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Standard interfaces for event handling.",
+            "keywords": [
+                "events",
+                "psr",
+                "psr-14"
+            ],
+            "support": {
+                "issues": "https://github.com/php-fig/event-dispatcher/issues",
+                "source": "https://github.com/php-fig/event-dispatcher/tree/1.0.0"
+            },
+            "time": "2019-01-08T18:20:26+00:00"
+        },
+        {
             "name": "psr/log",
             "version": "3.0.0",
             "source": {
@@ -5829,16 +5879,16 @@
         },
         {
             "name": "takemo101/chubby",
-            "version": "v0.0.21",
+            "version": "v0.0.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/takemo101/chubby.git",
-                "reference": "9dd2afa68fea97b5e4282b819f02c79bb4d88d6e"
+                "reference": "787b5429a06153086475a8cb477d23830d87a5c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/takemo101/chubby/zipball/9dd2afa68fea97b5e4282b819f02c79bb4d88d6e",
-                "reference": "9dd2afa68fea97b5e4282b819f02c79bb4d88d6e",
+                "url": "https://api.github.com/repos/takemo101/chubby/zipball/787b5429a06153086475a8cb477d23830d87a5c1",
+                "reference": "787b5429a06153086475a8cb477d23830d87a5c1",
                 "shasum": ""
             },
             "require": {
@@ -5850,6 +5900,7 @@
                 "php": "^8.2",
                 "php-di/invoker": "^2.3",
                 "php-di/php-di": "^7.0",
+                "psr/event-dispatcher": "^1.0",
                 "slim/slim": "4.*",
                 "symfony/console": "^6.3",
                 "symfony/error-handler": "^6.3",
@@ -5890,9 +5941,9 @@
             ],
             "support": {
                 "issues": "https://github.com/takemo101/chubby/issues",
-                "source": "https://github.com/takemo101/chubby/tree/v0.0.21"
+                "source": "https://github.com/takemo101/chubby/tree/v0.0.22"
             },
-            "time": "2023-12-28T03:10:56+00:00"
+            "time": "2024-01-01T23:35:41+00:00"
         },
         {
             "name": "theseer/tokenizer",

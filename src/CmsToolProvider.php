@@ -91,7 +91,7 @@ class CmsToolProvider implements Provider
 
                 $handlers = new WebhookHandlers(...$classes);
 
-                $hook->doByType($handlers);
+                $hook->doTyped($handlers);
 
                 return $handlers;
             },
@@ -143,75 +143,7 @@ class CmsToolProvider implements Provider
     private function bootHtml(Hook $hook): void
     {
         $hook
-            ->onByType(
-                function (
-                    ServerRequestInterface $request,
-                    ContainerInterface $container,
-                ) {
-                    /** @var AppendCsrfInputFilter */
-                    $filter = $container->get(AppendCsrfInputFilter::class);
-
-                    /** @var ViewCreator */
-                    $view = $container->get(ViewCreator::class);
-
-                    /** @var DataAccessors */
-                    $dataAccessors = $container->get(DataAccessors::class);
-
-                    // CsrfGuardContext generation processing is set in consideration of when the CSRF middleware is not executed.
-                    if ($token = CsrfGuardContext::fromRequest(
-                        $request,
-                        fn () => $container->get(CsrfGuardContext::class),
-                    )
-                        ?->getGuard()
-                        ->getToken()
-                    ) {
-                        $filter->setCsrfToken($token);
-
-                        $view->share('csrf', $token);
-                    }
-
-                    // If there is an administrator session, pass the administrator information to the view
-                    if ($adminSession = AdminSessionContext::fromRequest($request)
-                        ?->getAdminSession()
-                    ) {
-                        /** @var RootAdminRepository */
-                        $repository = $container->get(RootAdminRepository::class);
-
-                        $view
-                            ->share(
-                                'auth',
-                                $adminSession->isLoggedIn()
-                                    ? $repository->find($adminSession->getId())
-                                    : null,
-                            );
-                    }
-
-                    // Put old inputs to flash session.
-                    /** @var array<string,mixed> */
-                    $params = [
-                        ...$request->getQueryParams(),
-                        ...(array) $request->getParsedBody(),
-                    ];
-
-                    if (!empty($params)) {
-                        FlashSessionsContext::fromRequest($request)
-                            ?->getFlashSessions()
-                            ->get(FlashOldInputs::class)
-                            ->put($params);
-                    }
-
-                    $dataAccessors->add(
-                        'request',
-                        ServerRequestAccessor::class,
-                        [
-                            'request' => $request,
-                        ]
-                    );
-
-                    return $request;
-                }
-            )
-            ->onByType(
+            ->onTyped(
                 function (
                     FormAppendFilters $filters,
                     ContainerInterface $container,
@@ -233,7 +165,7 @@ class CmsToolProvider implements Provider
     private function bootTwig(Hook $hook): void
     {
         $hook
-            ->onByType(
+            ->onTyped(
                 function (ServerRequestInterface $request, ContainerInterface $container) {
                     /** @var Environment */
                     $twig = $container->get(Environment::class);

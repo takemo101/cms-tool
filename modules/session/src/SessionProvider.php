@@ -62,7 +62,7 @@ class SessionProvider implements Provider
 
                 $factory = new FlashSessionsFactory(...$flashes);
 
-                $hook->doByType($factory);
+                $hook->doTyped($factory);
 
                 return $factory;
             },

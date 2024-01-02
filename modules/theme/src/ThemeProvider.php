@@ -132,7 +132,7 @@ class ThemeProvider implements Provider
 
                 $presets = new ThemeRoutePresets($routes);
 
-                $hook->doByType($presets);
+                $hook->doTyped($presets);
 
                 return $presets;
             },
@@ -145,7 +145,7 @@ class ThemeProvider implements Provider
 
                 $presets = new ThemeHookPresets($hooks);
 
-                $hook->doByType($presets);
+                $hook->doTyped($presets);
 
                 return $presets;
             },

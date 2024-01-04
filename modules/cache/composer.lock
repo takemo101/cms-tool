@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "92d080ce4725af09dcd740c07b76d5ed",
+    "content-hash": "2b10410f509b3ce0621b852030ff4dc5",
     "packages": [
         {
             "name": "psr/cache",
@@ -6072,16 +6072,16 @@
         },
         {
             "name": "takemo101/chubby",
-            "version": "v0.0.22",
+            "version": "v0.0.23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/takemo101/chubby.git",
-                "reference": "787b5429a06153086475a8cb477d23830d87a5c1"
+                "reference": "f1ac0985063ca2cccc308da7e2a7e6e226b885e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/takemo101/chubby/zipball/787b5429a06153086475a8cb477d23830d87a5c1",
-                "reference": "787b5429a06153086475a8cb477d23830d87a5c1",
+                "url": "https://api.github.com/repos/takemo101/chubby/zipball/f1ac0985063ca2cccc308da7e2a7e6e226b885e2",
+                "reference": "f1ac0985063ca2cccc308da7e2a7e6e226b885e2",
                 "shasum": ""
             },
             "require": {
@@ -6134,9 +6134,9 @@
             ],
             "support": {
                 "issues": "https://github.com/takemo101/chubby/issues",
-                "source": "https://github.com/takemo101/chubby/tree/v0.0.22"
+                "source": "https://github.com/takemo101/chubby/tree/v0.0.23"
             },
-            "time": "2024-01-01T23:35:41+00:00"
+            "time": "2024-01-04T07:42:45+00:00"
         },
         {
             "name": "theseer/tokenizer",

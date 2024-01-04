@@ -33,6 +33,7 @@ use Twig\Environment;
 use Twig\Extension\ExtensionInterface;
 use Twig\Loader\LoaderInterface;
 use Stringable;
+use Takemo101\Chubby\Bootstrap\DefinitionHelper;
 use Takemo101\Chubby\Config\ConfigPhpRepository;
 
 use function DI\get;
@@ -53,73 +54,22 @@ class ViewProvider implements Provider
     public function register(Definitions $definitions): void
     {
         $definitions->add([
-            TemplateFinder::class => function (
-                ContainerInterface $container,
-                ConfigRepository $config,
-                Hook $hook,
-            ) {
-                /** @var class-string<TemplateFinder> */
-                $class = $config->get(
-                    'view.finder',
-                    DefaultTemplateFinder::class,
-                );
-
-                /** @var TemplateFinder */
-                $finder = $container->get($class);
-
-                /** @var TemplateFinder */
-                $finder = $hook->do(
-                    TemplateFinder::class,
-                    $finder,
-                );
-
-                return $finder;
-            },
-            TemplateRenderer::class => function (
-                ContainerInterface $container,
-                ConfigRepository $config,
-                Hook $hook,
-            ) {
-                /** @var class-string<TemplateRenderer> */
-                $class = $config->get(
-                    'view.renderer',
-                    TwigTemplateRenderer::class,
-                );
-
-                /** @var TemplateRenderer */
-                $renderer = $container->get($class);
-
-                /** @var TemplateRenderer */
-                $renderer = $hook->do(
-                    TemplateRenderer::class,
-                    $renderer,
-                );
-
-                return $renderer;
-            },
-            DataAccessInvoker::class =>
-            function (
-                ContainerInterface $container,
-                ConfigRepository $config,
-                Hook $hook,
-            ) {
-                /** @var class-string<DataAccessInvoker> */
-                $class = $config->get(
-                    'view.invoker',
-                    DefaultDataAccessInvoker::class,
-                );
-
-                /** @var DataAccessInvoker */
-                $invoker = $container->get($class);
-
-                /** @var TemplateRenderer */
-                $invoker = $hook->do(
-                    DataAccessInvoker::class,
-                    $invoker,
-                );
-
-                return $invoker;
-            },
+            TemplateFinder::class => DefinitionHelper::createReplaceableDefinition(
+                TemplateFinder::class,
+                'view.finder',
+                DefaultTemplateFinder::class,
+                true,
+            ),
+            TemplateRenderer::class => DefinitionHelper::createReplaceableDefinition(
+                TemplateRenderer::class,
+                'view.renderer',
+                TwigTemplateRenderer::class,
+            ),
+            DataAccessInvoker::class => DefinitionHelper::createReplaceableDefinition(
+                DataAccessInvoker::class,
+                'view.invoker',
+                DefaultDataAccessInvoker::class,
+            ),
             DataAccessors::class => function (
                 DataAccessorsFactory $factory,
                 Hook $hook,

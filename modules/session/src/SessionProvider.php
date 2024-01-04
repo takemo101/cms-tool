@@ -6,8 +6,8 @@ use CmsTool\Session\Contract\SessionFactory;
 use CmsTool\Session\Csrf\CsrfGuard;
 use CmsTool\Session\Flash\FlashSession;
 use CmsTool\Session\Flash\FlashSessionsFactory;
-use Psr\Container\ContainerInterface;
 use Takemo101\Chubby\ApplicationContainer;
+use Takemo101\Chubby\Bootstrap\DefinitionHelper;
 use Takemo101\Chubby\Bootstrap\Definitions;
 use Takemo101\Chubby\Bootstrap\Provider\Provider;
 use Takemo101\Chubby\Config\ConfigPhpRepository;
@@ -34,25 +34,11 @@ class SessionProvider implements Provider
     {
         $definitions->add([
             'csrf' => get(CsrfGuard::class),
-            SessionFactory::class => function (
-                ConfigRepository $config,
-                ContainerInterface $container,
-                Hook $hook,
-            ) {
-                /** @var class-string<SessionFactory> */
-                $class = $config->get('session.factory', NativePhpSessionFactory::class);
-
-                /** @var SessionFactory */
-                $factory = $container->get($class);
-
-                /** @var SessionFactory */
-                $factory = $hook->do(
-                    SessionFactory::class,
-                    $factory,
-                );
-
-                return $factory;
-            },
+            SessionFactory::class => DefinitionHelper::createReplaceableDefinition(
+                SessionFactory::class,
+                'session.factory',
+                NativePhpSessionFactory::class,
+            ),
             FlashSessionsFactory::class => function (
                 ConfigRepository $config,
                 Hook $hook,

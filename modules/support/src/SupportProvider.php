@@ -12,18 +12,18 @@ use CmsTool\Support\JsonAccess\JsonArraySaver;
 use CmsTool\Support\JsonAccess\DefaultJsonAccessor;
 use EventSauce\ObjectHydrator\ObjectMapper;
 use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
-use Psr\Container\ContainerInterface;
 use Takemo101\Chubby\ApplicationContainer;
 use Takemo101\Chubby\Bootstrap\Definitions;
 use Takemo101\Chubby\Bootstrap\Provider\Provider;
 use Takemo101\Chubby\Config\ConfigRepository;
 use Takemo101\Chubby\Filesystem\PathHelper;
 use Takemo101\Chubby\Hook\Hook;
-use RuntimeException;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Takemo101\Chubby\Bootstrap\DefinitionHelper;
 use Takemo101\Chubby\Config\ConfigPhpRepository;
 use Takemo101\Chubby\Console\CommandCollection;
+use RuntimeException;
 
 use function DI\get;
 
@@ -87,28 +87,11 @@ class SupportProvider implements Provider
     public function registerJsonAccess(Definitions $definitions): void
     {
         $definitions->add([
-            JsonArrayAccessor::class => function (
-                ContainerInterface $container,
-                ConfigRepository $config,
-                Hook $hook,
-            ) {
-                /** @var class-string<JsonArrayAccessor> */
-                $class = $config->get(
-                    'support.json.accessor',
-                    DefaultJsonAccessor::class,
-                );
-
-                /** @var JsonArrayAccessor */
-                $accessor = $container->get($class);
-
-                /** @var JsonArrayAccessor */
-                $accessor = $hook->do(
-                    JsonArrayAccessor::class,
-                    $accessor,
-                );
-
-                return $accessor;
-            },
+            JsonArrayAccessor::class => DefinitionHelper::createReplaceableDefinition(
+                JsonArrayAccessor::class,
+                'support.json.accessor',
+                DefaultJsonAccessor::class,
+            ),
             JsonArrayLoader::class => get(JsonArrayAccessor::class),
             JsonArraySaver::class => get(JsonArrayAccessor::class),
         ]);
@@ -145,28 +128,11 @@ class SupportProvider implements Provider
                     $cipher,
                 );
             },
-            Encrypter::class => function (
-                ContainerInterface $container,
-                ConfigRepository $config,
-                Hook $hook,
-            ) {
-                /** @var class-string<Encrypter> */
-                $class = $config->get(
-                    'support.encrypt.encrypter',
-                    DefaultEncrypter::class,
-                );
-
-                /** @var Encrypter */
-                $encrypter = $container->get($class);
-
-                /** @var Encrypter */
-                $encrypter = $hook->do(
-                    Encrypter::class,
-                    $encrypter,
-                );
-
-                return $encrypter;
-            },
+            Encrypter::class => DefinitionHelper::createReplaceableDefinition(
+                Encrypter::class,
+                'support.encrypt.encrypter',
+                DefaultEncrypter::class,
+            ),
         ]);
     }
 

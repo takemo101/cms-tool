@@ -10,8 +10,8 @@ use CmsTool\Theme\Hook\ThemeHook;
 use CmsTool\Theme\Hook\ThemeHookPresets;
 use CmsTool\Theme\Routing\ThemeRoute;
 use CmsTool\Theme\Routing\ThemeRoutePresets;
-use Psr\Container\ContainerInterface;
 use Takemo101\Chubby\ApplicationContainer;
+use Takemo101\Chubby\Bootstrap\DefinitionHelper;
 use Takemo101\Chubby\Bootstrap\Definitions;
 use Takemo101\Chubby\Bootstrap\Provider\Provider;
 use Takemo101\Chubby\Config\ConfigRepository;
@@ -35,94 +35,27 @@ class ThemeProvider implements Provider
     public function register(Definitions $definitions): void
     {
         $definitions->add([
-            ThemeFinder::class => function (
-                ContainerInterface $container,
-                ConfigRepository $config,
-                Hook $hook,
-            ) {
-                /** @var class-string<ThemeFinder> */
-                $class = $config->get(
-                    'theme.finder',
-                    DefaultThemeFinder::class,
-                );
-
-                /** @var ThemeFinder */
-                $finder = $container->get($class);
-
-                /** @var ThemeFinder */
-                $finder = $hook->do(
-                    ThemeFinder::class,
-                    $finder,
-                );
-
-                return $finder;
-            },
-            ThemeLoader::class => function (
-                ContainerInterface $container,
-                ConfigRepository $config,
-                Hook $hook,
-            ) {
-                /** @var class-string<ThemeLoader> */
-                $class = $config->get(
-                    'theme.loader',
-                    DefaultThemeLoader::class,
-                );
-
-                /** @var ThemeLoader */
-                $loader = $container->get($class);
-
-                /** @var ThemeLoader */
-                $loader = $hook->do(
-                    ThemeLoader::class,
-                    $loader,
-                );
-
-                return $loader;
-            },
-            ThemeAssetFinfoFactory::class => function (
-                ContainerInterface $container,
-                ConfigRepository $config,
-                Hook $hook,
-            ) {
-                /** @var class-string<ThemeAssetFinfoFactory> */
-                $class = $config->get(
-                    'theme.factory',
-                    DefaultThemeAssetFinfoFactory::class,
-                );
-
-                /** @var ThemeAssetFinfoFactory */
-                $factory = $container->get($class);
-
-                /** @var ThemeAssetFinfoFactory */
-                $factory = $hook->do(
-                    ThemeAssetFinfoFactory::class,
-                    $factory,
-                );
-
-                return $factory;
-            },
-            ActiveThemeIdMatcher::class => function (
-                ContainerInterface $container,
-                ConfigRepository $config,
-                Hook $hook,
-            ) {
-                /** @var class-string<ActiveThemeIdMatcher> */
-                $class = $config->get(
-                    'theme.matcher',
-                    DefaultActiveThemeIdMatcher::class,
-                );
-
-                /** @var ActiveThemeIdMatcher */
-                $matcher = $container->get($class);
-
-                /** @var ActiveThemeIdMatcher */
-                $matcher = $hook->do(
-                    ActiveThemeIdMatcher::class,
-                    $matcher,
-                );
-
-                return $matcher;
-            },
+            ThemeFinder::class => DefinitionHelper::createReplaceableDefinition(
+                ThemeFinder::class,
+                'theme.finder',
+                DefaultThemeFinder::class,
+                true,
+            ),
+            ThemeLoader::class => DefinitionHelper::createReplaceableDefinition(
+                ThemeLoader::class,
+                'theme.loader',
+                DefaultThemeLoader::class,
+            ),
+            ActiveThemeIdMatcher::class => DefinitionHelper::createReplaceableDefinition(
+                ActiveThemeIdMatcher::class,
+                'theme.matcher',
+                DefaultActiveThemeIdMatcher::class,
+            ),
+            ThemeAssetFinfoFactory::class => DefinitionHelper::createReplaceableDefinition(
+                ThemeAssetFinfoFactory::class,
+                'theme.factory',
+                DefaultThemeAssetFinfoFactory::class,
+            ),
             ThemeRoutePresets::class => function (
                 ConfigRepository $config,
                 Hook $hook,

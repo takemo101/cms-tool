@@ -19,7 +19,7 @@ class ViewCreator
      * @param TemplateFinder $finder
      * @param TemplateRenderer $renderer
      */
-    final public function __construct(
+    public function __construct(
         private TemplateFinder $finder,
         private TemplateRenderer $renderer,
     ) {
@@ -92,9 +92,9 @@ class ViewCreator
      *
      * @param string $key
      * @param mixed $value
-     * @return static
+     * @return self
      */
-    public function share(string $key, mixed $value): static
+    public function share(string $key, mixed $value): self
     {
         $this->shared[$key] = $value;
 
@@ -115,9 +115,9 @@ class ViewCreator
      * Set the template finder implementation.
      *
      * @param TemplateFinder $finder
-     * @return static
+     * @return self
      */
-    public function setFinder(TemplateFinder $finder): static
+    public function setFinder(TemplateFinder $finder): self
     {
         $this->finder = $finder;
 
@@ -138,9 +138,9 @@ class ViewCreator
      * Set the template renderer implementation.
      *
      * @param TemplateRenderer $renderer
-     * @return static
+     * @return self
      */
-    public function setRederer(TemplateRenderer $renderer): static
+    public function setRederer(TemplateRenderer $renderer): self
     {
         $this->renderer = $renderer;
 

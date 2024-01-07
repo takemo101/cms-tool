@@ -42,7 +42,7 @@ class ThemePathHelper
     {
         return $this->getThemePath(
             $theme,
-            ThemeConfig::SettingFilename,
+            ThemeConfig::MetaFilename,
         );
     }
 

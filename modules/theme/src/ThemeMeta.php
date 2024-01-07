@@ -2,7 +2,7 @@
 
 namespace CmsTool\Theme;
 
-readonly class ThemeSetting
+readonly class ThemeMeta
 {
     /**
      * constructor
@@ -16,6 +16,7 @@ readonly class ThemeSetting
      * @param string|null $link
      * @param string|null $preset
      * @param ThemeAuthor $author
+     * @param bool $readonly
      * @param array<string,mixed> $extension
      */
     public function __construct(
@@ -28,6 +29,7 @@ readonly class ThemeSetting
         public ?string $link,
         public ?string $preset,
         public ThemeAuthor $author,
+        public bool $readonly = false,
         public array $extension = [],
     ) {
         //
@@ -57,6 +59,7 @@ readonly class ThemeSetting
      *   name:string,
      *   link?:?string,
      *  },
+     *  readonly?:bool,
      *  extension?:array<string,mixed>,
      * } $data
      * @return self
@@ -73,6 +76,7 @@ readonly class ThemeSetting
             link: $data['link'] ?? null,
             preset: $data['preset'] ?? null,
             author: ThemeAuthor::fromArray($data['author']),
+            readonly: $data['readonly'] ?? false,
             extension: $data['extension'] ?? [],
         );
     }

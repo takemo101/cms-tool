@@ -26,21 +26,21 @@
                     {% endif %}
                     <img
                         class="theme-item__thumb-img"
-                        src="{{ theme.setting.thumbnail() ? theme(theme.id, theme.setting.thumbnail()) : vendor('example.jpeg') }}"
-                        alt="{{ theme.setting.name }}" />
+                        src="{{ theme.meta.thumbnail() ? theme(theme.id, theme.meta.thumbnail()) : vendor('example.jpeg') }}"
+                        alt="{{ theme.meta.name }}" />
                 </a>
-                <h3 class="theme-item__title mb:10px">{{ theme.setting.name }}</h3>
+                <h3 class="theme-item__title mb:10px">{{ theme.meta.name }}</h3>
                 <div class="theme-tags">
-                    {% for tag in theme.setting.tags %}
+                    {% for tag in theme.meta.tags %}
                         <span class="theme-tags__item">
                             {{ tag }}
                         </span>
                     {% endfor %}
                 </div>
-                {% if theme.setting.author.name %}
+                {% if theme.meta.author.name %}
                 <div class="mt:10px">
                     <span class="f:12px f:bold f:gray-62">
-                        {{ theme.setting.author.name }}
+                        {{ theme.meta.author.name }}
                     </span>
                 </div>
                 {% endif %}

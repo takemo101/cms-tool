@@ -59,7 +59,7 @@ class ActiveThemeFunctionLoader
         $this->beforeHook($activeTheme);
 
         // If there is a preset setting, register the preset route
-        if ($name = $activeTheme->setting->preset) {
+        if ($name = $activeTheme->meta->preset) {
             $hook = $this->resolver->resolve($name);
 
             $hook?->hook($activeTheme, $this->hook);

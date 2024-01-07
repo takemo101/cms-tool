@@ -58,6 +58,7 @@ class DefaultThemeLoader implements ThemeLoader
          *   name:string,
          *   link?:?string,
          *  },
+         *  readonly?:bool,
          *  extension?:array<string,mixed>,
          * }
          */
@@ -80,7 +81,7 @@ class DefaultThemeLoader implements ThemeLoader
             id: $themeId,
             directory: $directory,
             active: $this->matcher->isMatch($themeId),
-            setting: ThemeSetting::fromArray($data),
+            meta: ThemeMeta::fromArray($data),
         );
 
         $this->cache[$path] = $theme;

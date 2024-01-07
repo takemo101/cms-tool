@@ -4,7 +4,7 @@ use CmsTool\Theme\Theme;
 use CmsTool\Theme\ThemeConfig;
 use CmsTool\Theme\ThemeId;
 use CmsTool\Theme\ThemePathHelper;
-use CmsTool\Theme\ThemeSetting;
+use CmsTool\Theme\ThemeMeta;
 use Takemo101\Chubby\Filesystem\PathHelper;
 
 beforeEach(function () {
@@ -12,7 +12,7 @@ beforeEach(function () {
         id: new ThemeId('theme-id'),
         directory: '/path/to/theme',
         active: true,
-        setting: ThemeSetting::fromArray([
+        meta: ThemeMeta::fromArray([
             'uid' => 'uid',
             'name' => 'name',
             'version' => 'version',
@@ -40,7 +40,7 @@ describe(
         it('should return the correct theme setting path', function () {
             $actual = $this->helper->getThemeSettingPath($this->theme);
 
-            $excepted = $this->theme->directory . '/' . ThemeConfig::SettingFilename;
+            $excepted = $this->theme->directory . '/' . ThemeConfig::MetaFilename;
 
             expect($actual)->toBe($excepted);
         })->skipOnWindows();

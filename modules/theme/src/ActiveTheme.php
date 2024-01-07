@@ -15,7 +15,7 @@ class ActiveTheme extends Theme
         return new self(
             id: $theme->id,
             directory: $theme->directory,
-            setting: $theme->setting,
+            meta: $theme->meta,
             active: true,
         );
     }

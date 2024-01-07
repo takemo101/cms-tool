@@ -20,7 +20,7 @@ class BlogRoute implements ThemeRoute
         RouteCollectorProxyInterface $proxy,
     ): void {
         $object = ImmutableArrayObject::of(
-            $theme->setting->extension,
+            $theme->meta->extension,
         );
 
         /**

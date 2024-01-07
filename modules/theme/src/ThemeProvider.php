@@ -35,23 +35,23 @@ class ThemeProvider implements Provider
     public function register(Definitions $definitions): void
     {
         $definitions->add([
-            ThemeFinder::class => DefinitionHelper::createReplaceableDefinition(
+            ThemeFinder::class => DefinitionHelper::createReplaceable(
                 ThemeFinder::class,
                 'theme.finder',
                 DefaultThemeFinder::class,
                 true,
             ),
-            ThemeLoader::class => DefinitionHelper::createReplaceableDefinition(
+            ThemeLoader::class => DefinitionHelper::createReplaceable(
                 ThemeLoader::class,
                 'theme.loader',
                 DefaultThemeLoader::class,
             ),
-            ActiveThemeIdMatcher::class => DefinitionHelper::createReplaceableDefinition(
+            ActiveThemeIdMatcher::class => DefinitionHelper::createReplaceable(
                 ActiveThemeIdMatcher::class,
                 'theme.matcher',
                 DefaultActiveThemeIdMatcher::class,
             ),
-            ThemeAssetFinfoFactory::class => DefinitionHelper::createReplaceableDefinition(
+            ThemeAssetFinfoFactory::class => DefinitionHelper::createReplaceable(
                 ThemeAssetFinfoFactory::class,
                 'theme.factory',
                 DefaultThemeAssetFinfoFactory::class,

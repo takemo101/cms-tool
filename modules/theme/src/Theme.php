@@ -9,13 +9,13 @@ class Theme
      *
      * @param ThemeId $id
      * @param string $directory
-     * @param ThemeSetting $setting
+     * @param ThemeMeta $meta
      * @param boolean $active
      */
     public function __construct(
         public readonly ThemeId $id,
         public readonly string $directory,
-        public readonly ThemeSetting $setting,
+        public readonly ThemeMeta $meta,
         private bool $active = false,
     ) {
         //
@@ -29,5 +29,16 @@ class Theme
     public function isActive(): bool
     {
         return $this->active;
+    }
+
+    /**
+     * Return whether it's a readonly theme
+     *
+     * @param boolean $active
+     * @return void
+     */
+    public function isReadonly(): bool
+    {
+        return $this->meta->readonly;
     }
 }

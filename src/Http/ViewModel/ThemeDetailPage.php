@@ -29,7 +29,7 @@ class ThemeDetailPage extends ViewModel
         ViewCreator $creator,
     ): string {
         return $renderer->renderString(
-            template: $this->theme->setting->content,
+            template: $this->theme->meta->content,
             data: [
                 ...$creator->getShared(),
                 'theme' => $this->theme,

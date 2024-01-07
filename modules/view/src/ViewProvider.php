@@ -54,18 +54,18 @@ class ViewProvider implements Provider
     public function register(Definitions $definitions): void
     {
         $definitions->add([
-            TemplateFinder::class => DefinitionHelper::createReplaceableDefinition(
+            TemplateFinder::class => DefinitionHelper::createReplaceable(
                 TemplateFinder::class,
                 'view.finder',
                 DefaultTemplateFinder::class,
                 true,
             ),
-            TemplateRenderer::class => DefinitionHelper::createReplaceableDefinition(
+            TemplateRenderer::class => DefinitionHelper::createReplaceable(
                 TemplateRenderer::class,
                 'view.renderer',
                 TwigTemplateRenderer::class,
             ),
-            DataAccessInvoker::class => DefinitionHelper::createReplaceableDefinition(
+            DataAccessInvoker::class => DefinitionHelper::createReplaceable(
                 DataAccessInvoker::class,
                 'view.invoker',
                 DefaultDataAccessInvoker::class,

@@ -1,6 +1,6 @@
 {% extends 'cms-tool::layouts.dashboard' %}
 
-{% block title %}テーマ {{ theme.setting.name }}{% endblock %}
+{% block title %}テーマ {{ theme.meta.name }}{% endblock %}
 
 {% block current %}theme{% endblock %}
 
@@ -15,13 +15,13 @@
     <div class="card-body">
         <div class="flex flex:col">
             <h3 class="f:18px f:bold mt:0 mb:16px">
-                {{ theme.setting.name }}
+                {{ theme.meta.name }}
             </h3>
-            {% if theme.setting.images is not empty %}
+            {% if theme.meta.images is not empty %}
                 <div class="splide overflow:hidden r:5px mb:16px">
                     <div class="splide__track">
                         <ul class="splide__list">
-                            {% for image in theme.setting.images %}
+                            {% for image in theme.meta.images %}
                                 <li class="splide__slide">
                                     <img
                                         class="obj:contain bg:gray-82 w:full h:full"
@@ -47,10 +47,10 @@
                         }) }}
                     {{ form_close() }}
                 {% endif %}
-                {% if theme.setting.link %}
+                {% if theme.meta.link %}
                     <a
                         class="link-btn link-btn--primary-line ml:10px"
-                        href="{{ theme.setting.link }}"
+                        href="{{ theme.meta.link }}"
                         target="_blank">
                         詳細を見る
                     </a>
@@ -70,22 +70,22 @@
                         <li class="flex jc:space-between mb:8px bb:1|solid|gray-82 py:8px">
                             <span class="f:bold">Version</span>
                             <span>
-                                {{ theme.setting.version }}
+                                {{ theme.meta.version }}
                             </span>
                         </li>
-                        {% if theme.setting.author.name %}
+                        {% if theme.meta.author.name %}
                         <li class="flex jc:space-between mb:8px bb:1|solid|gray-82 py:8px">
                             <span class="f:bold">作者</span>
                             <span>
-                                {% if theme.setting.author.link %}
+                                {% if theme.meta.author.link %}
                                     <a
                                         class="link"
-                                        href="{{ theme.setting.author.link }}"
+                                        href="{{ theme.meta.author.link }}"
                                         target="_blank">
-                                        {{ theme.setting.author.name }}
+                                        {{ theme.meta.author.name }}
                                     </a>
                                 {% else %}
-                                    {{ theme.setting.author.name }}
+                                    {{ theme.meta.author.name }}
                                 {% endif %}
 
                             </span>
@@ -98,7 +98,7 @@
                         特徴タグ
                     </h4>
                     <div class="theme-tags">
-                        {% for tag in theme.setting.tags %}
+                        {% for tag in theme.meta.tags %}
                             <span class="theme-tags__item">
                                 {{ tag }}
                             </span>

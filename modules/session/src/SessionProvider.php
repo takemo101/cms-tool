@@ -34,7 +34,7 @@ class SessionProvider implements Provider
     {
         $definitions->add([
             'csrf' => get(CsrfGuard::class),
-            SessionFactory::class => DefinitionHelper::createReplaceableDefinition(
+            SessionFactory::class => DefinitionHelper::createReplaceable(
                 SessionFactory::class,
                 'session.factory',
                 NativePhpSessionFactory::class,

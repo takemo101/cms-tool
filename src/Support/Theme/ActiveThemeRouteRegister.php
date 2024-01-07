@@ -43,7 +43,7 @@ class ActiveThemeRouteRegister
         }
 
         // If there is a preset setting, register the preset route
-        if ($name = $activeTheme->setting->preset) {
+        if ($name = $activeTheme->meta->preset) {
             $route = $this->resolver->resolve($name);
 
             $route?->route($activeTheme, $proxy);

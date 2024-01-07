@@ -22,7 +22,7 @@ class BlogHook implements ThemeHook
             function (
                 DataAccessors $accessors,
             ) use ($theme) {
-                $extension = ImmutableArrayObject::of($theme->setting->extension);
+                $extension = ImmutableArrayObject::of($theme->meta->extension);
 
                 /** @var string */
                 $blogEndpoint = $extension->get('endpoints.blog', 'blogs');

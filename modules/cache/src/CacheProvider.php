@@ -41,12 +41,12 @@ class CacheProvider implements Provider
     public function register(Definitions $definitions): void
     {
         $definitions->add([
-            MarshallerInterface::class => DefinitionHelper::createReplaceableDefinition(
+            MarshallerInterface::class => DefinitionHelper::createReplaceable(
                 MarshallerInterface::class,
                 'cache.marshaller',
                 DefaultMarshaller::class,
             ),
-            CacheAdapterFactory::class => DefinitionHelper::createReplaceableDefinition(
+            CacheAdapterFactory::class => DefinitionHelper::createReplaceable(
                 CacheAdapterFactory::class,
                 'cache.factory',
                 FilesystemAdapterFactory::class,

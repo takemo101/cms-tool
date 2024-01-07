@@ -87,7 +87,7 @@ class SupportProvider implements Provider
     public function registerJsonAccess(Definitions $definitions): void
     {
         $definitions->add([
-            JsonArrayAccessor::class => DefinitionHelper::createReplaceableDefinition(
+            JsonArrayAccessor::class => DefinitionHelper::createReplaceable(
                 JsonArrayAccessor::class,
                 'support.json.accessor',
                 DefaultJsonAccessor::class,
@@ -128,7 +128,7 @@ class SupportProvider implements Provider
                     $cipher,
                 );
             },
-            Encrypter::class => DefinitionHelper::createReplaceableDefinition(
+            Encrypter::class => DefinitionHelper::createReplaceable(
                 Encrypter::class,
                 'support.encrypt.encrypter',
                 DefaultEncrypter::class,

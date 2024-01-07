@@ -10,8 +10,6 @@ use Takemo101\Chubby\Filesystem\PathHelper;
 
 class DefaultThemeFinder implements ThemeFinder
 {
-    public const ThemeSettingFilename = 'theme.json';
-
     /**
      * @var array<string,string>
      */
@@ -83,7 +81,7 @@ class DefaultThemeFinder implements ThemeFinder
                     continue;
                 }
 
-                $path = $this->helper->join($directory, ThemeConfig::SettingFilename);
+                $path = $this->helper->join($directory, ThemeConfig::MetaFilename);
 
                 if ($this->filesystem->exists($path)) {
                     $themes[$id] = $path;
@@ -109,7 +107,7 @@ class DefaultThemeFinder implements ThemeFinder
             $path = $this->helper->join(
                 $location,
                 $id->value(),
-                ThemeConfig::SettingFilename,
+                ThemeConfig::MetaFilename,
             );
 
             if ($this->filesystem->exists($path)) {

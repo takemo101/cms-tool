@@ -8,7 +8,7 @@ use CmsTool\Session\Middleware\SessionStart;
 use Psr\Container\ContainerInterface;
 use Slim\Interfaces\RouteCollectorProxyInterface as Proxy;
 use Takemo101\Chubby\Http\ErrorHandler\ErrorResponseRenders;
-use Takemo101\Chubby\Http\SlimHttpAdapter;
+use Takemo101\Chubby\Http\SlimHttp;
 use Takemo101\Chubby\Support\ApplicationSummary;
 use Takemo101\CmsTool\Error\SystemErrorPageRender;
 use Takemo101\CmsTool\Error\ThemeErrorPageRender;
@@ -66,7 +66,7 @@ hook()
         },
     )
     ->onTyped(
-        function (SlimHttpAdapter $http) {
+        function (SlimHttp $http) {
 
             /** @var string */
             $webhookRoutePath = config('system.webhook.route', '/webhook');

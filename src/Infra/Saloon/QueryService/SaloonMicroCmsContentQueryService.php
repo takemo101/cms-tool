@@ -39,7 +39,7 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
     public function getSingle(
         string $endpoint,
         MicroCmsContentGetOneQuery $query = new MicroCmsContentGetOneQuery(),
-
+        bool $cache = true,
     ): ?ArrayObject {
 
         $apiQuery = new MicroCmsGetOneQuery(
@@ -52,29 +52,33 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
             'endpoint' => $endpoint,
         ]);
 
+        $callback = function () use (
+            $endpoint,
+            $apiQuery,
+        ): array {
+            $connector = $this->factory->create();
+
+            $response = $connector->send(
+                MicroCmsGetOneRequest::createSingle(
+                    endpoint: $endpoint,
+                    apiQuery: $apiQuery,
+                ),
+            );
+
+            if ($response->status() !== 200) {
+                return null;
+            }
+
+            return $response->json();
+        };
+
         /** @var array<string,mixed> */
-        $json = $this->cache->get(
-            key: $key,
-            callback: function () use (
-                $endpoint,
-                $apiQuery,
-            ): array {
-                $connector = $this->factory->create();
-
-                $response = $connector->send(
-                    MicroCmsGetOneRequest::createSingle(
-                        endpoint: $endpoint,
-                        apiQuery: $apiQuery,
-                    ),
-                );
-
-                if ($response->status() !== 200) {
-                    return null;
-                }
-
-                return $response->json();
-            },
-        );
+        $json = $cache
+            ? $this->cache->get(
+                key: $key,
+                callback: $callback,
+            )
+            : $callback();
 
         return ImmutableArrayObject::of($json);
     }
@@ -117,6 +121,7 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
         string $endpoint,
         string $id,
         MicroCmsContentGetOneQuery $query = new MicroCmsContentGetOneQuery(),
+        bool $cache = true,
     ): ?ArrayObject {
 
         $apiQuery = new MicroCmsGetOneQuery(
@@ -130,31 +135,35 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
             'id' => $id,
         ]);
 
+        $callback = function () use (
+            $endpoint,
+            $id,
+            $apiQuery,
+        ): array {
+            $connector = $this->factory->create();
+
+            $response = $connector->send(
+                MicroCmsGetOneRequest::createOne(
+                    endpoint: $endpoint,
+                    id: $id,
+                    apiQuery: $apiQuery,
+                ),
+            );
+
+            if ($response->status() !== 200) {
+                return null;
+            }
+
+            return $response->json();
+        };
+
         /** @var array<string,mixed> */
-        $json = $this->cache->get(
-            key: $key,
-            callback: function () use (
-                $endpoint,
-                $id,
-                $apiQuery,
-            ): array {
-                $connector = $this->factory->create();
-
-                $response = $connector->send(
-                    MicroCmsGetOneRequest::createOne(
-                        endpoint: $endpoint,
-                        id: $id,
-                        apiQuery: $apiQuery,
-                    ),
-                );
-
-                if ($response->status() !== 200) {
-                    return null;
-                }
-
-                return $response->json();
-            },
-        );
+        $json = $cache
+            ? $this->cache->get(
+                key: $key,
+                callback: $callback,
+            )
+            : $callback();
 
         return ImmutableArrayObject::of($json);
     }
@@ -201,6 +210,7 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
         string $endpoint,
         Pager $pager = new Pager(),
         MicroCmsContentGetListQuery $query = new MicroCmsContentGetListQuery(),
+        bool $cache = true,
     ): MicroCmsContentGetListResult {
         $apiQuery = new MicroCmsGetListQuery(
             limit: $pager->limit,
@@ -218,30 +228,34 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
             'endpoint' => $endpoint,
         ]);
 
+        $callback = function () use (
+            $endpoint,
+            $apiQuery,
+        ): array {
+
+            $connector = $this->factory->create();
+
+            $response = $connector->send(
+                new MicroCmsGetListRequest(
+                    endpoint: $endpoint,
+                    apiQuery: $apiQuery,
+                ),
+            );
+
+            if ($response->status() !== 200) {
+                throw new InfraException('failed to get list');
+            }
+
+            return $response->json();
+        };
+
         /** @var array<string,mixed> */
-        $json = $this->cache->get(
-            key: $key,
-            callback: function () use (
-                $endpoint,
-                $apiQuery,
-            ): array {
-
-                $connector = $this->factory->create();
-
-                $response = $connector->send(
-                    new MicroCmsGetListRequest(
-                        endpoint: $endpoint,
-                        apiQuery: $apiQuery,
-                    ),
-                );
-
-                if ($response->status() !== 200) {
-                    throw new InfraException('failed to get list');
-                }
-
-                return $response->json();
-            },
-        );
+        $json = $cache
+            ? $this->cache->get(
+                key: $key,
+                callback: $callback,
+            )
+            : $callback();
 
         /** @var array<string,mixed> */
         $contents = $json['contents'] ?? [];

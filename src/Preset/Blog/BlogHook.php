@@ -24,14 +24,29 @@ class BlogHook implements ThemeHook
             ) use ($theme) {
                 $extension = ImmutableArrayObject::of($theme->meta->extension);
 
-                /** @var string */
-                $blogEndpoint = $extension->get('endpoints.blog', 'blogs');
+                /**
+                 * @var object{
+                 *  blog: string,
+                 *  category: string,
+                 *  tag: string,
+                 * }
+                 */
+                $endpoints = ImmutableArrayObject::of([
+                    'blog' => $extension->get('endpoints.blog', 'blogs'),
+                    'category' => $extension->get('endpoints.category', 'categories'),
+                    'tag' => $extension->get('endpoints.tag', 'tags'),
+                ]);
 
-                /** @var string */
-                $categoryEndpoint = $extension->get('endpoints.category', 'categories');
-
-                /** @var string */
-                $tagEndpoint = $extension->get('endpoints.tag', 'tags');
+                /**
+                 * @var object{
+                 *  category: string,
+                 *  tag: string,
+                 * }
+                 */
+                $fields = ImmutableArrayObject::of([
+                    'category' => $extension->get('fields.category', 'category'),
+                    'tag' => $extension->get('fields.tag', 'tags'),
+                ]);
 
                 $accessors
                     ->add(
@@ -42,7 +57,31 @@ class BlogHook implements ThemeHook
                         TaxonomiesAccessor::class,
                         [
                             'theme' => $theme,
-                            'endpoint' => $blogEndpoint,
+                            'endpoint' => $endpoints->blog,
+                        ]
+                    )
+                    ->add(
+                        [
+                            'category_contents',
+                            'category_contents_*',
+                        ],
+                        TaxonomiesAccessor::class,
+                        [
+                            'theme' => $theme,
+                            'endpoint' => $endpoints->blog,
+                            'format' => "{$fields->category}[equals]%s",
+                        ]
+                    )
+                    ->add(
+                        [
+                            'tag_contents',
+                            'tag_contents_*',
+                        ],
+                        TaxonomiesAccessor::class,
+                        [
+                            'theme' => $theme,
+                            'endpoint' => $endpoints->blog,
+                            'format' => "{$fields->tag}[equals]%s",
                         ]
                     )
                     ->add(
@@ -53,7 +92,7 @@ class BlogHook implements ThemeHook
                         TaxonomiesAccessor::class,
                         [
                             'theme' => $theme,
-                            'endpoint' => $categoryEndpoint,
+                            'endpoint' => $endpoints->category,
                         ]
                     )
                     ->add(
@@ -64,7 +103,7 @@ class BlogHook implements ThemeHook
                         TaxonomiesAccessor::class,
                         [
                             'theme' => $theme,
-                            'endpoint' => $tagEndpoint,
+                            'endpoint' => $endpoints->tag,
                         ]
                     );
             },

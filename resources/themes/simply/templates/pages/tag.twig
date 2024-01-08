@@ -5,15 +5,26 @@
 {% from 'components.pager' import pager %}
 
 {% block content %}
-    {% include 'components.contents' with {
-        contents: contents
-    } %}
+    <section class="bg-gray-100 text-black">
+        <div class="section-narrow-layout">
+            <p class="list-title">
+                <span class="tag-label inline">
+                    {{ taxonomy.name }}
+                </span>
+                の記事一覧
+            </p>
 
-    <div class="mt-8">
-        {{ pager(
-            paginator,
-            share.request.uri.path,
-            share.request.query
-        ) }}
-    </div>
+            {% include 'components.contents' with {
+                contents: contents
+            } %}
+
+            <div class="mt-8">
+                {{ pager(
+                    paginator,
+                    share.request.uri.path,
+                    share.request.query
+                ) }}
+            </div>
+        </div>
+    </section>
 {% endblock %}

@@ -1,6 +1,8 @@
 <?php
 
-use Slim\Interfaces\RouteCollectorProxyInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Slim\Exception\HttpNotFoundException;
+use Slim\Interfaces\RouteCollectorProxyInterface as Proxy;
 use Takemo101\Chubby\Http\Renderer\HtmlRenderer;
 
 use const Takemo101\CmsTool\HookTags\RegisterThemeRoute;
@@ -8,15 +10,13 @@ use const Takemo101\CmsTool\HookTags\RegisterThemeRoute;
 hook()->on(
     RegisterThemeRoute,
     function (
-        RouteCollectorProxyInterface $proxy,
+        Proxy $proxy,
     ) {
         $proxy->get(
             '/sample',
-            fn () => new HtmlRenderer(
-                <<<HTML
-                    <h1>Sample</h1>
-                HTML,
-            ),
+            fn (
+                ServerRequestInterface $request,
+            ) => throw new HttpNotFoundException($request),
         );
     },
 );

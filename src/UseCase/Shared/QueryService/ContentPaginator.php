@@ -67,7 +67,7 @@ readonly class ContentPaginator
      */
     public function hasPages(): bool
     {
-        return $this->totalPage > 1;
+        return $this->totalPage > 0;
     }
 
     /**

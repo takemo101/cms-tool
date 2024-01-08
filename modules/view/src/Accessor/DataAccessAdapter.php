@@ -78,4 +78,14 @@ class DataAccessAdapter implements ArrayAccess
     {
         return $this->offsetExists($offset);
     }
+
+    /**
+     * @param string $name
+     * @param mixed[] $arguments
+     * @return mixed
+     */
+    public function __call(string $name, array $arguments)
+    {
+        return $this->__accessors->call($name, $arguments);
+    }
 }

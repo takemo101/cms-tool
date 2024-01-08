@@ -1,0 +1,38 @@
+{% extends 'layouts.master' %}
+
+{% block content %}
+    <div>
+        {{ form_open({
+            route: 'blog.index',
+            method: 'get',
+        }) }}
+            <div class="flex justify-center">
+                <input
+                    class="w-1/2 p-2 border border-gray-400 rounded"
+                    type="text"
+                    name="q"
+                    value="{{ share.request.query.q }}"
+                    placeholder="キーワードを入力してください"
+                >
+                <button
+                    class="p-2 bg-blue-800 text-white text-center hover:opacity-50"
+                    type="submit">
+                    検索
+                </button>
+            </div>
+
+        {{ form_close() }}
+    </div>
+
+    {% include 'components.contents' with {
+        contents: share.contents
+    } %}
+
+    <div class="mt-8 w-full text-center">
+        <a
+            class="inline-block text-xl p-8 bg-blue-800 text-white text-center hover:opacity-50"
+            href="{{ route('blog.index') }}">
+            全て見る
+        </a>
+    </div>
+{% endblock %}

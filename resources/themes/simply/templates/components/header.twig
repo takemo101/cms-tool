@@ -1,31 +1,56 @@
-<header>
-    <nav>
-        <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 relative z-50 flex justify-between py-8">
-            <div class="relative z-10 flex items-center gap-16">
-                <div class="flex lg:gap-10 gap-4">
-                    <a
-                        class="relative -my-2 -mx-3 rounded-lg px-3 py-2 text-sm text-gray-700 transition-colors delay-150 hover:text-gray-900 hover:delay-[0ms]"
-                        href="{{ route('home') }}">
-                        <span class="relative z-10">Home</span>
-                    </a>
-                    {% for c in share.categories %}
-                        <a
-                            class="relative -my-2 -mx-3 rounded-lg px-3 py-2 text-sm text-gray-700 transition-colors delay-150 hover:text-gray-900 hover:delay-[0ms]"
-                            href="{{ route('blog.category', {
-                                id: c.id
-                            }) }}">
-                            <span class="relative z-10">{{ c.name }}</span>
+<header class="block z-10 shadow-md">
+    <div class="border-b">
+        <div class="container mx-auto px-4">
+            <div class="py-4">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center space-x-4">
+                        <a href="{{ route('home') }}">
+                            <h1 class="text-3xl font-bold">{{ share.meta.name }}</h1>
                         </a>
-                    {% endfor %}
-                    <a
-                        class="relative -my-2 -mx-3 rounded-lg px-3 py-2 text-sm text-gray-700 transition-colors delay-150 hover:text-gray-900 hover:delay-[0ms]"
-                        href="{{ route('fixed-page', {
-                            path: 'about'
-                        }) }}">
-                        <span class="relative z-10">About</span>
-                    </a>
+                        <span class="text-sm">Simply Theme</span>
+                    </div>
+                    <div class="hidden sm:flex items-center space-x-4">
+                        {{ form_open({
+                            route: 'blog.index',
+                            method: 'get',
+                        }) }}
+                            <div class="inline-block bg-gray-200 rounded-full py-2 px-4">
+                                <input
+                                    type="search"
+                                    placeholder="検索キーワードを入力"
+                                    name="q"
+                                    value="{{ share.request.query.q }}"
+                                    class="bg-gray-200 outline-none w-[280px]" />
+                            </div>
+                            <button type="submit" class="inline-block px-2">
+                                <i class="fas fa-search text-gray-400"></i>
+                            </button>
+                        {{ form_close() }}
+                    </div>
                 </div>
             </div>
         </div>
-    </nav>
+    </div>
+    <div class="container mx-auto px-4">
+        <div class="py-4 sm:overflow-auto overflow-x-scroll">
+            <nav class="flex space-x-6 text-black min-w-max">
+                <a
+                    class="hover:opacity-60"
+                    href="{{ route('fixed-page', {
+                        path: 'about'
+                    }) }}">
+                    {{ share.meta.name }}について
+                </a>
+                {% for c in share.categories %}
+                    <a
+                        class="hover:opacity-60"
+                        href="{{ route('blog.category', {
+                            id: c.id
+                        }) }}">
+                        {{ c.name }}
+                    </a>
+                {% endfor %}
+            </nav>
+        </div>
+    </div>
 </header>

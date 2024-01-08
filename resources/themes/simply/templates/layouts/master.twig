@@ -41,13 +41,9 @@
         {# header #}
         {% include 'components.header' %}
 
-        <main class="bg-gray-100 pt-4 pb-12">
-            <section class="">
-                <div class=" mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-                    {# main content #}
-                    {% block content %}{% endblock %}
-                </div>
-            </section>
+        <main class="bg-gray-100">
+            {# main content #}
+            {% block content %}{% endblock %}
         </main>
 
         {# footer #}

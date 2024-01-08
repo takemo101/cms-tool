@@ -45,14 +45,5 @@ class RequestParameterSetupListener
                 ->get(FlashOldInputs::class)
                 ->put($params);
         }
-
-        // Make a request from View via Dataaccessors
-        $this->accessors->add(
-            'request',
-            ServerRequestAccessor::class,
-            [
-                'request' => $request,
-            ]
-        );
     }
 }

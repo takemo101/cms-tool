@@ -71,6 +71,66 @@ class DataAccessors
     }
 
     /**
+     * Get the value from the accessor
+     *
+     * @param string $key
+     * @param mixed[] $arguments
+     * @return mixed
+     * @throws RuntimeException
+     */
+    public function call(string $key, array $arguments = []): mixed
+    {
+        $cacheKey = $this->buildCallCacheKey($key, $arguments);
+
+        // If the cache has a value, return it
+        if (array_key_exists($cacheKey, $this->cache)) {
+            return $this->cache[$cacheKey];
+        }
+
+        foreach ($this->accessors as $accessor) {
+            $extractArguments = $accessor->extractArguments($key);
+            if ($extractArguments !== false) {
+
+                $joinedArguments = [
+                    ...$extractArguments,
+                    ...$arguments,
+                ];
+
+                $value = $this->invoker->invoke(
+                    $accessor->getAccessor(),
+                    $accessor->getParameters(),
+                    $joinedArguments,
+                );
+
+                $this->cache[$cacheKey] = $value;
+
+                return $value;
+            }
+        }
+
+        throw new RuntimeException("The key '{$key}' is not registered.");
+    }
+
+    /**
+     * Create a cache key for the ``call`` method
+     *
+     * @param string $key
+     * @param mixed $default
+     * @return mixed
+     * @throws RuntimeException
+     */
+    private function buildCallCacheKey(string $key, array $arguments): string
+    {
+        $query = http_build_query($arguments);
+
+        return $key . (
+            $query
+            ? '?' . $query
+            : ''
+        );
+    }
+
+    /**
      * Is there a value for the key?
      *
      * @param string $key

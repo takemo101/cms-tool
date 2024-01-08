@@ -66,7 +66,7 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
             );
 
             if ($response->status() !== 200) {
-                return null;
+                return [];
             }
 
             return $response->json();
@@ -80,7 +80,9 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
             )
             : $callback();
 
-        return ImmutableArrayObject::of($json);
+        return empty($json)
+            ? null
+            : ImmutableArrayObject::of($json);;
     }
 
     /**
@@ -151,7 +153,7 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
             );
 
             if ($response->status() !== 200) {
-                return null;
+                return [];
             }
 
             return $response->json();
@@ -165,7 +167,9 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
             )
             : $callback();
 
-        return ImmutableArrayObject::of($json);
+        return empty($json)
+            ? null
+            : ImmutableArrayObject::of($json);
     }
 
     /**

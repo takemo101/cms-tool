@@ -93,7 +93,7 @@ const generalStyle = {
 
   "form-file": `flex`,
   "form-file__text": `
-    overflow-x:hidden
+    overflow:hidden
     text:ellipsis
     white-space:nowrap
     w:3/5 h:41px lh:41px
@@ -294,7 +294,7 @@ const halfColumnLayoutStyle = {
 
 const sidebarNavStyle = {
   // sidebar styles
-  "sidebar": `overflow-x:scroll`,
+  "sidebar": `overflow:hidden@sm overflow-x:scroll`,
   "sidebar__inner": `
     min-w:max-content
     flex flex:col@sm flex:row

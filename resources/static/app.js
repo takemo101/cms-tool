@@ -51,7 +51,7 @@ ${r?'Expression: "'+r+`"
     bg:${oe.Secondary}
     f:white
   `,"form-file":"flex","form-file__text":`
-    overflow-x:hidden
+    overflow:hidden
     text:ellipsis
     white-space:nowrap
     w:3/5 h:41px lh:41px
@@ -196,7 +196,7 @@ ${r?'Expression: "'+r+`"
   `,"half-column__left":"flex-basis:220@sm flex-basis:full","half-column__right":`
     flex-basis:full
     break-word
-  `},Zp={sidebar:"overflow-x:scroll",sidebar__inner:`
+  `},Zp={sidebar:"overflow:hidden@sm overflow-x:scroll",sidebar__inner:`
     min-w:max-content
     flex flex:col@sm flex:row
   `,"nav-link":`

@@ -14,7 +14,8 @@
         "symfony/string": "^6.3",
         "eventsauce/object-hydrator": "^1.4",
         "symfony/http-foundation": "^7.0",
-        "symfony/property-access": "^7.0"
+        "symfony/property-access": "^7.0",
+        "symfony/translation": "^6.3"
 	},
     "autoload": {
         "psr-4": {

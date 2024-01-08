@@ -10,6 +10,9 @@ use CmsTool\Support\JsonAccess\JsonArrayAccessor;
 use CmsTool\Support\JsonAccess\JsonArrayLoader;
 use CmsTool\Support\JsonAccess\JsonArraySaver;
 use CmsTool\Support\JsonAccess\DefaultJsonAccessor;
+use CmsTool\Support\Translation\DefaultTranslator;
+use CmsTool\Support\Translation\SymfonyTranslatorFactory;
+use CmsTool\Support\Translation\Translator;
 use EventSauce\ObjectHydrator\ObjectMapper;
 use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
 use Takemo101\Chubby\ApplicationContainer;
@@ -24,6 +27,8 @@ use Takemo101\Chubby\Bootstrap\DefinitionHelper;
 use Takemo101\Chubby\Config\ConfigPhpRepository;
 use Takemo101\Chubby\Console\CommandCollection;
 use RuntimeException;
+use Symfony\Component\Translation\Translator as SymfonyTranslator;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 use function DI\get;
 
@@ -45,6 +50,7 @@ class SupportProvider implements Provider
         $this->registerJsonAccess($definitions);
         $this->registerEncrypt($definitions);
         $this->registerValidation($definitions);
+        $this->registerTranslation($definitions);
 
         $definitions->add([
             //
@@ -145,12 +151,38 @@ class SupportProvider implements Provider
     public function registerValidation(Definitions $definitions): void
     {
         $definitions->add([
-            ValidatorInterface::class => function () {
+            ValidatorInterface::class => function (
+                TranslatorInterface $translator,
+            ) {
                 return Validation::createValidatorBuilder()
                     ->enableAnnotationMapping()
+                    ->setTranslator($translator)
+                    ->setTranslationDomain(SymfonyTranslatorFactory::ValidationDomain)
                     ->getValidator();
             },
             ObjectMapper::class => fn () => new ObjectMapperUsingReflection(),
+        ]);
+    }
+
+    public function registerTranslation(Definitions $definitions): void
+    {
+        $definitions->add([
+            SymfonyTranslator::class => function (
+                SymfonyTranslatorFactory $factory,
+                Hook $hook,
+            ) {
+                $translator = $factory->create();
+
+                $hook->doTyped($translator);
+
+                return $translator;
+            },
+            TranslatorInterface::class => get(SymfonyTranslator::class),
+            Translator::class => DefinitionHelper::createReplaceable(
+                Translator::class,
+                'support.translation.translator',
+                DefaultTranslator::class,
+            ),
         ]);
     }
 

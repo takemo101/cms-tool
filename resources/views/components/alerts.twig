@@ -47,9 +47,9 @@
         <div class="w:full">
             <p class="alert__title alert--error-text">入力内容を確認してください</p>
             <ul class="m:0 pl:18 list-style-type:circle">
-                {% for errs in error_all() %}
+                {% for name, errs in error_all() %}
                     {% for e in errs %}
-                        <li>{{ e }}</li>
+                        <li>{{ t(name, [], 'attributes') }}：{{ e }}</li>
                     {% endfor %}
                 {% endfor %}
             </ul>

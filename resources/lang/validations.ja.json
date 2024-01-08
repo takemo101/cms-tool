@@ -1,0 +1,4 @@
+{
+  "This value should not be blank.": "空であってはなりません。",
+  "This value is too short. It should have {{ limit }} character or more.|This value is too short. It should have {{ limit }} characters or more.": "値が短すぎます。{{ limit }}文字以上でなければなりません。"
+}

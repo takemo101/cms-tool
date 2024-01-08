@@ -18,6 +18,7 @@ use Takemo101\CmsTool\Support\Twig\ErrorExtension;
 use Takemo101\CmsTool\Support\Twig\FlashExtension;
 use Takemo101\CmsTool\Support\Twig\OldExtension;
 use Takemo101\CmsTool\Support\Twig\SessionExtension;
+use Takemo101\CmsTool\Support\Twig\TranslationExtension;
 
 return [
 
@@ -98,6 +99,7 @@ return [
             OldExtension::class,
             SessionExtension::class,
             AssetExtension::class,
+            TranslationExtension::class,
         ],
 
         // Set up functions to be used in Twig

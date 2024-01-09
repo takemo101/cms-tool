@@ -46,10 +46,6 @@ hook()
             /** @var ApplicationSummary */
             $summary = $container->get(ApplicationSummary::class);
 
-            $renders->addRender(
-                new ValidationErrorResponseRender(),
-            );
-
             if (!$summary->isDebugMode()) {
 
                 /** @var SystemErrorPageRender */
@@ -63,6 +59,10 @@ hook()
                     $themeErrorPageRender,
                 );
             }
+
+            $renders->addRender(
+                new ValidationErrorResponseRender(),
+            );
         },
     )
     ->onTyped(

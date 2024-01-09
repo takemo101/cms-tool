@@ -27,7 +27,7 @@ class SiteMetaController
             ChangeSiteNameRequest::class,
         );
 
-        $handler->handle($form->name);
+        $handler->handle($form->siteName);
 
         return redirect()->back();
     }

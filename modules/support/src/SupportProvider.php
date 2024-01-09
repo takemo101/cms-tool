@@ -11,7 +11,9 @@ use CmsTool\Support\JsonAccess\JsonArrayLoader;
 use CmsTool\Support\JsonAccess\JsonArraySaver;
 use CmsTool\Support\JsonAccess\DefaultJsonAccessor;
 use CmsTool\Support\Translation\DefaultTranslator;
-use CmsTool\Support\Translation\SymfonyTranslatorFactory;
+use CmsTool\Support\Translation\SymfonyTranslationProxy;
+use CmsTool\Support\Translation\TranslationJsonFileLoader;
+use CmsTool\Support\Translation\TranslationLoader;
 use CmsTool\Support\Translation\Translator;
 use EventSauce\ObjectHydrator\ObjectMapper;
 use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
@@ -27,7 +29,6 @@ use Takemo101\Chubby\Bootstrap\DefinitionHelper;
 use Takemo101\Chubby\Config\ConfigPhpRepository;
 use Takemo101\Chubby\Console\CommandCollection;
 use RuntimeException;
-use Symfony\Component\Translation\Translator as SymfonyTranslator;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 use function DI\get;
@@ -157,7 +158,7 @@ class SupportProvider implements Provider
                 return Validation::createValidatorBuilder()
                     ->enableAnnotationMapping()
                     ->setTranslator($translator)
-                    ->setTranslationDomain(SymfonyTranslatorFactory::ValidationDomain)
+                    ->setTranslationDomain(SymfonyTranslationProxy::ValidationDomain)
                     ->getValidator();
             },
             ObjectMapper::class => fn () => new ObjectMapperUsingReflection(),
@@ -167,21 +168,18 @@ class SupportProvider implements Provider
     public function registerTranslation(Definitions $definitions): void
     {
         $definitions->add([
-            SymfonyTranslator::class => function (
-                SymfonyTranslatorFactory $factory,
-                Hook $hook,
-            ) {
-                $translator = $factory->create();
-
-                $hook->doTyped($translator);
-
-                return $translator;
-            },
-            TranslatorInterface::class => get(SymfonyTranslator::class),
+            TranslatorInterface::class => get(SymfonyTranslationProxy::class),
+            TranslationLoader::class => DefinitionHelper::createReplaceable(
+                TranslationLoader::class,
+                'support.translation.loader',
+                TranslationJsonFileLoader::class,
+                true,
+            ),
             Translator::class => DefinitionHelper::createReplaceable(
                 Translator::class,
                 'support.translation.translator',
                 DefaultTranslator::class,
+                true,
             ),
         ]);
     }

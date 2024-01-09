@@ -14,7 +14,9 @@
         <hr class="divider" />
     </div>
     <div class="card-body">
-        {{ alerts.error() }}
+        {{ alerts.error({
+            group: 'seo',
+        }) }}
 
         {{ form_open({
             route: 'admin.seo.update',
@@ -50,7 +52,7 @@
                 </div>
                 <div class="form-column" x-data="files">
                     {{ forms.label({
-                        name: 'icon',
+                        name: 'favicon',
                         label: 'ファビコン画像',
                     }) }}
 

@@ -37,7 +37,9 @@
 
 {% macro error(options = {
     class: '',
+    group: '',
 }) %}
+    {% set group = options.group ? options.group ~ '.' : '' %}
 
     {% if is_error() %}
     <div
@@ -49,7 +51,7 @@
             <ul class="m:0 pl:18 list-style-type:circle">
                 {% for name, errs in error_all() %}
                     {% for e in errs %}
-                        <li>{{ t(name, [], 'attributes') }}：{{ e }}</li>
+                        <li>{{ t('attributes.' ~ group ~ name) }}：{{ e }}</li>
                     {% endfor %}
                 {% endfor %}
             </ul>

@@ -2,37 +2,21 @@
 
 namespace Takemo101\CmsTool;
 
-use CmsTool\Session\Csrf\CsrfGuardContext;
-use CmsTool\Session\Flash\FlashSessionsContext;
-use CmsTool\Session\SessionContext;
-use CmsTool\View\Accessor\DataAccessors;
 use CmsTool\View\Html\Filter\FormAppendFilters;
-use CmsTool\View\ViewCreator;
 use Psr\Container\ContainerInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use Takemo101\Chubby\ApplicationContainer;
 use Takemo101\Chubby\Bootstrap\Definitions;
 use Takemo101\Chubby\Bootstrap\Provider\Provider;
 use Takemo101\Chubby\Config\ConfigRepository;
 use Takemo101\Chubby\Filesystem\LocalFilesystem;
 use Takemo101\Chubby\Hook\Hook;
-use Takemo101\CmsTool\Domain\Admin\RootAdminRepository;
-use Takemo101\CmsTool\Http\Session\AdminSessionContext;
 use Takemo101\CmsTool\Http\Session\AdminSessionFactory;
 use Takemo101\CmsTool\Http\Session\DefaultAdminSessionFactory;
-use Takemo101\CmsTool\Support\Accessor\ServerRequestAccessor;
 use Takemo101\CmsTool\Support\FormAppendFilter\AppendCsrfInputFilter;
-use Takemo101\CmsTool\Support\Session\FlashErrorMessages;
-use Takemo101\CmsTool\Support\Session\FlashOldInputs;
 use Takemo101\CmsTool\Support\Theme\ActiveThemeFunctionLoader;
-use Takemo101\CmsTool\Support\Twig\ErrorExtension;
-use Takemo101\CmsTool\Support\Twig\FlashExtension;
-use Takemo101\CmsTool\Support\Twig\OldExtension;
-use Takemo101\CmsTool\Support\Twig\SessionExtension;
 use Takemo101\CmsTool\Support\VendorPath;
 use Takemo101\CmsTool\Support\Webhook\WebhookHandler;
 use Takemo101\CmsTool\Support\Webhook\WebhookHandlers;
-use Twig\Environment;
 
 class CmsToolProvider implements Provider
 {
@@ -126,7 +110,6 @@ class CmsToolProvider implements Provider
         $hook = $container->get(Hook::class);
 
         $this->bootHtml($hook);
-        $this->bootTwig($hook);
 
         /** @var ActiveThemeFunctionLoader */
         $functionLoader = $container->get(ActiveThemeFunctionLoader::class);
@@ -152,49 +135,6 @@ class CmsToolProvider implements Provider
                     $csrf = $container->get(AppendCsrfInputFilter::class);
 
                     $filters->addFilter($csrf);
-                }
-            );
-    }
-
-    /**
-     * Boot twig.
-     *
-     * @param Hook $hook
-     * @return void
-     */
-    private function bootTwig(Hook $hook): void
-    {
-        $hook
-            ->onTyped(
-                function (ServerRequestInterface $request, ContainerInterface $container) {
-                    /** @var Environment */
-                    $twig = $container->get(Environment::class);
-
-                    if ($flashSessions = FlashSessionsContext::fromRequest($request)
-                        ?->getFlashSessions()
-                    ) {
-                        $twig->getExtension(ErrorExtension::class)
-                            ->setErrors(
-                                $flashSessions->get(FlashErrorMessages::class),
-                            );
-
-                        $twig->getExtension(OldExtension::class)
-                            ->setOldInputs(
-                                $flashSessions->get(FlashOldInputs::class),
-                            );
-                    }
-
-                    if ($session = SessionContext::fromRequest($request)
-                        ?->getSession()
-                    ) {
-                        $twig->getExtension(SessionExtension::class)
-                            ->setSession($session);
-
-                        $twig->getExtension(FlashExtension::class)
-                            ->setFlash($session->getFlash());
-                    }
-
-                    return $request;
                 }
             );
     }

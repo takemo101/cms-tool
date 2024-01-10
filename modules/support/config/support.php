@@ -5,7 +5,7 @@ use CmsTool\Support\Encrypt\EncryptCipher;
 use CmsTool\Support\Hash\BcryptHasher;
 use CmsTool\Support\JsonAccess\DefaultJsonAccessor;
 use CmsTool\Support\Translation\DefaultTranslator;
-use CmsTool\Support\Translation\TranslationJsonFileLoader;
+use CmsTool\Support\Translation\TranslationJsonFileAccessor;
 
 return [
     'encrypt' => [
@@ -31,7 +31,7 @@ return [
 
     'json' => [
 
-        // Default json accessor class
+        // Default JsonArrayAccessor class
         'accessor' => DefaultJsonAccessor::class,
     ],
 
@@ -40,16 +40,15 @@ return [
         // Default Translator class
         'translator' => DefaultTranslator::class,
 
-        // Default TranslationLoader class
-        'loader' => TranslationJsonFileLoader::class,
+        // Default TranslationAccessor class
+        'accessor' => TranslationJsonFileAccessor::class,
 
         // Settings for translation by file
         'file' => [
 
             // Refer to translation file
             'locations' => [
-
-                base_path('resources', 'lang'),
+                //
             ],
         ]
     ],

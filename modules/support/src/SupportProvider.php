@@ -10,10 +10,13 @@ use CmsTool\Support\JsonAccess\JsonArrayAccessor;
 use CmsTool\Support\JsonAccess\JsonArrayLoader;
 use CmsTool\Support\JsonAccess\JsonArraySaver;
 use CmsTool\Support\JsonAccess\DefaultJsonAccessor;
+use CmsTool\Support\Translation\Command\AddTranslationTextCommand;
 use CmsTool\Support\Translation\DefaultTranslator;
 use CmsTool\Support\Translation\SymfonyTranslationProxy;
-use CmsTool\Support\Translation\TranslationJsonFileLoader;
+use CmsTool\Support\Translation\TranslationAccessor;
+use CmsTool\Support\Translation\TranslationJsonFileAccessor;
 use CmsTool\Support\Translation\TranslationLoader;
+use CmsTool\Support\Translation\TranslationSaver;
 use CmsTool\Support\Translation\Translator;
 use EventSauce\ObjectHydrator\ObjectMapper;
 use EventSauce\ObjectHydrator\ObjectMapperUsingReflection;
@@ -82,7 +85,15 @@ class SupportProvider implements Provider
 
         require $helper->join(__DIR__, 'helper.php');
 
-        $this->bootEncrypt($container);
+        /** @var Hook */
+        $hook = $container->get(Hook::class);
+
+        $hook->onTyped(
+            fn (CommandCollection $commands) => $commands->add(
+                GenerateEncryptKeyCommand::class,
+                AddTranslationTextCommand::class,
+            ),
+        );
     }
 
     /**
@@ -169,12 +180,14 @@ class SupportProvider implements Provider
     {
         $definitions->add([
             TranslatorInterface::class => get(SymfonyTranslationProxy::class),
-            TranslationLoader::class => DefinitionHelper::createReplaceable(
-                TranslationLoader::class,
-                'support.translation.loader',
-                TranslationJsonFileLoader::class,
+            TranslationAccessor::class => DefinitionHelper::createReplaceable(
+                TranslationAccessor::class,
+                'support.translation.accessor',
+                TranslationJsonFileAccessor::class,
                 true,
             ),
+            TranslationLoader::class => get(TranslationAccessor::class),
+            TranslationSaver::class => get(TranslationAccessor::class),
             Translator::class => DefinitionHelper::createReplaceable(
                 Translator::class,
                 'support.translation.translator',
@@ -182,23 +195,5 @@ class SupportProvider implements Provider
                 true,
             ),
         ]);
-    }
-
-    /**
-     * Execute Encrypt booting process.
-     *
-     * @param ApplicationContainer $container
-     * @return void
-     */
-    public function bootEncrypt(ApplicationContainer $container): void
-    {
-        /** @var Hook */
-        $hook = $container->get(Hook::class);
-
-        $hook->onTyped(
-            fn (CommandCollection $commands) => $commands->add(
-                GenerateEncryptKeyCommand::class,
-            ),
-        );
     }
 }

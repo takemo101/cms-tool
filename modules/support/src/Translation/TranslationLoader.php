@@ -3,7 +3,7 @@
 namespace CmsTool\Support\Translation;
 
 use CmsTool\Support\Translation\Exception\NotFoundTranslationException;
-use CmsTool\Support\Translation\Exception\TranslationDecodeErrorException;
+use CmsTool\Support\Translation\Exception\TranslationConversionException;
 use CmsTool\Support\Translation\Exception\TranslationResourceException;
 
 /**
@@ -15,8 +15,9 @@ interface TranslationLoader
      * Load the translation and return the data in array format
      *
      * @param string $domain
+     * @param string $locale
      * @return array<string,mixed>
-     * @throws TranslationDecodeErrorException|NotFoundTranslationException
+     * @throws TranslationConversionException|NotFoundTranslationException
      */
     public function load(string $domain, string $locale = Translator::DefaultLocale): array;
 

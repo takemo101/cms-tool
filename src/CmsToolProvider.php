@@ -2,6 +2,8 @@
 
 namespace Takemo101\CmsTool;
 
+use CmsTool\Support\Translation\TranslationAccessor;
+use CmsTool\Support\Translation\TranslationLoader;
 use CmsTool\View\Html\Filter\FormAppendFilters;
 use Psr\Container\ContainerInterface;
 use Takemo101\Chubby\ApplicationContainer;
@@ -110,6 +112,7 @@ class CmsToolProvider implements Provider
         $hook = $container->get(Hook::class);
 
         $this->bootHtml($hook);
+        $this->bootTranslation($hook);
 
         /** @var ActiveThemeFunctionLoader */
         $functionLoader = $container->get(ActiveThemeFunctionLoader::class);
@@ -135,6 +138,30 @@ class CmsToolProvider implements Provider
                     $csrf = $container->get(AppendCsrfInputFilter::class);
 
                     $filters->addFilter($csrf);
+                }
+            );
+    }
+
+    /**
+     * Boot translation.
+     *
+     * @param Hook $hook
+     * @return void
+     */
+    private function bootTranslation(Hook $hook): void
+    {
+        $hook
+            ->onTyped(
+                function (
+                    TranslationAccessor $accessor,
+                    ContainerInterface $container,
+                ) {
+                    /** @var VendorPath */
+                    $path = $container->get(VendorPath::class);
+
+                    $accessor->addResource(
+                        $path->getResourcePath('lang'),
+                    );
                 }
             );
     }

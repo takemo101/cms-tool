@@ -2,18 +2,18 @@
 
 namespace CmsTool\Support\Translation;
 
-use CmsTool\Support\JsonAccess\Exception\JsonAccessException;
-use CmsTool\Support\JsonAccess\JsonArrayLoader;
+use CmsTool\Support\JsonAccess\Exception\JsonConversionException;
+use CmsTool\Support\JsonAccess\JsonArrayAccessor;
 use CmsTool\Support\Translation\Exception\NotFoundTranslationException;
-use CmsTool\Support\Translation\Exception\TranslationDecodeErrorException;
+use CmsTool\Support\Translation\Exception\TranslationConversionException;
 use CmsTool\Support\Translation\Exception\TranslationResourceException;
 use DI\Attribute\Inject;
 use Takemo101\Chubby\Filesystem\PathHelper;
 
 /**
- * @implements TranslationLoader<string>
+ * @implements TranslationAccessor<string>
  */
-class TranslationJsonFileLoader implements TranslationLoader
+class TranslationJsonFileAccessor implements TranslationAccessor
 {
     /**
      * @var array<string,mixed>
@@ -24,12 +24,12 @@ class TranslationJsonFileLoader implements TranslationLoader
      * constructor
      *
      * @param PathHelper $pathHelper
-     * @param JsonArrayLoader $loader
+     * @param JsonArrayAccessor $accessor
      * @param string[] $locations
      */
     public function __construct(
         private PathHelper $pathHelper,
-        private JsonArrayLoader $loader,
+        private JsonArrayAccessor $accessor,
         #[Inject('config.support.translation.file.locations')]
         private array $locations = [],
     ) {
@@ -54,14 +54,13 @@ class TranslationJsonFileLoader implements TranslationLoader
                 return $this->cache[$path];
             }
 
-            if ($this->loader->exists($path)) {
+            if ($this->accessor->exists($path)) {
                 try {
-                    $data = $this->loader->load($path);
-                } catch (JsonAccessException $e) {
-                    throw new TranslationDecodeErrorException(
+                    $data = $this->accessor->load($path);
+                } catch (JsonConversionException $e) {
+                    throw TranslationConversionException::decodeError(
                         domain: $domain,
                         locale: $locale,
-                        message: $e->getMessage(),
                         previous: $e,
                     );
                 }
@@ -92,7 +91,7 @@ class TranslationJsonFileLoader implements TranslationLoader
 
             if (
                 isset($this->cache[$path])
-                || $this->loader->exists($path)
+                || $this->accessor->exists($path)
             ) {
                 return true;
             }
@@ -117,6 +116,36 @@ class TranslationJsonFileLoader implements TranslationLoader
         }
 
         $this->locations[] = $resource;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function save(
+        string $domain,
+        string $locale = Translator::DefaultLocale,
+        array $data = [],
+    ): void {
+        foreach ($this->locations as $location) {
+            $path = $this->getJsonPath(
+                location: $location,
+                domain: $domain,
+                locale: $locale,
+            );
+            try {
+                $this->accessor->save(
+                    path: $path,
+                    data: $data,
+                    flags: JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES,
+                );
+            } catch (JsonConversionException $e) {
+                throw TranslationConversionException::encodeError(
+                    domain: $domain,
+                    locale: $locale,
+                    previous: $e,
+                );
+            }
+        }
     }
 
     /**

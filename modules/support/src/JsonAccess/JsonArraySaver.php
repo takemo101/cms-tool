@@ -12,8 +12,9 @@ interface JsonArraySaver
      *
      * @param string $path
      * @param array<string,mixed> $data
+     * @param integer $flags JSON encode flags
      * @return void
      * @throws JsonNotAccessibleException|JsonConversionException
      */
-    public function save(string $path, array $data): void;
+    public function save(string $path, array $data, int $flags = 0): void;
 }

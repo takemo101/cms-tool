@@ -5,7 +5,6 @@ namespace CmsTool\Support\JsonAccess;
 use CmsTool\Support\JsonAccess\Exception\JsonConversionException;
 use CmsTool\Support\JsonAccess\Exception\JsonNotAccessibleException;
 use CmsTool\Support\JsonAccess\Exception\NotFoundJsonException;
-use CmsTool\Support\JsonAccess\Exception\JsonAccessException;
 use Takemo101\Chubby\Filesystem\LocalFilesystem;
 
 class DefaultJsonAccessor implements JsonArrayAccessor
@@ -22,11 +21,7 @@ class DefaultJsonAccessor implements JsonArrayAccessor
     }
 
     /**
-     * Load the JSON and return the data in array format
-     *
-     * @param string $path
-     * @return array<string,mixed>
-     * @throws JsonAccessException
+     * {@inheritdoc}
      */
     public function load(string $path): array
     {
@@ -63,10 +58,7 @@ class DefaultJsonAccessor implements JsonArrayAccessor
     }
 
     /**
-     * Check if the JSON exists
-     *
-     * @param string $path
-     * @return boolean
+     * {@inheritdoc}
      */
     public function exists(string $path): bool
     {
@@ -74,17 +66,12 @@ class DefaultJsonAccessor implements JsonArrayAccessor
     }
 
     /**
-     * Save the data in array format to the JSON
-     *
-     * @param string $path
-     * @param array<string,mixed> $data
-     * @return void
-     * @throws JsonAccessException
+     * {@inheritdoc}
      */
-    public function save(string $path, array $data): void
+    public function save(string $path, array $data, int $flags = 0): void
     {
         try {
-            $json = json_encode($data, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT);
+            $json = json_encode($data, $flags | JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT);
         } catch (\JsonException $e) {
             throw JsonConversionException::encodeError($path, $e);
         }

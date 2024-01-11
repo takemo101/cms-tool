@@ -51,7 +51,7 @@
             <ul class="m:0 pl:18 list-style-type:circle">
                 {% for name, errs in error_all() %}
                     {% for e in errs %}
-                        <li>{{ t('attributes.' ~ group ~ name) }}：{{ e }}</li>
+                        <li>{{ t('attributes.' ~ group ~ name) }}：{{ t('validations.' ~ e) }}</li>
                     {% endfor %}
                 {% endfor %}
             </ul>

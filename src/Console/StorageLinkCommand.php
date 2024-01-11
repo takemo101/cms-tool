@@ -2,6 +2,7 @@
 
 namespace Takemo101\CmsTool\Console;
 
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -9,6 +10,10 @@ use Takemo101\Chubby\Console\Command\Command;
 use Takemo101\Chubby\Filesystem\LocalFilesystem;
 use Takemo101\CmsTool\Infra\Storage\LocalPublicStoragePath;
 
+#[AsCommand(
+    name: 'storage:link',
+    description: "Create a symbolic link from 'storage.public.link_path' to 'storage.public.storage_path'",
+)]
 class StorageLinkCommand extends Command
 {
     /**
@@ -18,14 +23,11 @@ class StorageLinkCommand extends Command
      */
     protected function configure()
     {
-        $this
-            ->setName('storage:link')
-            ->setDescription("Create a symbolic link from 'storage.public.link_path' to 'storage.public.storage_path'")
-            ->addOption(
-                name: 'clear',
-                mode: InputOption::VALUE_NONE,
-                description: 'Delete the existing link and create a new one.',
-            );
+        $this->addOption(
+            name: 'clear',
+            mode: InputOption::VALUE_NONE,
+            description: 'Delete the existing link and create a new one.',
+        );
     }
 
     /**

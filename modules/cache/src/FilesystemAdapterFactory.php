@@ -16,18 +16,18 @@ class FilesystemAdapterFactory implements CacheAdapterFactory
     /**
      * constructor
      *
-     * @param string $directory
-     * @param int $lifetime
      * @param MarshallerInterface $marshaller
      * @param LoggerInterface $logger
+     * @param string $directory
+     * @param int $lifetime
      */
     public function __construct(
+        private MarshallerInterface $marshaller,
+        private LoggerInterface $logger,
         #[Inject('config.cache.filesystem.directory')]
         private string $directory = '',
         #[Inject('config.cache.lifetime')]
         private int $lifetime = 0,
-        private MarshallerInterface $marshaller,
-        private LoggerInterface $logger,
     ) {
         //
     }
@@ -38,8 +38,8 @@ class FilesystemAdapterFactory implements CacheAdapterFactory
     public function create(): AdapterInterface & CacheInterface & ResettableInterface
     {
         $adapter = new FilesystemAdapter(
-            directory: $this->directory,
             defaultLifetime: $this->lifetime,
+            directory: $this->directory,
             marshaller: $this->marshaller,
         );
 

@@ -15,6 +15,6 @@
         "name": "Takemo101",
         "link": "https://github.com/takemo101"
     },
-    "readonly": true,
+    "readonly": false,
     "extension": {}
 }

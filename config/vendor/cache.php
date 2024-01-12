@@ -11,7 +11,7 @@ return [
     'marshaller' => DefaultMarshaller::class,
 
     // Default lifetime seconds
-    'lifetime' => 21600 * 2, // 6 hours
+    'lifetime' => (int) env('CACHE_LIFETIME', 21600 * 2), // 6 hours
 
     // FilesystemAdapter options
     'filesystem' => [

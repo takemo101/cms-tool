@@ -44,6 +44,28 @@ readonly class ThemeMeta
     }
 
     /**
+     * Duplicate metadata of the theme for theme copy
+     *
+     * @return self
+     */
+    public function copy(): self
+    {
+        return new self(
+            uid: $this->uid,
+            name: $this->name,
+            version: $this->version,
+            content: $this->content,
+            images: $this->images,
+            tags: $this->tags,
+            link: $this->link,
+            preset: $this->preset,
+            author: $this->author,
+            readonly: false, // copy is not readonly
+            extension: $this->extension,
+        );
+    }
+
+    /**
      * Create a new instance from an array of data.
      *
      * @param array{

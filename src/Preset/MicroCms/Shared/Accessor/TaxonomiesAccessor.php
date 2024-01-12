@@ -1,6 +1,6 @@
 <?php
 
-namespace Takemo101\CmsTool\Preset\Shared\Accessor;
+namespace Takemo101\CmsTool\Preset\MicroCms\Shared\Accessor;
 
 use ArrayObject;
 use CmsTool\Theme\Theme;

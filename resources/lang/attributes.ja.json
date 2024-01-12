@@ -1,22 +1,22 @@
 {
-  "email": "メールアドレス",
-  "password": "パスワード",
-  "passwordConfirmation": "パスワード（確認）",
-  "name": "名前",
-  "siteName": "サイト名",
-  "key": "APIキー",
-  "service_id": "サービスID",
-  "root": {
-    "name": "アカウント名",
     "email": "メールアドレス",
-    "password": "パスワード"
-  },
-  "seo": {
-    "title": "タイトル",
-    "description": "サイト説明",
-    "keywords": "サイトキーワード",
-    "favicon": "ファビコン画像",
-    "icon": "SNSシェア画像",
-    "robots": "robots"
-  }
+    "password": "パスワード",
+    "passwordConfirmation": "パスワード（確認）",
+    "name": "名前",
+    "siteName": "サイト名",
+    "key": "APIキー",
+    "service_id": "サービスID",
+    "root": {
+        "name": "アカウント名",
+        "email": "メールアドレス",
+        "password": "パスワード"
+    },
+    "seo": {
+        "title": "タイトル",
+        "description": "サイト説明",
+        "keywords": "サイトキーワード",
+        "favicon": "ファビコン画像",
+        "icon": "SNSシェア画像",
+        "robots": "robots"
+    }
 }

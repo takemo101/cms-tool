@@ -1,13 +1,13 @@
 <?php
 
-namespace Takemo101\CmsTool\Preset\Blog;
+namespace Takemo101\CmsTool\Preset\MicroCms\Blog;
 
 use CmsTool\Theme\Routing\ThemeRoute;
 use CmsTool\Theme\Theme;
 use Slim\Interfaces\RouteCollectorProxyInterface;
-use Takemo101\CmsTool\Preset\Shared\Action\ContentDetailAction;
-use Takemo101\CmsTool\Preset\Shared\Action\ContentIndexAction;
-use Takemo101\CmsTool\Preset\Shared\Action\TaxonomyIndexAction;
+use Takemo101\CmsTool\Preset\MicroCms\Shared\Action\ContentDetailAction;
+use Takemo101\CmsTool\Preset\MicroCms\Shared\Action\ContentIndexAction;
+use Takemo101\CmsTool\Preset\MicroCms\Shared\Action\TaxonomyIndexAction;
 use Takemo101\CmsTool\Support\Shared\ImmutableArrayObject;
 
 class BlogRoute implements ThemeRoute

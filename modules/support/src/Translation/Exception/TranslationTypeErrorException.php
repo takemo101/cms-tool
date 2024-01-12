@@ -9,13 +9,13 @@ class TranslationTypeErrorException extends TranslatorException
      *
      * @param string $key
      * @param string $locale
-     * @return static
+     * @return self
      */
     public static function notStringError(
         string $key,
         string $locale
-    ): static {
-        return new static(
+    ): self {
+        return new self(
             key: $key,
             locale: $locale,
             message: "The translation must be a string"

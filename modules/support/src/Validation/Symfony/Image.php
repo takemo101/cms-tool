@@ -14,7 +14,10 @@ class Image extends SymfonyImage
     public array $ignoreErrors = [];
 
     /**
+     * {@inheritdoc}
      * @param integer[]|integer|null $ignoreErrors
+     * @param string[] $mimeTypes
+     * @param array<string,mixed>|null $options
      */
     public function __construct(
         array $options = null,

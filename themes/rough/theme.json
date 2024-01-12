@@ -1,20 +1,20 @@
 {
-  "uid": "dfb7b9a5-09d4-79ce-1e13-2bda4aad6fe7",
-  "name": "Rough",
-  "version": "1.0.0",
-  "content": "rough template",
-  "images": [
-    "example.jpeg"
-  ],
-  "tags": [
-    "ブログ"
-  ],
-  "link": "https://github.com/takemo101/chubby",
-  "preset": "blog",
-  "author": {
-    "name": "Takemo101",
-    "link": "https://github.com/takemo101"
-  },
-  "readonly": true,
-  "extension": {}
+    "uid": "dfb7b9a5-09d4-79ce-1e13-2bda4aad6fe7",
+    "name": "Rough",
+    "version": "1.0.0",
+    "content": "rough template",
+    "images": [
+        "example.jpeg"
+    ],
+    "tags": [
+        "ブログ"
+    ],
+    "link": "https://github.com/takemo101/chubby",
+    "preset": "microcms:blog",
+    "author": {
+        "name": "Takemo101",
+        "link": "https://github.com/takemo101"
+    },
+    "readonly": true,
+    "extension": {}
 }

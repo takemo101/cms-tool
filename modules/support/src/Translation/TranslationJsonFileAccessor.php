@@ -16,7 +16,7 @@ use Takemo101\Chubby\Filesystem\PathHelper;
 class TranslationJsonFileAccessor implements TranslationAccessor
 {
     /**
-     * @var array<string,mixed>
+     * @var array<string,array<string,mixed>>
      */
     private array $cache = [];
 
@@ -146,6 +146,16 @@ class TranslationJsonFileAccessor implements TranslationAccessor
                 );
             }
         }
+    }
+
+    /**
+     * Get the locations
+     *
+     * @return string[]
+     */
+    public function getLocations(): array
+    {
+        return $this->locations;
     }
 
     /**

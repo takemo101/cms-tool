@@ -31,7 +31,7 @@ interface Translator
      *
      * @param string $key It is a key expressed in the dot notation.
      * The first part is a domain name, and the domain name is a group of keys separated by dots.
-     * @param mixed[] $replace
+     * @param array<string,mixed> $replace
      * @param string|null $locale The locale or null to use the default
      * @return string
      * @throws TranslationLoaderException|TranslatorException

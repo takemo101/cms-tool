@@ -35,6 +35,8 @@ class AddTranslationTextCommand extends Command
      *
      * @param InputInterface $input
      * @param OutputInterface $output
+     * @param Translator $translator
+     * @param TranslationAccessor<mixed> $accessor
      * @return integer
      */
     public function handle(

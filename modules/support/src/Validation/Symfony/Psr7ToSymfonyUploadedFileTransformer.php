@@ -3,6 +3,7 @@
 namespace CmsTool\Support\Validation\Symfony;
 
 use Psr\Http\Message\UploadedFileInterface;
+use RuntimeException;
 
 class Psr7ToSymfonyUploadedFileTransformer
 {
@@ -13,7 +14,7 @@ class Psr7ToSymfonyUploadedFileTransformer
             fn () => tempnam(
                 sys_get_temp_dir(),
                 uniqid('symfony', true),
-            ),
+            ) ?: throw new RuntimeException('Unable to create a temporary file'),
         );
     }
 }

@@ -6,7 +6,6 @@ use EventSauce\ObjectHydrator\ObjectMapper;
 use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use InvalidArgumentException;
-use Psr\Http\Message\UploadedFileInterface;
 
 class RequestValidator
 {

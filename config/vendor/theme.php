@@ -4,8 +4,8 @@ use CmsTool\Theme\DefaultThemeAssetFinfoFactory;
 use CmsTool\Theme\DefaultThemeFinder;
 use CmsTool\Theme\DefaultThemeLoader;
 use Takemo101\CmsTool\Infra\JsonAccess\JsonAccessActiveThemeIdMatcher;
-use Takemo101\CmsTool\Preset\Blog\BlogHook;
-use Takemo101\CmsTool\Preset\Blog\BlogRoute;
+use Takemo101\CmsTool\Preset\MicroCms\Blog\BlogHook;
+use Takemo101\CmsTool\Preset\MicroCms\Blog\BlogRoute;
 
 return [
 
@@ -33,12 +33,12 @@ return [
     // ThemeRoute implementation class name
     'routes' => [
         // string => class-string<ThemeRoute>
-        'blog' => BlogRoute::class,
+        'microcms:blog' => BlogRoute::class,
     ],
 
     // ThemeHook implementation class name
     'hooks' => [
         // string => class-string<ThemeHook>
-        'blog' => BlogHook::class,
+        'microcms:blog' => BlogHook::class,
     ],
 ];

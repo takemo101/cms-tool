@@ -1,6 +1,6 @@
 <?php
 
-namespace Takemo101\CmsTool\Preset\Shared\Action;
+namespace Takemo101\CmsTool\Preset\MicroCms\Shared\Action;
 
 use CmsTool\View\View;
 use CmsTool\View\ViewCreator;
@@ -8,7 +8,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
 use Takemo101\CmsTool\Preset\Shared\Exception\NotFoundThemeTemplateException;
 use Takemo101\CmsTool\Preset\Shared\LayeredTemplateNamesCreator;
-use Takemo101\CmsTool\Preset\Shared\ViewModel\ContentDetailPage;
+use Takemo101\CmsTool\Preset\MicroCms\Shared\ViewModel\ContentDetailPage;
 use Takemo101\CmsTool\UseCase\MicroCms\QueryService\Content\MicroCmsContentQueryService;
 
 class ContentDetailAction

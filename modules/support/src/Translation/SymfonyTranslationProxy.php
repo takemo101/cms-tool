@@ -2,7 +2,6 @@
 
 namespace CmsTool\Support\Translation;
 
-use Symfony\Component\Validator\Validation;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SymfonyTranslationProxy implements TranslatorInterface
@@ -22,6 +21,7 @@ class SymfonyTranslationProxy implements TranslatorInterface
 
     /**
      * {@inheritdoc}
+     * @param array<string,mixed> $parameters
      */
     public function trans(string $id, array $parameters = [], string $domain = null, string $locale = null): string
     {

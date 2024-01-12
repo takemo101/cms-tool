@@ -11,7 +11,7 @@ class DefaultTranslator implements Translator
     /**
      * constructor
      *
-     * @param TranslationLoader $loader
+     * @param TranslationLoader<mixed> $loader
      * @param TranslationStringReplacer $replacer
      * @param string $locale default locale
      */
@@ -29,7 +29,7 @@ class DefaultTranslator implements Translator
      */
     public function exists(string $key, ?string $locale = null): bool
     {
-        [$domain] = $this->getDomainAndTranslation($key);
+        [$domain, $translation] = $this->getDomainAndTranslation($key);
 
         if (!$this->loader->exists($domain)) {
             return false;
@@ -37,7 +37,7 @@ class DefaultTranslator implements Translator
 
         $resource = $this->loader->load($domain, $locale ?? $this->getLocale());
 
-        return Arr::has($resource, $key);
+        return Arr::has($resource, $translation);
     }
 
     /**

@@ -1,12 +1,12 @@
 <?php
 
-namespace Takemo101\CmsTool\Preset\Blog;
+namespace Takemo101\CmsTool\Preset\MicroCms\Blog;
 
 use CmsTool\Theme\Hook\ThemeHook;
 use CmsTool\Theme\Theme;
 use CmsTool\View\Accessor\DataAccessors;
 use Takemo101\Chubby\Hook\Hook;
-use Takemo101\CmsTool\Preset\Shared\Accessor\TaxonomiesAccessor;
+use Takemo101\CmsTool\Preset\MicroCms\Shared\Accessor\TaxonomiesAccessor;
 use Takemo101\CmsTool\Support\Shared\ImmutableArrayObject;
 
 class BlogHook implements ThemeHook

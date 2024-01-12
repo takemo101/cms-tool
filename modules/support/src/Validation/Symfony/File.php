@@ -14,7 +14,10 @@ class File extends SymfonyFile
     public array $ignoreErrors = [];
 
     /**
+     * {@inheritdoc}
      * @param integer[]|integer|null $ignoreErrors
+     * @param string[]|string $mimeTypes
+     * @param array<string,mixed>|null $options
      */
     public function __construct(
         array $options = null,
@@ -29,7 +32,6 @@ class File extends SymfonyFile
         string $mimeTypesMessage = null,
         string $disallowEmptyMessage = null,
         string $filenameTooLongMessage = null,
-
         string $uploadIniSizeErrorMessage = null,
         string $uploadFormSizeErrorMessage = null,
         string $uploadPartialErrorMessage = null,
@@ -40,7 +42,6 @@ class File extends SymfonyFile
         string $uploadErrorMessage = null,
         array $groups = null,
         mixed $payload = null,
-
         array|string $extensions = null,
         string $extensionsMessage = null,
     ) {

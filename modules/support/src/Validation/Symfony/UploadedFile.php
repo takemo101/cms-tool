@@ -30,6 +30,7 @@ class UploadedFile extends SymfonyUploadedFile
         $path = '';
 
         if (\UPLOAD_ERR_NO_FILE !== $error) {
+            /** @var string */
             $path = $psrUploadedFile->getStream()->getMetadata('uri') ?? '';
 
             if (

@@ -1,6 +1,9 @@
 <?php
 
+use Psr\Cache\CacheItemInterface;
 use Symfony\Contracts\Cache\CacheInterface;
+use Symfony\Contracts\Cache\CallbackInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 use Takemo101\Chubby\Support\ServiceLocator;
 
 if (!function_exists('cache')) {
@@ -16,7 +19,7 @@ if (!function_exists('cache')) {
      *                              The default (or providing null) is implementation dependent but should
      *                              typically be 1.0, which should provide optimal stampede protection.
      *                              See https://en.wikipedia.org/wiki/Cache_stampede#Probabilistic_early_expiration
-     * @param array      &$metadata The metadata of the cached item {@see ItemInterface::getMetadata()}
+     * @param mixed[]|null      &$metadata The metadata of the cached item {@see ItemInterface::getMetadata()}
      *
      * @return T
      *
@@ -26,11 +29,14 @@ if (!function_exists('cache')) {
         string $key,
         callable $callback,
         float $beta = null,
-        array &$metadata = null
+        ?array &$metadata = null
     ): mixed {
         /** @var CacheInterface */
         $cache = ServiceLocator::container()->get(CacheInterface::class);
 
-        return $cache->get($key, $callback, $beta, $metadata);
+        /** @var T */
+        $value = $cache->get($key, $callback, $beta, $metadata);
+
+        return $value;
     }
 }

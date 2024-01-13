@@ -6,8 +6,8 @@
     "license": "proprietary",
     "require": {
         "php": "^8.2",
-        "odan/session": "^6.1",
-        "slim/csrf": "^1.3"
+        "slim/csrf": "^1.3",
+        "odan/session": "^6.1"
 	},
     "autoload": {
         "psr-4": {
@@ -21,9 +21,9 @@
         "laravel/pint": "^1.13",
         "pestphp/pest": "^2.24",
         "phpstan/phpstan": "^1.10",
-        "symfony/var-dumper": "^6.3",
         "mockery/mockery": "^1.6",
-        "takemo101/chubby": "^0.0.24"
+        "takemo101/chubby": "^0.0.25",
+        "symfony/var-dumper": "^6.4|^7.0"
     },
     "scripts": {
         "lint": "pint -v",

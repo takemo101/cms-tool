@@ -13,7 +13,7 @@ class DataAccessAdapter implements ArrayAccess
     /**
      * constructor
      *
-     * @param DataAccessors $accessors
+     * @param DataAccessors $__accessors
      */
     public function __construct(
         private DataAccessors $__accessors,

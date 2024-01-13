@@ -34,16 +34,15 @@
         "cms-module/support": "^1.0",
         "cms-module/theme": "^1.0",
         "cms-module/view": "^1.0",
-        "guzzlehttp/guzzle": "^7.8",
         "saloonphp/saloon": "^3.4",
-        "takemo101/chubby": "^0.0.24"
+        "takemo101/chubby": "^0.0.25"
     },
     "require-dev": {
         "laravel/pint": "^1.13",
         "mockery/mockery": "^1.6",
         "pestphp/pest": "^2.24",
         "phpstan/phpstan": "^1.10",
-        "symfony/var-dumper": "^6.3"
+        "symfony/var-dumper": "^6.4|^7.0"
     },
     "scripts": {
         "lint": "pint -v",

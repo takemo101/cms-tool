@@ -10,11 +10,11 @@
         "ext-mbstring": "*",
         "ext-openssl": "*",
         "illuminate/collections": "^10.31",
-        "symfony/validator": "^6.3",
-        "symfony/string": "^6.3",
         "eventsauce/object-hydrator": "^1.4",
-        "symfony/http-foundation": "^7.0",
-        "symfony/property-access": "^7.0"
+        "symfony/validator": "^6.4|^7.0",
+        "symfony/string": "^6.4|^7.0",
+        "symfony/http-foundation": "^6.4|^7.0",
+        "symfony/property-access": "^6.4|^7.0"
 	},
     "autoload": {
         "psr-4": {
@@ -28,9 +28,9 @@
         "laravel/pint": "^1.13",
         "pestphp/pest": "^2.24",
         "phpstan/phpstan": "^1.10",
-        "symfony/var-dumper": "^6.3",
         "mockery/mockery": "^1.6",
-        "takemo101/chubby": "^0.0.24"
+        "takemo101/chubby": "^0.0.25",
+        "symfony/var-dumper": "^6.4|^7.0"
     },
     "scripts": {
         "lint": "pint -v",

@@ -42,7 +42,7 @@ describe(
 
             $this->finder->shouldReceive('find')
                 ->with($id)
-                ->andThrow(NotFoundThemeException::class);
+                ->andThrow(new NotFoundThemeException($id));
 
             expect(fn () => $this->service->getOne($id))->toThrow(NotFoundThemeException::class);
         });

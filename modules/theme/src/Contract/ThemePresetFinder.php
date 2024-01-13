@@ -2,8 +2,6 @@
 
 namespace CmsTool\Theme\Contract;
 
-use CmsTool\Theme\Exception\NotFoundThemeException;
-
 /**
  * @template T of object
  */

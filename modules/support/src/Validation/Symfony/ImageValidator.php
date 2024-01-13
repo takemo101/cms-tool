@@ -9,9 +9,9 @@ use Symfony\Component\Validator\Constraints\ImageValidator as SymfonyImageValida
 class ImageValidator extends SymfonyImageValidator
 {
     /**
-     * @return void
+     * {@inheritDoc}
      */
-    public function validate(mixed $value, Constraint $constraint)
+    public function validate(mixed $value, Constraint $constraint): void
     {
         if (
             $constraint instanceof Image

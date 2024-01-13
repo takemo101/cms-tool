@@ -12,7 +12,7 @@ beforeEach(function () {
     $this->matcher = m::mock(ActiveThemeIdMatcher::class);
     $this->filesystem = m::mock(LocalFilesystem::class);
 
-    $this->loader = new DefaultThemeLoader($this->id, $this->filesystem, new PathHelper());
+    $this->loader = new DefaultThemeLoader($this->matcher, $this->filesystem, new PathHelper());
 });
 
 describe(

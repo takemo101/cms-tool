@@ -28,7 +28,6 @@ class DataAccessors
      * constructor
      *
      * @param DataAccessInvoker $invoker
-     * @param array<string,Closure|string> $callables
      */
     public function __construct(
         private readonly DataAccessInvoker $invoker,
@@ -91,6 +90,7 @@ class DataAccessors
             $extractArguments = $accessor->extractArguments($key);
             if ($extractArguments !== false) {
 
+                /** @var mixed[] */
                 $joinedArguments = [
                     ...$extractArguments,
                     ...$arguments,
@@ -115,8 +115,8 @@ class DataAccessors
      * Create a cache key for the ``call`` method
      *
      * @param string $key
-     * @param mixed $default
-     * @return mixed
+     * @param mixed[] $arguments
+     * @return string
      * @throws RuntimeException
      */
     private function buildCallCacheKey(string $key, array $arguments): string
@@ -157,7 +157,7 @@ class DataAccessors
      * Add access processing to keys
      *
      * @param string|string[] $key
-     * @param Closure|class-string<object&callable> $callable
+     * @param Closure|class-string<object&callable> $accessor
      * @param array<string,mixed> $parameters
      * @return self
      */
@@ -181,7 +181,7 @@ class DataAccessors
     /**
      * Clear the cache
      *
-     * @return self
+     * @return void
      */
     public function clearCache(): void
     {

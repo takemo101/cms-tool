@@ -37,7 +37,7 @@ abstract class ThemePresets implements ThemePresetFinder
      *
      * @param string $name
      * @param T|class-string<T> $class
-     * @return self
+     * @return self<T>
      * @throws RuntimeException
      */
     public function add(string $name, object|string $class): self
@@ -50,7 +50,9 @@ abstract class ThemePresets implements ThemePresetFinder
             is_a($class, static::Type, true) // @phpstan-ignore-line
             || is_subclass_of($class, static::Type, true)
         )) {
-            throw new RuntimeException("Class {$class} is not a subclass of " . static::Type);
+            $className = is_object($class) ? get_class($class) : $class;
+
+            throw new RuntimeException("Class {$className} is not a subclass of " . static::Type);
         }
 
         $this->presets[$name] = $class;
@@ -69,7 +71,7 @@ abstract class ThemePresets implements ThemePresetFinder
     /**
      * Get all presets
      *
-     * @return array<string,class-string<T>>
+     * @return array<string,T|class-string<T>>
      */
     public function presets(): array
     {

@@ -45,15 +45,4 @@ class ThemeId implements Stringable
     {
         return $this->value;
     }
-
-    /**
-     * Create an instance from the specified id.
-     *
-     * @param string $value
-     * @return self
-     */
-    public static function fromThemeId(ThemeId $id): self
-    {
-        return new static($id->value());
-    }
 }

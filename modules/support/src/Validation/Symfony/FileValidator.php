@@ -9,9 +9,9 @@ use Symfony\Component\Validator\Constraints\FileValidator as SymfonyFileValidato
 class FileValidator extends SymfonyFileValidator
 {
     /**
-     * @return void
+     * {@inheritDoc}
      */
-    public function validate(mixed $value, Constraint $constraint)
+    public function validate(mixed $value, Constraint $constraint): void
     {
         if (
             $constraint instanceof File

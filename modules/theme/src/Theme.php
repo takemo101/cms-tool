@@ -34,8 +34,7 @@ class Theme
     /**
      * Return whether it's a readonly theme
      *
-     * @param boolean $active
-     * @return void
+     * @return bool
      */
     public function isReadonly(): bool
     {

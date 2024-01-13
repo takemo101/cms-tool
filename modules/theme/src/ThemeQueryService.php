@@ -6,8 +6,6 @@ use CmsTool\Theme\Contract\ThemeFinder;
 use CmsTool\Theme\Contract\ThemeLoader;
 use CmsTool\Theme\Exception\NotFoundThemeException;
 use CmsTool\Theme\Exception\ThemeLoadException;
-use CmsTool\Theme\Theme;
-use CmsTool\Theme\ThemeId;
 
 class ThemeQueryService
 {

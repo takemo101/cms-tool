@@ -19,9 +19,9 @@ use Takemo101\Chubby\Console\Command\Command;
 class AddTranslationTextCommand extends Command
 {
     /**
-     * {@inheritdoc}
+     * @return void
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->addArgument(
             name: 'locale',

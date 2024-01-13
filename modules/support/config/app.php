@@ -4,16 +4,16 @@
 
 return [
     // Application base url
-    'url' => env('APP_URL', 'http://localhost:8080'),
+    'url' => 'http://localhost:8080',
 
     // Application name
-    'name' => env('APP_NAME', 'CmsTool'),
+    'name' => 'CmsTool',
 
     // Application environment
-    'env' => env('APP_ENV', 'local'),
+    'env' => 'local',
 
     // Is debug mode enabled?
-    'debug' => (bool) env('APP_DEBUG', true),
+    'debug' => true,
 
     // Timezone
     'timezone' => 'Asia/Tokyo',
@@ -22,5 +22,5 @@ return [
     'locale' => 'ja',
 
     // Built-in server flag
-    'built_in_server' => (bool) env('BUILT_IN_SERVER', false),
+    'built_in_server' => false,
 ];

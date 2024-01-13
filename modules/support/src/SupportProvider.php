@@ -167,7 +167,7 @@ class SupportProvider implements Provider
                 TranslatorInterface $translator,
             ) {
                 return Validation::createValidatorBuilder()
-                    ->enableAnnotationMapping()
+                    ->enableAttributeMapping()
                     ->setTranslator($translator)
                     ->setTranslationDomain(SymfonyTranslationProxy::ValidationDomain)
                     ->getValidator();

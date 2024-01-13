@@ -9,7 +9,7 @@ use Symfony\Contracts\Cache\CacheInterface;
 interface CacheAdapterFactory
 {
     /**
-     * @return AdapterInterface&CacheInterface&ResettableInterfac
+     * @return AdapterInterface&CacheInterface&ResettableInterface
      */
     public function create(): AdapterInterface & CacheInterface & ResettableInterface;
 }

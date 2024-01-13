@@ -9,12 +9,13 @@ use Odan\Session\SessionManagerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Mockery as m;
 
 beforeEach(function () {
-    $this->sessionFactory = Mockery::mock(SessionFactory::class);
-    $this->request = Mockery::mock(ServerRequestInterface::class);
-    $this->handler = Mockery::mock(RequestHandlerInterface::class);
-    $this->response = Mockery::mock(ResponseInterface::class);
+    $this->sessionFactory = m::mock(SessionFactory::class);
+    $this->request = m::mock(ServerRequestInterface::class);
+    $this->handler = m::mock(RequestHandlerInterface::class);
+    $this->response = m::mock(ResponseInterface::class);
 });
 
 
@@ -25,10 +26,11 @@ describe(
         it(
             'should start the session if it is not already started',
             function () {
-                $session = Mockery::mock(SessionManagerInterface::class, SessionInterface::class);
+                $session = m::mock(SessionManagerInterface::class, SessionInterface::class);
                 $session->shouldReceive('isStarted')->andReturn(false);
                 $session->shouldReceive('start');
                 $session->shouldReceive('save');
+                $session->shouldReceive('getFlash');
 
                 $this->sessionFactory->shouldReceive('create')->andReturn($session);
                 $flashSessionsFactory = new FlashSessionsFactory();
@@ -74,4 +76,4 @@ describe(
             }
         );
     }
-)->group('session-start-middleware', 'middleware');
+)->group('SessionStart', 'middleware');

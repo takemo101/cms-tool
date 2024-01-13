@@ -14,9 +14,9 @@ interface DataAccessInvoker
      * Execute the value acquisition process from the accessor
      * Return the target value
      *
-     * @param Closure|class-string<object&callable> $accessor
+     * @param Closure|class-string<object&callable> $callable
      * @param array<string,mixed> $parameters
-     * @param string[] $arguments
+     * @param mixed[] $arguments
      * @return mixed
      * @throws RuntimeException
      */

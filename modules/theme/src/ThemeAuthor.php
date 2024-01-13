@@ -2,7 +2,12 @@
 
 namespace CmsTool\Theme;
 
-readonly class ThemeAuthor
+use Takemo101\Chubby\Contract\Arrayable;
+
+/**
+ * @implements Arrayable<string,mixed>
+ */
+readonly class ThemeAuthor implements Arrayable
 {
     /**
      * constructor
@@ -15,6 +20,17 @@ readonly class ThemeAuthor
         public ?string $link,
     ) {
         //
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function toArray(): array
+    {
+        return [
+            'name' => $this->name,
+            'link' => $this->link,
+        ];
     }
 
     /**

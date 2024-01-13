@@ -41,12 +41,13 @@ class ThemeLoadException extends RuntimeException
     }
 
     /**
-     * Create an exception when the content is fraudulent.
+     * Create a new exception for decoding errors.
+     *
      * @param string $path
      * @return self
      */
-    public static function invalidContent(string $path): self
+    public static function decodeError(string $path): self
     {
-        return new self($path, "Theme content is invalid: {$path}");
+        return new self($path, "Failed to decode theme content: {$path}");
     }
 }

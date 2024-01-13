@@ -27,6 +27,9 @@ return [
         base_path('themes'),
     ],
 
+    // Directory to place themes when copying
+    'copy' => base_path('themes'),
+
     // ID of the theme used by default
     'default' => 'simply',
 

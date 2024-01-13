@@ -2,6 +2,8 @@
 
 namespace CmsTool\Theme;
 
+use CmsTool\Theme\Exception\ThemeSpecException;
+
 class Theme
 {
     /**
@@ -39,5 +41,49 @@ class Theme
     public function isReadonly(): bool
     {
         return $this->meta->readonly;
+    }
+
+    /**
+     * Can the theme be deleted?
+     *
+     * @return bool
+     */
+    public function canBeDeleted(): bool
+    {
+        return !(
+            $this->isReadonly() || $this->isActive()
+        );
+    }
+
+    /**
+     * Delete the theme
+     * If the theme is active or readonly, an exception will be thrown.
+     *
+     * @return string The path of the deleted theme
+     */
+    public function delete(): string
+    {
+        if (!$this->canBeDeleted()) {
+            throw ThemeSpecException::cannotBeDeletedError($this);
+        }
+
+        return $this->directory;
+    }
+
+    /**
+     * Create a copy of the theme
+     *
+     * @return self
+     */
+    public function copy(
+        ThemeId $id,
+        string $directory,
+    ): self {
+        return new self(
+            id: $id,
+            directory: $directory,
+            meta: $this->meta->copy(),
+            active: false,
+        );
     }
 }

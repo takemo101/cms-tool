@@ -8,10 +8,14 @@ use CmsTool\Theme\ThemeQueryService;
 use CmsTool\View\View;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
+use Takemo101\Chubby\Http\Renderer\RouteRedirectRenderer;
 use Takemo101\CmsTool\Domain\Theme\NotFoundThemeIdException;
 use Takemo101\CmsTool\Http\Renderer\RedirectBackRenderer;
 use Takemo101\CmsTool\Http\ViewModel\ThemeDetailPage;
+use Takemo101\CmsTool\UseCase\Shared\Exception\NotFoundDataException;
 use Takemo101\CmsTool\UseCase\Theme\Handler\ActivateThemeHandler;
+use Takemo101\CmsTool\UseCase\Theme\Handler\CopyThemeHandler;
+use Takemo101\CmsTool\UseCase\Theme\Handler\DeleteThemeHandler;
 
 class ThemeController
 {
@@ -73,5 +77,49 @@ class ThemeController
         }
 
         return redirect()->back();
+    }
+
+    /**
+     * @param ServerRequestInterface $request
+     * @param CopyThemeHandler $handler
+     * @param string $id
+     * @return RouteRedirectRenderer
+     */
+    public function copy(
+        ServerRequestInterface $request,
+        CopyThemeHandler $handler,
+        string $id,
+    ): RouteRedirectRenderer {
+
+        try {
+            $copyTheme = $handler->handle($id);
+        } catch (NotFoundDataException $e) {
+            throw new HttpNotFoundException($request, $e->getMessage(), $e);
+        }
+
+        return redirect()->route(
+            'admin.theme.detail',
+            ['id' => $copyTheme->id->value()]
+        );
+    }
+
+    /**
+     * @param ServerRequestInterface $request
+     * @param DeleteThemeHandler $handler
+     * @param string $id
+     * @return RouteRedirectRenderer
+     */
+    public function delete(
+        ServerRequestInterface $request,
+        DeleteThemeHandler $handler,
+        string $id,
+    ): RouteRedirectRenderer {
+        try {
+            $handler->handle($id);
+        } catch (NotFoundDataException $e) {
+            throw new HttpNotFoundException($request, $e->getMessage(), $e);
+        }
+
+        return redirect()->route('admin.theme.index');
     }
 }

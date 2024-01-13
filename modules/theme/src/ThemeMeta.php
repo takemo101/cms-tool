@@ -2,13 +2,18 @@
 
 namespace CmsTool\Theme;
 
-readonly class ThemeMeta
+use Takemo101\Chubby\Contract\Arrayable;
+
+/**
+ * @implements Arrayable<string,mixed>
+ */
+readonly class ThemeMeta implements Arrayable
 {
     /**
      * constructor
      *
      * @param string $uid
-     * @param string $name
+     * @param ThemeName $name
      * @param string $version
      * @param string $content
      * @param string[] $images
@@ -21,7 +26,7 @@ readonly class ThemeMeta
      */
     public function __construct(
         public string $uid,
-        public string $name,
+        public ThemeName $name,
         public string $version,
         public string $content,
         public array $images,
@@ -52,7 +57,7 @@ readonly class ThemeMeta
     {
         return new self(
             uid: $this->uid,
-            name: $this->name,
+            name: $this->name->copy(),
             version: $this->version,
             content: $this->content,
             images: $this->images,
@@ -63,6 +68,26 @@ readonly class ThemeMeta
             readonly: false, // copy is not readonly
             extension: $this->extension,
         );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function toArray(): array
+    {
+        return [
+            'uid' => $this->uid,
+            'name' => $this->name->value(),
+            'version' => $this->version,
+            'content' => $this->content,
+            'images' => $this->images,
+            'tags' => $this->tags,
+            'link' => $this->link,
+            'preset' => $this->preset,
+            'author' => $this->author->toArray(),
+            'readonly' => $this->readonly,
+            'extension' => $this->extension,
+        ];
     }
 
     /**
@@ -90,7 +115,7 @@ readonly class ThemeMeta
     {
         return new self(
             uid: $data['uid'],
-            name: $data['name'],
+            name: new ThemeName($data['name']),
             version: $data['version'],
             content: $data['content'],
             images: $data['images'] ?? [],

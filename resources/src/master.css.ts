@@ -10,6 +10,7 @@ const Colors = {
   Primary: "#563bff",
   Secondary: "#fc783f",
   Tertiary: "#21213b",
+  Warning: "#ff5a5a",
   Link: "#7979b4",
   ActiveLinkBackground: "#e9e7fd",
   ActiveLink: "#563bff",
@@ -86,8 +87,17 @@ const generalStyle = {
     bg:${Colors.Primary}
     f:white
   `,
+  "form-btn--primary-line": `
+    bg:white
+    b:1px|solid|${Colors.Primary}
+    f:${Colors.Primary}
+  `,
   "form-btn--secondary": `
     bg:${Colors.Secondary}
+    f:white
+  `,
+  "form-btn--warning": `
+    bg:${Colors.Warning}
     f:white
   `,
 

@@ -3,9 +3,11 @@
 namespace CmsTool\Theme;
 
 use CmsTool\Theme\Contract\ActiveThemeIdMatcher;
+use CmsTool\Theme\Contract\ThemeAccessor;
 use CmsTool\Theme\Contract\ThemeAssetFinfoFactory;
 use CmsTool\Theme\Contract\ThemeFinder;
 use CmsTool\Theme\Contract\ThemeLoader;
+use CmsTool\Theme\Contract\ThemeSaver;
 use CmsTool\Theme\Hook\ThemeHook;
 use CmsTool\Theme\Hook\ThemeHookPresets;
 use CmsTool\Theme\Routing\ThemeRoute;
@@ -18,6 +20,8 @@ use Takemo101\Chubby\Config\ConfigRepository;
 use Takemo101\Chubby\Filesystem\PathHelper;
 use Takemo101\Chubby\Config\ConfigPhpRepository;
 use Takemo101\Chubby\Hook\Hook;
+
+use function DI\get;
 
 class ThemeProvider implements Provider
 {
@@ -41,11 +45,14 @@ class ThemeProvider implements Provider
                 DefaultThemeFinder::class,
                 true,
             ),
-            ThemeLoader::class => DefinitionHelper::createReplaceable(
-                ThemeLoader::class,
-                'theme.loader',
-                DefaultThemeLoader::class,
+            ThemeAccessor::class => DefinitionHelper::createReplaceable(
+                ThemeAccessor::class,
+                'theme.accessor',
+                DefaultThemeAccessor::class,
+                true,
             ),
+            ThemeLoader::class => get(ThemeAccessor::class),
+            ThemeSaver::class => get(ThemeAccessor::class),
             ActiveThemeIdMatcher::class => DefinitionHelper::createReplaceable(
                 ActiveThemeIdMatcher::class,
                 'theme.matcher',

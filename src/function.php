@@ -221,6 +221,14 @@ hook()
                                         '/theme/{id}',
                                         [ThemeController::class, 'activate'],
                                     )->setName('admin.theme.activate');
+                                    $proxy->delete(
+                                        '/theme/{id}',
+                                        [ThemeController::class, 'delete'],
+                                    )->setName('admin.theme.delete');
+                                    $proxy->post(
+                                        '/theme/{id}/copy',
+                                        [ThemeController::class, 'copy'],
+                                    )->setName('admin.theme.copy');
 
                                     $proxy->get(
                                         '/webhook',

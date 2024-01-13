@@ -4,8 +4,10 @@ namespace CmsTool\Theme;
 
 use Stringable;
 
-class ThemeId implements Stringable
+class ThemeName implements Stringable
 {
+    public const CopySuffix = ' (Copy)';
+
     /**
      * constructor
      *
@@ -14,7 +16,7 @@ class ThemeId implements Stringable
     public function __construct(
         private string $value,
     ) {
-        assert($value !== '', 'The theme id cannot be empty.');
+        assert($value !== '', 'The theme name cannot be empty.');
     }
 
     /**
@@ -47,12 +49,12 @@ class ThemeId implements Stringable
     }
 
     /**
-     * Generate a new id.
+     * Copy the theme name.
      *
      * @return self
      */
-    public static function generate(): self
+    public function copy(): self
     {
-        return new self(uniqid());
+        return new self($this->value() . self::CopySuffix);
     }
 }

@@ -18,6 +18,23 @@ class ThemePathHelper
     }
 
     /**
+     * Theme location from id
+     *
+     * @param string $location
+     * @param ThemeId $id
+     * @return string
+     */
+    public function getThemeLocation(
+        string $location,
+        ThemeId $id,
+    ): string {
+        return $this->helper->join(
+            $location,
+            $id->value(),
+        );
+    }
+
+    /**
      * Get theme path
      *
      * @param Theme $theme
@@ -76,5 +93,27 @@ class ThemePathHelper
             ThemeConfig::TemplatesPath,
             ...$paths,
         );
+    }
+
+    /**
+     * Extract theme directory from path
+     *
+     * @param string $path
+     * @return string
+     */
+    public function extractThemeDirectory(string $path): string
+    {
+        return $this->helper->dirname($path);
+    }
+
+    /**
+     * Extract theme id from path
+     *
+     * @param string $path
+     * @return ThemeId
+     */
+    public function extractThemeId(string $path): ThemeId
+    {
+        return new ThemeId($this->helper->basename($path));
     }
 }

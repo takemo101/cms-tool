@@ -61,7 +61,7 @@
                 {{ content|nl2br|raw }}
             </p>
 
-            <div class="flex flex:row@sm flex:col gap:20px">
+            <div class="flex flex:row@sm flex:col gap:20px mb:30">
                 <div class="w:full">
                     <h4 class="f:16px f:bold mt:0 mb:16px">
                         テーマ情報
@@ -105,6 +105,23 @@
                         {% endfor %}
                     </div>
                 </div>
+            </div>
+
+            <div class="t:right">
+                {{ form_open({route: ['admin.theme.copy', {id: theme.id}], method: 'post', class: 'inline-block ml:10px'}) }}
+                    {{ forms.submit({
+                        label: '複製する',
+                        class: 'form-btn--primary',
+                    }) }}
+                {{ form_close() }}
+                {% if theme.canBeDeleted() %}
+                    {{ form_open({route: ['admin.theme.delete', {id: theme.id}], method: 'delete', class: 'inline-block ml:10px'}) }}
+                        {{ forms.submit({
+                            label: '削除する',
+                            class: 'form-btn--warning',
+                        }) }}
+                    {{ form_close() }}
+                {% endif %}
             </div>
 
         </div>

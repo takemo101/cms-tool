@@ -1,11 +1,10 @@
 {
     "name": "takemo101/cms-tool",
-    "type": "project",
-    "description": "This is Chubby's project.",
+    "description": "This is Chubby's CMS tool.",
     "keywords": [
         "php",
         "slim",
-        "chubbt",
+        "chubby",
         "framework"
     ],
     "authors": [

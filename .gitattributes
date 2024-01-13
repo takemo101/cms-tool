@@ -1,6 +1,7 @@
 /tests                  export-ignore
 /storage                export-ignore
 /docker                 export-ignore
+/themes                 export-ignore
 /.github                export-ignore
 /.php_cs                export-ignore
 .editorconfig           export-ignore

@@ -17,6 +17,7 @@ use Takemo101\CmsTool\Http\Controller\InstallController;
 use Takemo101\CmsTool\Error\ValidationErrorResponseRender;
 use Takemo101\CmsTool\Http\Action\PhpInfoAction;
 use Takemo101\CmsTool\Http\Action\SitePublishAction;
+use Takemo101\CmsTool\Http\Action\StorageAssetAction;
 use Takemo101\CmsTool\Http\Action\Theme\ActiveThemeAssetAction;
 use Takemo101\CmsTool\Http\Action\Theme\HomeAction;
 use Takemo101\CmsTool\Http\Action\Theme\FixedPageAction;
@@ -38,11 +39,15 @@ use Takemo101\CmsTool\Http\Middleware\AdminSessionStart;
 use Takemo101\CmsTool\Http\Middleware\GuideToInstallation;
 use Takemo101\CmsTool\Http\Middleware\WhenUninstalled;
 use Takemo101\CmsTool\Http\Middleware\WhenUnpublished;
+use Takemo101\CmsTool\Infra\Storage\LocalPublicStoragePath;
 use Takemo101\CmsTool\Support\Theme\ActiveThemeRouteRegister;
 
 hook()
     ->onTyped(
-        function (ErrorResponseRenders $renders, ContainerInterface $container) {
+        function (
+            ErrorResponseRenders $renders,
+            ContainerInterface $container,
+        ) {
             /** @var ApplicationSummary */
             $summary = $container->get(ApplicationSummary::class);
 
@@ -66,7 +71,12 @@ hook()
         },
     )
     ->onTyped(
-        function (SlimHttp $http) {
+        function (
+            SlimHttp $http,
+            ContainerInterface $container,
+        ) {
+            /** @var ApplicationSummary */
+            $summary = $container->get(ApplicationSummary::class);
 
             /** @var string */
             $webhookRoutePath = config('system.webhook.route', '/webhook');
@@ -77,6 +87,16 @@ hook()
                 $webhookRoutePath,
                 WebhookAction::class,
             )->setName('webhook');
+
+            if ($summary->isBuiltInServer()) {
+                /** @var LocalPublicStoragePath */
+                $storagePath = $container->get(LocalPublicStoragePath::class);
+
+                $http->get(
+                    $storagePath->getUrl('{path:.+}'),
+                    StorageAssetAction::class,
+                );
+            }
 
             $http->group(
                 '',

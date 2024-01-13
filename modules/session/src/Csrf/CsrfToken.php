@@ -72,6 +72,16 @@ readonly class CsrfToken
     }
 
     /**
+     * Create a empty instance of CsrfToken.
+     *
+     * @return self
+     */
+    public static function empty(): self
+    {
+        return new self();
+    }
+
+    /**
      * Create a new instance of CsrfToken from a ServerRequestInterface object.
      *
      * @param ServerRequestInterface $request The server request object.

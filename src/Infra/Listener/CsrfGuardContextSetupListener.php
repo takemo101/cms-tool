@@ -3,6 +3,7 @@
 namespace Takemo101\CmsTool\Infra\Listener;
 
 use CmsTool\Session\Csrf\CsrfGuardContext;
+use CmsTool\Session\Csrf\CsrfToken;
 use CmsTool\View\ViewCreator;
 use Psr\Container\ContainerInterface;
 use Takemo101\Chubby\Event\Attribute\AsEventListener;
@@ -39,10 +40,9 @@ class CsrfGuardContextSetupListener
         // CsrfGuardContext generation processing is set in consideration of when the CSRF middleware is not executed.
         if ($token = CsrfGuardContext::fromRequest(
             $request,
-            fn () => $this->container->get(CsrfGuardContext::class),
         )
             ?->getGuard()
-            ->getToken()
+            ->getToken() ?? CsrfToken::empty()
         ) {
             $this->filter->setCsrfToken($token);
 

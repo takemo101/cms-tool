@@ -2,6 +2,8 @@
 
 namespace Takemo101\CmsTool\Domain\Shared;
 
+use Symfony\Component\Uid\Uuid;
+
 class IdCreator
 {
     /**
@@ -19,6 +21,16 @@ class IdCreator
         $ulid = self::$ulid ?? self::$ulid = Ulid::createCurrent();
 
         return $ulid;
+    }
+
+    /**
+     * UUID generation
+     *
+     * @return Uuid
+     */
+    public static function uuid(): Uuid
+    {
+        return Uuid::v4();
     }
 
     /**

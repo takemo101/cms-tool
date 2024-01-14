@@ -1,6 +1,11 @@
 {% extends 'layouts.master' %}
 
 {% block content %}
+    {# 新着記事の次のカラムに表示させる内容の変数設定 #}
+    {% set secondColumnTitle = 'TECHNOLOGY' %}
+    {% set secondColumnSubtitle = 'テクノロジー' %}
+    {% set secondColumnCategory = 'qgrfb-gict' %}
+
     {% set contents = share.contents_7 %}
     {% set first_content = contents|first %}
 
@@ -47,11 +52,11 @@
     </section>
     <section class="bg-gray-100 text-black">
         {% include 'components.home.contents' with {
-            contents: share.category_contents_6('qgrfb-gict'),
-            title: 'TECHNOLOGY',
-            subtitle: 'テクノロジー',
+            contents: share.category_contents_6(secondColumnCategory),
+            title: secondColumnTitle,
+            subtitle: secondColumnSubtitle,
             link: route('blog.category', {
-                id: 'qgrfb-gict',
+                id: secondColumnCategory,
             }),
         } %}
     </section>

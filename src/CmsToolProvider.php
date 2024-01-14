@@ -3,7 +3,6 @@
 namespace Takemo101\CmsTool;
 
 use CmsTool\Support\Translation\TranslationAccessor;
-use CmsTool\Support\Translation\TranslationLoader;
 use CmsTool\View\Html\Filter\FormAppendFilters;
 use Psr\Container\ContainerInterface;
 use Takemo101\Chubby\ApplicationContainer;

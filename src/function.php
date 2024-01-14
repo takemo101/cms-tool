@@ -289,6 +289,11 @@ hook()
                         }
                     );
 
+                    $proxy->get(
+                        '/assets/{path:.+}',
+                        ActiveThemeAssetAction::class,
+                    )->setName(ActiveThemeAssetAction::RouteName);
+
                     $proxy->group('', function (Proxy $proxy) {
 
                         /** @var ActiveThemeRouteRegister */
@@ -298,11 +303,6 @@ hook()
                             '/',
                             HomeAction::class,
                         )->setName('home');
-
-                        $proxy->get(
-                            '/assets/{path:.+}',
-                            ActiveThemeAssetAction::class,
-                        )->setName(ActiveThemeAssetAction::RouteName);
 
                         // Set routing for theme
                         $register->register($proxy);

@@ -2,6 +2,7 @@
 
 namespace Takemo101\CmsTool\Http\Middleware;
 
+use CmsTool\View\ViewCreator;
 use Fig\Http\Message\StatusCodeInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -18,10 +19,12 @@ class WhenUnpublished implements MiddlewareInterface
      *
      * @param SitePublishRepository $repository
      * @param ResponseFactoryInterface $responseFactory
+     * @param ViewCreator $creator
      */
     public function __construct(
         private SitePublishRepository $repository,
         private ResponseFactoryInterface $responseFactory,
+        private ViewCreator $creator,
     ) {
         //
     }
@@ -37,9 +40,12 @@ class WhenUnpublished implements MiddlewareInterface
         ServerRequestInterface $request,
         RequestHandlerInterface $handler,
     ): ResponseInterface {
+
         if (!$this->repository->isPublished()) {
             return (new HtmlRenderer(
-                view('cms-tool::error.unpublished'),
+                $this->creator->createIfExists(
+                    'pages.error.unpublished',
+                ) ?? $this->creator->create('cms-tool::error.unpublished'),
                 StatusCodeInterface::STATUS_UNAUTHORIZED,
             ))
                 ->render(
@@ -48,6 +54,6 @@ class WhenUnpublished implements MiddlewareInterface
                 );
         }
 
-        return $handler->handle($request);
+        return $handler->handle($request);;
     }
 }

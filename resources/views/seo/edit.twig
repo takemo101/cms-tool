@@ -6,6 +6,7 @@
 
 {% import "cms-tool::components.forms" as forms %}
 {% import "cms-tool::components.alerts" as alerts %}
+{% import "cms-tool::components.dialogs" as dialogs %}
 
 {% block content_right %}
 <div class="card">
@@ -13,7 +14,7 @@
         <h2 class="card-header__title">SEO設定</h2>
         <hr class="divider" />
     </div>
-    <div class="card-body">
+    <div class="card-body" x-data="{ open: false }">
         {{ alerts.error({
             group: 'seo',
         }) }}
@@ -22,6 +23,7 @@
             route: 'admin.seo.update',
             method: 'put',
             enctype: 'multipart/form-data',
+            'x-ref': 'form',
         }) }}
 
             <div class="mb:30">
@@ -187,12 +189,18 @@
                 </div>
             </div>
             <div class="t:right">
-                {{ forms.submit({
+                {{ forms.button({
                     label: '更新',
                     class: 'form-btn--primary',
+                    click: '$refs.form.reportValidity() && (open = true)',
                 }) }}
             </div>
         {{ form_close() }}
+        {{ dialogs.confirm({
+            title: 'Update',
+            message: '変更内容を保存しますか？',
+            submit: '$refs.form.submit()',
+        }) }}
     </div>
 </div>
 {% endblock %}

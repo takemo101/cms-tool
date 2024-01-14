@@ -4,6 +4,7 @@
 
 {% import "cms-tool::components.forms" as forms %}
 {% import "cms-tool::components.alerts" as alerts %}
+{% import "cms-tool::components.dialogs" as dialogs %}
 
 {% block content %}
 <div class="center-card">
@@ -17,8 +18,12 @@
         </p>
     </div>
     {{ alerts.error() }}
-    <div>
-        {{ form_open({route: 'install', method: 'post'}) }}
+    <div x-data="{ open: false }">
+        {{ form_open({
+            route: 'install',
+            method: 'post',
+            'x-ref': 'form',
+        }) }}
             <div class="mb:30">
                 <h4 class="f:16px f:bold mt:0 mb:16px">
                     API設定
@@ -93,10 +98,16 @@
                     href="{{ route('install.basic') }}">
                     戻る
                 </a>
-                {{ forms.submit({
+                {{ forms.button({
                     label: '利用開始する',
                     class: 'form-btn--primary w:full',
                     disabled: not setting.canBeInstalled(),
+                    click: 'open = true',
+                }) }}
+                {{ dialogs.confirm({
+                    title: 'Update',
+                    message: '利用開始をしますか？',
+                    submit: '$refs.form.submit()',
                 }) }}
             </div>
         {{ form_close() }}

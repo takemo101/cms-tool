@@ -1,5 +1,6 @@
 import { init, Style } from '@master/css';
 import Alpine from 'alpinejs';
+import dialog from '@fylgja/alpinejs-dialog';
 import intersect from '@alpinejs/intersect'
 import style from './master.css';
 import './style.css';
@@ -13,8 +14,11 @@ init();
 // Register Splide
 window.Splide = Splide;
 
+// reference: https://dev.to/wtho/get-started-with-alpinejs-and-typescript-4dgf
+
 // Register AlpineJS
 window.Alpine = Alpine;
+Alpine.plugin(dialog);
 
 // Register AlpineJS components
 // reference: https://www.raymondcamden.com/2022/06/03/image-upload-preview-in-alpinejs

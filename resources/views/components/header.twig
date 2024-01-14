@@ -1,3 +1,5 @@
+{% import "cms-tool::components.dialogs" as dialogs %}
+
 <nav class="header z:999">
     <div class="header__inner">
         <div class="flex flex:row">
@@ -9,10 +11,10 @@
             <h1 class="header__title">{{ config('app.name') }}</h1>
         </div>
 
-        <div class="as:center" x-data>
+        <div class="as:center" x-data="{ open: false }">
             <button
                 class="header__btn"
-                @click.prevent="$refs.form.submit()">
+                @click.prevent="open = true">
                 ログアウト
             </button>
             {{ form_open({
@@ -21,6 +23,11 @@
                 'x-ref': 'form',
             }) }}
             {{ form_close() }}
+            {{ dialogs.confirm({
+                title: 'Logout',
+                message: 'ログアウトしますか？',
+                submit: '$refs.form.submit()',
+            }) }}
 
         </div>
     </div>

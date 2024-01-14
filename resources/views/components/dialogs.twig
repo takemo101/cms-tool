@@ -1,0 +1,41 @@
+{% macro confirm(options = {
+    title: 'Update',
+    message: '更新しますか？',
+    var: 'open',
+    submit: null,
+}) %}
+    {% set var = options.var ?? 'open' %}
+
+    <dialog
+        class="p:0 r:5px b:1|solid|gray-82 w:fit-content@sm w:full"
+        x-show="{{ var }}"
+        x-dialog.noscroll="{{ var }} = false">
+        <div class="flex:col jc:center w:360px@sm w:full p:20 t:left">
+            <div class="flex jc:space-between w:full lh:2.8 bb:1|solid|gray-82">
+                <span class="f:20 f:bold">{{ options.title }}</span>
+                <button type="button" @click="{{ var }} = false">X</button>
+            </div>
+            <div class="w:full py:30">
+                <p class="f:gray-52">
+                    {{ options.message }}
+                </p>
+            </div>
+            <div class="w:full">
+                <div class="flex jc:space-between">
+                    <button
+                        type="button"
+                        @click="{{ var }} = false"
+                        class="form-btn form-btn--secondary">
+                        Cancel
+                    </button>
+                    <button
+                        type="button"
+                        @click="{{ options.submit }}"
+                        class="form-btn form-btn--primary">
+                        OK
+                    </button>
+                </div>
+            </div>
+        </div>
+    </dialog>
+{% endmacro %}

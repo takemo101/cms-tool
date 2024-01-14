@@ -5,6 +5,7 @@
 {% block current %}webhook{% endblock %}
 
 {% import "cms-tool::components.forms" as forms %}
+{% import "cms-tool::components.dialogs" as dialogs %}
 
 {% block content_right %}
 <div class="card">
@@ -66,18 +67,27 @@
                 </table>
             </div>
 
-            <p class="f:16 mt:0 mb:16px">
-                リクエストヘッダー：Valueは、以下のボタンを押すことで再生成できます。<br/>
+            <div class="mt:0 mb:16px" x-data="{ open: false }">
+                <p class="f:16 mb:16px">
+                    リクエストヘッダー：Valueは、以下のボタンを押すことで再生成できます。
+                </p>
                 {{ form_open({
                     route: 'admin.webhook.regenerate',
                     method: 'patch',
+                    'x-ref': 'form',
                 }) }}
-                    {{ forms.submit({
+                    {{ forms.button({
                         label: '再生成する',
                         class: 'form-btn--primary',
+                        click: 'open = true',
                     }) }}
                 {{ form_close() }}
-            </p>
+                {{ dialogs.confirm({
+                    title: 'Update',
+                    message: '値を再生成しますか？',
+                    submit: '$refs.form.submit()',
+                }) }}
+            </div>
         </div>
     </div>
 </div>

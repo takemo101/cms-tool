@@ -11,7 +11,6 @@ interface MicroCmsContentQueryService
      * Get the published content of a single object.
      *
      * @param string $endpoint
-     * @param string $id
      * @param MicroCmsContentGetOneQuery $query
      * @param bool $cache
      * @return ArrayObject|null

@@ -18,7 +18,10 @@
   @apply sm:text-3xl text-2xl font-bold;
 }
 .section-header__subtitle {
-  @apply text-sm text-gray-600;
+  @apply sm:text-sm text-xs text-gray-600;
+}
+.section-header__to-link {
+  @apply sm:text-base text-sm hover:opacity-60;
 }
 
 .list-title {
@@ -31,4 +34,8 @@
 
 .tag-label {
   @apply before:content-['#'] bg-gray-200 text-gray-800 text-sm py-1 px-3;
+}
+
+.prose pre {
+  background-color: #0d1117;
 }

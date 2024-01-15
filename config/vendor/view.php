@@ -34,7 +34,7 @@ return [
     'locations' => [],
 
     'namespaces' => [
-        'cms-tool' => base_path('resources/views'),
+        //
     ],
 
     'extensions' => [

@@ -3,6 +3,7 @@
 namespace Takemo101\CmsTool;
 
 use CmsTool\Support\Translation\TranslationAccessor;
+use CmsTool\View\Contract\TemplateFinder;
 use CmsTool\View\Html\Filter\FormAppendFilters;
 use Psr\Container\ContainerInterface;
 use Takemo101\Chubby\ApplicationContainer;
@@ -110,6 +111,7 @@ class CmsToolProvider implements Provider
 
         $hook = $container->get(Hook::class);
 
+        $this->bootTemplate($hook, $path);
         $this->bootHtml($hook);
         $this->bootTranslation($hook);
 
@@ -117,6 +119,24 @@ class CmsToolProvider implements Provider
         $functionLoader = $container->get(ActiveThemeFunctionLoader::class);
 
         $functionLoader->load();
+    }
+
+    /**
+     * Boot view.
+     *
+     * @param Hook $hook
+     * @param VendorPath $path
+     * @return void
+     */
+    private function bootTemplate(Hook $hook, VendorPath $path): void
+    {
+        $hook
+            ->onTyped(
+                fn (TemplateFinder $finder) => $finder->addNamespace(
+                    'cms-tool',
+                    $path->getResourcePath('views'),
+                )
+            );
     }
 
     /**

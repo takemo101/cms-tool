@@ -15,13 +15,13 @@
     </div>
     <div class="card-body">
         <div>
-            <p class="mt:0 mb:16px">
+            <p class="u-text">
                 {{ auth.name }}さん、こんにちは！
             </p>
         </div>
-        <h3 class="f:18px f:bold mt:0 mb:16px">サイトの公開状態</h3>
+        <h3 class="u-title">サイトの公開状態</h3>
         <div>
-            <p class="f:16 lh:1.6rem mt:0 mb:16px">
+            <p class="u-text">
                 {% if isPublished %}
                     サイトは公開されています。<br/>
                     <a
@@ -71,9 +71,9 @@
                 {{ form_close() }}
             </div>
         </div>
-        <h3 class="f:18px f:bold mt:0 mb:16px">操作方法</h3>
+        <h3 class="u-title">操作方法</h3>
         <div>
-            <ul class="f:16px list-style:circle pl:18px lh:1.6rem">
+            <ul class="u-list">
                 <li>
                     <a
                         class="link"

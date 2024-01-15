@@ -14,9 +14,9 @@
         <hr class="divider" />
     </div>
     <div class="card-body">
-        <h3 class="f:18px f:bold mt:0 mb:16px">Webhookの設定</h3>
+        <h3 class="u-title">Webhookの設定</h3>
         <div>
-            <p class="f:16 lh:1.6rem mt:0 mb:16px">
+            <p class="u-text">
                 以下の内容をmicroCMSのWebhook設定に入力してください。<br/>
                 Webhookを設定することで、コンテンツの更新をトリガーに、表示内容が即座に更新されます。<br/>
                 設定していなくても、コンテンツの更新は反映されますが、キャッシュの有効期限が切れるまで表示内容は更新されません。<br/>
@@ -67,8 +67,8 @@
                 </table>
             </div>
 
-            <div class="mt:0 mb:16px" x-data="{ open: false }">
-                <p class="f:16 mb:16px">
+            <div x-data="{ open: false }">
+                <p class="u-text">
                     リクエストヘッダー：Valueは、以下のボタンを押すことで再生成できます。
                 </p>
                 {{ form_open({

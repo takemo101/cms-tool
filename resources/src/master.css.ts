@@ -223,6 +223,17 @@ const generalStyle = {
     bg:${Colors.Secondary}
     b:1|solid|${Colors.Secondary}
   `,
+
+  // text utility styles
+  "u-title": `f:18px f:bold mt:0 mb:16px`,
+  "u-text": `f:16 lh:1.6rem mt:0 mb:16px`,
+  "u-text--gray": `f:gray-52`,
+  "u-list": `
+    f:16px list-style:circle
+    pl:18px lh:1.6rem
+    mb:10px>li
+  `,
+  "u-list--num": `list-style:decimal`,
 } as const;
 
 const centerLayoutStyle = {
@@ -302,6 +313,39 @@ const halfColumnLayoutStyle = {
   `,
 } as const;
 
+const dialogStyle = {
+  "dialog": `
+    p:0
+    r:5px
+    bg:white
+    b:1|solid|gray-82
+    w:fit-content@sm w:full
+  `,
+  "dialog-layout": `
+    flex:col jc:center
+    w:360px@sm w:full
+    p:20
+    t:left
+  `,
+  "dialog-header": `
+    flex jc:space-between
+    w:full
+    lh:2.8
+    bb:1|solid|gray-82
+  `,
+  "dialog-header__title": `f:20 f:bold`,
+  "dialog-header__close": `
+    cursor:pointer
+    opacity:0.5:hover
+  `,
+  "dialog-body": `w:full py:30`,
+  "dialog-body__message": `f:gray-52`,
+  "dialog-footer": `
+    w:full
+    flex jc:space-between
+  `,
+} as const;
+
 const sidebarNavStyle = {
   // sidebar styles
   "sidebar": `overflow:hidden@sm overflow-x:scroll`,
@@ -375,6 +419,7 @@ const style = {
   ...centerLayoutStyle,
   ...headerNavStyle,
   ...halfColumnLayoutStyle,
+  ...dialogStyle,
   ...sidebarNavStyle,
   ...themeStyle,
 } as const;

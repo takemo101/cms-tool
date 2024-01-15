@@ -18,6 +18,7 @@ use Takemo101\CmsTool\Http\Session\DefaultAdminSessionFactory;
 use Takemo101\CmsTool\Support\FormAppendFilter\AppendCsrfInputFilter;
 use Takemo101\CmsTool\Support\Theme\ActiveThemeFunctionLoader;
 use Takemo101\CmsTool\Support\VendorPath;
+use Takemo101\CmsTool\Support\Webhook\CacheCleanWebhookHandler;
 use Takemo101\CmsTool\Support\Webhook\WebhookHandler;
 use Takemo101\CmsTool\Support\Webhook\WebhookHandlers;
 
@@ -76,7 +77,10 @@ class CmsToolProvider implements Provider
                     [],
                 );
 
-                $handlers = new WebhookHandlers(...$classes);
+                $handlers = new WebhookHandlers(...[
+                    ...$classes,
+                    CacheCleanWebhookHandler::class,
+                ]);
 
                 $hook->doTyped($handlers);
 

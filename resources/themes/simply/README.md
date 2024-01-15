@@ -71,12 +71,25 @@
 }
 ```
 
+## トップページのテクノロジー記事一覧設定
+
+トップページのテクノロジー記事一覧（新着記事の下のカラムに表示される記事一覧）は、`./templates/pages/home.twig`の以下の部分の設定を変更することで、表示する記事などを変更できます。  
+タイトル・サブタイトル・表示対象のカテゴリ ID を変数に設定します。
+
+```twig
+    {% set secondColumnTitle = '一覧のタイトル（ローマ字がカッコいい）' %}
+    {% set secondColumnSubtitle = 'サブタイトル' %}
+    {% set secondColumnCategory = '対象カテゴリのID' %}
+```
+
 ## 画面プレビューの設定
 
-MicroCMS の投稿した記事の画面プレビューを利用する場合は、遷移先 URL に以下を設定してください。
+MicroCMS の投稿した記事の画面プレビューを利用する場合は、MicroCMS の画面プレビュー設定の遷移先 URL に以下を設定してください。
 
 ```
 https://ホスト名/blog/{CONTENT_ID}?key={DRAFT_KEY}
 ```
+
+[操作マニュアルはこちら](https://document.microcms.io/manual/screen-preview)
 
 > `theme.json`の`extension.signatures.blog`の値を変更した場合は、`/blog`の部分も変更されますので、ご注意ください。

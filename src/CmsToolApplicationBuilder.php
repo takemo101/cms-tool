@@ -24,11 +24,19 @@ class CmsToolApplicationBuilder
     ): Application {
         $app = ApplicationBuilder::buildStandard($option);
 
+        $path = $app->getPath();
+
         $app->getProvider(DependencyProvider::class)
-            ->setDependencyPath(__DIR__ . '/dependency.php');
+            ->setDependencyPath(
+                __DIR__ . '/dependency.php',
+                $path->getSettingPath('dependency.php'),
+            );
 
         $app->getProvider(FunctionProvider::class)
-            ->setFunctionPath(__DIR__ . '/function.php');
+            ->setFunctionPath(
+                __DIR__ . '/function.php',
+                $path->getSettingPath('function.php'),
+            );
 
         return $app->addProvider(
             CacheProvider::class,

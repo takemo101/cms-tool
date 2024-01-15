@@ -85,6 +85,14 @@
                                 {{ theme.meta.version }}
                             </span>
                         </li>
+                        {% if theme.meta.preset %}
+                        <li class="flex jc:space-between mb:8px bb:1|solid|gray-82 py:8px">
+                            <span class="f:bold">Preset</span>
+                            <span>
+                                {{ theme.meta.preset }}
+                            </span>
+                        </li>
+                        {% endif %}
                         {% if theme.meta.author.name %}
                         <li class="flex jc:space-between mb:8px bb:1|solid|gray-82 py:8px">
                             <span class="f:bold">作者</span>

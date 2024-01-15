@@ -34,7 +34,7 @@
         "cms-module/theme": "^1.0",
         "cms-module/view": "^1.0",
         "saloonphp/saloon": "^3.4",
-        "takemo101/chubby": "^0.0.26"
+        "takemo101/chubby": "^0.0.27"
     },
     "require-dev": {
         "laravel/pint": "^1.13",

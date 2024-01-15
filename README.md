@@ -1,18 +1,27 @@
-# MicroCms Tool
+# CMS Tool
 
-This is a skeleton for a [Chubby](https://github.com/takemo101/chubby)
+ヘッドレス CMS のフロントページを作成するためのツールです。  
+簡単な
+インストールするだけで、フロントページを管理するための機能を利用できます。
 
-## Requirements
-- PHP 8.2 or higher
+現在は、テスト段階です。
 
-## Installation
+## 対応している CMS
+
+MicroCMS
+
+> 他の CMS にも対応予定
+
+## 必要な環境
+
+-   PHP 8.2 以上
+
+## インストール方法
 
 ```bash
-$ composer create-project takemo101/chubby-skeleton path
+$ composer require takemo101/cms-tool
 ```
 
-## Usage
+##　使い方
 
-```bash
-php console serve
-```
+> まだ書いてない

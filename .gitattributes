@@ -12,7 +12,7 @@ composer.lock           export-ignore
 phpstan.neon.dist       export-ignore
 phpunit.xml.dist        export-ignore
 phpunit.xml.dist.bak    export-ignore
-README.md               export-ignore
+/README.md              export-ignore
 Taskfile.yml            export-ignore
 docker-compose.yaml     export-ignore
 pint.json               export-ignore

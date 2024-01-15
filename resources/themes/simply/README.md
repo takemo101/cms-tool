@@ -70,3 +70,13 @@
     }
 }
 ```
+
+## 画面プレビューの設定
+
+MicroCMS の投稿した記事の画面プレビューを利用する場合は、遷移先 URL に以下を設定してください。
+
+```
+https://ホスト名/blog/{CONTENT_ID}?key={DRAFT_KEY}
+```
+
+> `theme.json`の`extension.signatures.blog`の値を変更した場合は、`/blog`の部分も変更されますので、ご注意ください。

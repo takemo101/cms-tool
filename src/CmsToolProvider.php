@@ -51,7 +51,7 @@ class CmsToolProvider implements Provider
             VendorPath::class => fn () => new VendorPath(
                 dirname(__DIR__, 1),
                 'src',
-                'config' . DIRECTORY_SEPARATOR . 'vendor',
+                'config',
                 'resources',
             ),
             AdminSessionFactory::class => function (
@@ -102,6 +102,10 @@ class CmsToolProvider implements Provider
         // Load default config files.
         $config->load(
             $path->getConfigPath(),
+            true,
+        );
+        $config->load(
+            $path->getConfigPath('vendor'),
             true,
         );
 

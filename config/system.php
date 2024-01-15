@@ -3,6 +3,8 @@
 use GuzzleHttp\RequestOptions;
 use Takemo101\CmsTool\Support\Webhook\CacheCleanWebhookHandler;
 
+// CMSTOOL system unique configuration
+
 return [
     // The path to the setting file.
     'setting' => base_path('setting.json'),

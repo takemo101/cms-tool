@@ -7,9 +7,12 @@ use CmsTool\Session\Middleware\Csrf;
 use CmsTool\Session\Middleware\SessionStart;
 use Psr\Container\ContainerInterface;
 use Slim\Interfaces\RouteCollectorProxyInterface as Proxy;
+use Takemo101\Chubby\Console\CommandCollection;
+use Takemo101\Chubby\Event\EventRegister;
 use Takemo101\Chubby\Http\ErrorHandler\ErrorResponseRenders;
 use Takemo101\Chubby\Http\SlimHttp;
 use Takemo101\Chubby\Support\ApplicationSummary;
+use Takemo101\CmsTool\Console\StorageLinkCommand;
 use Takemo101\CmsTool\Error\SystemErrorPageRender;
 use Takemo101\CmsTool\Error\ThemeErrorPageRender;
 use Takemo101\CmsTool\Http\Action\VendorAssetAction;
@@ -39,10 +42,26 @@ use Takemo101\CmsTool\Http\Middleware\AdminSessionStart;
 use Takemo101\CmsTool\Http\Middleware\GuideToInstallation;
 use Takemo101\CmsTool\Http\Middleware\WhenUninstalled;
 use Takemo101\CmsTool\Http\Middleware\WhenUnpublished;
+use Takemo101\CmsTool\Infra\Listener\AdminSessionContextSetupListener;
+use Takemo101\CmsTool\Infra\Listener\CsrfGuardContextSetupListener;
+use Takemo101\CmsTool\Infra\Listener\RequestParameterSetupListener;
+use Takemo101\CmsTool\Infra\Listener\TwigExtensionSetupListener;
 use Takemo101\CmsTool\Infra\Storage\LocalPublicStoragePath;
 use Takemo101\CmsTool\Support\Theme\ActiveThemeRouteRegister;
 
 hook()
+    ->onTyped(
+        fn (CommandCollection $commands) => $commands->add(
+            StorageLinkCommand::class,
+        ),
+    )
+    ->onTyped(
+        fn (EventRegister $register) => $register
+            ->on(AdminSessionContextSetupListener::class)
+            ->on(CsrfGuardContextSetupListener::class)
+            ->on(RequestParameterSetupListener::class)
+            ->on(TwigExtensionSetupListener::class)
+    )
     ->onTyped(
         function (
             ErrorResponseRenders $renders,

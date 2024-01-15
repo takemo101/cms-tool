@@ -22,7 +22,7 @@ readonly class VendorPath
     public function __construct(
         public string $basePath,
         public string $sourcePath = 'src',
-        public string $configPath = 'config' . DIRECTORY_SEPARATOR . 'vendor',
+        public string $configPath = 'config',
         public string $resourcePath = 'resources',
     ) {
         $this->helper = new PathHelper();

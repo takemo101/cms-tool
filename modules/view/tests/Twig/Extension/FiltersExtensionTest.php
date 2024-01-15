@@ -1,7 +1,7 @@
 <?php
 
 use CmsTool\View\Twig\Extension\FiltersExtension;
-use Tests\TestCase;
+use Tests\View\TestCase;
 
 describe(
     'FiltersExtension',

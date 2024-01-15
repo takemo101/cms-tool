@@ -5,7 +5,7 @@ use CmsTool\Support\JsonAccess\Exception\JsonNotAccessibleException;
 use CmsTool\Support\JsonAccess\Exception\NotFoundJsonException;
 use CmsTool\Support\JsonAccess\DefaultJsonAccessor;
 use Takemo101\Chubby\Filesystem\LocalFilesystem;
-use Tests\TestCase;
+use Tests\Support\TestCase;
 
 beforeEach(
     function () {

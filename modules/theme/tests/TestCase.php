@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Theme;
 
 use PHPUnit\Framework\TestCase as BaseTestCase;
 use Takemo101\Chubby\Application;

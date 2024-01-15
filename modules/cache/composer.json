@@ -7,11 +7,11 @@
     "require": {
         "php": "^8.2",
         "symfony/cache": "^6.4|^7.0"
-	},
+    },
     "autoload": {
         "psr-4": {
             "CmsTool\\Cache\\": "src/",
-            "Tests\\": "tests/"
+            "Tests\\Cache\\": "tests/"
         }
     },
     "minimum-stability": "dev",

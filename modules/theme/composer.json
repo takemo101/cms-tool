@@ -6,11 +6,11 @@
     "license": "proprietary",
     "require": {
         "php": "^8.2"
-	},
+    },
     "autoload": {
         "psr-4": {
             "CmsTool\\Theme\\": "src/",
-            "Tests\\": "tests/"
+            "Tests\\Theme\\": "tests/"
         }
     },
     "minimum-stability": "dev",

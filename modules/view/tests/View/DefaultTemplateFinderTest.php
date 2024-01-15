@@ -3,7 +3,7 @@
 use CmsTool\View\DefaultTemplateFinder;
 use Takemo101\Chubby\Filesystem\LocalFilesystem;
 use Takemo101\Chubby\Filesystem\PathHelper;
-use Tests\TestCase;
+use Tests\View\TestCase;
 
 describe(
     'DefaultTemplateFinder',

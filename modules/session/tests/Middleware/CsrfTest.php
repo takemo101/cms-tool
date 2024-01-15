@@ -7,7 +7,7 @@ use CmsTool\Session\Csrf\HttpCsrfTokenMismatchException;
 use CmsTool\Session\SessionContext;
 use Odan\Session\MemorySession;
 use Psr\Http\Server\RequestHandlerInterface;
-use Tests\TestCase;
+use Tests\Session\TestCase;
 
 describe(
     'CsrfMiddleware',

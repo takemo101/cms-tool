@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "75bcb6fbee292561bea87bb8b15ea95c",
+    "content-hash": "2799ca06880cb6de639d6b4ed61a6294",
     "packages": [
         {
             "name": "eventsauce/object-hydrator",

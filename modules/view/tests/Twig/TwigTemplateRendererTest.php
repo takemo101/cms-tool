@@ -4,7 +4,7 @@
 use CmsTool\View\HtmlObject;
 use CmsTool\View\Twig\TwigTemplateRenderer;
 use Takemo101\Chubby\Contract\Renderable;
-use Tests\TestCase;
+use Tests\View\TestCase;
 use Twig\Environment;
 
 describe(

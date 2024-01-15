@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Session;
 
 use CmsTool\Session\SessionProvider;
 use PHPUnit\Framework\TestCase as BaseTestCase;

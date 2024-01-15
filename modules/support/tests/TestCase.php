@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Support;
 
 use CmsTool\Support\SupportProvider;
 use PHPUnit\Framework\TestCase as BaseTestCase;

@@ -8,11 +8,11 @@
         "php": "^8.2",
         "slim/csrf": "^1.3",
         "odan/session": "^6.1"
-	},
+    },
     "autoload": {
         "psr-4": {
             "CmsTool\\Session\\": "src/",
-            "Tests\\": "tests/"
+            "Tests\\Session\\": "tests/"
         }
     },
     "minimum-stability": "dev",

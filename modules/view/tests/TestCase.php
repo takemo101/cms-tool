@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\View;
 
 use CmsTool\View\ViewProvider;
 use PHPUnit\Framework\TestCase as BaseTestCase;

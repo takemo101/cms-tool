@@ -1,7 +1,7 @@
 <?php
 
 use Takemo101\Chubby\Filesystem\LocalFilesystem;
-use Tests\TestCase;
+use Tests\View\TestCase;
 use Twig\Environment;
 
 describe(

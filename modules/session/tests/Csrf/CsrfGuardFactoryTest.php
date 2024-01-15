@@ -7,7 +7,7 @@ use Odan\Session\MemorySession;
 use Odan\Session\SessionInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Tests\TestCase;
+use Tests\Session\TestCase;
 
 describe(
     'CsrfGuardFactory',

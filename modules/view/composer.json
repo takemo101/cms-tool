@@ -6,12 +6,12 @@
     "license": "proprietary",
     "require": {
         "php": "^8.2",
-		"twig/twig": "^3.8"
-	},
+        "twig/twig": "^3.8"
+    },
     "autoload": {
         "psr-4": {
             "CmsTool\\View\\": "src/",
-            "Tests\\": "tests/"
+            "Tests\\View\\": "tests/"
         }
     },
     "minimum-stability": "dev",

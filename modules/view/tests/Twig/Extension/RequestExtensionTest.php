@@ -2,7 +2,7 @@
 
 use CmsTool\View\Twig\Extension\RequestExtension;
 use Psr\Http\Message\ServerRequestInterface;
-use Tests\TestCase;
+use Tests\View\TestCase;
 
 describe(
     'RequestExtension',

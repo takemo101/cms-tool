@@ -2,7 +2,7 @@
 
 use CmsTool\View\Twig\Extension\ConfigExtension;
 use Takemo101\Chubby\Config\ConfigRepository;
-use Tests\TestCase;
+use Tests\View\TestCase;
 
 describe(
     'ConfigExtension',

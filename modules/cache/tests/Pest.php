@@ -1,5 +1,5 @@
 <?php
 
-use Tests\TestCase;
+use Tests\Cache\TestCase;
 
 uses(TestCase::class)->in('Cache');

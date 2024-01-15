@@ -3,7 +3,7 @@
 
 use CmsTool\View\Twig\TwigFactory;
 use CmsTool\View\Twig\TwigOption;
-use Tests\TestCase;
+use Tests\View\TestCase;
 use Twig\Environment;
 use Twig\Loader\LoaderInterface;
 

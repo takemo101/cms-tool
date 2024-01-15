@@ -1,7 +1,7 @@
 <?php
 
 use CmsTool\View\HtmlObject;
-use Tests\TestCase;
+use Tests\View\TestCase;
 
 describe(
     'HtmlObject',

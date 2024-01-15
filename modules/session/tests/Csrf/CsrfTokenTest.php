@@ -1,7 +1,7 @@
 <?php
 
 use CmsTool\Session\Csrf\CsrfToken;
-use Tests\TestCase;
+use Tests\Session\TestCase;
 
 describe(
     'CsrfToken',

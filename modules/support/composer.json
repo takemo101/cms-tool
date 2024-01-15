@@ -9,17 +9,17 @@
         "ext-json": "*",
         "ext-mbstring": "*",
         "ext-openssl": "*",
-        "illuminate/collections": "^10.31",
+        "illuminate/collections": "^10.40",
         "eventsauce/object-hydrator": "^1.4",
         "symfony/validator": "^6.4|^7.0",
         "symfony/string": "^6.4|^7.0",
         "symfony/http-foundation": "^6.4|^7.0",
         "symfony/property-access": "^6.4|^7.0"
-	},
+    },
     "autoload": {
         "psr-4": {
             "CmsTool\\Support\\": "src/",
-            "Tests\\": "tests/"
+            "Tests\\Support\\": "tests/"
         }
     },
     "minimum-stability": "dev",

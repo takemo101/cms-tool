@@ -1,5 +1,5 @@
 <?php
 
-use Tests\TestCase;
+use Tests\Theme\TestCase;
 
 uses(TestCase::class)->in('Theme');

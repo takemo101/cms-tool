@@ -2,7 +2,7 @@
 
 use CmsTool\View\Twig\Extension\RouteExtension;
 use Slim\Interfaces\RouteParserInterface;
-use Tests\TestCase;
+use Tests\View\TestCase;
 
 describe(
     'RouteExtension',

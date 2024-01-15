@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Cache;
 
 use CmsTool\Cache\CacheProvider;
 use PHPUnit\Framework\TestCase as BaseTestCase;

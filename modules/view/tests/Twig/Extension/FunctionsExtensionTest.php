@@ -1,7 +1,7 @@
 <?php
 
 use CmsTool\View\Twig\Extension\FunctionsExtension;
-use Tests\TestCase;
+use Tests\View\TestCase;
 
 describe(
     'FunctionsExtension',

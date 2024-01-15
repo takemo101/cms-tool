@@ -5,7 +5,7 @@ use CmsTool\View\Contract\TemplateRenderer;
 use CmsTool\View\View;
 use CmsTool\View\ViewCreator;
 use Takemo101\Chubby\Contract\Arrayable;
-use Tests\TestCase;
+use Tests\View\TestCase;
 
 describe(
     'ViewCreator',

@@ -155,7 +155,7 @@ ${r?'Expression: "'+r+`"
     f:16px list-style:circle
     pl:18px lh:1.6rem
     mb:10px>li
-  `,"u-list--num":"list-style:decimal"},Jp={"center-card":`
+  `},Jp={"center-card":`
     max-w:380px@sm
     mx:auto my:auto
     p:20px@sm

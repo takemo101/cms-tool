@@ -233,7 +233,6 @@ const generalStyle = {
     pl:18px lh:1.6rem
     mb:10px>li
   `,
-  "u-list--num": `list-style:decimal`,
 } as const;
 
 const centerLayoutStyle = {

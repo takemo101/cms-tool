@@ -3,6 +3,7 @@
 namespace Takemo101\CmsTool;
 
 use CmsTool\Support\Translation\TranslationAccessor;
+use CmsTool\Theme\Contract\ThemeFinder;
 use CmsTool\View\Contract\TemplateFinder;
 use CmsTool\View\Html\Filter\FormAppendFilters;
 use Psr\Container\ContainerInterface;
@@ -112,6 +113,7 @@ class CmsToolProvider implements Provider
         $hook = $container->get(Hook::class);
 
         $this->bootTemplate($hook, $path);
+        $this->bootTheme($hook, $path);
         $this->bootHtml($hook);
         $this->bootTranslation($hook);
 
@@ -135,6 +137,23 @@ class CmsToolProvider implements Provider
                 fn (TemplateFinder $finder) => $finder->addNamespace(
                     'cms-tool',
                     $path->getResourcePath('views'),
+                )
+            );
+    }
+
+    /**
+     * Boot theme.
+     *
+     * @param Hook $hook
+     * @param VendorPath $path
+     * @return void
+     */
+    private function bootTheme(Hook $hook, VendorPath $path): void
+    {
+        $hook
+            ->onTyped(
+                fn (ThemeFinder $finder) => $finder->addLocation(
+                    $path->getResourcePath('themes'),
                 )
             );
     }

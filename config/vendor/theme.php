@@ -23,7 +23,6 @@ return [
 
     // Directory to place themes
     'locations' => [
-        base_path('resources/themes'),
         base_path('themes'),
     ],
 

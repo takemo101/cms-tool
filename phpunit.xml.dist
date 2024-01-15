@@ -4,6 +4,11 @@
   <testsuites>
     <testsuite name="default">
       <directory suffix=".php">./tests</directory>
+      <directory suffix=".php">./modules/cache/tests</directory>
+      <directory suffix=".php">./modules/session/tests</directory>
+      <directory suffix=".php">./modules/support/tests</directory>
+      <directory suffix=".php">./modules/theme/tests</directory>
+      <directory suffix=".php">./modules/view/tests</directory>
     </testsuite>
   </testsuites>
   <php>

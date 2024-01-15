@@ -111,8 +111,6 @@ class CmsToolProvider implements Provider
 
         // Load helper functions.
         $this->filesystem->require($path->getSourcePath('helper.php'));
-        // Load hook tags.
-        $this->filesystem->require($path->getSourcePath('tags.php'));
 
         $hook = $container->get(Hook::class);
 

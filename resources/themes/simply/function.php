@@ -3,12 +3,10 @@
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Interfaces\RouteCollectorProxyInterface as Proxy;
-use Takemo101\Chubby\Http\Renderer\HtmlRenderer;
-
-use const Takemo101\CmsTool\HookTags\RegisterThemeRoute;
+use Takemo101\CmsTool\HookTags;
 
 hook()->on(
-    RegisterThemeRoute,
+    HookTags::RegisterThemeRoute,
     function (
         Proxy $proxy,
     ) {

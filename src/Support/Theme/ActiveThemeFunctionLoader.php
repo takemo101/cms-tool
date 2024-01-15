@@ -12,8 +12,7 @@ use Takemo101\Chubby\ApplicationContainer;
 use Takemo101\Chubby\Filesystem\LocalFilesystem;
 use Takemo101\Chubby\Hook\Hook;
 use Takemo101\CmsTool\Domain\Theme\ActiveThemeRepository;
-
-use const Takemo101\CmsTool\HookTags\LoadActiveTheme;
+use Takemo101\CmsTool\HookTags;
 
 class ActiveThemeFunctionLoader
 {
@@ -72,7 +71,7 @@ class ActiveThemeFunctionLoader
         }
 
         $this->hook->doTyped($activeTheme);
-        $this->hook->do(LoadActiveTheme, $activeTheme);
+        $this->hook->do(HookTags::LoadActiveTheme, $activeTheme);
     }
 
     /**

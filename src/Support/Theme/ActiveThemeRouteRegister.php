@@ -7,8 +7,7 @@ use CmsTool\Theme\Routing\ThemeRoutePresetResolver;
 use Slim\Interfaces\RouteCollectorProxyInterface;
 use Takemo101\Chubby\Hook\Hook;
 use Takemo101\CmsTool\Domain\Theme\ActiveThemeRepository;
-
-use const Takemo101\CmsTool\HookTags\RegisterThemeRoute;
+use Takemo101\CmsTool\HookTags;
 
 class ActiveThemeRouteRegister
 {
@@ -50,6 +49,6 @@ class ActiveThemeRouteRegister
         }
 
         // Register the route of the theme
-        $this->hook->do(RegisterThemeRoute, $proxy);
+        $this->hook->do(HookTags::RegisterThemeRoute, $proxy);
     }
 }

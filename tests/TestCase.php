@@ -20,7 +20,7 @@ class TestCase extends BaseTestCase
     protected function setUp(): void
     {
         /** @var Application */
-        $app = require __DIR__ . '/../setting/bootstrap.php';
+        $app = require __DIR__ . '/../src/bootstrap.php';
 
         $this->setUpContainer($app);
         $this->setUpHttp();

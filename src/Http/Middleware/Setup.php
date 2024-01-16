@@ -59,8 +59,6 @@ class Setup implements MiddlewareInterface
     private function setupUrl(
         ServerRequestInterface $request
     ): void {
-        $this->appUrl->reconstruct(
-            $request->getUri()->__toString()
-        );
+        $this->appUrl->replace($request->getUri());
     }
 }

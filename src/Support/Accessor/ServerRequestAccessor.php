@@ -6,6 +6,7 @@ use ArrayObject;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UriInterface;
 use Takemo101\CmsTool\Support\Shared\ImmutableArrayObject;
+use Takemo101\CmsTool\Support\Uri\UriProxy;
 
 class ServerRequestAccessor
 {
@@ -31,7 +32,7 @@ class ServerRequestAccessor
         $cookie = $this->request->getCookieParams();
         $server = $this->request->getServerParams();
 
-        $uri = $this->request->getUri();
+        $uri = new UriProxy($this->request->getUri());
 
         return ImmutableArrayObject::of([
             'header' => $header,
@@ -40,6 +41,8 @@ class ServerRequestAccessor
             'cookie' => $cookie,
             'server' => $server,
             'uri' => [
+                'full' => $uri->__toString(),
+                'current' => $uri->getCurrent(),
                 'scheme' => $uri->getScheme(),
                 'authority' => $uri->getAuthority(),
                 'host' => $uri->getHost(),
@@ -47,25 +50,8 @@ class ServerRequestAccessor
                 'path' => $uri->getPath(),
                 'query' => $uri->getQuery(),
                 'fragment' => $uri->getFragment(),
-                'base' => $this->getBasePath($uri),
+                'base' => $uri->getBase(),
             ],
         ]);
-    }
-
-    /**
-     * @param UriInterface $uri
-     * @return string
-     */
-    private function getBasePath(UriInterface $uri): string
-    {
-        $schema = $uri->getScheme();
-        $authority = $uri->getAuthority();
-
-        $base = ($schema
-            ? $schema . ':'
-            : ''
-        ) . ($authority ? '//' . $authority : '');
-
-        return $base;
     }
 }

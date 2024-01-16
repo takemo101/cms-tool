@@ -45,53 +45,74 @@ class AssetExtension extends AbstractExtension
         ];
     }
 
-    public function getAssetUrl(?string $path = null): string
+    public function getAssetUrl(?string $path = null, bool $full = false): string
     {
         if (empty($path)) {
             return '';
         }
 
-        return $this->routeParser->fullUrlFor(
-            $this->appUrl,
-            ActiveThemeAssetAction::RouteName,
-            [
-                'path' => $path,
-            ]
-        );
+        $data = [
+            'path' => $path,
+        ];
+
+        return $full
+            ? $this->routeParser->fullUrlFor(
+                $this->appUrl,
+                ActiveThemeAssetAction::RouteName,
+                $data,
+            )
+            : $this->routeParser->urlFor(
+                ActiveThemeAssetAction::RouteName,
+                $data,
+            );
     }
 
-    public function getThemeAssetUrl(string|ThemeId $id, ?string $path = null): string
+    public function getThemeAssetUrl(string|ThemeId $id, ?string $path = null, bool $full = false): string
     {
         if (empty($path)) {
             return '';
         }
 
-        return $this->routeParser->fullUrlFor(
-            $this->appUrl,
-            ThemeAssetAction::RouteName,
-            [
-                'id' => (string) $id,
-                'path' => $path,
-            ]
-        );
+        $data = [
+            'id' => (string) $id,
+            'path' => $path,
+        ];
+
+        return $full
+            ? $this->routeParser->fullUrlFor(
+                $this->appUrl,
+                ThemeAssetAction::RouteName,
+                $data,
+            )
+            : $this->routeParser->urlFor(
+                ThemeAssetAction::RouteName,
+                $data,
+            );
     }
 
-    public function getVendorAssetUrl(?string $path = null): string
+    public function getVendorAssetUrl(?string $path = null, bool $full = false): string
     {
         if (empty($path)) {
             return '';
         }
 
-        return $this->routeParser->fullUrlFor(
-            $this->appUrl,
-            VendorAssetAction::RouteName,
-            [
-                'path' => $path,
-            ]
-        );
+        $data = [
+            'path' => $path,
+        ];
+
+        return $full
+            ? $this->routeParser->fullUrlFor(
+                $this->appUrl,
+                VendorAssetAction::RouteName,
+                $data,
+            )
+            : $this->routeParser->urlFor(
+                VendorAssetAction::RouteName,
+                $data,
+            );
     }
 
-    public function getLocalPublicStorageUrl(?string $path = null): string
+    public function getLocalPublicStorageUrl(?string $path = null, bool $full = false): string
     {
         if (empty($path)) {
             return '';
@@ -99,10 +120,14 @@ class AssetExtension extends AbstractExtension
 
         $storageUrl = $this->localPublicStoragePath->getUrl($path);
 
+        if (!$full) {
+            return $storageUrl;
+        }
+
         return strpos($storageUrl, 'http') === 0
             ? $storageUrl
             : $this->helper->join(
-                $this->appUrl->__toString(),
+                $this->appUrl->getBase(),
                 $storageUrl,
             );
     }

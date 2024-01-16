@@ -21,6 +21,8 @@ class UriProxy implements UriInterface, Stringable
 
     /**
      * {@inheritdoc}
+     *
+     * @return string
      */
     public function getScheme()
     {
@@ -29,6 +31,8 @@ class UriProxy implements UriInterface, Stringable
 
     /**
      * {@inheritdoc}
+     *
+     * @return string
      */
     public function getAuthority()
     {
@@ -37,6 +41,8 @@ class UriProxy implements UriInterface, Stringable
 
     /**
      * {@inheritdoc}
+     *
+     * @return string
      */
     public function getUserInfo()
     {
@@ -45,6 +51,8 @@ class UriProxy implements UriInterface, Stringable
 
     /**
      * {@inheritdoc}
+     *
+     * @return string
      */
     public function getHost()
     {
@@ -53,6 +61,8 @@ class UriProxy implements UriInterface, Stringable
 
     /**
      * {@inheritdoc}
+     *
+     * @return string
      */
     public function getPort()
     {
@@ -61,6 +71,8 @@ class UriProxy implements UriInterface, Stringable
 
     /**
      * {@inheritdoc}
+     *
+     * @return string
      */
     public function getPath()
     {
@@ -69,6 +81,8 @@ class UriProxy implements UriInterface, Stringable
 
     /**
      * {@inheritdoc}
+     *
+     * @return string
      */
     public function getQuery()
     {
@@ -77,6 +91,8 @@ class UriProxy implements UriInterface, Stringable
 
     /**
      * {@inheritdoc}
+     *
+     * @return string
      */
     public function getFragment()
     {
@@ -85,6 +101,8 @@ class UriProxy implements UriInterface, Stringable
 
     /**
      * {@inheritdoc}
+     *
+     * @return static
      */
     public function withScheme(string $scheme)
     {
@@ -93,6 +111,8 @@ class UriProxy implements UriInterface, Stringable
 
     /**
      * {@inheritdoc}
+     *
+     * @return static
      */
     public function withUserInfo(string $user, ?string $password = null)
     {
@@ -101,6 +121,8 @@ class UriProxy implements UriInterface, Stringable
 
     /**
      * {@inheritdoc}
+     *
+     * @return static
      */
     public function withHost(string $host)
     {
@@ -109,6 +131,8 @@ class UriProxy implements UriInterface, Stringable
 
     /**
      * {@inheritdoc}
+     *
+     * @return static
      */
     public function withPort(?int $port)
     {
@@ -117,6 +141,8 @@ class UriProxy implements UriInterface, Stringable
 
     /**
      * {@inheritdoc}
+     *
+     * @return static
      */
     public function withPath(string $path)
     {
@@ -125,6 +151,8 @@ class UriProxy implements UriInterface, Stringable
 
     /**
      * {@inheritdoc}
+     *
+     * @return static
      */
     public function withQuery(string $query)
     {
@@ -133,6 +161,8 @@ class UriProxy implements UriInterface, Stringable
 
     /**
      * {@inheritdoc}
+     *
+     * @return static
      */
     public function withFragment(string $fragment)
     {
@@ -141,10 +171,38 @@ class UriProxy implements UriInterface, Stringable
 
     /**
      * {@inheritdoc}
+     *
+     * @return static
      */
     public function __toString()
     {
         return $this->uri->__toString();
+    }
+
+    /**
+     * Get the current URI.
+     *
+     * @return string
+     */
+    public function getCurrent(): string
+    {
+        return $this->getBase() . $this->getPath();
+    }
+
+    /**
+     * Get the base URI.
+     *
+     * @return string
+     */
+    public function getBase(): string
+    {
+        $schema = $this->getScheme();
+        $authority = $this->getAuthority();
+
+        return ($schema
+            ? $schema . ':'
+            : ''
+        ) . ($authority ? '//' . $authority : '');
     }
 
     /**

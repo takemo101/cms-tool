@@ -8,6 +8,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Takemo101\CmsTool\Support\Accessor\ServerRequestAccessor;
+use Takemo101\CmsTool\Support\Uri\ApplicationUrl;
 
 class Setup implements MiddlewareInterface
 {
@@ -15,9 +16,11 @@ class Setup implements MiddlewareInterface
      * constructor
      *
      * @param DataAccessors $accessors
+     * @param ApplicationUrl $appUrl
      */
     public function __construct(
         private DataAccessors $accessors,
+        private ApplicationUrl $appUrl,
     ) {
         //
     }
@@ -35,6 +38,7 @@ class Setup implements MiddlewareInterface
     ): ResponseInterface {
 
         $this->setupAccessors($request);
+        $this->setupUrl($request);
 
         return $handler->handle($request);
     }
@@ -49,6 +53,14 @@ class Setup implements MiddlewareInterface
             [
                 'request' => $request,
             ]
+        );
+    }
+
+    private function setupUrl(
+        ServerRequestInterface $request
+    ): void {
+        $this->appUrl->reconstruct(
+            $request->getUri()->__toString()
         );
     }
 }

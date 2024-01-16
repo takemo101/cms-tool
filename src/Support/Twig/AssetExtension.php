@@ -6,10 +6,12 @@ use CmsTool\Theme\ThemeId;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 use Slim\Interfaces\RouteParserInterface;
+use Takemo101\Chubby\Filesystem\PathHelper;
 use Takemo101\CmsTool\Http\Action\Theme\ActiveThemeAssetAction;
 use Takemo101\CmsTool\Http\Action\ThemeAssetAction;
 use Takemo101\CmsTool\Http\Action\VendorAssetAction;
 use Takemo101\CmsTool\Infra\Storage\LocalPublicStoragePath;
+use Takemo101\CmsTool\Support\Uri\ApplicationUrl;
 
 class AssetExtension extends AbstractExtension
 {
@@ -17,10 +19,14 @@ class AssetExtension extends AbstractExtension
      * constructor
      *
      * @param RouteParserInterface $routeParser
+     * @param ApplicationUrl $appUrl
+     * @param PathHelper $helper
      * @param LocalPublicStoragePath $localPublicStoragePath
      */
     public function __construct(
         private RouteParserInterface $routeParser,
+        private ApplicationUrl $appUrl,
+        private PathHelper $helper,
         private LocalPublicStoragePath $localPublicStoragePath,
     ) {
         //
@@ -45,7 +51,8 @@ class AssetExtension extends AbstractExtension
             return '';
         }
 
-        return $this->routeParser->urlFor(
+        return $this->routeParser->fullUrlFor(
+            $this->appUrl,
             ActiveThemeAssetAction::RouteName,
             [
                 'path' => $path,
@@ -59,7 +66,8 @@ class AssetExtension extends AbstractExtension
             return '';
         }
 
-        return $this->routeParser->urlFor(
+        return $this->routeParser->fullUrlFor(
+            $this->appUrl,
             ThemeAssetAction::RouteName,
             [
                 'id' => (string) $id,
@@ -74,7 +82,8 @@ class AssetExtension extends AbstractExtension
             return '';
         }
 
-        return $this->routeParser->urlFor(
+        return $this->routeParser->fullUrlFor(
+            $this->appUrl,
             VendorAssetAction::RouteName,
             [
                 'path' => $path,
@@ -88,6 +97,13 @@ class AssetExtension extends AbstractExtension
             return '';
         }
 
-        return $this->localPublicStoragePath->getUrl($path);
+        $storageUrl = $this->localPublicStoragePath->getUrl($path);
+
+        return strpos($storageUrl, 'http') === 0
+            ? $storageUrl
+            : $this->helper->join(
+                $this->appUrl->__toString(),
+                $storageUrl,
+            );
     }
 }

@@ -15,13 +15,14 @@
         <meta property="og:url" content="{{ share.request.uri.current }}" />
         <meta property="og:title" content="{{ metaTitle }}" />
         <meta property="og:description" content="{{ metaDescription }}" />
-        <meta property="og:site_name" content="{{ config('app.name') }}" />
+        <meta property="og:site_name" content="{{ share.meta.name }}" />
+        <meta property="og:type" content="article" />
         {% if metaIcon %}
             <meta property="og:image" content="{{ metaIcon }}" />
         {% endif %}
 
         {% if share.meta.seo.favicon %}
-            <link rel="icon" href="{{ storage(share.meta.seo.favicon) }}">
+            <link rel="icon" href="{{ storage(share.meta.seo.favicon, true) }}">
         {% endif %}
 
         <title>{{ metaTitle }}{% block title_separator %}｜{% endblock %}{% block title_suffix %}{{ share.meta.name }}{% endblock %}</title>

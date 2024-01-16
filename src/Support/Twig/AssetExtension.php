@@ -126,9 +126,6 @@ class AssetExtension extends AbstractExtension
 
         return strpos($storageUrl, 'http') === 0
             ? $storageUrl
-            : $this->helper->join(
-                $this->appUrl->getBase(),
-                $storageUrl,
-            );
+            : $this->appUrl->getBase() . $storageUrl;
     }
 }

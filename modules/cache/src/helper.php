@@ -1,10 +1,8 @@
 <?php
 
-use Psr\Cache\CacheItemInterface;
-use Symfony\Contracts\Cache\CacheInterface;
-use Symfony\Contracts\Cache\CallbackInterface;
-use Symfony\Contracts\Cache\ItemInterface;
+use CmsTool\Cache\ControlledCache;
 use Takemo101\Chubby\Support\ServiceLocator;
+use Psr\Cache\CacheItemInterface;
 
 if (!function_exists('cache')) {
     /**
@@ -13,29 +11,21 @@ if (!function_exists('cache')) {
      * @template T
      *
      * @param string $key The key of the item to retrieve from the cache
-     * @param (callable(CacheItemInterface,bool):T)|(callable(ItemInterface,bool):T)|CallbackInterface<T> $callback
-     * @param float|null $beta      A float that, as it grows, controls the likeliness of triggering
-     *                              early expiration. 0 disables it, INF forces immediate expiration.
-     *                              The default (or providing null) is implementation dependent but should
-     *                              typically be 1.0, which should provide optimal stampede protection.
-     *                              See https://en.wikipedia.org/wiki/Cache_stampede#Probabilistic_early_expiration
-     * @param mixed[]|null      &$metadata The metadata of the cached item {@see ItemInterface::getMetadata()}
-     *
+     * @param callable(CacheItemInterface):T $callback The callable to execute if the item is not found in the cache
+     * @param bool $enabled default true
      * @return T
-     *
-     * @throws InvalidArgumentException When $key is not valid or when $beta is negative
+     * @throws \InvalidArgumentException
      */
     function cache(
         string $key,
         callable $callback,
-        float $beta = null,
-        ?array &$metadata = null
+        bool $enabled = true,
     ): mixed {
-        /** @var CacheInterface */
-        $cache = ServiceLocator::container()->get(CacheInterface::class);
+        /** @var ControlledCache */
+        $cache = ServiceLocator::container()->get(ControlledCache::class);
 
         /** @var T */
-        $value = $cache->get($key, $callback, $beta, $metadata);
+        $value = $cache->get($key, $callback, $enabled);
 
         return $value;
     }

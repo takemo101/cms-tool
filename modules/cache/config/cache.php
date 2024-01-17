@@ -1,7 +1,6 @@
 <?php
 
-use CmsTool\Cache\FilesystemAdapterFactory;
-use Symfony\Component\Cache\Marshaller\DefaultMarshaller;
+use CmsTool\Cache\FilesystemCacheItemPoolFactory;
 
 return [
 
@@ -9,11 +8,8 @@ return [
     // This setting is reflected when using ControlledCache
     'enabled' => (bool) env('CACHE_ENABLED', true),
 
-    // CacheAdapterFactory implementation class name
-    'factory' => FilesystemAdapterFactory::class,
-
-    // MarshallerInterface implementation class name
-    'marshaller' => DefaultMarshaller::class,
+    // CacheItemPoolFactory implementation class name
+    'factory' => FilesystemCacheItemPoolFactory::class,
 
     // Default lifetime seconds
     'lifetime' => 21600, // 6 hours
@@ -22,6 +18,13 @@ return [
     'filesystem' => [
 
         // Cache directory path
-        'directory' => storage_path('cache/data'),
+        'path' => storage_path('cache/data'),
+    ],
+
+    // SqliteAdapter options
+    'sqlite' => [
+
+        // Cache database file path
+        'path' => storage_path('cache/data/sqlite'),
     ],
 ];

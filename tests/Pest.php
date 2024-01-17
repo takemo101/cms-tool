@@ -1,14 +1,10 @@
 <?php
 
-use Tests\Cache\TestCase as CacheTestCase;
 use Tests\Session\TestCase as SessionTestCase;
 use Tests\Support\TestCase as SupportTestCase;
 use Tests\TestCase;
 
 uses(TestCase::class)->in('Feature');
-
-// for cache
-uses(CacheTestCase::class)->in('../modules/cache/tests/Cache');
 
 // for session
 uses(SessionTestCase::class)->in(

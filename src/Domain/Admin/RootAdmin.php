@@ -4,6 +4,7 @@ namespace Takemo101\CmsTool\Domain\Admin;
 
 use Takemo101\CmsTool\Domain\Shared\EmailAddress;
 use Takemo101\CmsTool\Domain\Shared\HashedPassword;
+use InvalidArgumentException;
 
 readonly class RootAdmin extends Admin
 {

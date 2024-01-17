@@ -2,4 +2,4 @@
 
 use Tests\Cache\TestCase;
 
-uses(TestCase::class)->in('Cache');
+// uses(TestCase::class)->in('Cache');

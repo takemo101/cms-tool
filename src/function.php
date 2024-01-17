@@ -28,6 +28,7 @@ use Takemo101\CmsTool\Http\Action\WebhookAction;
 use Takemo101\CmsTool\Http\Action\ThemeAssetAction;
 use Takemo101\CmsTool\Http\Controller\Admin\AdminAccountController;
 use Takemo101\CmsTool\Http\Controller\Admin\BasicSettingController;
+use Takemo101\CmsTool\Http\Controller\Admin\CacheController;
 use Takemo101\CmsTool\Http\Controller\Admin\DashboardController;
 use Takemo101\CmsTool\Http\Controller\Admin\LoginController;
 use Takemo101\CmsTool\Http\Controller\Admin\MicroCmsApiController;
@@ -272,6 +273,15 @@ hook()
                                         '/webhook/regenerate',
                                         [WebhookController::class, 'regenerate'],
                                     )->setName('admin.webhook.regenerate');
+
+                                    $proxy->get(
+                                        '/cache',
+                                        [CacheController::class, 'confirm'],
+                                    )->setName('admin.cache.confirm');
+                                    $proxy->delete(
+                                        '/cache',
+                                        [CacheController::class, 'clean'],
+                                    )->setName('admin.cache.clean');
 
                                     $proxy->get(
                                         '/uninstall',

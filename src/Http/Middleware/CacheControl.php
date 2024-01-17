@@ -35,10 +35,13 @@ class CacheControl implements MiddlewareInterface
     ): ResponseInterface {
         $response = $handler->handle($request);
 
-        if (!$response->hasHeader('Cache-Control')) {
+        if (
+            !$response->hasHeader('Cache-Control')
+            && $header = $this->getCacheControlHeaderString()
+        ) {
             $response = $response->withHeader(
                 'Cache-Control',
-                $this->getCacheControlHeaderString(),
+                $header,
             );
         }
 

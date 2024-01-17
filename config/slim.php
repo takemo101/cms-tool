@@ -33,4 +33,12 @@ return [
             'log_error_details' => true,
         ],
     ],
+
+    // Cache control header settings
+    'cache_control' => [
+
+        'private' => true,
+
+        'no-cache' => true,
+    ]
 ];

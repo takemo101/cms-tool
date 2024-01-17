@@ -21,7 +21,7 @@ class TrackingCodeController
         TrackingCodeQueryService $queryService,
     ): View {
         return view(
-            'cms-tool::seo.tracking',
+            'cms-tool::tracking.edit',
             [
                 'tracking' => $queryService->get(),
             ]

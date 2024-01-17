@@ -35,11 +35,13 @@ use Takemo101\CmsTool\Http\Controller\Admin\SiteMetaController;
 use Takemo101\CmsTool\Http\Controller\Admin\SiteSeoController;
 use Takemo101\CmsTool\Http\Controller\Admin\ThemeController;
 use Takemo101\CmsTool\Http\Controller\Admin\Tool\ThemeJsonController;
+use Takemo101\CmsTool\Http\Controller\Admin\TrackingCodeController;
 use Takemo101\CmsTool\Http\Controller\Admin\UninstallController;
 use Takemo101\CmsTool\Http\Controller\Admin\WebhookController;
 use Takemo101\CmsTool\Http\Middleware\AdminAuth;
 use Takemo101\CmsTool\Http\Middleware\AdminSessionStart;
 use Takemo101\CmsTool\Http\Middleware\GuideToInstallation;
+use Takemo101\CmsTool\Http\Middleware\InsertTrackingCode;
 use Takemo101\CmsTool\Http\Middleware\WhenUninstalled;
 use Takemo101\CmsTool\Http\Middleware\WhenUnpublished;
 use Takemo101\CmsTool\Infra\Listener\AdminSessionContextSetupListener;
@@ -223,6 +225,15 @@ hook()
                                         [SiteSeoController::class, 'deleteImage'],
                                     )->setName('admin.seo.delete.image');
 
+                                    $proxy->get(
+                                        '/tracking-code',
+                                        [TrackingCodeController::class, 'edit'],
+                                    )->setName('admin.tracking.edit');
+                                    $proxy->put(
+                                        '/tracking-code',
+                                        [TrackingCodeController::class, 'update'],
+                                    )->setName('admin.tracking.update');
+
                                     $proxy->patch(
                                         '/publish/{status:published|unpublished}',
                                         SitePublishAction::class,
@@ -331,6 +342,7 @@ hook()
                             FixedPageAction::class,
                         )->setName('fixed-page');
                     })
+                        ->add(InsertTrackingCode::class)
                         ->add(WhenUnpublished::class)
                         ->add(GuideToInstallation::class);
                 }

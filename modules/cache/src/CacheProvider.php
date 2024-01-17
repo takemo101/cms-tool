@@ -3,15 +3,8 @@
 namespace CmsTool\Cache;
 
 use CmsTool\Cache\Command\CacheCleanCommand;
-use CmsTool\Cache\Contract\CacheAdapterFactory;
+use CmsTool\Cache\Contract\CacheItemPoolFactory;
 use Psr\Cache\CacheItemPoolInterface;
-use Psr\SimpleCache\CacheInterface as Psr16CacheInterface;
-use Symfony\Component\Cache\Adapter\AdapterInterface;
-use Symfony\Component\Cache\Marshaller\DefaultMarshaller;
-use Symfony\Component\Cache\Marshaller\MarshallerInterface;
-use Symfony\Component\Cache\Psr16Cache;
-use Symfony\Component\Cache\ResettableInterface;
-use Symfony\Contracts\Cache\CacheInterface;
 use Takemo101\Chubby\ApplicationContainer;
 use Takemo101\Chubby\Bootstrap\DefinitionHelper;
 use Takemo101\Chubby\Bootstrap\Definitions;
@@ -21,9 +14,6 @@ use Takemo101\Chubby\Config\ConfigRepository;
 use Takemo101\Chubby\Console\CommandCollection;
 use Takemo101\Chubby\Filesystem\PathHelper;
 use Takemo101\Chubby\Hook\Hook;
-
-use function DI\get;
-use function DI\factory;
 
 class CacheProvider implements Provider
 {
@@ -41,23 +31,12 @@ class CacheProvider implements Provider
     public function register(Definitions $definitions): void
     {
         $definitions->add([
-            MarshallerInterface::class => DefinitionHelper::createReplaceable(
-                MarshallerInterface::class,
-                'cache.marshaller',
-                DefaultMarshaller::class,
-            ),
-            CacheAdapterFactory::class => DefinitionHelper::createReplaceable(
-                CacheAdapterFactory::class,
+            CacheItemPoolFactory::class => DefinitionHelper::createReplaceable(
+                FilesystemCacheItemPoolFactory::class,
                 'cache.factory',
-                FilesystemAdapterFactory::class,
+                CacheItemPoolFactory::class,
             ),
-            CacheInterface::class => factory([CacheAdapterFactory::class, 'create']),
-            AdapterInterface::class => get(CacheInterface::class),
-            ResettableInterface::class => get(CacheInterface::class),
-            CacheItemPoolInterface::class => get(CacheInterface::class),
-            Psr16CacheInterface::class => fn (
-                CacheItemPoolInterface $pool,
-            ) => new Psr16Cache($pool),
+            CacheItemPoolInterface::class => fn (CacheItemPoolFactory $factory) => $factory->create(),
         ]);
     }
 

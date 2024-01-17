@@ -1,9 +1,8 @@
 <?php
 
-namespace Takemo101\CmsTool\Domain\Tracking;
+namespace Takemo101\CmsTool\UseCase\TrackingCode\QueryService;
 
-
-readonly class TrackingCode
+readonly class TrackingCodeData
 {
     /**
      * constructor
@@ -13,9 +12,9 @@ readonly class TrackingCode
      * @param string|null $footer
      */
     public function __construct(
-        public ?string $head = null,
-        public ?string $body = null,
-        public ?string $footer = null,
+        public ?string $head,
+        public ?string $body,
+        public ?string $footer,
     ) {
         //
     }

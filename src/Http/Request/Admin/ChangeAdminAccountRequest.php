@@ -2,7 +2,6 @@
 
 namespace Takemo101\CmsTool\Http\Request\Admin;
 
-use Symfony\Component\Validator\Constraints\All;
 use Symfony\Component\Validator\Constraints\AtLeastOneOf;
 use Symfony\Component\Validator\Constraints\Blank;
 use Symfony\Component\Validator\Constraints\Email;

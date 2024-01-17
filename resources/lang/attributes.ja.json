@@ -18,5 +18,8 @@
         "favicon": "ファビコン画像",
         "icon": "SNSシェア画像",
         "robots": "robots"
-    }
+    },
+    "head": "Head",
+    "body": "Body",
+    "footer": "Footer"
 }

@@ -30,7 +30,7 @@ class UploadedFile extends SymfonyUploadedFile
         $error = $psrUploadedFile->getError();
         $path = '';
 
-        if (\UPLOAD_ERR_OK === $error || \UPLOAD_ERR_NO_FILE !== $error) {
+        if (\UPLOAD_ERR_NO_FILE !== $error) {
 
             // If the file size is too large,
             // There is an exception because the file cannot be moved
@@ -46,7 +46,6 @@ class UploadedFile extends SymfonyUploadedFile
                 }
             } catch (RuntimeException $e) {
                 // If an exception occurs, it is considered that the file has not been uploaded.
-                $error = \UPLOAD_ERR_NO_FILE;
             }
         }
 

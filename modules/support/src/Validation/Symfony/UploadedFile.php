@@ -6,6 +6,7 @@ use Psr\Http\Message\UploadedFileInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile as SymfonyUploadedFile;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use RuntimeException;
 
 /**
  * Psr7UploadedFile is a wrapper for SymfonyUploadedFile
@@ -29,16 +30,22 @@ class UploadedFile extends SymfonyUploadedFile
         $error = $psrUploadedFile->getError();
         $path = '';
 
-        if (\UPLOAD_ERR_NO_FILE !== $error) {
-            /** @var string */
-            $path = $psrUploadedFile->getStream()->getMetadata('uri') ?? '';
+        if (\UPLOAD_ERR_OK === $error || \UPLOAD_ERR_NO_FILE !== $error) {
 
-            if (
-                $this->test = !is_string($path)
-                || !is_uploaded_file($path)
-            ) {
-                $path = $getTemporaryPath();
-                $psrUploadedFile->moveTo($path);
+            // If the file size is too large,
+            // There is an exception because the file cannot be moved
+            try {
+                /** @var string */
+                $path = $psrUploadedFile->getStream()->getMetadata('uri');
+
+                if ($this->test = !is_string($path)
+                    || !is_uploaded_file($path)
+                ) {
+                    $path = $getTemporaryPath();
+                    $psrUploadedFile->moveTo($path);
+                }
+            } catch (\RuntimeException $e) {
+                $error = \UPLOAD_ERR_NO_FILE;
             }
         }
 

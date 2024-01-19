@@ -8,6 +8,8 @@ use Attribute;
 #[Attribute(Attribute::TARGET_PROPERTY | Attribute::TARGET_METHOD | Attribute::IS_REPEATABLE)]
 class Image extends SymfonyImage
 {
+    public const DEFAULT_MAX_SIZE = '1M';
+
     /**
      * @var integer[]
      */
@@ -70,7 +72,7 @@ class Image extends SymfonyImage
     ) {
         parent::__construct(
             $options,
-            $maxSize,
+            $maxSize ?? (ini_get('upload_max_filesize') ?: self::DEFAULT_MAX_SIZE),
             $binaryFormat,
             $mimeTypes,
             $filenameMaxLength,

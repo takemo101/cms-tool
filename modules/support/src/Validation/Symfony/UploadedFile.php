@@ -44,7 +44,8 @@ class UploadedFile extends SymfonyUploadedFile
                     $path = $getTemporaryPath();
                     $psrUploadedFile->moveTo($path);
                 }
-            } catch (\RuntimeException $e) {
+            } catch (RuntimeException $e) {
+                // If an exception occurs, it is considered that the file has not been uploaded.
                 $error = \UPLOAD_ERR_NO_FILE;
             }
         }

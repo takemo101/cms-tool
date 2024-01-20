@@ -4,8 +4,7 @@ namespace CmsTool\Support\Validation\Symfony;
 
 use Psr\Http\Message\UploadedFileInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile as SymfonyUploadedFile;
-use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use RuntimeException;
 
 /**
  * Psr7UploadedFile is a wrapper for SymfonyUploadedFile
@@ -30,15 +29,21 @@ class UploadedFile extends SymfonyUploadedFile
         $path = '';
 
         if (\UPLOAD_ERR_NO_FILE !== $error) {
-            /** @var string */
-            $path = $psrUploadedFile->getStream()->getMetadata('uri') ?? '';
 
-            if (
-                $this->test = !is_string($path)
-                || !is_uploaded_file($path)
-            ) {
-                $path = $getTemporaryPath();
-                $psrUploadedFile->moveTo($path);
+            // If the file size is too large,
+            // There is an exception because the file cannot be moved
+            try {
+                /** @var string */
+                $path = $psrUploadedFile->getStream()->getMetadata('uri');
+
+                if ($this->test = !is_string($path)
+                    || !is_uploaded_file($path)
+                ) {
+                    $path = $getTemporaryPath();
+                    $psrUploadedFile->moveTo($path);
+                }
+            } catch (RuntimeException $e) {
+                // If an exception occurs, it is considered that the file has not been uploaded.
             }
         }
 
@@ -49,29 +54,5 @@ class UploadedFile extends SymfonyUploadedFile
             $psrUploadedFile->getError(),
             $this->test
         );
-    }
-
-    /**
-     * Moves the file to a new location.
-     *
-     * @throws FileException if, for any reason, the file could not have been moved
-     */
-    public function move(string $directory, string $name = null): File
-    {
-        if (!$this->isValid() || $this->test) {
-            return parent::move($directory, $name);
-        }
-
-        $target = $this->getTargetFile($directory, $name);
-
-        try {
-            $this->psrUploadedFile->moveTo((string) $target);
-        } catch (\RuntimeException $e) {
-            throw new FileException(sprintf('Could not move the file "%s" to "%s" (%s).', $this->getPathname(), $target, $e->getMessage()), 0, $e);
-        }
-
-        @chmod($target, 0666 & ~umask());
-
-        return $target;
     }
 }

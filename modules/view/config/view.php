@@ -11,6 +11,7 @@ use CmsTool\View\Twig\Extension\FunctionsExtension;
 use CmsTool\View\Twig\Extension\RouteExtension;
 use CmsTool\View\Twig\TwigTemplateRenderer;
 use Takemo101\Chubby\Contract\Renderable;
+use Twig\Extension\StringLoaderExtension;
 
 return [
 
@@ -82,6 +83,7 @@ return [
 
         // Set the class name of the Twig Extension to be enabled
         'extensions' => [
+            StringLoaderExtension::class,
             ConfigExtension::class,
             RequestExtension::class,
             RouteExtension::class,

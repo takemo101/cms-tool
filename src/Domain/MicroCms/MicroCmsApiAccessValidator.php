@@ -7,8 +7,7 @@ interface MicroCmsApiAccessValidator
     /**
      * Verify whether the Microcms API key and service ID are valid
      *
-     * @param string $key
-     * @param string $serviceId
+     * @param MicroCmsApi $entity
      * @return boolean
      */
     public function validate(MicroCmsApi $entity): bool;

@@ -63,6 +63,7 @@ const generalStyle = {
     px:10px py:10px r:5px
     appearance:none
   `,
+  "form-input--textarea": `min-w:full max-w:full`,
   "form-select": `
     b:1px|solid|gray-82
     px:10px r:5px h:41px lh:41px
@@ -410,8 +411,27 @@ const themeStyle = {
     obj:cover
     m:0 r:5px
   `,
+} as const;
 
-}
+const tableStyle = {
+  "table-container": `
+    overflow-x:auto overflow-x:scroll@sm mb:16px
+  `,
+  "table": `
+    border:separate border-spacing:0
+    w:full@sm w:max-content
+
+    f:bold>thead>tr
+    b:1|solid|gray-82>thead>tr>th
+    p:10>thead>tr>th
+    bl:0>thead>tr>th:last-child
+
+    p:10>tbody>tr>td
+    b:1|solid|gray-82>tbody>tr>td
+    bt:0>tbody>tr>td
+    bl:0>tbody>tr>td:last-child
+  `,
+} as const;
 
 const style = {
   ...generalStyle,
@@ -421,6 +441,7 @@ const style = {
   ...dialogStyle,
   ...sidebarNavStyle,
   ...themeStyle,
+  ...tableStyle,
 } as const;
 
 export default style;

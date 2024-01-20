@@ -19,6 +19,7 @@ use Takemo101\CmsTool\Support\Twig\FlashExtension;
 use Takemo101\CmsTool\Support\Twig\OldExtension;
 use Takemo101\CmsTool\Support\Twig\SessionExtension;
 use Takemo101\CmsTool\Support\Twig\TranslationExtension;
+use Twig\Extension\StringLoaderExtension;
 
 return [
 
@@ -88,6 +89,7 @@ return [
 
         // Set the class name of the Twig Extension to be enabled
         'extensions' => [
+            StringLoaderExtension::class,
             ConfigExtension::class,
             RequestExtension::class,
             RouteExtension::class,

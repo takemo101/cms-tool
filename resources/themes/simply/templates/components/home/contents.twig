@@ -31,7 +31,7 @@
                             alt="{{ content.title }}"
                             class="object-cover
                                 w-full xl:h-[380px] sm:h-[280px] h-full"
-                            src="{{ content.eyecatch ? content.eyecatch.url : asset('empty.jpeg') }}" />
+                            src="{{ content.eyecatch ? microcms_img(content.eyecatch.url, { w: 600 }) : asset('empty.jpeg') }}" />
                     </div>
                     <p class="text-lg font-bold mb-4">
                         {{ content.title }}

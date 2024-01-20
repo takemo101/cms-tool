@@ -19,7 +19,7 @@ return [
 
         'name' => 'app',
 
-        'lifetime' => 21600,
+        'lifetime' => (int) env('SESSION_LIFETIME', 21600),
     ],
 
     // Csrf options

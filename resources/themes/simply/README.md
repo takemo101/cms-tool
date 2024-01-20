@@ -26,9 +26,9 @@
     // tags テーマのタグ配列：任意
     "tags": ["ブログ", "シンプル", "ミニマル"],
     // link テーマの詳細説明が記載されているサイトのリンク：任意
-    "link": "https://github.com/takemo101/chubby",
+    "link": "https://github.com/takemo101/cms-tool",
     // preset テーマで利用するプリセットラベル：任意
-    "preset": "blog",
+    "preset": "microcms:blog",
     // author テーマ作者情報：必須
     "author": {
         // name テーマ作者名：必須

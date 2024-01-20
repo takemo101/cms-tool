@@ -16,6 +16,7 @@ use Takemo101\CmsTool\Support\Accessor\SiteMetaAccessor;
 use Takemo101\CmsTool\Support\Twig\AssetExtension;
 use Takemo101\CmsTool\Support\Twig\ErrorExtension;
 use Takemo101\CmsTool\Support\Twig\FlashExtension;
+use Takemo101\CmsTool\Support\Twig\MicroCmsExtension;
 use Takemo101\CmsTool\Support\Twig\OldExtension;
 use Takemo101\CmsTool\Support\Twig\SessionExtension;
 use Takemo101\CmsTool\Support\Twig\TranslationExtension;
@@ -102,6 +103,7 @@ return [
             SessionExtension::class,
             AssetExtension::class,
             TranslationExtension::class,
+            MicroCmsExtension::class,
         ],
 
         // Set up functions to be used in Twig

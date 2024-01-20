@@ -24,7 +24,7 @@
 
         {# css #}
         {% block css %}{% endblock %}
-        <link rel="stylesheet" href="{{ vendor('app.css') }}">
+        <link rel="preload" href="{{ vendor('app.css') }}" as="style">
 
         {# header js #}
         <!-- htmx -->

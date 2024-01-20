@@ -18,7 +18,7 @@
                         class="object-cover
                             xl:w-[280px] sm:w-[200px] w-full
                             xl:h-[280px] sm:h-[200px] h-full"
-                        src="{{ content.eyecatch ? content.eyecatch.url : asset('empty.jpeg') }}" />
+                        src="{{ content.eyecatch ? microcms_img(content.eyecatch.url, { w: 600 }) : asset('empty.jpeg') }}" />
                 </a>
             </div>
             <div class="flex items-center">

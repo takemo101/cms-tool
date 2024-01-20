@@ -34,7 +34,7 @@
         {# header js #}
         {% block header_js %}{% endblock %}
         <script src="//kit.fontawesome.com/849ec56e4d.js" defer crossorigin="anonymous"></script>
-        <script src="{{ asset('app.js') }}"></script>
+        <script defer src="{{ asset('app.js') }}"></script>
     </head>
     <body
         class="flex flex-col h-full {% block body_class %}{% endblock %}">

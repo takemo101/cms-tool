@@ -185,7 +185,7 @@ hook()
                                     });
 
                                     $proxy->get(
-                                        'phpinfo',
+                                        '/phpinfo',
                                         PhpInfoAction::class,
                                     )->setName('admin.phpinfo');
 

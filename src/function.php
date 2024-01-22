@@ -32,6 +32,7 @@ use Takemo101\CmsTool\Http\Controller\Admin\CacheController;
 use Takemo101\CmsTool\Http\Controller\Admin\DashboardController;
 use Takemo101\CmsTool\Http\Controller\Admin\LoginController;
 use Takemo101\CmsTool\Http\Controller\Admin\MicroCmsApiController;
+use Takemo101\CmsTool\Http\Controller\Admin\RobotsTxtController;
 use Takemo101\CmsTool\Http\Controller\Admin\SiteMetaController;
 use Takemo101\CmsTool\Http\Controller\Admin\SiteSeoController;
 use Takemo101\CmsTool\Http\Controller\Admin\ThemeController;
@@ -47,7 +48,9 @@ use Takemo101\CmsTool\Http\Middleware\WhenUninstalled;
 use Takemo101\CmsTool\Http\Middleware\WhenUnpublished;
 use Takemo101\CmsTool\Infra\Listener\AdminSessionContextSetupListener;
 use Takemo101\CmsTool\Infra\Listener\ApplicationUrlReplaceListener;
+use Takemo101\CmsTool\Infra\Listener\CreateRobotsTxtListener;
 use Takemo101\CmsTool\Infra\Listener\CsrfGuardContextSetupListener;
+use Takemo101\CmsTool\Infra\Listener\DeleteRobotsTxtListener;
 use Takemo101\CmsTool\Infra\Listener\RequestParameterSetupListener;
 use Takemo101\CmsTool\Infra\Listener\ServerRequestAccessorSetupListener;
 use Takemo101\CmsTool\Infra\Listener\TwigExtensionSetupListener;
@@ -67,7 +70,9 @@ hook()
             ->on(RequestParameterSetupListener::class)
             ->on(TwigExtensionSetupListener::class)
             ->on(ApplicationUrlReplaceListener::class)
-            ->on(ServerRequestAccessorSetupListener::class),
+            ->on(ServerRequestAccessorSetupListener::class)
+            ->on(CreateRobotsTxtListener::class)
+            ->on(DeleteRobotsTxtListener::class),
     )
     ->onTyped(
         function (
@@ -238,6 +243,15 @@ hook()
                                         '/tracking-code',
                                         [TrackingCodeController::class, 'update'],
                                     )->setName('admin.tracking.update');
+
+                                    $proxy->get(
+                                        '/robots-txt',
+                                        [RobotsTxtController::class, 'edit'],
+                                    )->setName('admin.robots.edit');
+                                    $proxy->put(
+                                        '/robots-txt',
+                                        [RobotsTxtController::class, 'update'],
+                                    )->setName('admin.robots.update');
 
                                     $proxy->patch(
                                         '/publish/{status:published|unpublished}',

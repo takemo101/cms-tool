@@ -1,0 +1,51 @@
+{% extends 'cms-tool::layouts.dashboard' %}
+
+{% block title %}robots.txt編集{% endblock %}
+
+{% block current %}robots{% endblock %}
+
+{% import "cms-tool::components.forms" as forms %}
+{% import "cms-tool::components.alerts" as alerts %}
+{% import "cms-tool::components.dialogs" as dialogs %}
+
+{% block content_right %}
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-header__title">robots.txt編集</h2>
+        <hr class="divider" />
+    </div>
+    <div class="card-body" x-data="{ open: false }">
+        {{ alerts.error() }}
+
+        {{ form_open({
+            route: 'admin.robots.update',
+            method: 'put',
+            'x-ref': 'form',
+        }) }}
+            <div class="mb:30">
+                <div class="form-column">
+                    {{ forms.textarea({
+                        name: 'content',
+                        label:'robots.txt',
+                        value: content,
+                        rows: 20,
+                        hint: 'robots.txtはbotがサイトをクロールする際に参照するファイルで、検索エンジンにインデックスされたくないページがある場合は、ここに設定を記述してください。',
+                    }) }}
+                </div>
+            </div>
+            <div class="t:right">
+                {{ forms.button({
+                    label: '更新',
+                    class: 'form-btn--primary',
+                    click: '$refs.form.reportValidity() && (open = true)',
+                }) }}
+            </div>
+        {{ form_close() }}
+        {{ dialogs.confirm({
+            title: 'Update',
+            message: '変更内容を保存しますか？',
+            submit: '$refs.form.submit()',
+        }) }}
+    </div>
+</div>
+{% endblock %}

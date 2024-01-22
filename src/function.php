@@ -32,6 +32,7 @@ use Takemo101\CmsTool\Http\Controller\Admin\CacheController;
 use Takemo101\CmsTool\Http\Controller\Admin\DashboardController;
 use Takemo101\CmsTool\Http\Controller\Admin\LoginController;
 use Takemo101\CmsTool\Http\Controller\Admin\MicroCmsApiController;
+use Takemo101\CmsTool\Http\Controller\Admin\RobotsTxtController;
 use Takemo101\CmsTool\Http\Controller\Admin\SiteMetaController;
 use Takemo101\CmsTool\Http\Controller\Admin\SiteSeoController;
 use Takemo101\CmsTool\Http\Controller\Admin\ThemeController;
@@ -242,6 +243,15 @@ hook()
                                         '/tracking-code',
                                         [TrackingCodeController::class, 'update'],
                                     )->setName('admin.tracking.update');
+
+                                    $proxy->get(
+                                        '/robots-txt',
+                                        [RobotsTxtController::class, 'edit'],
+                                    )->setName('admin.robots.edit');
+                                    $proxy->put(
+                                        '/robots-txt',
+                                        [RobotsTxtController::class, 'update'],
+                                    )->setName('admin.robots.update');
 
                                     $proxy->patch(
                                         '/publish/{status:published|unpublished}',

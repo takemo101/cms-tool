@@ -48,6 +48,7 @@ use Takemo101\CmsTool\Http\Middleware\WhenUninstalled;
 use Takemo101\CmsTool\Http\Middleware\WhenUnpublished;
 use Takemo101\CmsTool\Infra\Listener\AdminSessionContextSetupListener;
 use Takemo101\CmsTool\Infra\Listener\ApplicationUrlReplaceListener;
+use Takemo101\CmsTool\Infra\Listener\ClearCacheListener;
 use Takemo101\CmsTool\Infra\Listener\CreateRobotsTxtListener;
 use Takemo101\CmsTool\Infra\Listener\CsrfGuardContextSetupListener;
 use Takemo101\CmsTool\Infra\Listener\DeleteRobotsTxtListener;
@@ -72,7 +73,8 @@ hook()
             ->on(ApplicationUrlReplaceListener::class)
             ->on(ServerRequestAccessorSetupListener::class)
             ->on(CreateRobotsTxtListener::class)
-            ->on(DeleteRobotsTxtListener::class),
+            ->on(DeleteRobotsTxtListener::class)
+            ->on(ClearCacheListener::class),
     )
     ->onTyped(
         function (

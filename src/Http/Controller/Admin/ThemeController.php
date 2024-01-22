@@ -6,12 +6,14 @@ use CmsTool\Theme\Exception\NotFoundThemeException;
 use CmsTool\Theme\ThemeId;
 use CmsTool\Theme\ThemeQueryService;
 use CmsTool\View\View;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
 use Takemo101\Chubby\Http\Renderer\RouteRedirectRenderer;
 use Takemo101\CmsTool\Domain\Theme\NotFoundThemeIdException;
 use Takemo101\CmsTool\Http\Renderer\RedirectBackRenderer;
 use Takemo101\CmsTool\Http\ViewModel\ThemeDetailPage;
+use Takemo101\CmsTool\Infra\Event\ThemeActivated;
 use Takemo101\CmsTool\UseCase\Shared\Exception\NotFoundDataException;
 use Takemo101\CmsTool\UseCase\Theme\Handler\ActivateThemeHandler;
 use Takemo101\CmsTool\UseCase\Theme\Handler\CopyThemeHandler;
@@ -62,19 +64,23 @@ class ThemeController
     /**
      * @param ServerRequestInterface $request
      * @param ActivateThemeHandler $handler
+     * @param EventDispatcherInterface $dispatcher
      * @param string $id
      * @return RedirectBackRenderer
      */
     public function activate(
         ServerRequestInterface $request,
         ActivateThemeHandler $handler,
+        EventDispatcherInterface $dispatcher,
         string $id,
     ): RedirectBackRenderer {
         try {
-            $handler->handle($id);
+            $activeThemeId = $handler->handle($id);
         } catch (NotFoundThemeIdException $e) {
             throw new HttpNotFoundException($request, $e->getMessage(), $e);
         }
+
+        $dispatcher->dispatch(new ThemeActivated($activeThemeId));
 
         return redirect()->back();
     }

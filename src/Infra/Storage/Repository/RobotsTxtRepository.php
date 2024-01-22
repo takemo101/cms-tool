@@ -27,7 +27,9 @@ class RobotsTxtRepository
      */
     public function get(): ?string
     {
-        return $this->filesystem->read($this->path);
+        return $this->filesystem->exists($this->path)
+            ? $this->filesystem->read($this->path)
+            : null;
     }
 
     /**

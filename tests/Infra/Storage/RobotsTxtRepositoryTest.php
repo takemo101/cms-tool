@@ -10,6 +10,7 @@ describe(
         it('should get robots.txt content', function () {
             // Create a mock for the LocalFilesystem
             $filesystem = m::mock(LocalFilesystem::class);
+            $filesystem->shouldReceive('exists')->once()->andReturn(true);
             $filesystem->shouldReceive('read')->once()->andReturn('User-agent: *');
 
             // Create an instance of the RobotsTxtRepository
@@ -20,6 +21,21 @@ describe(
 
             // Assert that the content is correct
             expect($content)->toBe('User-agent: *');
+        });
+
+        it('should return null if robots.txt does not exist', function () {
+            // Create a mock for the LocalFilesystem
+            $filesystem = m::mock(LocalFilesystem::class);
+            $filesystem->shouldReceive('exists')->once()->andReturn(false);
+
+            // Create an instance of the RobotsTxtRepository
+            $repository = new RobotsTxtRepository($filesystem);
+
+            // Call the get method
+            $content = $repository->get();
+
+            // Assert that the content is null
+            expect($content)->toBeNull();
         });
 
         it('should save robots.txt content', function () {

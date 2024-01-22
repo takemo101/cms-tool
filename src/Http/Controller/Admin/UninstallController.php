@@ -4,7 +4,9 @@ namespace Takemo101\CmsTool\Http\Controller\Admin;
 
 use CmsTool\View\View;
 use Psr\Cache\CacheItemPoolInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Takemo101\Chubby\Http\Renderer\RouteRedirectRenderer;
+use Takemo101\CmsTool\Infra\Event\Uninstalled;
 use Takemo101\CmsTool\UseCase\Admin\Auth\AdminSession;
 use Takemo101\CmsTool\UseCase\Install\Handler\UninstallHandler;
 
@@ -25,6 +27,7 @@ class UninstallController
         UninstallHandler $handler,
         AdminSession $session,
         CacheItemPoolInterface $cache,
+        EventDispatcherInterface $dispatcher
     ): RouteRedirectRenderer {
 
         $handler->handle();
@@ -32,6 +35,8 @@ class UninstallController
         $cache->clear();
 
         $session->logout();
+
+        $dispatcher->dispatch(new Uninstalled());
 
         return redirect()->route('home');
     }

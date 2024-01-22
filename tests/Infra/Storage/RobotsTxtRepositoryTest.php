@@ -40,6 +40,7 @@ describe(
         it('should delete robots.txt', function () {
             // Create a mock for the LocalFilesystem
             $filesystem = m::mock(LocalFilesystem::class);
+            $filesystem->shouldReceive('exists')->once()->andReturn(true);
             $filesystem->shouldReceive('delete')->once();
 
             // Create an instance of the RobotsTxtRepository

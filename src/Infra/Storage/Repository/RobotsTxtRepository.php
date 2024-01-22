@@ -48,6 +48,8 @@ class RobotsTxtRepository
      */
     public function delete(): void
     {
-        $this->filesystem->delete($this->path);
+        if ($this->filesystem->exists($this->path)) {
+            $this->filesystem->delete($this->path);
+        }
     }
 }

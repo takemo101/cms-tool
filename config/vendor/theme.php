@@ -30,7 +30,7 @@ return [
     'copy' => base_path('themes'),
 
     // ID of the theme used by default
-    'default' => 'simply',
+    'default' => env('DEFAULT_THEME', 'simply'),
 
     // ThemeRoute implementation class name
     'routes' => [

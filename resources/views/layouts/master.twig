@@ -34,11 +34,7 @@
         {% block header_js %}{% endblock %}
     </head>
     <body
-        class="body {% block body_class %}{% endblock %}"
-        hx-headers="{
-            '{{ csrf.getHeaderNameKey() }}': '{{ csrf.name }}',
-            '{{ csrf.getHeaderValueKey() }}': '{{ csrf.value }}'
-        }">
+        class="body {% block body_class %}{% endblock %}">
 
         <div class="layout {% block layout_class %}{% endblock %}">
             {# header #}
@@ -54,6 +50,12 @@
 
             {# footer js #}
             {% block footer_js %}{% endblock %}
+            <script>
+                document.body.addEventListener('htmx:configRequest', (event) => {
+                    event.detail.headers['{{ csrf.getHeaderNameKey() }}'] = '{{ csrf.name }}';
+                    event.detail.headers['{{ csrf.getHeaderValueKey() }}'] = '{{ csrf.value }}';
+                });
+            </script>
         </div>
     </body>
 </html>

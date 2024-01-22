@@ -11,12 +11,6 @@ class HookTags
     public const RegisterThemeRoute = 'theme.routing.register';
 
     /**
-     * A hook tag called when creating a template view of the theme.
-     * The Hook method takes the ``View`` as an argument.
-     */
-    public const CreateThemeTemplate = 'theme.template.create';
-
-    /**
      * Hook tag called when loading the active theme
      * The Hook method takes the ``ActiveTheme`` as an argument.
      */

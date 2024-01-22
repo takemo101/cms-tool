@@ -5,6 +5,7 @@ namespace Takemo101\CmsTool\Http\Controller;
 use CmsTool\Support\Validation\HttpValidationErrorException;
 use CmsTool\Support\Validation\RequestValidator;
 use CmsTool\View\View;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Takemo101\Chubby\Http\Renderer\RouteRedirectRenderer;
 use Takemo101\CmsTool\Domain\Install\InstallationNotPossibleException;
@@ -12,6 +13,7 @@ use Takemo101\CmsTool\Domain\MicroCms\MicroCmsApiAccessException;
 use Takemo101\CmsTool\Http\Request\Install\SaveMicroCmsApiRequest;
 use Takemo101\CmsTool\Http\Request\Install\SaveBasicSettingRequest;
 use Takemo101\CmsTool\Http\ViewModel\InstallPage;
+use Takemo101\CmsTool\Infra\Event\Installed;
 use Takemo101\CmsTool\UseCase\BasicSetting\Handler\RootAdminForSaveBasicSettingCommand;
 use Takemo101\CmsTool\UseCase\BasicSetting\Handler\SaveBasicSettingCommand;
 use Takemo101\CmsTool\UseCase\BasicSetting\Handler\SaveBasicSettingHandler;
@@ -159,6 +161,7 @@ class InstallController
     public function install(
         ServerRequestInterface $request,
         InstallHandler $handler,
+        EventDispatcherInterface $dispatcher,
     ): RouteRedirectRenderer {
         try {
             $handler->handle();
@@ -172,6 +175,8 @@ class InstallController
                 request: $request,
             );
         }
+
+        $dispatcher->dispatch(new Installed());
 
         return redirect()->route('admin.login');
     }

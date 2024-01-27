@@ -56,7 +56,6 @@ class BlogHook implements ThemeHook
                         ],
                         TaxonomiesAccessor::class,
                         [
-                            'theme' => $theme,
                             'endpoint' => $endpoints->blog,
                         ]
                     )
@@ -67,7 +66,6 @@ class BlogHook implements ThemeHook
                         ],
                         TaxonomiesAccessor::class,
                         [
-                            'theme' => $theme,
                             'endpoint' => $endpoints->blog,
                             'format' => "{$fields->category}[equals]%s",
                         ]
@@ -79,7 +77,6 @@ class BlogHook implements ThemeHook
                         ],
                         TaxonomiesAccessor::class,
                         [
-                            'theme' => $theme,
                             'endpoint' => $endpoints->blog,
                             'format' => "{$fields->tag}[equals]%s",
                         ]
@@ -91,7 +88,6 @@ class BlogHook implements ThemeHook
                         ],
                         TaxonomiesAccessor::class,
                         [
-                            'theme' => $theme,
                             'endpoint' => $endpoints->category,
                         ]
                     )
@@ -102,8 +98,15 @@ class BlogHook implements ThemeHook
                         ],
                         TaxonomiesAccessor::class,
                         [
-                            'theme' => $theme,
                             'endpoint' => $endpoints->tag,
+                        ]
+                    )
+                    ->add(
+                        'related_contents',
+                        RelatedBlogAccessor::class,
+                        [
+                            'endpoint' => $endpoints->blog,
+                            'fields' => $fields,
                         ]
                     );
             },

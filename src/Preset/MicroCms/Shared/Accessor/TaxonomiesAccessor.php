@@ -17,13 +17,11 @@ class TaxonomiesAccessor
      * constructor
      *
      * @param MicroCmsContentQueryService $queryService
-     * @param Theme $theme
      * @param string $endpoint
      * @param string|null $format Sprintf format string for filters
      */
     public function __construct(
         private MicroCmsContentQueryService $queryService,
-        private Theme $theme,
         private string $endpoint,
         private ?string $format = null,
     ) {

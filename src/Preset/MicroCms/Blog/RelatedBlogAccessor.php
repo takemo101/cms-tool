@@ -31,7 +31,7 @@ class RelatedBlogAccessor
     }
 
     /**
-     * Undocumented function
+     * get related content
      *
      * @param string $id
      * @param integer $limit

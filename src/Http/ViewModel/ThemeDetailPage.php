@@ -2,6 +2,7 @@
 
 namespace Takemo101\CmsTool\Http\ViewModel;
 
+use CmsTool\Theme\Support\ThemeReadmeReader;
 use CmsTool\Theme\Theme;
 use CmsTool\View\Contract\TemplateRenderer;
 use CmsTool\View\ViewCreator;
@@ -35,5 +36,17 @@ class ThemeDetailPage extends ViewModel
                 'theme' => $this->theme,
             ],
         );
+    }
+
+    /**
+     * @param ThemeReadmeReader $reader
+     * @return string
+     */
+    public function readme(
+        ThemeReadmeReader $reader,
+    ): string {
+        $readme = $reader->get($this->theme) ?? '';
+
+        return $readme;
     }
 }

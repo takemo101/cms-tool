@@ -1,12 +1,11 @@
 ## 概要
 
-このテーマは、MicroCMS でブログサイトを作成するためのテーマです。  
+このテーマは、microCMS でブログサイトを作成するためのテーマです。  
 `blog`プリセットを利用することを前提に作成しています。
 
-## テーマ設定について
+## `theme.json`
 
-`theme.json`は、管理画面で表示するテーマのメタデータを json 形式で記述するファイルです。  
-以下は、設定例と説明です。
+`theme.json`は、管理画面で表示するテーマのメタデータを json 形式で記述するファイルです。
 
 ```jsonc
 {
@@ -38,7 +37,7 @@
     // テーマの動作を変更する場合にこの設定を編集する
     // 設定によってはテーマの動作に影響が出るため、変更する場合は注意する
     "extension": {
-        // endpoints 各データ種別ごとのMicroCMSのApiエンドポイント：任意
+        // endpoints 各データ種別ごとのmicroCMSのApiエンドポイント：任意
         "endpoints": {
             // 記事Api
             "blog": "blogs",
@@ -56,7 +55,7 @@
             // タグごとの記事一覧ページ
             "tag": "tag"
         },
-        // fields 記事データMicroCMSのApiの関連データのフィールド名：任意
+        // fields 記事データmicroCMSのApiの関連データのフィールド名：任意
         "fields": {
             // 記事のカテゴリフィールド名
             "category": "category",
@@ -67,23 +66,27 @@
 }
 ```
 
-## トップページのテクノロジー記事一覧設定
+> `extension`の設定は、テーマやプリセットごとに異なるため、変更する場合は注意してください。
+
+## トップページのテクノロジー記事一覧
 
 トップページのテクノロジー記事一覧（新着記事の下のカラムに表示される記事一覧）は、`./templates/pages/home.twig`の以下の部分の設定を変更することで、表示する記事などを変更できます。  
 タイトル・サブタイトル・表示対象のカテゴリ ID を変数に設定します。
 
 ```twig
-    {% set secondColumnTitle = '一覧のタイトル（ローマ字がカッコいい）' %}
-    {% set secondColumnSubtitle = 'サブタイトル' %}
-    {% set secondColumnCategory = '対象カテゴリのID' %}
+{% set secondColumnTitle = '一覧のタイトル（ローマ字がカッコいい）' %}
+{% set secondColumnSubtitle = 'サブタイトル' %}
+{% set secondColumnCategory = '対象カテゴリのID' %}
 ```
 
-## 画面プレビューの設定
+## 画面プレビュー
 
-MicroCMS の投稿した記事の画面プレビューを利用する場合は、MicroCMS の画面プレビュー設定の遷移先 URL に以下を設定してください。
+microCMS の投稿した記事の画面プレビューを利用する場合は、microCMS の画面プレビュー設定の遷移先 URL に以下を設定してください。
 
 ```
 https://ホスト名/blog/{CONTENT_ID}?key={DRAFT_KEY}
+
+# ホスト名が localhost:8080 の場合 http://localhost:8080/blog/{CONTENT_ID}?key={DRAFT_KEY} のようになります
 ```
 
 [操作マニュアルはこちら](https://document.microcms.io/manual/screen-preview)

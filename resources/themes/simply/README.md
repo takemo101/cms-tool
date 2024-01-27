@@ -16,8 +16,6 @@
     "name": "Simply",
     // version テーマバージョン：必須
     "version": "1.0.0",
-    // content テーマ説明文 twig構文が利用できる：必須
-    "content": "{{ theme.meta.name }}は、シンプルなデザインのブログテーマです。",
     // images テーマのスライド画像配列 assetsディレクトリにある画像ファイルの相対パスを指定する：任意
     // 先頭の画像ファイルがサムネイルとなる
     "images": ["image01.jpg", "image02.jpg"],

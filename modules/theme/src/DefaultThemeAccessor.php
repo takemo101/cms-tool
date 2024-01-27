@@ -77,7 +77,6 @@ class DefaultThemeAccessor implements ThemeAccessor
          *  uid:string,
          *  name:string,
          *  version:string,
-         *  content:string,
          *  images?:string[],
          *  tags?:string[],
          *  link?:?string,

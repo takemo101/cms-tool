@@ -4,8 +4,7 @@ namespace Takemo101\CmsTool\Http\ViewModel;
 
 use CmsTool\Theme\Support\ThemeReadmeReader;
 use CmsTool\Theme\Theme;
-use CmsTool\View\Contract\TemplateRenderer;
-use CmsTool\View\ViewCreator;
+use Takemo101\CmsTool\Infra\Markdown\MarkdownToHtml;
 
 class ThemeDetailPage extends ViewModel
 {
@@ -21,32 +20,18 @@ class ThemeDetailPage extends ViewModel
     }
 
     /**
-     * @param TemplateRenderer $renderer
-     * @param ViewCreator $creator
-     * @return string
-     */
-    public function content(
-        TemplateRenderer $renderer,
-        ViewCreator $creator,
-    ): string {
-        return $renderer->renderString(
-            template: $this->theme->meta->content,
-            data: [
-                ...$creator->getShared(),
-                'theme' => $this->theme,
-            ],
-        );
-    }
-
-    /**
      * @param ThemeReadmeReader $reader
-     * @return string
+     * @param MarkdownToHtml $toHtml
+     * @return string|null
      */
     public function readme(
         ThemeReadmeReader $reader,
-    ): string {
-        $readme = $reader->get($this->theme) ?? '';
+        MarkdownToHtml $toHtml,
+    ): ?string {
+        $readme = $reader->get($this->theme);
 
-        return $readme;
+        return $readme
+            ? $toHtml($readme)
+            : null;
     }
 }

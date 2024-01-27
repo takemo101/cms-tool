@@ -20,6 +20,7 @@
     "@master/css": "^1.37.8",
     "@master/normal.css": "^2.0.0-beta.84",
     "@splidejs/splide": "^4.1.4",
-    "alpinejs": "^3.13.3"
+    "alpinejs": "^3.13.3",
+    "github-markdown-css": "^5.5.0"
   }
 }

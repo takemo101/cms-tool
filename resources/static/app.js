@@ -151,7 +151,7 @@ ${r?'Expression: "'+r+`"
     f:white
     bg:${oe.Secondary}
     b:1|solid|${oe.Secondary}
-  `,"u-title":"f:18px f:bold mt:0 mb:16px","u-text":"f:16 lh:1.6rem mt:0 mb:16px","u-text--gray":"f:gray-52","u-list":`
+  `,"u-section":"mb:60px@sm mb:50px","u-title":"f:18px f:bold mt:0 mb:16px","u-text":"f:16 lh:1.6rem mt:0 mb:16px","u-text--gray":"f:gray-52","u-list":`
     f:16px list-style:circle
     pl:18px lh:1.6rem
     mb:10px>li

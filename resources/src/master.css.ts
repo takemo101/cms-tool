@@ -226,6 +226,7 @@ const generalStyle = {
   `,
 
   // text utility styles
+  "u-section": `mb:60px@sm mb:50px`,
   "u-title": `f:18px f:bold mt:0 mb:16px`,
   "u-text": `f:16 lh:1.6rem mt:0 mb:16px`,
   "u-text--gray": `f:gray-52`,

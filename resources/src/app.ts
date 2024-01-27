@@ -4,6 +4,7 @@ import dialog from '@fylgja/alpinejs-dialog';
 import intersect from '@alpinejs/intersect'
 import style from './master.css';
 import './style.css';
+import 'github-markdown-css/github-markdown-light.css';
 import '@splidejs/splide/css';
 import Splide from '@splidejs/splide';
 

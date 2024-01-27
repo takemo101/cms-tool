@@ -33,7 +33,7 @@
                     </div>
                 </div>
             {% endif %}
-            <div class="flex:col mb:16px" x-data="{ open: false }">
+            <div class="flex jc:right mb:16px" x-data="{ open: false }">
                 {% if theme.isActive() %}
                     {{ forms.submit({
                         label: '選択中です',
@@ -69,9 +69,11 @@
                 {% endif %}
             </div>
 
-            <p class="u-text">
-                {{ readme|raw }}
-            </p>
+            <div class="u-section">
+                <div class="markdown-body">
+                    {{ readme|raw }}
+                </div>
+            </div>
 
             <div class="flex flex:row@sm flex:col gap:20px mb:30">
                 <div class="w:full">

@@ -67,4 +67,10 @@
 
         </div>
     </section>
+
+    <section class="bg-gray-100 text-black">
+        {% include 'components.relateds' with {
+            relateds: share.related_contents(content.id),
+        } %}
+    </section>
 {% endblock %}

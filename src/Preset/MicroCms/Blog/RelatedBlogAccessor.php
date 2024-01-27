@@ -10,7 +10,7 @@ use Takemo101\CmsTool\UseCase\Shared\QueryService\Pager;
 class RelatedBlogAccessor
 {
     /** @var integer */
-    public const DefaultLimit = 4;
+    public const DefaultLimit = 3;
 
     /**
      * constructor
@@ -60,14 +60,18 @@ class RelatedBlogAccessor
         /** @var object{id:string}[] */
         $tags = $content[$this->fields->tag] ?? [];
 
+        /** @var string[] */
+        $tagIds = [];
+
+        foreach ($tags as $tag) {
+            $tagIds[] = $tag->id;
+        }
+
         $query = new MicroCmsContentGetListQuery(
             filters: $this->buildQueryString(
                 id: $id,
-                category: $category->id,
-                tags: array_map(
-                    fn (object $tag) => $tag->id,
-                    $tags,
-                ),
+                categoryId: $category->id,
+                tagIds: $tagIds,
             ),
         );
 
@@ -82,23 +86,23 @@ class RelatedBlogAccessor
      * build related content query
      *
      * @param string $id
-     * @param string $category
-     * @param string[] $tags
+     * @param string $categoryId
+     * @param string[] $tagIds
      * @return string
      */
     private function buildQueryString(
         string $id,
-        string $category,
-        array $tags,
+        string $categoryId,
+        array $tagIds,
     ): string {
         $excludeQuery = "id[not_equals]{$id}";
 
         $filters = [
-            "{$this->fields->category}[equals]{$category}",
+            "{$this->fields->category}[equals]{$categoryId}",
         ];
 
-        foreach ($tags as $tag) {
-            $filters[] = "{$this->fields->tag}[contains]{$tag}";
+        foreach ($tagIds as $tagId) {
+            $filters[] = "{$this->fields->tag}[contains]{$tagId}";
         }
 
         $taxonomieQuery = implode('[and]', $filters);

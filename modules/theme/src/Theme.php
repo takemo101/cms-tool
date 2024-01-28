@@ -24,6 +24,21 @@ class Theme
     }
 
     /**
+     * Change the theme metadata
+     *
+     * @return self
+     */
+    public function changeMeta(ThemeMeta $meta): self
+    {
+        return new self(
+            id: $this->id,
+            directory: $this->directory,
+            meta: $meta,
+            active: $this->active,
+        );
+    }
+
+    /**
      * Return whether it's an active theme
      *
      * @return boolean

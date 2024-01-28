@@ -21,5 +21,6 @@
     },
     "head": "Head",
     "body": "Body",
-    "footer": "Footer"
+    "footer": "Footer",
+    "meta": "theme.json"
 }

@@ -3,6 +3,7 @@
 namespace CmsTool\Support\Validation;
 
 use EventSauce\ObjectHydrator\ObjectMapper;
+use GuzzleHttp\Psr7\ServerRequest;
 use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use InvalidArgumentException;
@@ -23,21 +24,18 @@ class RequestValidator
     }
 
     /**
-     * Create form request
+     * Create FormRequest
      *
      * @template T of object
      *
-     * @param ServerRequestInterface $request
+     * @param array<string,mixed> $inputs
      * @param class-string<T>|T $classOrObject
      * @return FormRequest<T>&T
      */
-    public function validate(
-        ServerRequestInterface $request,
+    public function validateInputs(
+        array $inputs,
         string|object $classOrObject,
     ): FormRequest {
-
-        $inputs = $this->extractInputs($request);
-
         /** @var FormRequest<T> */
         $formRequest = new FormRequest(
             $this->mapper,
@@ -55,6 +53,59 @@ class RequestValidator
         );
 
         return $formRequest; // @phpstan-ignore-line
+    }
+
+    /**
+     * Create FormRequest from the request
+     *
+     * @template T of object
+     *
+     * @param ServerRequestInterface $request
+     * @param class-string<T>|T $classOrObject
+     * @return FormRequest<T>&T
+     */
+    public function validate(
+        ServerRequestInterface $request,
+        string|object $classOrObject,
+    ): FormRequest {
+
+        $inputs = $this->extractInputs($request);
+
+        return $this->validateInputs(
+            $inputs,
+            $classOrObject,
+        );
+    }
+
+    /**
+     * Create FormRequest from input array and perform validation
+     *
+     * @template T of object
+     *
+     * @param array<string,mixed> $inputs
+     * @param ServerRequestInterface $request
+     * @param class-string<T>|T $classOrObject
+     * @return FormRequest<T>&T
+     * @throws InvalidArgumentException|HttpValidationErrorException
+     */
+    public function throwIfFailedInputs(
+        array $inputs,
+        ServerRequestInterface $request,
+        string|object $classOrObject,
+    ): FormRequest {
+        $formRequest = $this->validateInputs(
+            $inputs,
+            $classOrObject,
+        );
+
+        if ($formRequest->isFailed()) {
+            throw new HttpValidationErrorException(
+                errors: $formRequest->getErrors(),
+                request: $request,
+            );
+        }
+
+        return $formRequest;
     }
 
     /**

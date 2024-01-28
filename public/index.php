@@ -1,7 +1,5 @@
 <?php
 
-set_time_limit(120);
-
 define('APP_START_TIME', microtime(true));
 
 require __DIR__ . '/../vendor/autoload.php';

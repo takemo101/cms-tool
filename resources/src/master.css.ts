@@ -422,7 +422,7 @@ const themeStyle = {
 
 const tableStyle = {
   "table-container": `
-    overflow-x:auto overflow-x:scroll@sm mb:16px
+    overflow-x:auto@sm overflow-x:scroll mb:16px
   `,
   "table": `
     border:separate border-spacing:0

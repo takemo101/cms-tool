@@ -50,4 +50,19 @@ class ThemeSpecException extends DomainException
             message: "The theme {$theme->id->value()} cannot be deleted.",
         );
     }
+
+    /**
+     * Create a new exception for when a theme cannot be edited.
+     *
+     * @param Theme $theme
+     * @return self
+     */
+    public static function cannotBeEditedError(
+        Theme $theme,
+    ): self {
+        return new self(
+            theme: $theme,
+            message: "The theme {$theme->id->value()} cannot be edited.",
+        );
+    }
 }

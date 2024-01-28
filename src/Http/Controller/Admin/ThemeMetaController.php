@@ -3,10 +3,8 @@
 namespace Takemo101\CmsTool\Http\Controller\Admin;
 
 use CmsTool\Support\Validation\RequestValidator;
-use CmsTool\Theme\Contract\ThemeSaver;
 use CmsTool\Theme\Exception\NotFoundThemeException;
 use CmsTool\Theme\ThemeId;
-use CmsTool\Theme\ThemeMeta;
 use CmsTool\Theme\ThemeQueryService;
 use CmsTool\View\View;
 use Psr\Http\Message\ServerRequestInterface;
@@ -38,6 +36,10 @@ class ThemeMetaController
             throw new HttpNotFoundException($request, $e->getMessage(), $e);
         }
 
+        if (!$theme->canBeEdited()) {
+            throw new HttpNotFoundException($request, 'Theme is readonly.');
+        }
+
         return view(
             'cms-tool::theme.meta.edit',
             new ThemeMetaPage($theme),
@@ -45,14 +47,12 @@ class ThemeMetaController
     }
 
     /**
-     * @param ThemeQueryService $queryService
      * @param ServerRequestInterface $request
      * @param RequestValidator $validator
      * @param string $id
      * @return RedirectBackRenderer
      */
     public function update(
-        ThemeQueryService $queryService,
         ServerRequestInterface $request,
         RequestValidator $validator,
         ChangeThemeMetaHandler $handler,

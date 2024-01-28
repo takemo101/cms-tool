@@ -50,3 +50,22 @@
         </div>
     </div>
 {% endblock %}
+
+{% block footer_js %}
+<script>
+    const options = {
+        lineNumbers: true,
+        lineWrapping: true,
+        styleActiveLine: true,
+        matchBrackets: true,
+        tabSize: 4,
+        mode: 'javascript',
+        theme: "material",
+    };
+
+    CodeMirror.fromTextArea(
+        document.getElementById("meta"),
+        options,
+    ).setSize("100%", "100%");
+</script>
+{% endblock %}

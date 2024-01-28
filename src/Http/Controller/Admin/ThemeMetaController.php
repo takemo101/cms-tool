@@ -11,10 +11,13 @@ use CmsTool\Theme\ThemeQueryService;
 use CmsTool\View\View;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
+use Takemo101\Chubby\Http\Renderer\RouteRedirectRenderer;
 use Takemo101\CmsTool\Http\Renderer\RedirectBackRenderer;
 use Takemo101\CmsTool\Http\Request\Admin\ChangeThemeMetaInputs;
 use Takemo101\CmsTool\Http\Request\Admin\UpdateThemeMetaJsonRequest;
 use Takemo101\CmsTool\Http\ViewModel\ThemeMetaPage;
+use Takemo101\CmsTool\UseCase\Shared\Exception\NotFoundDataException;
+use Takemo101\CmsTool\UseCase\Theme\Handler\ChangeThemeMetaHandler;
 
 class ThemeMetaController
 {
@@ -50,35 +53,38 @@ class ThemeMetaController
      */
     public function update(
         ThemeQueryService $queryService,
-        ThemeSaver $saver,
         ServerRequestInterface $request,
         RequestValidator $validator,
+        ChangeThemeMetaHandler $handler,
         string $id,
-    ): RedirectBackRenderer {
-
-        try {
-            $theme = $queryService->getOne(new ThemeId($id));
-        } catch (NotFoundThemeException $e) {
-            throw new HttpNotFoundException($request, $e->getMessage(), $e);
-        }
+    ): RedirectBackRenderer|RouteRedirectRenderer {
 
         $form = $validator->throwIfFailed(
             $request,
             UpdateThemeMetaJsonRequest::class,
         );
 
-        $meta = $form->getMetaArray();
+        $payload = $form->getMetaPayload();
 
         $validator->throwIfFailedInputs(
-            $meta,
+            $payload,
             $request,
             ChangeThemeMetaInputs::class,
         );
 
-        $changed = $theme->changeMeta(ThemeMeta::fromArray($form->getMetaArray()));
+        try {
+            $theme = $handler->handle($id, $payload);
+        } catch (NotFoundDataException $e) {
+            throw new HttpNotFoundException($request, $e->getMessage(), $e);
+        }
 
-        $saver->save($changed);
-
-        return redirect()->back();
+        return $theme->isReadonly()
+            ? redirect()->route(
+                'admin.theme.detail',
+                [
+                    'id' => $theme->id->value(),
+                ],
+            )
+            : redirect()->back();
     }
 }

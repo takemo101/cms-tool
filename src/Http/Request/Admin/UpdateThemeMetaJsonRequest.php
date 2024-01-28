@@ -32,7 +32,7 @@ readonly class UpdateThemeMetaJsonRequest
     /**
      * @return array<string,mixed>|null
      */
-    public function getMetaArray(): ?array
+    public function getMetaPayload(): ?array
     {
         return json_decode($this->meta, true);
     }

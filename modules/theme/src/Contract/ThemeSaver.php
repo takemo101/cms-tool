@@ -10,7 +10,7 @@ interface ThemeSaver
     /**
      * Save a theme.
      *
-     * @return Theme
+     * @return void
      * @throws ThemeSaveException
      */
     public function save(Theme $theme): void;

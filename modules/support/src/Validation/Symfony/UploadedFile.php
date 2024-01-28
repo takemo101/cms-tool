@@ -22,7 +22,7 @@ class UploadedFile extends SymfonyUploadedFile
      * @param callable():string $getTemporaryPath
      */
     public function __construct(
-        private readonly UploadedFileInterface $psrUploadedFile,
+        UploadedFileInterface $psrUploadedFile,
         callable $getTemporaryPath,
     ) {
         $error = $psrUploadedFile->getError();

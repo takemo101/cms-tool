@@ -3,7 +3,7 @@
 {% block title %}{{ content.title }}{% endblock %}
 
 {% block content %}
-    <section class="bg-gray-100 text-black">
+    <section class="section-narrow bg-gray-100 text-black">
         <div class="section-narrow-layout">
             <div class="flex items-center md:justify-start mb-12 text-xs md:text-sm leading-6 -tracking-[0.3px] lg:tracking-normal">
                 <a href="{{ route('home') }}" class="text-gray-750 hover:opacity-60">
@@ -68,7 +68,7 @@
         </div>
     </section>
 
-    <section class="bg-gray-100 text-black">
+    <section class="section-narrow bg-gray-100 text-black">
         {% include 'components.relateds' with {
             relateds: share.related_contents(content.id),
         } %}

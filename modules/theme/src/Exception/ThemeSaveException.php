@@ -13,7 +13,6 @@ class ThemeSaveException extends RuntimeException
      * @param string $path
      * @param string|null $message
      * @param Throwable|null $previous
-     * @param
      */
     public function __construct(
         private readonly string $path,

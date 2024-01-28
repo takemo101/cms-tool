@@ -21,121 +21,191 @@ beforeEach(function () {
     $this->requestValidator = new RequestValidator($this->validator, $this->mapper);
 });
 
-describe(
-    'RequestValidator::validate',
-    function () {
-        it(
-            'should create and validate a FormRequest',
-            function () {
-                // Create mock inputs
-                $inputs = [
-                    'key1' => 'value1',
-                    'key2' => 'value2',
-                ];
+describe('validateInputs', function () {
+    it('should create and validate a FormRequest from inputs', function () {
+        // Create mock inputs
+        $inputs = [
+            'key1' => 'value1',
+            'key2' => 'value2',
+        ];
 
-                // Mock the methods of ServerRequestInterface
-                $this->request->shouldReceive('getQueryParams')->andReturn([]);
-                $this->request->shouldReceive('getParsedBody')->andReturn([]);
-                $this->request->shouldReceive('getUploadedFiles')->andReturn([]);
-                $this->request->shouldReceive('getQueryParams')->andReturn($inputs);
+        $hydratedObject = new stdClass();
+        $errors = new ConstraintViolationList();
 
-                $hydratedObject = new stdClass();
-                $errors = new ConstraintViolationList();
+        // Mock the methods of ObjectMapper
+        $this->mapper->shouldReceive('hydrateObject')->andReturn($hydratedObject);
 
-                // Mock the methods of ObjectMapper
-                $this->mapper->shouldReceive('hydrateObject')->andReturn($hydratedObject);
+        // Mock the methods of ValidatorInterface
+        $this->validator->shouldReceive('validate')->andReturn($errors);
 
-                // Mock the methods of ValidatorInterface
-                $this->validator->shouldReceive('validate')->andReturn($errors);
+        // Call the validateInputs method
+        $formRequest = $this->requestValidator->validateInputs($inputs, $this->classOrObject);
 
-                $requestValidator = new RequestValidator($this->validator, $this->mapper);
+        // Assert that the FormRequest is created and validated correctly
+        expect($formRequest)->toBeInstanceOf(FormRequest::class);
+        expect($formRequest->getHydratedObject())->toBe($hydratedObject);
+        expect($formRequest->getErrors())->toBe($errors);
+    });
+})->group('RequestValidator', 'validation');
 
-                // Call the validate method
-                $formRequest = $requestValidator->validate($this->request, $this->classOrObject);
+describe('validate', function () {
+    it('should create and validate a FormRequest from the request', function () {
+        // Create mock inputs
+        $inputs = [
+            'key1' => 'value1',
+            'key2' => 'value2',
+        ];
 
-                // Assert that the FormRequest is created and validated correctly
-                expect($formRequest)->toBeInstanceOf(FormRequest::class);
-                expect($formRequest->getHydratedObject())->toBe($hydratedObject);
-                expect($formRequest->getErrors())->toBe($errors);
-            }
+        // Mock the methods of ServerRequestInterface
+        $this->request->shouldReceive('getQueryParams')->andReturn([]);
+        $this->request->shouldReceive('getParsedBody')->andReturn([]);
+        $this->request->shouldReceive('getUploadedFiles')->andReturn([]);
+        $this->request->shouldReceive('getQueryParams')->andReturn($inputs);
+
+        $hydratedObject = new stdClass();
+        $errors = new ConstraintViolationList();
+
+        // Mock the methods of ObjectMapper
+        $this->mapper->shouldReceive('hydrateObject')->andReturn($hydratedObject);
+
+        // Mock the methods of ValidatorInterface
+        $this->validator->shouldReceive('validate')->andReturn($errors);
+
+        // Call the validate method
+        $formRequest = $this->requestValidator->validate($this->request, $this->classOrObject);
+
+        // Assert that the FormRequest is created and validated correctly
+        expect($formRequest)->toBeInstanceOf(FormRequest::class);
+        expect($formRequest->getHydratedObject())->toBe($hydratedObject);
+        expect($formRequest->getErrors())->toBe($errors);
+    });
+})->group('RequestValidator', 'validation');
+
+describe('throwIfFailedInputs', function () {
+    it('should throw an exception if validation fails', function () {
+        // Create mock inputs
+        $inputs = [
+            'key1' => 'value1',
+            'key2' => 'value2',
+        ];
+
+        // Mock the methods of ServerRequestInterface
+        $this->request->shouldReceive('getQueryParams')->andReturn([]);
+        $this->request->shouldReceive('getParsedBody')->andReturn([]);
+        $this->request->shouldReceive('getUploadedFiles')->andReturn([]);
+        $this->request->shouldReceive('getQueryParams')->andReturn($inputs);
+
+        $hydratedObject = new stdClass();
+        $errors = new ConstraintViolationList([new ConstraintViolation('error', 'error', [], null, 'key1', null, null, null)]);
+
+        // Mock the methods of ObjectMapper
+        $this->mapper->shouldReceive('hydrateObject')->andReturn($hydratedObject);
+
+        // Mock the methods of ValidatorInterface
+        $this->validator->shouldReceive('validate')->andReturn($errors);
+
+        // Expect an exception to be thrown
+        expect(fn () => $this->requestValidator->throwIfFailedInputs(
+            $inputs,
+            $this->request,
+            $this->classOrObject,
+        ))->toThrow(HttpValidationErrorException::class);
+    });
+
+    it('should return a FormRequest if validation passes', function () {
+        // Create mock inputs
+        $inputs = [
+            'key1' => 'value1',
+            'key2' => 'value2',
+        ];
+
+        // Mock the methods of ServerRequestInterface
+        $this->request->shouldReceive('getQueryParams')->andReturn([]);
+        $this->request->shouldReceive('getParsedBody')->andReturn([]);
+        $this->request->shouldReceive('getUploadedFiles')->andReturn([]);
+        $this->request->shouldReceive('getQueryParams')->andReturn($inputs);
+
+        $hydratedObject = new stdClass();
+        $errors = new ConstraintViolationList();
+
+        // Mock the methods of ObjectMapper
+        $this->mapper->shouldReceive('hydrateObject')->andReturn($hydratedObject);
+
+        // Mock the methods of ValidatorInterface
+        $this->validator->shouldReceive('validate')->andReturn($errors);
+
+        // Call the throwIfFailedInputs method
+        $formRequest = $this->requestValidator->throwIfFailedInputs(
+            $inputs,
+            $this->request,
+            $this->classOrObject,
         );
-    }
-)->group('request-validator', 'validation');
 
-describe(
-    'RequestValidator::throwIfFailed',
-    function () {
+        // Assert that a FormRequest is returned
+        expect($formRequest)->toBeInstanceOf(FormRequest::class);
+        expect($formRequest->getHydratedObject())->toBe($hydratedObject);
+        expect($formRequest->getErrors())->toBe($errors);
+    });
+})->group('RequestValidator', 'validation');
 
-        it(
-            'should throw an exception if validation fails',
-            function () {
-                // Create mock inputs
-                $inputs = [
-                    'key1' => 'value1',
-                    'key2' => 'value2',
-                ];
+describe('throwIfFailed', function () {
+    it('should throw an exception if validation fails', function () {
+        // Create mock inputs
+        $inputs = [
+            'key1' => 'value1',
+            'key2' => 'value2',
+        ];
 
-                // Mock the methods of ServerRequestInterface
-                $this->request->shouldReceive('getQueryParams')->andReturn([]);
-                $this->request->shouldReceive('getParsedBody')->andReturn([]);
-                $this->request->shouldReceive('getUploadedFiles')->andReturn([]);
-                $this->request->shouldReceive('getQueryParams')->andReturn($inputs);
+        // Mock the methods of ServerRequestInterface
+        $this->request->shouldReceive('getQueryParams')->andReturn([]);
+        $this->request->shouldReceive('getParsedBody')->andReturn([]);
+        $this->request->shouldReceive('getUploadedFiles')->andReturn([]);
+        $this->request->shouldReceive('getQueryParams')->andReturn($inputs);
 
-                $hydratedObject = new stdClass();
-                $errors = new ConstraintViolationList([new ConstraintViolation('error', 'error', [], null, 'key1', null, null, null)]);
+        $hydratedObject = new stdClass();
+        $errors = new ConstraintViolationList([new ConstraintViolation('error', 'error', [], null, 'key1', null, null, null)]);
 
-                // Mock the methods of ObjectMapper
-                $this->mapper->shouldReceive('hydrateObject')->andReturn($hydratedObject);
+        // Mock the methods of ObjectMapper
+        $this->mapper->shouldReceive('hydrateObject')->andReturn($hydratedObject);
 
-                // Mock the methods of ValidatorInterface
-                $this->validator->shouldReceive('validate')->andReturn($errors);
+        // Mock the methods of ValidatorInterface
+        $this->validator->shouldReceive('validate')->andReturn($errors);
 
-                $requestValidator = new RequestValidator($this->validator, $this->mapper);
+        // Expect an exception to be thrown
+        expect(fn () => $this->requestValidator->throwIfFailed(
+            $this->request,
+            $this->classOrObject,
+        ))->toThrow(HttpValidationErrorException::class);
+    });
 
-                // Call the throwIfFailed method
-                // Expect an exception to be thrown
-                expect(fn () => $requestValidator->throwIfFailed(
-                    $this->request,
-                    $this->classOrObject,
-                ))->toThrow(HttpValidationErrorException::class);
-            }
-        );
+    it('should return a FormRequest if validation passes', function () {
+        // Create mock inputs
+        $inputs = [
+            'key1' => 'value1',
+            'key2' => 'value2',
+        ];
 
-        it(
-            'should return a FormRequest if validation passes',
-            function () {
+        // Mock the methods of ServerRequestInterface
+        $this->request->shouldReceive('getQueryParams')->andReturn([]);
+        $this->request->shouldReceive('getParsedBody')->andReturn([]);
+        $this->request->shouldReceive('getUploadedFiles')->andReturn([]);
+        $this->request->shouldReceive('getQueryParams')->andReturn($inputs);
 
-                // Create mock inputs
-                $inputs = [
-                    'key1' => 'value1',
-                    'key2' => 'value2',
-                ];
+        $hydratedObject = new stdClass();
+        $errors = new ConstraintViolationList();
 
-                // Mock the methods of ServerRequestInterface
-                $this->request->shouldReceive('getQueryParams')->andReturn([]);
-                $this->request->shouldReceive('getParsedBody')->andReturn([]);
-                $this->request->shouldReceive('getUploadedFiles')->andReturn([]);
-                $this->request->shouldReceive('getQueryParams')->andReturn($inputs);
+        // Mock the methods of ObjectMapper
+        $this->mapper->shouldReceive('hydrateObject')->andReturn($hydratedObject);
 
-                $hydratedObject = new stdClass();
-                $errors = new ConstraintViolationList();
+        // Mock the methods of ValidatorInterface
+        $this->validator->shouldReceive('validate')->andReturn($errors);
 
-                // Mock the methods of ObjectMapper
-                $this->mapper->shouldReceive('hydrateObject')->andReturn($hydratedObject);
+        // Call the throwIfFailed method
+        $formRequest = $this->requestValidator->throwIfFailed($this->request, $this->classOrObject);
 
-                // Mock the methods of ValidatorInterface
-                $this->validator->shouldReceive('validate')->andReturn($errors);
-
-                $requestValidator = new RequestValidator($this->validator, $this->mapper);
-
-                // Call the throwIfFailed method
-                $formRequest = $requestValidator->throwIfFailed($this->request, $this->classOrObject);
-
-                // Assert that a FormRequest is returned
-                expect($formRequest)->toBeInstanceOf(FormRequest::class);
-                expect($formRequest->getHydratedObject())->toBe($hydratedObject);
-                expect($formRequest->getErrors())->toBe($errors);
-            }
-        );
-    }
-)->group('request-validator', 'validation');
+        // Assert that a FormRequest is returned
+        expect($formRequest)->toBeInstanceOf(FormRequest::class);
+        expect($formRequest->getHydratedObject())->toBe($hydratedObject);
+        expect($formRequest->getErrors())->toBe($errors);
+    });
+})->group('RequestValidator', 'validation');

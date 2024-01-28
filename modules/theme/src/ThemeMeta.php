@@ -15,7 +15,6 @@ readonly class ThemeMeta implements Arrayable
      * @param string $uid
      * @param ThemeName $name
      * @param string $version
-     * @param string $content
      * @param string[] $images
      * @param string[] $tags
      * @param string|null $link
@@ -28,7 +27,6 @@ readonly class ThemeMeta implements Arrayable
         public string $uid,
         public ThemeName $name,
         public string $version,
-        public string $content,
         public array $images,
         public array $tags,
         public ?string $link,
@@ -59,7 +57,6 @@ readonly class ThemeMeta implements Arrayable
             uid: $this->uid,
             name: $this->name->copy(),
             version: $this->version,
-            content: $this->content,
             images: $this->images,
             tags: $this->tags,
             link: $this->link,
@@ -79,7 +76,6 @@ readonly class ThemeMeta implements Arrayable
             'uid' => $this->uid,
             'name' => $this->name->value(),
             'version' => $this->version,
-            'content' => $this->content,
             'images' => $this->images,
             'tags' => $this->tags,
             'link' => $this->link,
@@ -97,7 +93,6 @@ readonly class ThemeMeta implements Arrayable
      *  uid:string,
      *  name:string,
      *  version:string,
-     *  content:string,
      *  images?:string[],
      *  tags?:string[],
      *  link?:?string,
@@ -117,7 +112,6 @@ readonly class ThemeMeta implements Arrayable
             uid: $data['uid'],
             name: new ThemeName($data['name']),
             version: $data['version'],
-            content: $data['content'],
             images: $data['images'] ?? [],
             tags: $data['tags'] ?? [],
             link: $data['link'] ?? null,

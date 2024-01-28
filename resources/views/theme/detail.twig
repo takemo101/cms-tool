@@ -9,10 +9,10 @@
 
 {% block content_right %}
 <div class="card">
-    <div class="card-header">
-        <h2 class="card-header__title">テーマ</h2>
-        <hr class="divider" />
-    </div>
+    {% include 'cms-tool::components.card-header' with {
+        title: 'テーマ',
+        back: route('admin.theme.index')
+    } %}
     <div class="card-body">
         <div class="flex flex:col">
             <h3 class="f:18px f:bold mt:0 mb:16px">
@@ -33,7 +33,7 @@
                     </div>
                 </div>
             {% endif %}
-            <div class="flex:col mb:16px" x-data="{ open: false }">
+            <div class="flex jc:right mb:16px" x-data="{ open: false }">
                 {% if theme.isActive() %}
                     {{ forms.submit({
                         label: '選択中です',
@@ -59,21 +59,75 @@
                         submit: '$refs.form.submit()',
                     }) }}
                 {% endif %}
-                {% if theme.meta.link %}
-                    <a
+                <div class="rel" x-data="{ open: false }">
+                    <button
+                        type="button"
                         class="link-btn link-btn--primary-line ml:10px"
                         href="{{ theme.meta.link }}"
-                        target="_blank">
-                        詳細を見る
-                    </a>
-                {% endif %}
+                        x-on:click="open = !open">
+                        <i class="fas fa-ellipsis-h"></i>
+                    </button>
+                    <ul class="menu menu--right" x-show="open">
+                        {% if theme.meta.link %}
+                        <li>
+                            <a class="menu-link"
+                                href="{{ theme.meta.link }}"
+                                target="_blank">
+                                情報を見る
+                            </a>
+                        </li>
+                        {% endif %}
+                        <li x-data="{ open: false }">
+                            {{ form_open({
+                                route: ['admin.theme.copy', {id: theme.id}],
+                                method: 'post',
+                                'x-ref': 'form',
+                            }) }}
+                                {{ forms.btn({
+                                    label: '複製する',
+                                    class: 'menu-link',
+                                    click: 'open = true',
+                                }) }}
+                            {{ form_close() }}
+                            {{ dialogs.confirm({
+                                title: 'Copy',
+                                message: 'このテーマを複製しますか？',
+                                submit: '$refs.form.submit()',
+                            }) }}
+                        </li>
+                        {% if theme.canBeDeleted() %}
+                        <li x-data="{ open: false }">
+                            {{ form_open({
+                                route: ['admin.theme.delete', {id: theme.id}],
+                                method: 'delete',
+                                'x-ref': 'form',
+                            }) }}
+                                {{ forms.btn({
+                                    label: '削除する',
+                                    class: 'menu-link',
+                                    click: 'open = true',
+                                }) }}
+                            {{ form_close() }}
+                            {{ dialogs.confirm({
+                                title: 'Delete',
+                                message: 'このテーマを削除しますか？',
+                                submit: '$refs.form.submit()',
+                            }) }}
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
             </div>
 
-            <p class="u-text">
-                {{ content|nl2br|raw }}
-            </p>
+            {% if readme %}
+                <div class="u-section">
+                    <div class="markdown-body">
+                        {{ readme|raw }}
+                    </div>
+                </div>
+            {% endif %}
 
-            <div class="flex flex:row@sm flex:col gap:20px mb:30">
+            <div class="flex flex:row@sm flex:col gap:20px">
                 <div class="w:full">
                     <h4 class="f:16px f:bold mt:0 mb:16px">
                         テーマ情報
@@ -125,47 +179,6 @@
                         {% endfor %}
                     </div>
                 </div>
-            </div>
-
-            <div class="t:right">
-                <div class="inline-block ml:10px" x-data="{ open: false }">
-                    {{ form_open({
-                        route: ['admin.theme.copy', {id: theme.id}],
-                        method: 'post',
-                        'x-ref': 'form',
-                    }) }}
-                        {{ forms.button({
-                            label: '複製する',
-                            class: 'form-btn--primary',
-                            click: 'open = true',
-                        }) }}
-                    {{ form_close() }}
-                    {{ dialogs.confirm({
-                        title: 'Copy',
-                        message: 'このテーマを複製しますか？',
-                        submit: '$refs.form.submit()',
-                    }) }}
-                </div>
-                {% if theme.canBeDeleted() %}
-                    <div class="inline-block ml:10px" x-data="{ open: false }">
-                        {{ form_open({
-                            route: ['admin.theme.delete', {id: theme.id}],
-                            method: 'delete',
-                            'x-ref': 'form',
-                        }) }}
-                            {{ forms.button({
-                                label: '削除する',
-                                class: 'form-btn--warning',
-                                click: 'open = true',
-                            }) }}
-                        {{ form_close() }}
-                        {{ dialogs.confirm({
-                            title: 'Delete',
-                            message: 'このテーマを削除しますか？',
-                            submit: '$refs.form.submit()',
-                        }) }}
-                    </div>
-                {% endif %}
             </div>
 
         </div>

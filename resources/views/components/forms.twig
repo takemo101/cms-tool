@@ -172,3 +172,18 @@
         {{ options.label }}
     </button>
 {% endmacro %}
+
+{% macro btn(options = {
+    label: '',
+    class: null,
+    disabled: false,
+    click: null,
+}) %}
+    <button
+        class="{{ options.class }}"
+        type="button"
+        {% if options.click %}x-on:click="{{ options.click }}"{% endif %}
+        {% if options.disabled %}disabled{% endif %}>
+        {{ options.label }}
+    </button>
+{% endmacro %}

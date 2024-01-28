@@ -440,6 +440,29 @@ const tableStyle = {
   `,
 } as const;
 
+const menuStyle = {
+  "menu": `
+    abs z:10
+    min-w:180px
+    overflow:auto
+    bg:white
+    r:5px
+    top:calc(100%+10px)
+    shadow:1|1|6|gray-80
+  `,
+  "menu--left": `right:auto left:0`,
+  "menu--right": `left:auto right:0`,
+  "menu--center": `left:50% transform:translateX(-50%)`,
+  "menu-link": `
+    block
+    w:full p:10px
+    f:${Colors.Link} t:left t:16px
+    cursor:pointer
+    bg:gray-82:hover
+    text:none
+  `,
+} as const;
+
 const style = {
   ...generalStyle,
   ...centerLayoutStyle,
@@ -449,6 +472,7 @@ const style = {
   ...sidebarNavStyle,
   ...themeStyle,
   ...tableStyle,
+  ...menuStyle,
 } as const;
 
 export default style;

@@ -77,6 +77,14 @@
                             </a>
                         </li>
                         {% endif %}
+                        {% if theme.canBeEdited() %}
+                            <li>
+                                <a class="menu-link"
+                                    href="{{ route('admin.theme.meta.edit', { id: theme.id }) }}">
+                                    theme.json
+                                </a>
+                            </li>
+                        {% endif %}
                         <li x-data="{ open: false }">
                             {{ form_open({
                                 route: ['admin.theme.copy', {id: theme.id}],
@@ -96,24 +104,24 @@
                             }) }}
                         </li>
                         {% if theme.canBeDeleted() %}
-                        <li x-data="{ open: false }">
-                            {{ form_open({
-                                route: ['admin.theme.delete', {id: theme.id}],
-                                method: 'delete',
-                                'x-ref': 'form',
-                            }) }}
-                                {{ forms.btn({
-                                    label: '削除する',
-                                    class: 'menu-link',
-                                    click: 'open = true',
+                            <li x-data="{ open: false }">
+                                {{ form_open({
+                                    route: ['admin.theme.delete', {id: theme.id}],
+                                    method: 'delete',
+                                    'x-ref': 'form',
                                 }) }}
-                            {{ form_close() }}
-                            {{ dialogs.confirm({
-                                title: 'Delete',
-                                message: 'このテーマを削除しますか？',
-                                submit: '$refs.form.submit()',
-                            }) }}
-                        </li>
+                                    {{ forms.btn({
+                                        label: '削除する',
+                                        class: 'menu-link',
+                                        click: 'open = true',
+                                    }) }}
+                                {{ form_close() }}
+                                {{ dialogs.confirm({
+                                    title: 'Delete',
+                                    message: 'このテーマを削除しますか？',
+                                    submit: '$refs.form.submit()',
+                                }) }}
+                            </li>
                         {% endif %}
                     </ul>
                 </div>

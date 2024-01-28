@@ -36,6 +36,7 @@ use Takemo101\CmsTool\Http\Controller\Admin\RobotsTxtController;
 use Takemo101\CmsTool\Http\Controller\Admin\SiteMetaController;
 use Takemo101\CmsTool\Http\Controller\Admin\SiteSeoController;
 use Takemo101\CmsTool\Http\Controller\Admin\ThemeController;
+use Takemo101\CmsTool\Http\Controller\Admin\ThemeMetaController;
 use Takemo101\CmsTool\Http\Controller\Admin\Tool\ThemeJsonController;
 use Takemo101\CmsTool\Http\Controller\Admin\TrackingCodeController;
 use Takemo101\CmsTool\Http\Controller\Admin\UninstallController;
@@ -260,26 +261,37 @@ hook()
                                         SitePublishAction::class,
                                     )->setName('admin.publish');
 
-                                    $proxy->get(
-                                        '/theme',
-                                        [ThemeController::class, 'index'],
-                                    )->setName('admin.theme.index');
-                                    $proxy->get(
-                                        '/theme/{id}',
-                                        [ThemeController::class, 'detail'],
-                                    )->setName('admin.theme.detail');
-                                    $proxy->put(
-                                        '/theme/{id}',
-                                        [ThemeController::class, 'activate'],
-                                    )->setName('admin.theme.activate');
-                                    $proxy->delete(
-                                        '/theme/{id}',
-                                        [ThemeController::class, 'delete'],
-                                    )->setName('admin.theme.delete');
-                                    $proxy->post(
-                                        '/theme/{id}/copy',
-                                        [ThemeController::class, 'copy'],
-                                    )->setName('admin.theme.copy');
+                                    $proxy->group('/theme', function (Proxy $proxy) {
+                                        $proxy->get(
+                                            '',
+                                            [ThemeController::class, 'index'],
+                                        )->setName('admin.theme.index');
+                                        $proxy->get(
+                                            '/{id}',
+                                            [ThemeController::class, 'detail'],
+                                        )->setName('admin.theme.detail');
+                                        $proxy->put(
+                                            '/{id}',
+                                            [ThemeController::class, 'activate'],
+                                        )->setName('admin.theme.activate');
+                                        $proxy->delete(
+                                            '/{id}',
+                                            [ThemeController::class, 'delete'],
+                                        )->setName('admin.theme.delete');
+                                        $proxy->post(
+                                            '/{id}/copy',
+                                            [ThemeController::class, 'copy'],
+                                        )->setName('admin.theme.copy');
+
+                                        $proxy->get(
+                                            '/{id}/meta',
+                                            [ThemeMetaController::class, 'edit'],
+                                        )->setName('admin.theme.meta.edit');
+                                        $proxy->put(
+                                            '/{id}/meta',
+                                            [ThemeMetaController::class, 'update'],
+                                        )->setName('admin.theme.meta.update');
+                                    });
 
                                     $proxy->get(
                                         '/webhook',

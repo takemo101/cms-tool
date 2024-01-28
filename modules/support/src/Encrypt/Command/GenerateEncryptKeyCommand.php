@@ -7,6 +7,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Takemo101\Chubby\Console\Command\Command;
 use Takemo101\Chubby\Filesystem\LocalFilesystem;
 use Takemo101\Chubby\Support\ApplicationPath;
+use RuntimeException;
 
 class GenerateEncryptKeyCommand extends Command
 {
@@ -65,9 +66,12 @@ class GenerateEncryptKeyCommand extends Command
         }
 
         if ($dotEnv = $filesystem->read($dotEnvPath)) {
-            $dotEnv = preg_replace('/APP_KEY=.*$/m', "APP_KEY={$key}", $dotEnv);
+            /** @var string|null */
+            $replaced = preg_replace('/APP_KEY=.*$/m', "APP_KEY={$key}", $dotEnv);
 
-            $filesystem->write($dotEnvPath, $dotEnv);
+            if ($replaced) {
+                $filesystem->write($dotEnvPath, $replaced);
+            }
         }
     }
 }

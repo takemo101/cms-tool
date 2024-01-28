@@ -24,6 +24,26 @@ class Theme
     }
 
     /**
+     * Change the theme metadata
+     *
+     * @return self
+     * @throws ThemeSpecException
+     */
+    public function changeMeta(ThemeMeta $meta): self
+    {
+        if (!$this->canBeEdited()) {
+            throw ThemeSpecException::cannotBeEditedError($this);
+        }
+
+        return new self(
+            id: $this->id,
+            directory: $this->directory,
+            meta: $meta,
+            active: $this->active,
+        );
+    }
+
+    /**
      * Return whether it's an active theme
      *
      * @return boolean
@@ -53,6 +73,16 @@ class Theme
         return !(
             $this->isReadonly() || $this->isActive()
         );
+    }
+
+    /**
+     * Can the theme be edited?
+     *
+     * @return bool
+     */
+    public function canBeEdited(): bool
+    {
+        return !$this->isReadonly();
     }
 
     /**

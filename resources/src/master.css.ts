@@ -186,6 +186,12 @@ const generalStyle = {
   `,
   "card-header": `px:20px@sm px:14px pt:20px@sm pt:14px`,
   "card-header__title": `mb:20px@sm mb:14px`,
+  "card-header__title--layout": `flex ai:center`,
+  "card-header__title__back": `
+    mr:8px
+    f:20px
+    opacity:0.5:hover
+  `,
   "card-body": `p:20px@sm p:14px`,
 
   // utility styles
@@ -226,6 +232,7 @@ const generalStyle = {
   `,
 
   // text utility styles
+  "u-section": `mb:60px@sm mb:50px`,
   "u-title": `f:18px f:bold mt:0 mb:16px`,
   "u-text": `f:16 lh:1.6rem mt:0 mb:16px`,
   "u-text--gray": `f:gray-52`,
@@ -415,7 +422,7 @@ const themeStyle = {
 
 const tableStyle = {
   "table-container": `
-    overflow-x:auto overflow-x:scroll@sm mb:16px
+    overflow-x:auto@sm overflow-x:scroll mb:16px
   `,
   "table": `
     border:separate border-spacing:0
@@ -433,6 +440,29 @@ const tableStyle = {
   `,
 } as const;
 
+const menuStyle = {
+  "menu": `
+    abs z:10
+    min-w:180px
+    overflow:auto
+    bg:white
+    r:5px
+    top:calc(100%+10px)
+    shadow:1|1|6|gray-80
+  `,
+  "menu--left": `right:auto left:0`,
+  "menu--right": `left:auto right:0`,
+  "menu--center": `left:50% transform:translateX(-50%)`,
+  "menu-link": `
+    block
+    w:full p:10px
+    f:${Colors.Link} t:left t:16px
+    cursor:pointer
+    bg:gray-82:hover
+    text:none
+  `,
+} as const;
+
 const style = {
   ...generalStyle,
   ...centerLayoutStyle,
@@ -442,6 +472,7 @@ const style = {
   ...sidebarNavStyle,
   ...themeStyle,
   ...tableStyle,
+  ...menuStyle,
 } as const;
 
 export default style;

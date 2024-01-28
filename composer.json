@@ -42,6 +42,7 @@
         "ext-openssl": "*",
         "eventsauce/object-hydrator": "^1.4",
         "illuminate/collections": "^10.40",
+        "league/commonmark": "^2.4",
         "odan/session": "^6.1",
         "psr/cache": "~1.0.0",
         "saloonphp/saloon": "^3.4",

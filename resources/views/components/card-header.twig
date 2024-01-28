@@ -1,0 +1,11 @@
+<div class="card-header">
+    <div class="card-header__title card-header__title--layout">
+        {% if back is not empty %}
+            <a class="card-header__title__back" href="{{ back }}">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+        {% endif %}
+        <h2>{{ title }}</h2>
+    </div>
+    <hr class="divider" />
+</div>

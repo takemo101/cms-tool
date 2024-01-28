@@ -16,7 +16,6 @@ beforeEach(function () {
             'uid' => 'uid',
             'name' => 'name',
             'version' => 'version',
-            'content' => 'content',
             'author' => [
                 'name' => 'name',
             ],

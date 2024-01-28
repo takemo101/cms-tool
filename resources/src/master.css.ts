@@ -186,6 +186,12 @@ const generalStyle = {
   `,
   "card-header": `px:20px@sm px:14px pt:20px@sm pt:14px`,
   "card-header__title": `mb:20px@sm mb:14px`,
+  "card-header__title--layout": `flex ai:center`,
+  "card-header__title__back": `
+    mr:8px
+    f:20px
+    opacity:0.5:hover
+  `,
   "card-body": `p:20px@sm p:14px`,
 
   // utility styles

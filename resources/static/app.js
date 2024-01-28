@@ -122,7 +122,11 @@ ${r?'Expression: "'+r+`"
     w:full h:max"
     bg:white
     box:border
-  `,"card-header":"px:20px@sm px:14px pt:20px@sm pt:14px","card-header__title":"mb:20px@sm mb:14px","card-body":"p:20px@sm p:14px",divider:`
+  `,"card-header":"px:20px@sm px:14px pt:20px@sm pt:14px","card-header__title":"mb:20px@sm mb:14px","card-header__title--layout":"flex ai:center","card-header__title__back":`
+    mr:8px
+    f:20px
+    opacity:0.5:hover
+  `,"card-body":"p:20px@sm p:14px",divider:`
     bx:0 bb:0 bt:1|solid|gray-82
     p:0 m:0 h:
   `,link:`

@@ -18,8 +18,8 @@ const Colors = {
 
 const generalStyle = {
   // layout styles
-  "body": `f:sans-serif_* m:0`,
-  "layout": `
+  body: `f:sans-serif_* m:0`,
+  layout: `
     min-h:100vh
     p:0 m:0
     bg:${Colors.Background}
@@ -29,7 +29,7 @@ const generalStyle = {
     h:full
     py:0@sm py:60px
   `,
-  "container": `
+  container: `
     flex flex:col
     mx:auto
     h:full
@@ -37,15 +37,15 @@ const generalStyle = {
   `,
 
   // alert styles
-  "alert": `
+  alert: `
     flex jc:normal ai:center
     py:10 px:14
     f:14px
     r:5px
     b:2|solid
   `,
-  "alert__title": `f:18 f:bold m:0 mb:5px`,
-  "alert__close": `w:30 pl:10`,
+  alert__title: `f:18 f:bold m:0 mb:5px`,
+  alert__close: `w:30 pl:10`,
   "alert__close-icon": `cursor:pointer opacity:0.5:hover`,
 
   "alert--error": `bg:red-90 b:red`,
@@ -175,9 +175,8 @@ const generalStyle = {
     f:12px f:gray-62
   `,
 
-
   // card styles
-  "card": `
+  card: `
     b:1|solid|gray-82
     r:5px
     w:full h:max"
@@ -195,11 +194,11 @@ const generalStyle = {
   "card-body": `p:20px@sm p:14px`,
 
   // utility styles
-  "divider": `
+  divider: `
     bx:0 bb:0 bt:1|solid|gray-82
     p:0 m:0 h:
   `,
-  "link": `
+  link: `
     f:${Colors.Link} f:bold
     cursor:pointer
     opacity:0.5:hover
@@ -269,13 +268,13 @@ const centerLayoutStyle = {
 
 const headerNavStyle = {
   // header styles
-  "header": `
+  header: `
     w:full
     bg:white
     shadow:2|2|4|gray-80
     position:fixed
   `,
-  "header__inner": `
+  header__inner: `
     max-w:1200px@sm w:full
     mx:auto
     flex flex:row jc:space-between
@@ -286,14 +285,14 @@ const headerNavStyle = {
     ai:center
     box:border
   `,
-  "header__logo": `
+  header__logo: `
     h:50px@sm w:50px@sm h:40px w:40px
     mr:8px
     as:center
   `,
   "header__logo-img": `h:full w:full as:center`,
-  "header__title": `f:20px f:bold as:center`,
-  "header__btn": `
+  header__title: `f:20px f:bold as:center`,
+  header__btn: `
     b:none
     bg:${Colors.Secondary}
     f:14px f:white f:bold
@@ -301,7 +300,7 @@ const headerNavStyle = {
     r:5px
     cursor:pointer
     opacity:0.5:hover
-  `
+  `,
 } as const;
 
 const halfColumnLayoutStyle = {
@@ -321,7 +320,7 @@ const halfColumnLayoutStyle = {
 } as const;
 
 const dialogStyle = {
-  "dialog": `
+  dialog: `
     p:0
     r:5px
     bg:white
@@ -355,8 +354,8 @@ const dialogStyle = {
 
 const sidebarNavStyle = {
   // sidebar styles
-  "sidebar": `overflow:hidden@sm overflow-x:scroll`,
-  "sidebar__inner": `
+  sidebar: `overflow:hidden@sm overflow-x:scroll`,
+  sidebar__inner: `
     min-w:max-content
     flex flex:col@sm flex:row
   `,
@@ -375,7 +374,7 @@ const sidebarNavStyle = {
     bg:${Colors.ActiveLinkBackground}
     f:${Colors.ActiveLink}
   `,
-} as const
+} as const;
 
 const themeStyle = {
   "theme-list": `
@@ -424,7 +423,7 @@ const tableStyle = {
   "table-container": `
     overflow-x:auto@sm overflow-x:scroll mb:16px
   `,
-  "table": `
+  table: `
     border:separate border-spacing:0
     w:full@sm w:max-content
 
@@ -441,7 +440,7 @@ const tableStyle = {
 } as const;
 
 const menuStyle = {
-  "menu": `
+  menu: `
     abs z:10
     min-w:180px
     overflow:auto

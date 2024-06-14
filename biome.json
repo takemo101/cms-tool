@@ -22,7 +22,8 @@
       "jsxQuoteStyle": "double",
       "trailingCommas": "all",
       "semicolons": "always",
-      "arrowParentheses": "always"
+      "arrowParentheses": "always",
+      "attributePosition": "multiline"
     }
   },
   "json": {

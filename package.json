@@ -7,7 +7,7 @@
     "build": "tsc && vite build",
     "watch": "tsc && vite build --watch",
     "biome-format": "biome format --write ./resources/src",
-    "biome-lint": "biome check --apply ./resources/src"
+    "biome-lint": "biome check --write ./resources/src"
   },
   "devDependencies": {
     "@biomejs/biome": "1.8.1",

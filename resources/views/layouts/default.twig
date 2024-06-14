@@ -1,3 +1,9 @@
 {% extends 'cms-tool::layouts.master' %}
 
 {% block layout_class %}layout--center{% endblock %}
+
+{% import "cms-tool::components.dialogs" as dialogs %}
+
+{% block footer %}
+    {{ dialogs.confirm() }}
+{% endblock %}

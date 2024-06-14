@@ -4,7 +4,6 @@
 
 {% import "cms-tool::components.forms" as forms %}
 {% import "cms-tool::components.alerts" as alerts %}
-{% import "cms-tool::components.dialogs" as dialogs %}
 
 {% block content %}
 <div class="center-card">
@@ -18,7 +17,15 @@
         </p>
     </div>
     {{ alerts.error() }}
-    <div x-data="{ open: false }">
+    <div x-data="{
+        handleConfirmClick() {
+            this.$dispatch('open-dialog', {
+                title: 'Install',
+                message: '利用開始をしますか？',
+                ok: () => this.$refs.form.submit(),
+            });
+        }
+    }">
         {{ form_open({
             route: 'install',
             method: 'post',
@@ -102,12 +109,7 @@
                     label: '利用開始する',
                     class: 'form-btn--primary w:full',
                     disabled: not setting.canBeInstalled(),
-                    click: 'open = true',
-                }) }}
-                {{ dialogs.confirm({
-                    title: 'Install',
-                    message: '利用開始をしますか？',
-                    submit: '$refs.form.submit()',
+                    click: 'handleConfirmClick',
                 }) }}
             </div>
         {{ form_close() }}

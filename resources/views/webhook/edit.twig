@@ -67,7 +67,15 @@
                 </table>
             </div>
 
-            <div x-data="{ open: false }">
+            <div x-data="{
+                handleUpdateClick() {
+                    this.$dispatch('open-dialog', {
+                        title: 'Update',
+                        message: '値を再生成しますか？',
+                        ok: () => this.$refs.form.submit(),
+                    });
+                }
+            }">
                 <p class="u-text">
                     リクエストヘッダー：Valueは、以下のボタンを押すことで再生成できます。
                 </p>
@@ -82,11 +90,6 @@
                         click: 'open = true',
                     }) }}
                 {{ form_close() }}
-                {{ dialogs.confirm({
-                    title: 'Update',
-                    message: '値を再生成しますか？',
-                    submit: '$refs.form.submit()',
-                }) }}
             </div>
         </div>
     </div>

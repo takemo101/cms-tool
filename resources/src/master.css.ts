@@ -330,7 +330,7 @@ const dialogStyle = {
   "dialog-layout": `
     flex:col jc:center
     w:360px@sm w:full
-    p:20
+    px:20px pb:20px pt:10px
     t:left
   `,
   "dialog-header": `

@@ -5,7 +5,7 @@ type HEX = `#${string}`;
 
 type StyleColor = RGB | HEX;
 
-const Colors = {
+export const Colors = {
   Background: "#f8f9fd",
   Primary: "#563bff",
   Secondary: "#fc783f",
@@ -14,6 +14,8 @@ const Colors = {
   Link: "#7979b4",
   ActiveLinkBackground: "#e9e7fd",
   ActiveLink: "#563bff",
+  Success: "#00b09b",
+  Error: "#ff5a5a",
 } as const satisfies Record<string, StyleColor>;
 
 const generalStyle = {

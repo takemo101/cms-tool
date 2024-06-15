@@ -8,10 +8,14 @@ import "github-markdown-css/github-markdown-light.css";
 import "@splidejs/splide/css";
 import Splide from "@splidejs/splide";
 import "./codemirror";
+import Toastr from "./support/toastr";
 
 // Definition of MasterCSS custom style
 Style.extend("classes", style);
 init();
+
+// Register Toastr
+window.Toastr = new Toastr();
 
 // Register Splide
 window.Splide = Splide;

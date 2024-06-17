@@ -25,7 +25,7 @@ describe(
                 expect($functions)->toHaveCount(1);
 
                 foreach ($functions as $function) {
-                    expect($function->getCallable()[0])->toBeInstanceOf(RouteParserInterface::class);
+                    expect($function->getCallable())->toBeInstanceOf(Closure::class);
                 }
             },
         );

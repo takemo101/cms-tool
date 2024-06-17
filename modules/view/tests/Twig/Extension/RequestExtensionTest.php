@@ -20,7 +20,7 @@ describe(
                 expect($functions)->toHaveCount(2);
 
                 foreach ($functions as $function) {
-                    expect($function->getCallable()[0])->toBeInstanceOf(RequestExtension::class);
+                    expect($function->getCallable())->toBeInstanceOf(Closure::class);
                 }
             },
         );

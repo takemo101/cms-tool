@@ -27,14 +27,14 @@ class FormExtension extends AbstractExtension
         return [
             new TwigFunction(
                 'form_open',
-                [$this->builder, 'buildOpen'],
+                $this->builder->buildOpen(...),
                 [
                     'is_safe' => ['html'],
                 ],
             ),
             new TwigFunction(
                 'form_close',
-                [$this->builder, 'buildClose'],
+                $this->builder->buildClose(...),
                 [
                     'is_safe' => ['html'],
                 ],

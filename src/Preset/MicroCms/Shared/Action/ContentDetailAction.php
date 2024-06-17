@@ -51,7 +51,7 @@ class ContentDetailAction
         $draftKey = $params[self::DraftQueryKey] ?? null;
 
         $content = $draftKey
-            ?  $queryService->getOneDraft(
+            ? $queryService->getOneDraft(
                 endpoint: $this->endpoint,
                 id: $id,
                 draftKey: $draftKey,

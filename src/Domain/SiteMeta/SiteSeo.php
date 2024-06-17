@@ -2,7 +2,6 @@
 
 namespace Takemo101\CmsTool\Domain\SiteMeta;
 
-
 readonly class SiteSeo
 {
     /**

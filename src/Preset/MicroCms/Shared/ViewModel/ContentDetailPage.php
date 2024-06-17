@@ -4,7 +4,6 @@ namespace Takemo101\CmsTool\Preset\MicroCms\Shared\ViewModel;
 
 use ArrayObject;
 use Takemo101\CmsTool\Http\ViewModel\ViewModel;
-use Takemo101\CmsTool\UseCase\Shared\QueryService\ContentPaginator;
 
 class ContentDetailPage extends ViewModel
 {

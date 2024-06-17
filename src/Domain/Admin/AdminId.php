@@ -5,7 +5,6 @@ namespace Takemo101\CmsTool\Domain\Admin;
 use Stringable;
 use Takemo101\CmsTool\Domain\Shared\IdCreator;
 use Takemo101\CmsTool\Domain\Shared\Trait\ValueObjectEquatable;
-use Takemo101\CmsTool\Domain\Shared\Ulid;
 use Takemo101\CmsTool\Domain\Shared\ValueObject;
 
 /**

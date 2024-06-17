@@ -5,7 +5,6 @@ namespace Takemo101\CmsTool\Support\Session;
 use CmsTool\Session\Flash\AbstractFlashSession;
 use Illuminate\Support\Arr;
 
-
 class FlashOldInputs extends AbstractFlashSession
 {
     /**

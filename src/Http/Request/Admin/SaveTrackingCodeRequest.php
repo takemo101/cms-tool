@@ -16,10 +16,8 @@ readonly class SaveTrackingCodeRequest
     public function __construct(
         #[Length(max: 5000)]
         public string $head,
-
         #[Length(max: 5000)]
         public string $body,
-
         #[Length(max: 5000)]
         public string $footer,
     ) {

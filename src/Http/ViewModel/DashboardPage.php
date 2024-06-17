@@ -2,7 +2,6 @@
 
 namespace Takemo101\CmsTool\Http\ViewModel;
 
-use CmsTool\Theme\Theme;
 use Takemo101\CmsTool\Domain\Publish\SitePublishRepository;
 use Takemo101\CmsTool\UseCase\MicroCms\QueryService\Api\MicroCmsApiData;
 use Takemo101\CmsTool\UseCase\SiteMeta\QueryService\SiteMetaData;

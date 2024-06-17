@@ -12,7 +12,6 @@ readonly class SaveBasicSettingRequest
         #[NotBlank]
         #[Length(max: 50)]
         public string $siteName,
-
         #[Valid]
         public RootAdminForSaveBasicSettingRequest $root,
     ) {

@@ -11,7 +11,6 @@ readonly class SaveMicroCmsApiRequest
         #[NotBlank]
         #[Length(max: 100)]
         public string $key,
-
         #[NotBlank]
         #[Length(max: 100)]
         public string $serviceId,

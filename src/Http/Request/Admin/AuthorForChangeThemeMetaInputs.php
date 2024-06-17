@@ -9,7 +9,6 @@ readonly class AuthorForChangeThemeMetaInputs
     public function __construct(
         #[NotBlank]
         public string $name = '',
-
         public ?string $link = null,
     ) {
         //

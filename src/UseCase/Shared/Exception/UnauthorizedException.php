@@ -2,8 +2,6 @@
 
 namespace Takemo101\CmsTool\UseCase\Shared\Exception;
 
-use Throwable;
-
 class UnauthorizedException extends UseCaseException
 {
     /**

@@ -4,7 +4,6 @@ namespace Takemo101\CmsTool\Infra\JsonAccess\QueryService;
 
 use EventSauce\ObjectHydrator\ObjectMapper;
 use Takemo101\CmsTool\UseCase\Admin\QueryService\RootAdminAccountData;
-use Takemo101\CmsTool\UseCase\Install\QueryService\InstallSettingData;
 
 class JsonAccessAdminAccountDataMapper
 {

@@ -90,7 +90,6 @@ class MicroCmsApiConnector extends Connector
     public static function fromEntity(
         MicroCmsApi $api,
         array $guzzleOptions = [],
-
     ): self {
         return new self(
             key: $api->key,

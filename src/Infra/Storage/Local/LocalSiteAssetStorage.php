@@ -3,7 +3,6 @@
 namespace Takemo101\CmsTool\Infra\Storage\Local;
 
 use Psr\Http\Message\UploadedFileInterface;
-use SplFileObject;
 use Takemo101\Chubby\Filesystem\LocalFilesystem;
 use Takemo101\CmsTool\Domain\Shared\IdCreator;
 use Takemo101\CmsTool\Infra\Storage\LocalPublicStoragePath;

@@ -23,7 +23,7 @@
         "phpstan/phpstan": "^1.10",
         "mockery/mockery": "^1.6",
         "symfony/var-dumper": "^6.4|^7.0",
-        "takemo101/chubby": "^0.0.27"
+        "takemo101/chubby": "^0.1.4"
     },
     "scripts": {
         "lint": "pint -v",

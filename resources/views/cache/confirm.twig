@@ -23,7 +23,15 @@
                     Webhookの設定方法はこちら
                 </a>
             </p>
-            <div class="mt:30" x-data="{ open: false }">
+            <div class="mt:30" x-data="{
+                handleClearClick() {
+                    this.$dispatch('open-dialog', {
+                        title: 'Clear',
+                        message: 'キャッシュをクリアしますか？',
+                        ok: () => this.$refs.form.submit(),
+                    });
+                }
+            }">
                 {{ form_open({
                     route: 'admin.cache.clean',
                     method: 'delete',
@@ -32,14 +40,9 @@
                     {{ forms.button({
                         label: 'キャッシュクリアする',
                         class: 'form-btn--secondary',
-                        click: 'open = true',
+                        click: 'handleClearClick',
                     }) }}
                 {{ form_close() }}
-                {{ dialogs.confirm({
-                    title: 'Clear',
-                    message: 'キャッシュをクリアしますか？',
-                    submit: '$refs.form.submit()',
-                }) }}
             </div>
         </div>
     </div>

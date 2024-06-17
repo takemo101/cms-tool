@@ -6,7 +6,6 @@
 
 {% import "cms-tool::components.forms" as forms %}
 {% import "cms-tool::components.alerts" as alerts %}
-{% import "cms-tool::components.dialogs" as dialogs %}
 
 {% block content_right %}
 <div class="card">
@@ -17,7 +16,14 @@
     <div class="card-body">
         {{ alerts.error() }}
 
-        <div class="mb:20px" x-data="{ open: false }">
+        <div class="mb:20px" x-data="{
+            handleUpdateClick() {
+                this.$dispatch('open-dialog', {
+                    open: () => this.$refs.form.reportValidity(),
+                    ok: () => this.$refs.form.submit(),
+                });
+            }
+        }">
             {{ form_open({
                 route: 'admin.meta.update',
                 method: 'put',
@@ -37,19 +43,21 @@
                     {{ forms.button({
                         label: '更新',
                         class: 'form-btn--primary',
-                        click: '$refs.form.reportValidity() && (open = true)',
+                        click: 'handleUpdateClick',
                     }) }}
                 </div>
             {{ form_close() }}
-            {{ dialogs.confirm({
-                title: 'Update',
-                message: '変更内容を保存しますか？',
-                submit: '$refs.form.submit()',
-            }) }}
         </div>
 
         <h3 class="u-title">microCMS API設定</h3>
-        <div x-data="{ open: false }">
+        <div x-data="{
+            handleUpdateClick() {
+                this.$dispatch('open-dialog', {
+                    open: () => this.$refs.form.reportValidity(),
+                    ok: () => this.$refs.form.submit(),
+                });
+            }
+        }">
             {{ form_open({
                 route: 'admin.api.update',
                 method: 'put',
@@ -88,15 +96,10 @@
                     {{ forms.button({
                         label: '更新',
                         class: 'form-btn--primary',
-                        click: '$refs.form.reportValidity() && (open = true)',
+                        click: 'handleUpdateClick',
                     }) }}
                 </div>
             {{ form_close() }}
-            {{ dialogs.confirm({
-                title: 'Update',
-                message: '変更内容を保存しますか？',
-                submit: '$refs.form.submit()',
-            }) }}
         </div>
     </div>
 </div>

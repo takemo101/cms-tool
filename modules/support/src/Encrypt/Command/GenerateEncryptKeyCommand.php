@@ -7,7 +7,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Takemo101\Chubby\Console\Command\Command;
 use Takemo101\Chubby\Filesystem\LocalFilesystem;
 use Takemo101\Chubby\Support\ApplicationPath;
-use RuntimeException;
 
 class GenerateEncryptKeyCommand extends Command
 {

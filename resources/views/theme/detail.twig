@@ -67,7 +67,9 @@
                         x-on:click="open = !open">
                         <i class="fas fa-ellipsis-h"></i>
                     </button>
-                    <ul class="menu menu--right" x-show="open">
+                    <ul class="menu menu--right"
+                        x-show="open"
+                        x-on:click.away="open = false">
                         {% if theme.meta.link %}
                         <li>
                             <a class="menu-link"

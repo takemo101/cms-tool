@@ -2,7 +2,6 @@
 
 namespace Takemo101\CmsTool\Http\ViewModel;
 
-use Takemo101\CmsTool\Domain\MicroCms\MicroCmsApiAccessValidator;
 use Takemo101\CmsTool\UseCase\SiteMeta\QueryService\SiteMetaData;
 use Takemo101\CmsTool\UseCase\SiteMeta\QueryService\SiteSeoData;
 

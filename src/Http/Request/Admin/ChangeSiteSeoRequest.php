@@ -11,19 +11,14 @@ readonly class ChangeSiteSeoRequest
     public function __construct(
         #[Length(max: 50)]
         public string $title,
-
         #[Length(max: 50)]
         public string $description,
-
         #[Length(max: 50)]
         public string $keywords,
-
         #[File(mimeTypes: ['image/png', 'image/jpeg'])]
         public ?UploadedFileInterface $favicon = null,
-
         #[File(mimeTypes: ['image/png', 'image/jpeg'])]
         public ?UploadedFileInterface $icon = null,
-
         #[Length(max: 50)]
         public string $robots = '',
     ) {

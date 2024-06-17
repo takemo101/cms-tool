@@ -4,7 +4,6 @@ namespace Takemo101\CmsTool\Support\Accessor;
 
 use ArrayObject;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Message\UriInterface;
 use Takemo101\CmsTool\Support\Shared\ImmutableArrayObject;
 use Takemo101\CmsTool\Support\Uri\UriProxy;
 

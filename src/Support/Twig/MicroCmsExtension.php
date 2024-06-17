@@ -4,7 +4,6 @@ namespace Takemo101\CmsTool\Support\Twig;
 
 use Takemo101\CmsTool\Infra\MicroCms\MicroCmsImageApiQueryBuilder;
 use Twig\Extension\AbstractExtension;
-use Twig\TwigFilter;
 use Twig\TwigFunction;
 
 class MicroCmsExtension extends AbstractExtension

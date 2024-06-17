@@ -4,6 +4,8 @@
     {% include 'cms-tool::components.header' %}
 {% endblock %}
 
+{% import "cms-tool::components.dialogs" as dialogs %}
+
 {% block content %}
    {% set current = block('current') is defined ? block('current') : '' %}
     <div class="half-column">
@@ -14,4 +16,8 @@
             {% block content_right %}{% endblock %}
         </div>
     </div>
+{% endblock %}
+
+{% block footer %}
+    {{ dialogs.confirm() }}
 {% endblock %}

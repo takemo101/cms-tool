@@ -5,13 +5,17 @@
   "type": "module",
   "scripts": {
     "build": "tsc && vite build",
-    "watch": "tsc && vite build --watch"
+    "watch": "tsc && vite build --watch",
+    "biome-format": "biome format --write ./resources/src",
+    "biome-lint": "biome check --write ./resources/src"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.8.1",
     "@types/alpinejs": "^3.13.5",
     "@types/alpinejs__intersect": "^3.13.3",
     "@types/codemirror": "^5.60.15",
     "@types/node": "^20.10.5",
+    "@types/toastify-js": "^1.12.3",
     "typescript": "^5.2.2",
     "vite": "^5.0.8"
   },
@@ -23,6 +27,7 @@
     "@splidejs/splide": "^4.1.4",
     "alpinejs": "^3.13.3",
     "codemirror": "5",
-    "github-markdown-css": "^5.5.0"
+    "github-markdown-css": "^5.5.0",
+    "toastify-js": "^1.12.0"
   }
 }

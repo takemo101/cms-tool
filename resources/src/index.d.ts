@@ -1,6 +1,5 @@
-declare module '@fylgja/alpinejs-dialog' {
-
-  import { PluginCallback } from "alpinejs";
+declare module "@fylgja/alpinejs-dialog" {
+  import type { PluginCallback } from "alpinejs";
 
   const dialog: PluginCallback;
 

@@ -6,7 +6,6 @@ use CmsTool\Session\Flash\FlashSessionsContext;
 use CmsTool\View\Accessor\DataAccessors;
 use Takemo101\Chubby\Event\Attribute\AsEventListener;
 use Takemo101\Chubby\Http\Bridge\BeforeControllerInvoke;
-use Takemo101\CmsTool\Support\Accessor\ServerRequestAccessor;
 use Takemo101\CmsTool\Support\Session\FlashOldInputs;
 
 #[AsEventListener(BeforeControllerInvoke::class)]

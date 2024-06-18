@@ -45,7 +45,7 @@ class ToastSession
      * Create a new instance from the array
      *
      * @param array{
-     *  toast-style: string,
+     *  toast-style: ToastTyle|string,
      *  toast-message?: string,
      * } $data
      * @return array<string,mixed>
@@ -53,10 +53,13 @@ class ToastSession
     public static function fromArray(
         array $data
     ): self {
+        /** @var ToastTyle|string */
+        $style = $data[ToastRenderer::ToastStyleKey];
+
         return new self(
-            style: ToastStyle::from(
-                $data[ToastRenderer::ToastStyleKey],
-            ),
+            style: is_string($style)
+                ? ToastStyle::from($style)
+                : $style,
             message: $data[ToastRenderer::ToastMessageKey] ?? null,
         );
     }

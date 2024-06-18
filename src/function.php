@@ -53,7 +53,6 @@ use Takemo101\CmsTool\Infra\Listener\CreateRobotsTxtListener;
 use Takemo101\CmsTool\Infra\Listener\CsrfGuardContextSetupListener;
 use Takemo101\CmsTool\Infra\Listener\DeleteRobotsTxtListener;
 use Takemo101\CmsTool\Infra\Listener\RequestParameterSetupListener;
-use Takemo101\CmsTool\Infra\Listener\TwigExtensionSetupListener;
 use Takemo101\CmsTool\Infra\Storage\LocalPublicStoragePath;
 use Takemo101\CmsTool\Support\Theme\ActiveThemeRouteRegister;
 
@@ -68,7 +67,6 @@ hook()
             ->on(AdminSessionContextSetupListener::class)
             ->on(CsrfGuardContextSetupListener::class)
             ->on(RequestParameterSetupListener::class)
-            ->on(TwigExtensionSetupListener::class)
             ->on(CreateRobotsTxtListener::class)
             ->on(DeleteRobotsTxtListener::class)
             ->on(ClearCacheListener::class),

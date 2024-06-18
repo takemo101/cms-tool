@@ -20,7 +20,6 @@ class CmsToolConfigurer extends DefaultSlimConfigurer
     {
         $slim = parent::configure($slim);
 
-        $slim->add(SetupProcess::class);
         $slim->add(CacheControl::class);
         $slim->add(new MethodOverrideMiddleware());
 

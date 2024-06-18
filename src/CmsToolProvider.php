@@ -7,12 +7,15 @@ use CmsTool\Theme\Contract\ThemeFinder;
 use CmsTool\View\Contract\TemplateFinder;
 use CmsTool\View\Html\Filter\FormAppendFilters;
 use Psr\Container\ContainerInterface;
+use Slim\Middleware\MethodOverrideMiddleware;
 use Takemo101\Chubby\ApplicationContainer;
 use Takemo101\Chubby\Bootstrap\Definitions;
 use Takemo101\Chubby\Bootstrap\Provider\Provider;
 use Takemo101\Chubby\Config\ConfigRepository;
 use Takemo101\Chubby\Filesystem\LocalFilesystem;
 use Takemo101\Chubby\Hook\Hook;
+use Takemo101\Chubby\Http\GlobalMiddlewareCollection;
+use Takemo101\CmsTool\Http\Middleware\CacheControl;
 use Takemo101\CmsTool\Http\Session\AdminSessionFactory;
 use Takemo101\CmsTool\Http\Session\DefaultAdminSessionFactory;
 use Takemo101\CmsTool\Support\FormAppendFilter\AppendCsrfInputFilter;
@@ -122,6 +125,7 @@ class CmsToolProvider implements Provider
         $this->bootTheme($hook, $path);
         $this->bootHtml($hook);
         $this->bootTranslation($hook);
+        $this->bootGlobalMiddleware($hook);
 
         /** @var ActiveThemeFunctionLoader */
         $functionLoader = $container->get(ActiveThemeFunctionLoader::class);
@@ -207,6 +211,23 @@ class CmsToolProvider implements Provider
                         $path->getResourcePath('lang'),
                     );
                 }
+            );
+    }
+
+    /**
+     * Boot global middleware.
+     *
+     * @param Hook $hook
+     * @return void
+     */
+    private function bootGlobalMiddleware(Hook $hook): void
+    {
+        $hook
+            ->onTyped(
+                fn (GlobalMiddlewareCollection $middlewares) => $middlewares->add(
+                    CacheControl::class,
+                    new MethodOverrideMiddleware(),
+                ),
             );
     }
 }

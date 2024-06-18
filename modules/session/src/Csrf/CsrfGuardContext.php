@@ -2,7 +2,7 @@
 
 namespace CmsTool\Session\Csrf;
 
-use Takemo101\Chubby\Http\Support\AbstractContext;
+use Takemo101\Chubby\Http\Context\AbstractContext;
 
 class CsrfGuardContext extends AbstractContext
 {
@@ -34,7 +34,7 @@ class CsrfGuardContext extends AbstractContext
      *
      * @return array<string,mixed>
      */
-    protected function getServerRequestAttributes(): array
+    protected function getContextValues(): array
     {
         return [
             CsrfGuard::class => $this->getGuard(),

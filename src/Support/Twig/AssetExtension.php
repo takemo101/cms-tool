@@ -24,10 +24,10 @@ class AssetExtension extends AbstractExtension
      * @param LocalPublicStoragePath $localPublicStoragePath
      */
     public function __construct(
-        private RouteParserInterface $routeParser,
-        private ApplicationUri $uri,
-        private PathHelper $helper,
-        private LocalPublicStoragePath $localPublicStoragePath,
+        private readonly RouteParserInterface $routeParser,
+        private readonly ApplicationUri $uri,
+        private readonly PathHelper $helper,
+        private readonly LocalPublicStoragePath $localPublicStoragePath,
     ) {
         //
     }
@@ -38,10 +38,10 @@ class AssetExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('asset', [$this, 'getAssetUrl']),
-            new TwigFunction('theme', [$this, 'getThemeAssetUrl']),
-            new TwigFunction('vendor', [$this, 'getVendorAssetUrl']),
-            new TwigFunction('storage', [$this, 'getLocalPublicStorageUrl']),
+            new TwigFunction('asset', $this->getAssetUrl(...)),
+            new TwigFunction('theme', $this->getThemeAssetUrl(...)),
+            new TwigFunction('vendor', $this->getVendorAssetUrl(...)),
+            new TwigFunction('storage', $this->getLocalPublicStorageUrl(...)),
         ];
     }
 

@@ -14,7 +14,7 @@ class MicroCmsExtension extends AbstractExtension
      * @param MicroCmsImageApiQueryBuilder $builder
      */
     public function __construct(
-        private MicroCmsImageApiQueryBuilder $builder,
+        private readonly MicroCmsImageApiQueryBuilder $builder,
     ) {
         //
     }
@@ -25,7 +25,7 @@ class MicroCmsExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('microcms_img', [$this->builder, 'build']),
+            new TwigFunction('microcms_img', $this->builder->build(...)),
         ];
     }
 }

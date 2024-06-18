@@ -1,10 +1,10 @@
 <?php
 
-// Slim framework related settings
+// Slim framework configuration
 
+use Takemo101\Chubby\Http\Configurer\DefaultSlimConfigurer;
 use Takemo101\Chubby\Http\ErrorHandler\ErrorHandler;
 use Takemo101\Chubby\Http\Factory\DefaultSlimFactory;
-use Takemo101\CmsTool\Http\Support\CmsToolConfigurer;
 
 return [
 
@@ -15,7 +15,7 @@ return [
     'factory' => DefaultSlimFactory::class,
 
     // Specify a class that implements Slimconfigurer to perform setting processing before executing Slim
-    'configurer' => CmsToolConfigurer::class,
+    'configurer' => DefaultSlimConfigurer::class,
 
     // Error output settings
     'error' => [
@@ -40,5 +40,10 @@ return [
         'private' => true,
 
         'no-cache' => true,
-    ]
+    ],
+
+    // Global middleware settings
+    'middlewares' => [
+        // class-string<MiddlewareInterface>
+    ],
 ];

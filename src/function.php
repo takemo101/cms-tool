@@ -109,8 +109,6 @@ hook()
             /** @var string */
             $webhookRoutePath = config('system.webhook.route', '/webhook');
 
-            $http->add(SessionStart::class);
-
             $http->post(
                 $webhookRoutePath,
                 WebhookAction::class,

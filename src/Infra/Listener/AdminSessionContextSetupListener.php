@@ -4,11 +4,11 @@ namespace Takemo101\CmsTool\Infra\Listener;
 
 use CmsTool\View\ViewCreator;
 use Takemo101\Chubby\Event\Attribute\AsEventListener;
-use Takemo101\Chubby\Http\Bridge\BeforeControllerInvoke;
+use Takemo101\Chubby\Http\Event\BeforeControllerExecution;
 use Takemo101\CmsTool\Domain\Admin\RootAdminRepository;
 use Takemo101\CmsTool\Http\Session\AdminSessionContext;
 
-#[AsEventListener(BeforeControllerInvoke::class)]
+#[AsEventListener(BeforeControllerExecution::class)]
 class AdminSessionContextSetupListener
 {
     /**
@@ -25,11 +25,11 @@ class AdminSessionContextSetupListener
     }
 
     /**
-     * @param BeforeControllerInvoke $event
+     * @param BeforeControllerExecution $event
      * @return void
      */
     public function __invoke(
-        BeforeControllerInvoke $event
+        BeforeControllerExecution $event
     ): void {
         $request = $event->getRequest();
 

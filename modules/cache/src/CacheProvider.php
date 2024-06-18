@@ -6,9 +6,9 @@ use CmsTool\Cache\Command\CacheCleanCommand;
 use CmsTool\Cache\Contract\CacheItemPoolFactory;
 use Psr\Cache\CacheItemPoolInterface;
 use Takemo101\Chubby\ApplicationContainer;
-use Takemo101\Chubby\Bootstrap\DefinitionHelper;
 use Takemo101\Chubby\Bootstrap\Definitions;
 use Takemo101\Chubby\Bootstrap\Provider\Provider;
+use Takemo101\Chubby\Bootstrap\Support\ConfigBasedDefinitionReplacer;
 use Takemo101\Chubby\Config\ConfigPhpRepository;
 use Takemo101\Chubby\Config\ConfigRepository;
 use Takemo101\Chubby\Console\CommandCollection;
@@ -31,10 +31,9 @@ class CacheProvider implements Provider
     public function register(Definitions $definitions): void
     {
         $definitions->add([
-            CacheItemPoolFactory::class => DefinitionHelper::createReplaceable(
+            CacheItemPoolFactory::class => new ConfigBasedDefinitionReplacer(
                 FilesystemCacheItemPoolFactory::class,
                 'cache.factory',
-                CacheItemPoolFactory::class,
             ),
             CacheItemPoolInterface::class => fn (CacheItemPoolFactory $factory) => $factory->create(),
         ]);

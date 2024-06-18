@@ -7,10 +7,10 @@ use CmsTool\Session\Csrf\CsrfToken;
 use CmsTool\View\ViewCreator;
 use Psr\Container\ContainerInterface;
 use Takemo101\Chubby\Event\Attribute\AsEventListener;
-use Takemo101\Chubby\Http\Bridge\BeforeControllerInvoke;
+use Takemo101\Chubby\Http\Event\BeforeControllerExecution;
 use Takemo101\CmsTool\Support\FormAppendFilter\AppendCsrfInputFilter;
 
-#[AsEventListener(BeforeControllerInvoke::class)]
+#[AsEventListener(BeforeControllerExecution::class)]
 class CsrfGuardContextSetupListener
 {
     /**
@@ -29,11 +29,11 @@ class CsrfGuardContextSetupListener
     }
 
     /**
-     * @param BeforeControllerInvoke $event
+     * @param BeforeControllerExecution $event
      * @return void
      */
     public function __invoke(
-        BeforeControllerInvoke $event
+        BeforeControllerExecution $event
     ): void {
         $request = $event->getRequest();
 

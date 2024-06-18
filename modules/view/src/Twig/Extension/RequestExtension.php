@@ -53,11 +53,11 @@ class RequestExtension extends AbstractExtension
         return [
             new TwigFunction(
                 'query',
-                [$this, 'getQueryParams'],
+                $this->getQueryParams(...)
             ),
             new TwigFunction(
                 'input',
-                [$this, 'getParsedBody'],
+                $this->getParsedBody(...),
             ),
         ];
     }

@@ -41,7 +41,7 @@ class AdminSessionStart implements MiddlewareInterface
         $context = new AdminSessionContext($session);
 
         return $handler->handle(
-            $context->withContext($request),
+            $context->withRequest($request),
         );
     }
 }

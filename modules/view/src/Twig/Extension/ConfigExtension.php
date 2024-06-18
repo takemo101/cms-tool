@@ -27,7 +27,7 @@ class ConfigExtension extends AbstractExtension
         return [
             new TwigFunction(
                 'config',
-                [$this->config, 'get'],
+                $this->config->get(...),
             ),
         ];
     }

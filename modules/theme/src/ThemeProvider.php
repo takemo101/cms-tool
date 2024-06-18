@@ -13,9 +13,9 @@ use CmsTool\Theme\Hook\ThemeHookPresets;
 use CmsTool\Theme\Routing\ThemeRoute;
 use CmsTool\Theme\Routing\ThemeRoutePresets;
 use Takemo101\Chubby\ApplicationContainer;
-use Takemo101\Chubby\Bootstrap\DefinitionHelper;
 use Takemo101\Chubby\Bootstrap\Definitions;
 use Takemo101\Chubby\Bootstrap\Provider\Provider;
+use Takemo101\Chubby\Bootstrap\Support\ConfigBasedDefinitionReplacer;
 use Takemo101\Chubby\Config\ConfigRepository;
 use Takemo101\Chubby\Filesystem\PathHelper;
 use Takemo101\Chubby\Config\ConfigPhpRepository;
@@ -39,29 +39,25 @@ class ThemeProvider implements Provider
     public function register(Definitions $definitions): void
     {
         $definitions->add([
-            ThemeFinder::class => DefinitionHelper::createReplaceable(
-                ThemeFinder::class,
-                'theme.finder',
+            ThemeFinder::class => new ConfigBasedDefinitionReplacer(
                 DefaultThemeFinder::class,
+                'theme.finder',
                 true,
             ),
-            ThemeAccessor::class => DefinitionHelper::createReplaceable(
-                ThemeAccessor::class,
-                'theme.accessor',
+            ThemeAccessor::class => new ConfigBasedDefinitionReplacer(
                 DefaultThemeAccessor::class,
+                'theme.accessor',
                 true,
             ),
             ThemeLoader::class => get(ThemeAccessor::class),
             ThemeSaver::class => get(ThemeAccessor::class),
-            ActiveThemeIdMatcher::class => DefinitionHelper::createReplaceable(
-                ActiveThemeIdMatcher::class,
-                'theme.matcher',
+            ActiveThemeIdMatcher::class => new ConfigBasedDefinitionReplacer(
                 DefaultActiveThemeIdMatcher::class,
+                'theme.matcher',
             ),
-            ThemeAssetFinfoFactory::class => DefinitionHelper::createReplaceable(
-                ThemeAssetFinfoFactory::class,
-                'theme.factory',
+            ThemeAssetFinfoFactory::class => new ConfigBasedDefinitionReplacer(
                 DefaultThemeAssetFinfoFactory::class,
+                'theme.factory',
             ),
             ThemeRoutePresets::class => function (
                 ConfigRepository $config,

@@ -3,31 +3,19 @@
 namespace Takemo101\CmsTool\Infra\Listener;
 
 use CmsTool\Session\Flash\FlashSessionsContext;
-use CmsTool\View\Accessor\DataAccessors;
 use Takemo101\Chubby\Event\Attribute\AsEventListener;
-use Takemo101\Chubby\Http\Bridge\BeforeControllerInvoke;
+use Takemo101\Chubby\Http\Event\BeforeControllerExecution;
 use Takemo101\CmsTool\Support\Session\FlashOldInputs;
 
-#[AsEventListener(BeforeControllerInvoke::class)]
+#[AsEventListener(BeforeControllerExecution::class)]
 class RequestParameterSetupListener
 {
     /**
-     * constructor
-     *
-     * @param DataAccessors $accessors
-     */
-    public function __construct(
-        private DataAccessors $accessors,
-    ) {
-        //
-    }
-
-    /**
-     * @param BeforeControllerInvoke $event
+     * @param BeforeControllerExecution $event
      * @return void
      */
     public function __invoke(
-        BeforeControllerInvoke $event
+        BeforeControllerExecution $event
     ): void {
         $request = $event->getRequest();
 

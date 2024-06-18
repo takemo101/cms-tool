@@ -50,8 +50,8 @@ class SessionStart implements MiddlewareInterface
         $flashSessionsContext = new FlashSessionsContext($flashSessions);
 
         $response = $handler->handle(
-            $flashSessionsContext->withContext(
-                $sessionContext->withContext($request),
+            $flashSessionsContext->withRequest(
+                $sessionContext->withRequest($request),
             ),
         );
 

@@ -21,7 +21,7 @@ describe(
                 expect($functions)->toHaveCount(1);
 
                 foreach ($functions as $function) {
-                    expect($function->getCallable()[0])->toBeInstanceOf(ConfigRepository::class);
+                    expect($function->getCallable())->toBeInstanceOf(Closure::class);
                 }
             },
         );

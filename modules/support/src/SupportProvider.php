@@ -28,11 +28,11 @@ use Takemo101\Chubby\Filesystem\PathHelper;
 use Takemo101\Chubby\Hook\Hook;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Takemo101\Chubby\Bootstrap\DefinitionHelper;
 use Takemo101\Chubby\Config\ConfigPhpRepository;
 use Takemo101\Chubby\Console\CommandCollection;
 use RuntimeException;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Takemo101\Chubby\Bootstrap\Support\ConfigBasedDefinitionReplacer;
 
 use function DI\get;
 
@@ -105,10 +105,9 @@ class SupportProvider implements Provider
     public function registerJsonAccess(Definitions $definitions): void
     {
         $definitions->add([
-            JsonArrayAccessor::class => DefinitionHelper::createReplaceable(
-                JsonArrayAccessor::class,
-                'support.json.accessor',
+            JsonArrayAccessor::class => new ConfigBasedDefinitionReplacer(
                 DefaultJsonAccessor::class,
+                'support.json.accessor',
             ),
             JsonArrayLoader::class => get(JsonArrayAccessor::class),
             JsonArraySaver::class => get(JsonArrayAccessor::class),
@@ -146,10 +145,9 @@ class SupportProvider implements Provider
                     $cipher,
                 );
             },
-            Encrypter::class => DefinitionHelper::createReplaceable(
-                Encrypter::class,
-                'support.encrypt.encrypter',
+            Encrypter::class => new ConfigBasedDefinitionReplacer(
                 DefaultEncrypter::class,
+                'support.encrypt.encrypter',
             ),
         ]);
     }
@@ -180,18 +178,16 @@ class SupportProvider implements Provider
     {
         $definitions->add([
             TranslatorInterface::class => get(SymfonyTranslationProxy::class),
-            TranslationAccessor::class => DefinitionHelper::createReplaceable(
-                TranslationAccessor::class,
-                'support.translation.accessor',
+            TranslationAccessor::class => new ConfigBasedDefinitionReplacer(
                 TranslationJsonFileAccessor::class,
+                'support.translation.accessor',
                 true,
             ),
             TranslationLoader::class => get(TranslationAccessor::class),
             TranslationSaver::class => get(TranslationAccessor::class),
-            Translator::class => DefinitionHelper::createReplaceable(
-                Translator::class,
-                'support.translation.translator',
+            Translator::class => new ConfigBasedDefinitionReplacer(
                 DefaultTranslator::class,
+                'support.translation.translator',
                 true,
             ),
         ]);

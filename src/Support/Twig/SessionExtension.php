@@ -5,30 +5,19 @@ namespace Takemo101\CmsTool\Support\Twig;
 use Odan\Session\SessionInterface as Session;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
-use RuntimeException;
+use Takemo101\Chubby\Context\ContextRepository;
 
 class SessionExtension extends AbstractExtension
 {
     /**
      * constructor
      *
-     * @param Session|null $session
+     * @param ContextRepository $repository
      */
     public function __construct(
-        private ?Session $session = null,
+        private readonly ContextRepository $repository,
     ) {
         //
-    }
-
-    /**
-     * Set the value of session
-     *
-     * @param Session $session
-     * @return void
-     */
-    public function setSession(Session $session): void
-    {
-        $this->session = $session;
     }
 
     /**
@@ -38,11 +27,8 @@ class SessionExtension extends AbstractExtension
      */
     private function getSession(): Session
     {
-        $session = $this->session;
-
-        $session ?? throw new RuntimeException('session is not set');
-
-        return $session;
+        return $this->repository->get()
+            ->getTyped(Session::class);
     }
 
     /**
@@ -51,8 +37,8 @@ class SessionExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('session', [$this, 'session']),
-            new TwigFunction('session_has', [$this, 'sessionHas']),
+            new TwigFunction('session', $this->session(...)),
+            new TwigFunction('session_has', $this->sessionHas(...)),
         ];
     }
 

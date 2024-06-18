@@ -10,6 +10,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Mockery as m;
+use Takemo101\Chubby\Http\Context\RequestContext;
 
 beforeEach(function () {
     $this->sessionFactory = m::mock(SessionFactory::class);
@@ -37,7 +38,7 @@ describe(
 
                 $this->handler->shouldReceive('handle')->andReturn($this->response);
 
-                $this->request->shouldReceive('withAttribute')->andReturnSelf();
+                $this->request->shouldReceive('getAttribute')->andReturn(new RequestContext());
 
                 $this->handler->shouldReceive('handle')->andReturn($this->response);
 
@@ -63,7 +64,7 @@ describe(
 
                 $this->handler->shouldReceive('handle')->andReturn($this->response);
 
-                $this->request->shouldReceive('withAttribute')->andReturnSelf();
+                $this->request->shouldReceive('getAttribute')->andReturn(new RequestContext());
 
                 $middleware = new SessionStart(
                     $this->sessionFactory,

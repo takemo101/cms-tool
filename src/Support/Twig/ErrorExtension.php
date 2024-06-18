@@ -4,7 +4,7 @@ namespace Takemo101\CmsTool\Support\Twig;
 
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
-use RuntimeException;
+use Takemo101\Chubby\Context\ContextRepository;
 use Takemo101\CmsTool\Support\Session\FlashErrorMessages;
 
 class ErrorExtension extends AbstractExtension
@@ -12,23 +12,12 @@ class ErrorExtension extends AbstractExtension
     /**
      * constructor
      *
-     * @param FlashErrorMessages|null $errors
+     * @param ContextRepository $repository
      */
     public function __construct(
-        private ?FlashErrorMessages $errors = null,
+        private readonly ContextRepository $repository,
     ) {
         //
-    }
-
-    /**
-     * Set the value of errors
-     *
-     * @param FlashErrorMessages $errors
-     * @return void
-     */
-    public function setErrors(FlashErrorMessages $errors): void
-    {
-        $this->errors = $errors;
     }
 
     /**
@@ -38,11 +27,8 @@ class ErrorExtension extends AbstractExtension
      */
     private function getErrors(): FlashErrorMessages
     {
-        $errors = $this->errors;
-
-        $errors ?? throw new RuntimeException('errors is not set');
-
-        return $errors;
+        return $this->repository->get()
+            ->getTyped(FlashErrorMessages::class);
     }
 
     /**
@@ -51,11 +37,11 @@ class ErrorExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('is_error', [$this, 'isError']),
-            new TwigFunction('error', [$this, 'error']),
-            new TwigFunction('error_first', [$this, 'errorFirst']),
-            new TwigFunction('error_has', [$this, 'errorHas']),
-            new TwigFunction('error_all', [$this, 'errorAll']),
+            new TwigFunction('is_error', $this->isError(...)),
+            new TwigFunction('error', $this->error(...)),
+            new TwigFunction('error_first', $this->errorFirst(...)),
+            new TwigFunction('error_has', $this->errorHas(...)),
+            new TwigFunction('error_all', $this->errorAll(...)),
         ];
     }
 

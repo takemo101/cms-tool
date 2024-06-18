@@ -1,17 +1,15 @@
 <?php
 
-use CmsTool\View\Accessor\DefaultDataAccessInvoker;
 use CmsTool\View\Contract\Htmlable;
-use CmsTool\View\DefaultTemplateFinder;
 use CmsTool\View\Twig\Extension\ConfigExtension;
 use CmsTool\View\Twig\Extension\RequestExtension;
 use CmsTool\View\Twig\Extension\FiltersExtension;
 use CmsTool\View\Twig\Extension\FormExtension;
 use CmsTool\View\Twig\Extension\FunctionsExtension;
 use CmsTool\View\Twig\Extension\RouteExtension;
-use CmsTool\View\Twig\TwigTemplateRenderer;
 use Takemo101\Chubby\Contract\Renderable;
 use Takemo101\CmsTool\Support\Accessor\MicroCmsApiAccessor;
+use Takemo101\CmsTool\Support\Accessor\ServerRequestAccessor;
 use Takemo101\CmsTool\Support\Accessor\SiteMetaAccessor;
 use Takemo101\CmsTool\Support\Twig\AssetExtension;
 use Takemo101\CmsTool\Support\Twig\ErrorExtension;
@@ -23,15 +21,6 @@ use Takemo101\CmsTool\Support\Twig\TranslationExtension;
 use Twig\Extension\StringLoaderExtension;
 
 return [
-
-    // TemplateFinder implementation class name
-    'finder' => DefaultTemplateFinder::class,
-
-    // TemplateRenderer implementation class name
-    'renderer' => TwigTemplateRenderer::class,
-
-    // DataAccessInvoker implementation class name
-    'invoker' => DefaultDataAccessInvoker::class,
 
     'locations' => [],
 
@@ -130,6 +119,7 @@ return [
 
         'meta' => SiteMetaAccessor::class,
         'api' => MicroCmsApiAccessor::class,
+        'request' => ServerRequestAccessor::class,
     ],
 
 ];

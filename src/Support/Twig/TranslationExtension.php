@@ -15,7 +15,7 @@ class TranslationExtension extends AbstractExtension
      * @param Translator $translator
      */
     public function __construct(
-        private Translator $translator,
+        private readonly Translator $translator,
     ) {
         //
     }
@@ -26,8 +26,8 @@ class TranslationExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('__', [$this->translator, 'translate']),
-            new TwigFunction('t', [$this->translator, 'translate']),
+            new TwigFunction('__', $this->translator->translate(...)),
+            new TwigFunction('t', $this->translator->translate(...)),
         ];
     }
 
@@ -37,8 +37,8 @@ class TranslationExtension extends AbstractExtension
     public function getFilters(): array
     {
         return [
-            new TwigFilter('trans', [$this->translator, 'translate']),
-            new TwigFilter('t', [$this->translator, 'translate']),
+            new TwigFilter('trans', $this->translator->translate(...)),
+            new TwigFilter('t', $this->translator->translate(...)),
         ];
     }
 }

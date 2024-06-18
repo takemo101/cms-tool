@@ -51,6 +51,7 @@
 
             {# footer js #}
             {% block footer_js %}{% endblock %}
+            {{ component('toast') }}
             <script>
                 document.body.addEventListener('htmx:configRequest', (event) => {
                     event.detail.headers['{{ csrf.getHeaderNameKey() }}'] = '{{ csrf.name }}';

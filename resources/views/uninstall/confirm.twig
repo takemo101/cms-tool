@@ -31,7 +31,7 @@
                 </li>
             </ul>
             <div class="mt:30" x-data="{
-                handleUpdateClick() {
+                handleUninstallClick() {
                     this.$dispatch('open-dialog', {
                         title: 'Uninstall',
                         message: 'アンインストールを実行しますか？',
@@ -47,7 +47,7 @@
                     {{ forms.button({
                         label: 'アンインストールする',
                         class: 'form-btn--secondary',
-                        click: 'open = true',
+                        click: 'handleUninstallClick',
                     }) }}
                 {{ form_close() }}
             </div>

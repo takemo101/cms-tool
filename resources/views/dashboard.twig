@@ -36,7 +36,15 @@
                     以下のボタンをクリックするとサイトを公開できます。
                 {% endif %}
             </p>
-            <div class="mb:16px" x-data="{ open: false }">
+            <div class="mb:16px" x-data="{
+                isPublished: {{ isPublished ? 'true' : 'false' }},
+                handleUpdateClick() {
+                    this.$dispatch('open-dialog', {
+                        message: this.isPublished ? 'サイトを非公開にしますか？' : 'サイトを公開しますか？',
+                        ok: () => this.$refs.form.submit(),
+                    });
+                }
+            }">
                 {{ form_open({
                     route: [
                         'admin.publish',
@@ -49,23 +57,13 @@
                         {{ forms.button({
                             label: 'サイトを非公開にする',
                             class: 'form-btn--secondary',
-                            click: 'open = true',
-                        }) }}
-                        {{ dialogs.confirm({
-                            title: 'Update',
-                            message: 'サイトを非公開にしますか？',
-                            submit: '$refs.form.submit()',
+                            click: 'handleUpdateClick',
                         }) }}
                     {% else %}
                         {{ forms.button({
                             label: 'サイトを公開する',
                             class: 'form-btn--primary',
-                            click: 'open = true',
-                        }) }}
-                        {{ dialogs.confirm({
-                            title: 'Update',
-                            message: 'サイトを公開しますか？',
-                            submit: '$refs.form.submit()',
+                            click: 'handleUpdateClick',
                         }) }}
                     {% endif %}
                 {{ form_close() }}

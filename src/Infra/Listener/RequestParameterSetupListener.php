@@ -3,7 +3,6 @@
 namespace Takemo101\CmsTool\Infra\Listener;
 
 use CmsTool\Session\Flash\FlashSessionsContext;
-use CmsTool\View\Accessor\DataAccessors;
 use Takemo101\Chubby\Event\Attribute\AsEventListener;
 use Takemo101\Chubby\Http\Event\BeforeControllerExecution;
 use Takemo101\CmsTool\Support\Session\FlashOldInputs;

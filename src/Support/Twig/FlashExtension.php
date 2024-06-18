@@ -5,30 +5,19 @@ namespace Takemo101\CmsTool\Support\Twig;
 use Odan\Session\FlashInterface as Flash;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
-use RuntimeException;
+use Takemo101\Chubby\Context\ContextRepository;
 
 class FlashExtension extends AbstractExtension
 {
     /**
      * constructor
      *
-     * @param Flash|null $flash
+     * @param ContextRepository $repository
      */
     public function __construct(
-        private ?Flash $flash = null,
+        private readonly ContextRepository $repository,
     ) {
         //
-    }
-
-    /**
-     * Set the value of flash
-     *
-     * @param Flash $flash
-     * @return void
-     */
-    public function setFlash(Flash $flash): void
-    {
-        $this->flash = $flash;
     }
 
     /**
@@ -38,11 +27,8 @@ class FlashExtension extends AbstractExtension
      */
     private function getFlash(): Flash
     {
-        $flash = $this->flash;
-
-        $flash ?? throw new RuntimeException('flash is not set');
-
-        return $flash;
+        return $this->repository->get()
+            ->getTyped(Flash::class);
     }
 
     /**
@@ -51,8 +37,8 @@ class FlashExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('flash', [$this, 'flash']),
-            new TwigFunction('flash_has', [$this, 'flashHas']),
+            new TwigFunction('flash', $this->flash(...)),
+            new TwigFunction('flash_has', $this->flashHas(...)),
         ];
     }
 

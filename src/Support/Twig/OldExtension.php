@@ -6,29 +6,19 @@ use Takemo101\CmsTool\Support\Session\FlashOldInputs;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 use RuntimeException;
+use Takemo101\Chubby\Context\ContextRepository;
 
 class OldExtension extends AbstractExtension
 {
     /**
      * constructor
      *
-     * @param FlashOldInputs|null $old
+     * @param ContextRepository $repository
      */
     public function __construct(
-        private ?FlashOldInputs $old = null,
+        private readonly ContextRepository $repository,
     ) {
         //
-    }
-
-    /**
-     * Set the value of old inputs
-     *
-     * @param FlashOldInputs $old
-     * @return void
-     */
-    public function setOldInputs(FlashOldInputs $old): void
-    {
-        $this->old = $old;
     }
 
     /**
@@ -38,11 +28,8 @@ class OldExtension extends AbstractExtension
      */
     private function getOldInputs(): FlashOldInputs
     {
-        $old = $this->old;
-
-        $old ?? throw new RuntimeException('old is not set');
-
-        return $old;
+        return $this->repository->get()
+            ->getTyped(FlashOldInputs::class);
     }
 
     /**
@@ -51,7 +38,7 @@ class OldExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('old', [$this, 'old']),
+            new TwigFunction('old', $this->old(...)),
         ];
     }
 

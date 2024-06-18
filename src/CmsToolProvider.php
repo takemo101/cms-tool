@@ -8,7 +8,6 @@ use CmsTool\Theme\Contract\ThemeFinder;
 use CmsTool\View\Contract\TemplateFinder;
 use CmsTool\View\Html\Filter\FormAppendFilters;
 use Psr\Container\ContainerInterface;
-use Slim\Middleware\MethodOverrideMiddleware;
 use Takemo101\Chubby\ApplicationContainer;
 use Takemo101\Chubby\Bootstrap\Definitions;
 use Takemo101\Chubby\Bootstrap\Provider\Provider;
@@ -227,7 +226,6 @@ class CmsToolProvider implements Provider
             ->onTyped(
                 fn (GlobalMiddlewareCollection $middlewares) => $middlewares->add(
                     CacheControl::class,
-                    new MethodOverrideMiddleware(),
                     SessionStart::class,
                 ),
             );

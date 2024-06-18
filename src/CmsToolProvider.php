@@ -2,6 +2,7 @@
 
 namespace Takemo101\CmsTool;
 
+use CmsTool\Session\Middleware\SessionStart;
 use CmsTool\Support\Translation\TranslationAccessor;
 use CmsTool\Theme\Contract\ThemeFinder;
 use CmsTool\View\Contract\TemplateFinder;
@@ -227,6 +228,7 @@ class CmsToolProvider implements Provider
                 fn (GlobalMiddlewareCollection $middlewares) => $middlewares->add(
                     CacheControl::class,
                     new MethodOverrideMiddleware(),
+                    SessionStart::class,
                 ),
             );
     }

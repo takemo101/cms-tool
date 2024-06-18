@@ -4,7 +4,6 @@
 // Here, mainly configure routing and middleware.
 
 use CmsTool\Session\Middleware\Csrf;
-use CmsTool\Session\Middleware\SessionStart;
 use Psr\Container\ContainerInterface;
 use Slim\Interfaces\RouteCollectorProxyInterface as Proxy;
 use Takemo101\Chubby\Console\CommandCollection;

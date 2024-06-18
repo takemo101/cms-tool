@@ -17,7 +17,6 @@ use Takemo101\CmsTool\Http\Session\AdminSessionFactory;
 use Takemo101\CmsTool\Http\Session\DefaultAdminSessionFactory;
 use Takemo101\CmsTool\Support\FormAppendFilter\AppendCsrfInputFilter;
 use Takemo101\CmsTool\Support\Theme\ActiveThemeFunctionLoader;
-use Takemo101\CmsTool\Support\Uri\ApplicationUrl;
 use Takemo101\CmsTool\Support\VendorPath;
 use Takemo101\CmsTool\Support\Webhook\CacheCleanWebhookHandler;
 use Takemo101\CmsTool\Support\Webhook\WebhookHandler;
@@ -50,14 +49,6 @@ class CmsToolProvider implements Provider
     public function register(Definitions $definitions): void
     {
         $definitions->add([
-            ApplicationUrl::class => function (
-                ConfigRepository $config,
-            ) {
-                /** @var string */
-                $uri = $config->get('app.url', '');
-
-                return ApplicationUrl::fromString($uri);
-            },
             VendorPath::class => fn () => new VendorPath(
                 dirname(__DIR__, 1),
                 'src',

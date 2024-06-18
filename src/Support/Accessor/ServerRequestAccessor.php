@@ -4,18 +4,19 @@ namespace Takemo101\CmsTool\Support\Accessor;
 
 use ArrayObject;
 use Psr\Http\Message\ServerRequestInterface;
+use Takemo101\Chubby\Context\ContextRepository;
+use Takemo101\Chubby\Http\Uri\UriProxy;
 use Takemo101\CmsTool\Support\Shared\ImmutableArrayObject;
-use Takemo101\CmsTool\Support\Uri\UriProxy;
 
 class ServerRequestAccessor
 {
     /**
      * constructor
      *
-     * @param ServerRequestInterface $request
+     * @param ContextRepository $repository
      */
     public function __construct(
-        private ServerRequestInterface $request,
+        private ContextRepository $repository,
     ) {
         //
     }
@@ -25,13 +26,15 @@ class ServerRequestAccessor
      */
     public function __invoke(): ArrayObject
     {
-        $header = $this->request->getHeaders();
-        $body = $this->request->getParsedBody();
-        $query = $this->request->getQueryParams();
-        $cookie = $this->request->getCookieParams();
-        $server = $this->request->getServerParams();
+        $request = $this->repository->get()->getTyped(ServerRequestInterface::class);
 
-        $uri = new UriProxy($this->request->getUri());
+        $header = $request->getHeaders();
+        $body = $request->getParsedBody();
+        $query = $request->getQueryParams();
+        $cookie = $request->getCookieParams();
+        $server = $request->getServerParams();
+
+        $uri = new UriProxy($request->getUri());
 
         return ImmutableArrayObject::of([
             'header' => $header,

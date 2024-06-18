@@ -7,11 +7,11 @@ use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 use Slim\Interfaces\RouteParserInterface;
 use Takemo101\Chubby\Filesystem\PathHelper;
+use Takemo101\Chubby\Http\Uri\ApplicationUri;
 use Takemo101\CmsTool\Http\Action\Theme\ActiveThemeAssetAction;
 use Takemo101\CmsTool\Http\Action\ThemeAssetAction;
 use Takemo101\CmsTool\Http\Action\VendorAssetAction;
 use Takemo101\CmsTool\Infra\Storage\LocalPublicStoragePath;
-use Takemo101\CmsTool\Support\Uri\ApplicationUrl;
 
 class AssetExtension extends AbstractExtension
 {
@@ -19,13 +19,13 @@ class AssetExtension extends AbstractExtension
      * constructor
      *
      * @param RouteParserInterface $routeParser
-     * @param ApplicationUrl $appUrl
+     * @param ApplicationUri $uri
      * @param PathHelper $helper
      * @param LocalPublicStoragePath $localPublicStoragePath
      */
     public function __construct(
         private RouteParserInterface $routeParser,
-        private ApplicationUrl $appUrl,
+        private ApplicationUri $uri,
         private PathHelper $helper,
         private LocalPublicStoragePath $localPublicStoragePath,
     ) {
@@ -57,7 +57,7 @@ class AssetExtension extends AbstractExtension
 
         return $full
             ? $this->routeParser->fullUrlFor(
-                $this->appUrl,
+                $this->uri,
                 ActiveThemeAssetAction::RouteName,
                 $data,
             )
@@ -80,7 +80,7 @@ class AssetExtension extends AbstractExtension
 
         return $full
             ? $this->routeParser->fullUrlFor(
-                $this->appUrl,
+                $this->uri,
                 ThemeAssetAction::RouteName,
                 $data,
             )
@@ -102,7 +102,7 @@ class AssetExtension extends AbstractExtension
 
         return $full
             ? $this->routeParser->fullUrlFor(
-                $this->appUrl,
+                $this->uri,
                 VendorAssetAction::RouteName,
                 $data,
             )
@@ -126,6 +126,6 @@ class AssetExtension extends AbstractExtension
 
         return strpos($storageUrl, 'http') === 0
             ? $storageUrl
-            : $this->appUrl->getBase() . $storageUrl;
+            : $this->uri->getBase() . $storageUrl;
     }
 }

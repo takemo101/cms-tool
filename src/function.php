@@ -48,13 +48,11 @@ use Takemo101\CmsTool\Http\Middleware\InsertTrackingCode;
 use Takemo101\CmsTool\Http\Middleware\WhenUninstalled;
 use Takemo101\CmsTool\Http\Middleware\WhenUnpublished;
 use Takemo101\CmsTool\Infra\Listener\AdminSessionContextSetupListener;
-use Takemo101\CmsTool\Infra\Listener\ApplicationUrlReplaceListener;
 use Takemo101\CmsTool\Infra\Listener\ClearCacheListener;
 use Takemo101\CmsTool\Infra\Listener\CreateRobotsTxtListener;
 use Takemo101\CmsTool\Infra\Listener\CsrfGuardContextSetupListener;
 use Takemo101\CmsTool\Infra\Listener\DeleteRobotsTxtListener;
 use Takemo101\CmsTool\Infra\Listener\RequestParameterSetupListener;
-use Takemo101\CmsTool\Infra\Listener\ServerRequestAccessorSetupListener;
 use Takemo101\CmsTool\Infra\Listener\TwigExtensionSetupListener;
 use Takemo101\CmsTool\Infra\Storage\LocalPublicStoragePath;
 use Takemo101\CmsTool\Support\Theme\ActiveThemeRouteRegister;
@@ -71,8 +69,6 @@ hook()
             ->on(CsrfGuardContextSetupListener::class)
             ->on(RequestParameterSetupListener::class)
             ->on(TwigExtensionSetupListener::class)
-            ->on(ApplicationUrlReplaceListener::class)
-            ->on(ServerRequestAccessorSetupListener::class)
             ->on(CreateRobotsTxtListener::class)
             ->on(DeleteRobotsTxtListener::class)
             ->on(ClearCacheListener::class),

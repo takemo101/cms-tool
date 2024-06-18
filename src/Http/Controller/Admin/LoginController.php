@@ -6,8 +6,9 @@ use CmsTool\Support\Validation\HttpValidationErrorException;
 use CmsTool\Support\Validation\RequestValidator;
 use CmsTool\View\View;
 use Psr\Http\Message\ServerRequestInterface;
-use Takemo101\Chubby\Http\Renderer\RouteRedirectRenderer;
 use Takemo101\CmsTool\Http\Request\Admin\LoginRequest;
+use Takemo101\CmsTool\Support\Toast\ToastRenderer;
+use Takemo101\CmsTool\Support\Toast\ToastStyle;
 use Takemo101\CmsTool\UseCase\Admin\Auth\AdminSession;
 use Takemo101\CmsTool\UseCase\Admin\Handler\Login\LoginAdminCommand;
 use Takemo101\CmsTool\UseCase\Admin\Handler\Login\LoginAdminHandler;
@@ -32,14 +33,14 @@ class LoginController
      * @param RequestValidator $validator
      * @param AdminSession $session
      * @param LoginAdminHandler $handler
-     * @return RouteRedirectRenderer
+     * @return ToastRenderer
      */
     public function login(
         ServerRequestInterface $request,
         RequestValidator $validator,
         AdminSession $session,
         LoginAdminHandler $handler,
-    ): RouteRedirectRenderer {
+    ): ToastRenderer {
         $form = $validator->throwIfFailed(
             $request,
             LoginRequest::class,
@@ -64,19 +65,27 @@ class LoginController
             );
         }
 
-        return redirect()->route('admin.dashboard');
+        return toast(
+            response: redirect()->route('admin.dashboard'),
+            style: ToastStyle::Success,
+            message: 'ログインしました',
+        );
     }
 
     /**
      * Logout
      *
      * @param AdminSession $session
-     * @return RouteRedirectRenderer
+     * @return ToastRenderer
      */
-    public function logout(AdminSession $session): RouteRedirectRenderer
+    public function logout(AdminSession $session): ToastRenderer
     {
         $session->logout();
 
-        return redirect()->route('admin.login');
+        return toast(
+            response: redirect()->route('admin.login'),
+            style: ToastStyle::Success,
+            message: 'ログアウトしました',
+        );
     }
 }

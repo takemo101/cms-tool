@@ -3,10 +3,10 @@
 namespace CmsTool\View;
 
 use CmsTool\View\Accessor\DataAccessAdapter;
-use CmsTool\View\Accessor\DataAccessInvoker;
 use CmsTool\View\Accessor\DataAccessors;
 use CmsTool\View\Accessor\DataAccessorsFactory;
-use CmsTool\View\Accessor\DefaultDataAccessInvoker;
+use CmsTool\View\Component\Components;
+use CmsTool\View\Component\ComponentsFactory;
 use CmsTool\View\Contract\TemplateFinder;
 use CmsTool\View\Contract\TemplateRenderer;
 use CmsTool\View\Html\Filter\AppendMethodOverrideInputFilter;
@@ -63,10 +63,6 @@ class ViewProvider implements Provider
                 TwigTemplateRenderer::class,
                 'view.renderer',
             ),
-            DataAccessInvoker::class => new ConfigBasedDefinitionReplacer(
-                DefaultDataAccessInvoker::class,
-                'view.invoker',
-            ),
             DataAccessors::class => function (
                 DataAccessorsFactory $factory,
                 Hook $hook,
@@ -76,6 +72,16 @@ class ViewProvider implements Provider
                 $hook->doTyped($accessors);
 
                 return $accessors;
+            },
+            Components::class => function (
+                ComponentsFactory $factory,
+                Hook $hook,
+            ) {
+                $components = $factory->create();
+
+                $hook->doTyped($components);
+
+                return $components;
             },
             TwigFactory::class => function (
                 ContainerInterface $container,

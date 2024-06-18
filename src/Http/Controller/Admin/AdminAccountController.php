@@ -6,8 +6,9 @@ use CmsTool\Support\Validation\RequestValidator;
 use CmsTool\View\View;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
-use Takemo101\CmsTool\Http\Renderer\RedirectBackRenderer;
 use Takemo101\CmsTool\Http\Request\Admin\ChangeAdminAccountRequest;
+use Takemo101\CmsTool\Support\Toast\ToastRenderer;
+use Takemo101\CmsTool\Support\Toast\ToastStyle;
 use Takemo101\CmsTool\UseCase\Admin\Auth\AdminSession;
 use Takemo101\CmsTool\UseCase\Admin\Handler\Update\ChangeAdminAccountCommand;
 use Takemo101\CmsTool\UseCase\Admin\Handler\Update\ChangeAdminAccountHandler;
@@ -46,14 +47,14 @@ class AdminAccountController
      *
      * @param ServerRequestInterface $request
      * @param RequestValidator $validator
-     * @return RedirectBackRenderer
+     * @return ToastRenderer
      */
     public function update(
         ServerRequestInterface $request,
         RequestValidator $validator,
         AdminSession $session,
         ChangeAdminAccountHandler $handler,
-    ): RedirectBackRenderer {
+    ): ToastRenderer {
         $form = $validator->throwIfFailed(
             $request,
             ChangeAdminAccountRequest::class,
@@ -76,6 +77,9 @@ class AdminAccountController
             );
         }
 
-        return redirect()->back();
+        return toast(
+            response: redirect()->back(),
+            style: ToastStyle::Update,
+        );
     }
 }

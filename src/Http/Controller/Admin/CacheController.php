@@ -5,6 +5,8 @@ namespace Takemo101\CmsTool\Http\Controller\Admin;
 use CmsTool\View\View;
 use Psr\Cache\CacheItemPoolInterface;
 use Takemo101\CmsTool\Http\Renderer\RedirectBackRenderer;
+use Takemo101\CmsTool\Support\Toast\ToastRenderer;
+use Takemo101\CmsTool\Support\Toast\ToastStyle;
 
 class CacheController
 {
@@ -18,14 +20,20 @@ class CacheController
 
     /**
      * @param CacheItemPoolInterface $cache
-     * @return RedirectBackRenderer
+     * @return ToastRenderer
      */
     public function clean(
         CacheItemPoolInterface $cache,
-    ): RedirectBackRenderer {
+    ): ToastRenderer {
 
         $cache->clear();
 
-        return redirect()->back();
+        return toast(
+            response: redirect()->back(),
+            style: ToastStyle::Success,
+            message: <<<MES
+                キャッシュをクリアしました
+            MES,
+        );
     }
 }

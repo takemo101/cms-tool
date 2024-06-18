@@ -33,7 +33,14 @@
                     </div>
                 </div>
             {% endif %}
-            <div class="flex jc:right mb:16px" x-data="{ open: false }">
+            <div class="flex jc:right mb:16px" x-data="{
+                handleActiveClick() {
+                    this.$dispatch('open-dialog', {
+                        message: 'このテーマを選択しますか？',
+                        ok: () => this.$refs.form.submit(),
+                    });
+                }
+            }">
                 {% if theme.isActive() %}
                     {{ forms.submit({
                         label: '選択中です',
@@ -50,14 +57,9 @@
                         {{ forms.button({
                             label: 'テーマを選択する',
                             class: 'form-btn--secondary',
-                            click: 'open = true',
+                            click: 'handleActiveClick',
                         }) }}
                     {{ form_close() }}
-                    {{ dialogs.confirm({
-                        title: 'Update',
-                        message: 'このテーマを選択しますか？',
-                        submit: '$refs.form.submit()',
-                    }) }}
                 {% endif %}
                 <div class="rel" x-data="{ open: false }">
                     <button
@@ -87,7 +89,14 @@
                                 </a>
                             </li>
                         {% endif %}
-                        <li x-data="{ open: false }">
+                        <li x-data="{
+                            handleCopyClick() {
+                                this.$dispatch('open-dialog', {
+                                    message: 'このテーマを複製しますか？',
+                                    ok: () => this.$refs.form.submit(),
+                                });
+                            }
+                        }">
                             {{ form_open({
                                 route: ['admin.theme.copy', {id: theme.id}],
                                 method: 'post',
@@ -96,17 +105,19 @@
                                 {{ forms.btn({
                                     label: '複製する',
                                     class: 'menu-link',
-                                    click: 'open = true',
+                                    click: 'handleCopyClick',
                                 }) }}
                             {{ form_close() }}
-                            {{ dialogs.confirm({
-                                title: 'Copy',
-                                message: 'このテーマを複製しますか？',
-                                submit: '$refs.form.submit()',
-                            }) }}
                         </li>
                         {% if theme.canBeDeleted() %}
-                            <li x-data="{ open: false }">
+                            <li x-data="{
+                                handleDeleteClick() {
+                                    this.$dispatch('open-dialog', {
+                                        message: 'このテーマを削除しますか？',
+                                        ok: () => this.$refs.form.submit(),
+                                    });
+                                }
+                            }">
                                 {{ form_open({
                                     route: ['admin.theme.delete', {id: theme.id}],
                                     method: 'delete',
@@ -115,14 +126,9 @@
                                     {{ forms.btn({
                                         label: '削除する',
                                         class: 'menu-link',
-                                        click: 'open = true',
+                                        click: 'handleDeleteClick',
                                     }) }}
                                 {{ form_close() }}
-                                {{ dialogs.confirm({
-                                    title: 'Delete',
-                                    message: 'このテーマを削除しますか？',
-                                    submit: '$refs.form.submit()',
-                                }) }}
                             </li>
                         {% endif %}
                     </ul>

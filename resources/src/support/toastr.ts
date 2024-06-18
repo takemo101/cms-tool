@@ -9,9 +9,15 @@ type ToastrOptions = Pick<
 
 const ToastrDefaultOptions = {
   escapeMarkup: false,
-  duration: 3000,
+  duration: 5000,
   gravity: "top" as Options["gravity"],
-  position: "right" as Options["position"],
+  position: "center" as Options["position"],
+};
+
+const BaseStyle = {
+  padding: "15px",
+  "font-weight": "bold",
+  "border-radius": "5px",
 };
 
 export default class Toastr {
@@ -31,6 +37,7 @@ export default class Toastr {
       },
       style: {
         background: Colors.Success,
+        ...BaseStyle,
       },
       ...ToastrDefaultOptions,
       ...options,
@@ -55,6 +62,7 @@ export default class Toastr {
       },
       style: {
         background: Colors.Error,
+        ...BaseStyle,
       },
       ...ToastrDefaultOptions,
       ...options,

@@ -9,11 +9,11 @@ use CmsTool\View\View;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
-use Takemo101\Chubby\Http\Renderer\RouteRedirectRenderer;
 use Takemo101\CmsTool\Domain\Theme\NotFoundThemeIdException;
-use Takemo101\CmsTool\Http\Renderer\RedirectBackRenderer;
 use Takemo101\CmsTool\Http\ViewModel\ThemeDetailPage;
 use Takemo101\CmsTool\Infra\Event\ThemeActivated;
+use Takemo101\CmsTool\Support\Toast\ToastRenderer;
+use Takemo101\CmsTool\Support\Toast\ToastStyle;
 use Takemo101\CmsTool\UseCase\Shared\Exception\NotFoundDataException;
 use Takemo101\CmsTool\UseCase\Theme\Handler\ActivateThemeHandler;
 use Takemo101\CmsTool\UseCase\Theme\Handler\CopyThemeHandler;
@@ -66,14 +66,14 @@ class ThemeController
      * @param ActivateThemeHandler $handler
      * @param EventDispatcherInterface $dispatcher
      * @param string $id
-     * @return RedirectBackRenderer
+     * @return ToastRenderer
      */
     public function activate(
         ServerRequestInterface $request,
         ActivateThemeHandler $handler,
         EventDispatcherInterface $dispatcher,
         string $id,
-    ): RedirectBackRenderer {
+    ): ToastRenderer {
         try {
             $activeThemeId = $handler->handle($id);
         } catch (NotFoundThemeIdException $e) {
@@ -82,20 +82,24 @@ class ThemeController
 
         $dispatcher->dispatch(new ThemeActivated($activeThemeId));
 
-        return redirect()->back();
+        return toast(
+            response: redirect()->back(),
+            style: ToastStyle::Success,
+            message: 'テーマを有効化しました'
+        );
     }
 
     /**
      * @param ServerRequestInterface $request
      * @param CopyThemeHandler $handler
      * @param string $id
-     * @return RouteRedirectRenderer
+     * @return ToastRenderer
      */
     public function copy(
         ServerRequestInterface $request,
         CopyThemeHandler $handler,
         string $id,
-    ): RouteRedirectRenderer {
+    ): ToastRenderer {
 
         try {
             $copyTheme = $handler->handle($id);
@@ -103,9 +107,13 @@ class ThemeController
             throw new HttpNotFoundException($request, $e->getMessage(), $e);
         }
 
-        return redirect()->route(
-            'admin.theme.detail',
-            ['id' => $copyTheme->id->value()]
+        return toast(
+            response: redirect()->route(
+                'admin.theme.detail',
+                ['id' => $copyTheme->id->value()]
+            ),
+            style: ToastStyle::Success,
+            message: 'テーマを複製しました'
         );
     }
 
@@ -113,19 +121,22 @@ class ThemeController
      * @param ServerRequestInterface $request
      * @param DeleteThemeHandler $handler
      * @param string $id
-     * @return RouteRedirectRenderer
+     * @return ToastRenderer
      */
     public function delete(
         ServerRequestInterface $request,
         DeleteThemeHandler $handler,
         string $id,
-    ): RouteRedirectRenderer {
+    ): ToastRenderer {
         try {
             $handler->handle($id);
         } catch (NotFoundDataException $e) {
             throw new HttpNotFoundException($request, $e->getMessage(), $e);
         }
 
-        return redirect()->route('admin.theme.index');
+        return toast(
+            response: redirect()->route('admin.theme.index'),
+            style: ToastStyle::Delete,
+        );
     }
 }

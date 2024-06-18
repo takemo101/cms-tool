@@ -6,8 +6,9 @@ use CmsTool\Support\Validation\HttpValidationErrorException;
 use CmsTool\Support\Validation\RequestValidator;
 use Psr\Http\Message\ServerRequestInterface;
 use Takemo101\CmsTool\Domain\MicroCms\MicroCmsApiAccessException;
-use Takemo101\CmsTool\Http\Renderer\RedirectBackRenderer;
 use Takemo101\CmsTool\Http\Request\Install\SaveMicroCmsApiRequest;
+use Takemo101\CmsTool\Support\Toast\ToastRenderer;
+use Takemo101\CmsTool\Support\Toast\ToastStyle;
 use Takemo101\CmsTool\UseCase\MicroCms\Handler\SaveMicroCmsApiCommand;
 use Takemo101\CmsTool\UseCase\MicroCms\Handler\SaveMicroCmsApiHandler;
 
@@ -17,14 +18,14 @@ class MicroCmsApiController
      * @param ServerRequestInterface $request
      * @param RequestValidator $validator
      * @param SaveMicroCmsApiHandler $handler
-     * @return RedirectBackRenderer
+     * @return ToastRenderer
      * @throws HttpValidationErrorException
      */
     public function update(
         ServerRequestInterface $request,
         RequestValidator $validator,
         SaveMicroCmsApiHandler $handler,
-    ): RedirectBackRenderer {
+    ): ToastRenderer {
         $form = $validator->throwIfFailed(
             $request,
             SaveMicroCmsApiRequest::class,
@@ -48,6 +49,9 @@ class MicroCmsApiController
             );
         }
 
-        return redirect()->back();
+        return toast(
+            response: redirect()->back(),
+            style: ToastStyle::Update,
+        );
     }
 }

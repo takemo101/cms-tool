@@ -2,16 +2,20 @@
 
 namespace Takemo101\CmsTool\Support\Toast;
 
+use CmsTool\Session\Flash\FlashSessionsContext;
 use CmsTool\Session\SessionContext;
+use LogicException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Takemo101\Chubby\ApplicationContainer;
 use Takemo101\Chubby\Contract\Arrayable;
+use Takemo101\Chubby\Contract\ContainerInjectable;
 use Takemo101\Chubby\Http\Renderer\ResponseRenderer;
 
 /**
  * @template T of ResponseRenderer
  */
-class ToastRenderer implements ResponseRenderer, Arrayable
+class ToastRenderer implements ResponseRenderer, Arrayable, ContainerInjectable
 {
     /**
      * Toast style session key
@@ -27,6 +31,8 @@ class ToastRenderer implements ResponseRenderer, Arrayable
      */
     public const ToastMessageKey = 'toast-message';
 
+    private ?ApplicationContainer $container = null;
+
     /**
      * constructor
      *
@@ -40,6 +46,16 @@ class ToastRenderer implements ResponseRenderer, Arrayable
         private ?string $message = null,
     ) {
         //
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setContainer(ApplicationContainer $container): void
+    {
+        if ($this->response instanceof ContainerInjectable) {
+            $this->response->setContainer($container);
+        }
     }
 
     /**
@@ -101,13 +117,11 @@ class ToastRenderer implements ResponseRenderer, Arrayable
         ResponseInterface $response,
     ): ResponseInterface {
 
-        $session = SessionContext::fromRequest($request)->getSession();
+        $toast = FlashSessionsContext::fromRequest($request)
+            ->getFlashSessions()
+            ->get(FlashToast::class);
 
-        $flash = $session->getFlash();
-
-        foreach ($this->toArray() as $key => $value) {
-            $flash->set($key, $value);
-        }
+        $toast->put($this->toArray());
 
         return $this->response->render($request, $response);
     }

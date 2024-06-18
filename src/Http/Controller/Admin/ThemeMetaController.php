@@ -9,11 +9,11 @@ use CmsTool\Theme\ThemeQueryService;
 use CmsTool\View\View;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
-use Takemo101\Chubby\Http\Renderer\RouteRedirectRenderer;
-use Takemo101\CmsTool\Http\Renderer\RedirectBackRenderer;
 use Takemo101\CmsTool\Http\Request\Admin\ChangeThemeMetaInputs;
 use Takemo101\CmsTool\Http\Request\Admin\UpdateThemeMetaJsonRequest;
 use Takemo101\CmsTool\Http\ViewModel\ThemeMetaPage;
+use Takemo101\CmsTool\Support\Toast\ToastRenderer;
+use Takemo101\CmsTool\Support\Toast\ToastStyle;
 use Takemo101\CmsTool\UseCase\Shared\Exception\NotFoundDataException;
 use Takemo101\CmsTool\UseCase\Theme\Handler\ChangeThemeMetaHandler;
 
@@ -50,14 +50,14 @@ class ThemeMetaController
      * @param ServerRequestInterface $request
      * @param RequestValidator $validator
      * @param string $id
-     * @return RedirectBackRenderer
+     * @return ToastRenderer
      */
     public function update(
         ServerRequestInterface $request,
         RequestValidator $validator,
         ChangeThemeMetaHandler $handler,
         string $id,
-    ): RedirectBackRenderer|RouteRedirectRenderer {
+    ): ToastRenderer {
 
         $form = $validator->throwIfFailed(
             $request,
@@ -78,13 +78,16 @@ class ThemeMetaController
             throw new HttpNotFoundException($request, $e->getMessage(), $e);
         }
 
-        return $theme->isReadonly()
-            ? redirect()->route(
-                'admin.theme.detail',
-                [
-                    'id' => $theme->id->value(),
-                ],
-            )
-            : redirect()->back();
+        return toast(
+            response: $theme->isReadonly()
+                ? redirect()->route(
+                    'admin.theme.detail',
+                    [
+                        'id' => $theme->id->value(),
+                    ],
+                )
+                : redirect()->back(),
+            style: ToastStyle::Update,
+        );;
     }
 }

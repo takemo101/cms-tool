@@ -14,6 +14,8 @@ use Takemo101\CmsTool\Http\Request\Install\SaveMicroCmsApiRequest;
 use Takemo101\CmsTool\Http\Request\Install\SaveBasicSettingRequest;
 use Takemo101\CmsTool\Http\ViewModel\InstallPage;
 use Takemo101\CmsTool\Infra\Event\Installed;
+use Takemo101\CmsTool\Support\Toast\ToastRenderer;
+use Takemo101\CmsTool\Support\Toast\ToastStyle;
 use Takemo101\CmsTool\UseCase\BasicSetting\Handler\RootAdminForSaveBasicSettingCommand;
 use Takemo101\CmsTool\UseCase\BasicSetting\Handler\SaveBasicSettingCommand;
 use Takemo101\CmsTool\UseCase\BasicSetting\Handler\SaveBasicSettingHandler;
@@ -156,13 +158,13 @@ class InstallController
      *
      * @param ServerRequestInterface $request
      * @param InstallHandler $handler
-     * @return RouteRedirectRenderer
+     * @return ToastRenderer
      */
     public function install(
         ServerRequestInterface $request,
         InstallHandler $handler,
         EventDispatcherInterface $dispatcher,
-    ): RouteRedirectRenderer {
+    ): ToastRenderer {
         try {
             $handler->handle();
         } catch (InstallationNotPossibleException $e) {
@@ -178,6 +180,13 @@ class InstallController
 
         $dispatcher->dispatch(new Installed());
 
-        return redirect()->route('admin.login');
+        return toast(
+            response: redirect()->route('admin.login'),
+            style: ToastStyle::Success,
+            message: <<<MES
+                インストールが完了しました
+                設定したアカウントでログインしてください
+            MES,
+        );
     }
 }

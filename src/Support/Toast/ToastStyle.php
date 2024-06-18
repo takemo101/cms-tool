@@ -5,9 +5,9 @@ namespace Takemo101\CmsTool\Support\Toast;
 enum ToastStyle: string
 {
     case Success = 'success';
-    case Created = 'created';
-    case Updated = 'updated';
-    case Deleted = 'deleted';
+    case Create = 'create';
+    case Update = 'update';
+    case Delete = 'delete';
     case Error = 'error';
 
     /**
@@ -39,9 +39,9 @@ enum ToastStyle: string
     {
         return match ($this) {
             self::Success => '成功しました',
-            self::Created => '追加しました',
-            self::Updated => '更新しました',
-            self::Deleted => '削除しました',
+            self::Create => '追加しました',
+            self::Update => '更新しました',
+            self::Delete => '削除しました',
             self::Error => 'エラーが発生しました',
         };
     }

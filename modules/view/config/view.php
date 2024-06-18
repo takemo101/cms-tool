@@ -1,8 +1,8 @@
 <?php
 
-use CmsTool\View\Accessor\DefaultDataAccessInvoker;
 use CmsTool\View\Contract\Htmlable;
 use CmsTool\View\DefaultTemplateFinder;
+use CmsTool\View\Twig\Extension\ComponentExtension;
 use CmsTool\View\Twig\Extension\ConfigExtension;
 use CmsTool\View\Twig\Extension\RequestExtension;
 use CmsTool\View\Twig\Extension\FiltersExtension;
@@ -10,7 +10,7 @@ use CmsTool\View\Twig\Extension\FormExtension;
 use CmsTool\View\Twig\Extension\FunctionsExtension;
 use CmsTool\View\Twig\Extension\RouteExtension;
 use CmsTool\View\Twig\TwigTemplateRenderer;
-use Takemo101\Chubby\Contract\Renderable;
+use CmsTool\View\View;
 use Twig\Extension\StringLoaderExtension;
 
 return [
@@ -20,9 +20,6 @@ return [
 
     // TemplateRenderer implementation class name
     'renderer' => TwigTemplateRenderer::class,
-
-    // DataAccessInvoker implementation class name
-    'invoker' => DefaultDataAccessInvoker::class,
 
     'locations' => [
         base_path('resources/views'),
@@ -78,7 +75,7 @@ return [
         // When set, the output of the `__toString` method of the following classes will not be escaped
         'safe_classes' => [
             Htmlable::class => ['html'],
-            Renderable::class => ['html'],
+            View::class => ['html'],
         ],
 
         // Set the class name of the Twig Extension to be enabled
@@ -90,6 +87,7 @@ return [
             FiltersExtension::class,
             FunctionsExtension::class,
             FormExtension::class,
+            ComponentExtension::class,
         ],
 
         // Set up functions to be used in Twig
@@ -114,4 +112,8 @@ return [
         // 'key' => class-string<object&callable>,
     ],
 
+    // Set up components
+    'components' => [
+        // 'name' => class-string<object&callable>,
+    ],
 ];

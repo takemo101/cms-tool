@@ -2,27 +2,46 @@
 
 namespace CmsTool\View\Accessor;
 
+use DI\FactoryInterface;
 use RuntimeException;
 use Closure;
 
-/**
- * Execute the value acquisition process from the accessor
- */
-interface DataAccessInvoker
+class DataAccessInvoker
 {
     /**
-     * Execute the value acquisition process from the accessor
-     * Return the target value
+     * constructor
      *
-     * @param Closure|class-string<object&callable> $callable
-     * @param array<string,mixed> $parameters
-     * @param mixed[] $arguments
-     * @return mixed
-     * @throws RuntimeException
+     * @param FactoryInterface $factory
+     */
+    public function __construct(
+        private FactoryInterface $factory,
+    ) {
+        //
+    }
+
+    /**
+     * {@inheritDoc}
      */
     public function invoke(
-        Closure|string $callable,
+        Closure|string $accessor,
         array $parameters = [],
-        array $arguments = [],
-    ): mixed;
+        array $arguments = []
+    ): mixed {
+        if ($accessor instanceof Closure) {
+            return call_user_func_array($accessor, $arguments);
+        }
+
+        if (!class_exists($accessor)) {
+            throw new RuntimeException("The accessor class does not exist: {$accessor}");
+        }
+
+        /** @var object&callable  */
+        $callable = $this->factory->make($accessor, $parameters);
+
+        if (!is_callable($callable)) {
+            throw new RuntimeException("The accessor class is not callable: {$accessor}");
+        }
+
+        return call_user_func_array($callable, $arguments);
+    }
 }

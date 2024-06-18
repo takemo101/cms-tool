@@ -52,6 +52,7 @@ use Takemo101\CmsTool\Infra\Listener\CreateRobotsTxtListener;
 use Takemo101\CmsTool\Infra\Listener\CsrfGuardContextSetupListener;
 use Takemo101\CmsTool\Infra\Listener\DeleteRobotsTxtListener;
 use Takemo101\CmsTool\Infra\Listener\RequestParameterSetupListener;
+use Takemo101\CmsTool\Infra\Listener\SlimConfiguredListener;
 use Takemo101\CmsTool\Infra\Storage\LocalPublicStoragePath;
 use Takemo101\CmsTool\Support\Theme\ActiveThemeRouteRegister;
 
@@ -68,7 +69,8 @@ hook()
             ->on(RequestParameterSetupListener::class)
             ->on(CreateRobotsTxtListener::class)
             ->on(DeleteRobotsTxtListener::class)
-            ->on(ClearCacheListener::class),
+            ->on(ClearCacheListener::class)
+            ->on(SlimConfiguredListener::class),
     )
     ->onTyped(
         function (

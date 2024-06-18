@@ -12,6 +12,7 @@ use CmsTool\View\Twig\Extension\RouteExtension;
 use CmsTool\View\Twig\TwigTemplateRenderer;
 use Takemo101\Chubby\Contract\Renderable;
 use Takemo101\CmsTool\Support\Accessor\MicroCmsApiAccessor;
+use Takemo101\CmsTool\Support\Accessor\ServerRequestAccessor;
 use Takemo101\CmsTool\Support\Accessor\SiteMetaAccessor;
 use Takemo101\CmsTool\Support\Twig\AssetExtension;
 use Takemo101\CmsTool\Support\Twig\ErrorExtension;
@@ -130,6 +131,7 @@ return [
 
         'meta' => SiteMetaAccessor::class,
         'api' => MicroCmsApiAccessor::class,
+        'request' => ServerRequestAccessor::class,
     ],
 
 ];

@@ -55,7 +55,7 @@ class Csrf implements MiddlewareInterface
         $request = $this->withToken($request, $guard);
 
         return $guard->process(
-            $context->withContext($request),
+            $context->withRequest($request),
             $handler,
         );
     }

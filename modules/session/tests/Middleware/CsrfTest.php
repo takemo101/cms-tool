@@ -19,7 +19,7 @@ describe(
                 /** @var TestCase $this */
 
                 $context = new SessionContext(new MemorySession());
-                $request = $context->withContext($this->createRequest('POST', '/'));
+                $request = $context->withRequest($this->createRequest('POST', '/'));
 
                 $response = $this->createResponse();
                 $handler = Mockery::mock(RequestHandlerInterface::class);
@@ -56,7 +56,7 @@ describe(
                 $tokenPair = $guard->generateToken();
 
                 $request = $context
-                    ->withContext($this->createRequest('POST', '/'))->withParsedBody($tokenPair);
+                    ->withRequest($this->createRequest('POST', '/'))->withParsedBody($tokenPair);
 
                 $actual = (new Csrf($factory))->process($request, $handler);
 

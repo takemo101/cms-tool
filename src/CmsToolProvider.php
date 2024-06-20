@@ -8,7 +8,10 @@ use CmsTool\Theme\Contract\ThemeFinder;
 use CmsTool\View\Contract\TemplateFinder;
 use CmsTool\View\Html\Filter\FormAppendFilters;
 use Psr\Container\ContainerInterface;
+use Slim\App as Slim;
+use Slim\Middleware\MethodOverrideMiddleware;
 use Takemo101\Chubby\ApplicationContainer;
+use Takemo101\Chubby\ApplicationHookTags;
 use Takemo101\Chubby\Bootstrap\Definitions;
 use Takemo101\Chubby\Bootstrap\Provider\Provider;
 use Takemo101\Chubby\Config\ConfigRepository;
@@ -227,6 +230,12 @@ class CmsToolProvider implements Provider
                 fn (GlobalMiddlewareCollection $middlewares) => $middlewares->add(
                     CacheControl::class,
                     SessionStart::class,
+                ),
+            )
+            ->on(
+                ApplicationHookTags::Http_AfterAddRoutingMiddleware,
+                fn (Slim $slim) => $slim->add(
+                    new MethodOverrideMiddleware(),
                 ),
             );
     }

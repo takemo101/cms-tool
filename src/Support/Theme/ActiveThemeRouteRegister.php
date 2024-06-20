@@ -49,6 +49,6 @@ class ActiveThemeRouteRegister
         }
 
         // Register the route of the theme
-        $this->hook->do(HookTags::Theme_RegisterThemeRoute, $proxy);
+        $this->hook->do(HookTags::RegisterThemeRoute, $proxy);
     }
 }

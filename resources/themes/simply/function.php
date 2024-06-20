@@ -6,7 +6,7 @@ use Slim\Interfaces\RouteCollectorProxyInterface as Proxy;
 use Takemo101\CmsTool\HookTags;
 
 hook()->on(
-    HookTags::Theme_RegisterThemeRoute,
+    HookTags::RegisterThemeRoute,
     function (
         Proxy $proxy,
     ) {

@@ -5,7 +5,10 @@
 
 use CmsTool\Session\Middleware\Csrf;
 use Psr\Container\ContainerInterface;
+use Slim\App as Slim;
 use Slim\Interfaces\RouteCollectorProxyInterface as Proxy;
+use Slim\Middleware\MethodOverrideMiddleware;
+use Takemo101\Chubby\ApplicationHookTags;
 use Takemo101\Chubby\Console\CommandCollection;
 use Takemo101\Chubby\Event\EventRegister;
 use Takemo101\Chubby\Http\ErrorHandler\ErrorResponseRenders;
@@ -52,7 +55,6 @@ use Takemo101\CmsTool\Infra\Listener\CreateRobotsTxtListener;
 use Takemo101\CmsTool\Infra\Listener\CsrfGuardContextSetupListener;
 use Takemo101\CmsTool\Infra\Listener\DeleteRobotsTxtListener;
 use Takemo101\CmsTool\Infra\Listener\RequestParameterSetupListener;
-use Takemo101\CmsTool\Infra\Listener\SlimConfiguredListener;
 use Takemo101\CmsTool\Infra\Storage\LocalPublicStoragePath;
 use Takemo101\CmsTool\Support\Theme\ActiveThemeRouteRegister;
 
@@ -70,7 +72,12 @@ hook()
             ->on(CreateRobotsTxtListener::class)
             ->on(DeleteRobotsTxtListener::class)
             ->on(ClearCacheListener::class)
-            ->on(SlimConfiguredListener::class),
+    )
+    ->on(
+        ApplicationHookTags::Http_AfterAddRoutingMiddleware,
+        fn (Slim $slim) => $slim->add(
+            new MethodOverrideMiddleware(),
+        ),
     )
     ->onTyped(
         function (

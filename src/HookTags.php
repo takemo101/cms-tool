@@ -15,4 +15,10 @@ class HookTags
      * The Hook method takes the ``ActiveTheme`` as an argument.
      */
     public const LoadActiveTheme = 'theme.active.load';
+
+    /**
+     * Hook tag called when the administrator session is started.
+     * The Hook method takes the ``AdminSession`` as an argument.
+     */
+    public const AdminSessionStarted = 'admin_session_started';
 };

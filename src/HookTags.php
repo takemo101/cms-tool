@@ -8,13 +8,13 @@ class HookTags
      * A hook tag called when registering an active theme route.
      * The Hook method takes the `` RoutecollectorProxyInterface`` as an argument.
      */
-    public const RegisterThemeRoute = 'theme.routing.register';
+    public const Theme_RegisterThemeRoute = 'theme.register_theme_route';
 
     /**
      * Hook tag called when loading the active theme
      * The Hook method takes the ``ActiveTheme`` as an argument.
      */
-    public const LoadActiveTheme = 'theme.active.load';
+    public const Theme_LoadedActiveTheme = 'theme.loaded_active_theme';
 
     /**
      * Hook tag called when the administrator session is started.

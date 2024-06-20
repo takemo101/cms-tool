@@ -4,7 +4,7 @@ namespace CmsTool\Session;
 
 use Odan\Session\FlashInterface as Flash;
 use Odan\Session\SessionInterface as Session;
-use Takemo101\Chubby\Http\Support\AbstractContext;
+use Takemo101\Chubby\Http\Context\AbstractContext;
 
 class SessionContext extends AbstractContext
 {
@@ -16,7 +16,7 @@ class SessionContext extends AbstractContext
      * @param Session $session
      */
     public function __construct(
-        private Session $session,
+        private readonly Session $session,
     ) {
         //
     }
@@ -36,7 +36,7 @@ class SessionContext extends AbstractContext
      *
      * @return array<string,mixed>
      */
-    protected function getServerRequestAttributes(): array
+    protected function getContextValues(): array
     {
         return [
             Session::class => $this->getSession(),

@@ -1,17 +1,21 @@
-import { init, Style } from '@master/css';
-import Alpine from 'alpinejs';
-import dialog from '@fylgja/alpinejs-dialog';
-import intersect from '@alpinejs/intersect'
-import style from './master.css';
-import './style.css';
-import 'github-markdown-css/github-markdown-light.css';
-import '@splidejs/splide/css';
-import Splide from '@splidejs/splide';
-import './codemirror'
+import intersect from "@alpinejs/intersect";
+import dialog from "@fylgja/alpinejs-dialog";
+import { Style, init } from "@master/css";
+import Alpine from "alpinejs";
+import style from "./master.css";
+import "./style.css";
+import "github-markdown-css/github-markdown-light.css";
+import "@splidejs/splide/css";
+import Splide from "@splidejs/splide";
+import "./codemirror";
+import Toastr from "./support/toastr";
 
 // Definition of MasterCSS custom style
-Style.extend('classes', style);
+Style.extend("classes", style);
 init();
+
+// Register Toastr
+window.Toastr = new Toastr();
 
 // Register Splide
 window.Splide = Splide;
@@ -24,29 +28,29 @@ Alpine.plugin(dialog);
 
 // Register AlpineJS components
 // reference: https://www.raymondcamden.com/2022/06/03/image-upload-preview-in-alpinejs
-document.addEventListener('alpine:init', () => {
-  Alpine.data('files', () => ({
-    src: '',
+document.addEventListener("alpine:init", () => {
+  Alpine.data("files", () => ({
+    src: "",
     change() {
-      let input = this.$refs.input as HTMLInputElement
+      const input = this.$refs.input as HTMLInputElement;
 
       const file = input.files?.[0];
 
-      this.src = file?.name ?? '';
+      this.src = file?.name ?? "";
     },
     reset() {
-      let input = this.$refs.input as HTMLInputElement
+      const input = this.$refs.input as HTMLInputElement;
 
-      input.value = '';
+      input.value = "";
 
-      this.src = '';
+      this.src = "";
     },
     select() {
-      let input = this.$refs.input as HTMLInputElement
+      const input = this.$refs.input as HTMLInputElement;
 
       input.click();
-    }
-  }))
+    },
+  }));
 });
 
 Alpine.plugin(intersect);

@@ -2,7 +2,7 @@
 
 namespace Takemo101\CmsTool\Http\Session;
 
-use Takemo101\Chubby\Http\Support\AbstractContext;
+use Takemo101\Chubby\Http\Context\AbstractContext;
 use Takemo101\CmsTool\UseCase\Admin\Auth\AdminSession;
 
 class AdminSessionContext extends AbstractContext
@@ -16,7 +16,7 @@ class AdminSessionContext extends AbstractContext
      * @param AdminSession $session
      */
     public function __construct(
-        private AdminSession $session,
+        private readonly AdminSession $session,
     ) {
         //
     }
@@ -36,7 +36,7 @@ class AdminSessionContext extends AbstractContext
      *
      * @return array<string,mixed>
      */
-    protected function getServerRequestAttributes(): array
+    protected function getContextValues(): array
     {
         return [
             AdminSession::class => $this->session,

@@ -54,6 +54,7 @@ class WhenUnpublished implements MiddlewareInterface
                 );
         }
 
-        return $handler->handle($request);;
+        return $handler->handle($request);
+        ;
     }
 }

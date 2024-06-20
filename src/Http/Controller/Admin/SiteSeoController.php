@@ -6,9 +6,10 @@ use CmsTool\Support\Validation\RequestValidator;
 use CmsTool\View\View;
 use Psr\Http\Message\ServerRequestInterface;
 use Takemo101\CmsTool\Domain\SiteMeta\SiteSeoImageTarget;
-use Takemo101\CmsTool\Http\Renderer\RedirectBackRenderer;
 use Takemo101\CmsTool\Http\Request\Admin\ChangeSiteSeoRequest;
 use Takemo101\CmsTool\Http\ViewModel\SiteSeoPage;
+use Takemo101\CmsTool\Support\Toast\ToastRenderer;
+use Takemo101\CmsTool\Support\Toast\ToastStyle;
 use Takemo101\CmsTool\UseCase\SiteMeta\Handler\ChangeSiteSeoCommand;
 use Takemo101\CmsTool\UseCase\SiteMeta\Handler\ChangeSiteSeoHandler;
 use Takemo101\CmsTool\UseCase\SiteMeta\Handler\CleanSiteSeoImageHandler;
@@ -35,14 +36,14 @@ class SiteSeoController
      * @param ServerRequestInterface $request
      * @param RequestValidator $validator
      * @param ChangeSiteSeoHandler $handler
-     * @return RedirectBackRenderer
+     * @return ToastRenderer
      * @throws HttpValidationErrorException
      */
     public function update(
         ServerRequestInterface $request,
         RequestValidator $validator,
         ChangeSiteSeoHandler $handler,
-    ): RedirectBackRenderer {
+    ): ToastRenderer {
         $form = $validator->throwIfFailed(
             $request,
             ChangeSiteSeoRequest::class,
@@ -59,7 +60,10 @@ class SiteSeoController
             ),
         );
 
-        return redirect()->back();
+        return toast(
+            response: redirect()->back(),
+            style: ToastStyle::Update,
+        );
     }
 
     /**

@@ -8,6 +8,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Takemo101\Chubby\Http\Context\RequestContext;
 use Takemo101\Chubby\Http\Renderer\HtmlRenderer;
 use Takemo101\CmsTool\Domain\Install\InstallRepository;
 
@@ -37,6 +38,10 @@ class GuideToInstallation implements MiddlewareInterface
         ServerRequestInterface $request,
         RequestHandlerInterface $handler,
     ): ResponseInterface {
+
+        RequestContext::fromRequest($request)
+            ->set(ServerRequestInterface::class, $request);
+
         if (!$this->repository->isInstalled()) {
             return (new HtmlRenderer(
                 view('cms-tool::error.uninstalled'),

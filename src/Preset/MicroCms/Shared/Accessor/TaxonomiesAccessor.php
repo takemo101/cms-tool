@@ -3,7 +3,6 @@
 namespace Takemo101\CmsTool\Preset\MicroCms\Shared\Accessor;
 
 use ArrayObject;
-use CmsTool\Theme\Theme;
 use Takemo101\CmsTool\UseCase\MicroCms\QueryService\Content\MicroCmsContentGetListQuery;
 use Takemo101\CmsTool\UseCase\MicroCms\QueryService\Content\MicroCmsContentQueryService;
 use Takemo101\CmsTool\UseCase\Shared\QueryService\Pager;
@@ -45,7 +44,6 @@ class TaxonomiesAccessor
             endpoint: $this->endpoint,
             pager: new Pager(limit: $limit),
             query: $query,
-
         )->contents;
     }
 }

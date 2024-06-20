@@ -2,7 +2,6 @@
 
 namespace Takemo101\CmsTool\UseCase\SiteMeta\Handler;
 
-use Psr\Http\Message\UploadedFileInterface;
 use Takemo101\CmsTool\Domain\SiteMeta\SiteMeta;
 use Takemo101\CmsTool\Domain\SiteMeta\SiteMetaRepository;
 use Takemo101\CmsTool\Domain\SiteMeta\SiteSeo;

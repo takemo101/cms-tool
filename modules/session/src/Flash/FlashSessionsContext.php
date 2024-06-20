@@ -2,7 +2,7 @@
 
 namespace CmsTool\Session\Flash;
 
-use Takemo101\Chubby\Http\Support\AbstractContext;
+use Takemo101\Chubby\Http\Context\AbstractContext;
 
 class FlashSessionsContext extends AbstractContext
 {
@@ -34,7 +34,7 @@ class FlashSessionsContext extends AbstractContext
      *
      * @return array<string,mixed>
      */
-    protected function getServerRequestAttributes(): array
+    protected function getContextValues(): array
     {
         return [
             FlashSessions::class => $this->getFlashSessions(),

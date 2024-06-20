@@ -2,8 +2,10 @@
 
 namespace Takemo101\CmsTool\Support\FormAppendFilter;
 
+use CmsTool\Session\Csrf\CsrfGuard;
 use CmsTool\Session\Csrf\CsrfToken;
 use CmsTool\View\Html\Filter\FormAppendFilter;
+use Takemo101\Chubby\Context\ContextRepository;
 
 class AppendCsrfInputFilter implements FormAppendFilter
 {
@@ -17,22 +19,12 @@ class AppendCsrfInputFilter implements FormAppendFilter
     /**
      * constructor
      *
-     * @param CsrfToken|null $token
+     * @param ContextRepository $repository
      */
     public function __construct(
-        private ?CsrfToken $token = null,
+        private readonly ContextRepository $repository,
     ) {
         //
-    }
-
-    /**
-     * Set the token to be added to the form
-     *
-     * @return string|null
-     */
-    public function setCsrfToken(CsrfToken $token): void
-    {
-        $this->token = $token;
     }
 
     /**
@@ -43,7 +35,10 @@ class AppendCsrfInputFilter implements FormAppendFilter
         /** @var string */
         $method = $attributes['method'] ?? 'GET';
 
-        $token = $this->token;
+        /** @var CsrfGuard|null */
+        $guard = $this->repository->get()->get(CsrfGuard::class);
+
+        $token = $guard?->getToken();
 
         if (
             in_array($method, self::IgnoreMethods)

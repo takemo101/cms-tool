@@ -3,7 +3,6 @@
 namespace CmsTool\Support\Validation;
 
 use EventSauce\ObjectHydrator\ObjectMapper;
-use GuzzleHttp\Psr7\ServerRequest;
 use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use InvalidArgumentException;

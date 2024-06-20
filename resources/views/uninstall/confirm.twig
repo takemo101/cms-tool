@@ -30,7 +30,15 @@
                     アンインストール実行後は、ログアウトされますので、再度ログインすることは出来ません。
                 </li>
             </ul>
-            <div class="mt:30" x-data="{ open: false }">
+            <div class="mt:30" x-data="{
+                handleUninstallClick() {
+                    this.$dispatch('open-dialog', {
+                        title: 'Uninstall',
+                        message: 'アンインストールを実行しますか？',
+                        ok: () => this.$refs.form.submit(),
+                    });
+                }
+            }">
                 {{ form_open({
                     route: 'admin.uninstall',
                     method: 'post',
@@ -39,14 +47,9 @@
                     {{ forms.button({
                         label: 'アンインストールする',
                         class: 'form-btn--secondary',
-                        click: 'open = true',
+                        click: 'handleUninstallClick',
                     }) }}
                 {{ form_close() }}
-                {{ dialogs.confirm({
-                    title: 'Uninstall',
-                    message: 'アンインストールを実行しますか？',
-                    submit: '$refs.form.submit()',
-                }) }}
             </div>
         </div>
     </div>

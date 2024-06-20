@@ -2,12 +2,13 @@
 
 namespace CmsTool\View;
 
+use CmsTool\View\Contract\Htmlable;
 use CmsTool\View\Contract\TemplateFinder;
 use CmsTool\View\Contract\TemplateRenderer;
 use Takemo101\Chubby\Contract\Arrayable;
 use Takemo101\Chubby\Contract\Renderable;
 
-class View implements Renderable
+class View implements Renderable, Htmlable
 {
     /**
      * constructor
@@ -102,5 +103,13 @@ class View implements Renderable
                         : $this->data),
                 ],
             );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function __toString(): string
+    {
+        return $this->render();
     }
 }

@@ -8,6 +8,9 @@ use CmsTool\Session\SessionContext;
 use Odan\Session\MemorySession;
 use Psr\Http\Server\RequestHandlerInterface;
 use Tests\Session\TestCase;
+use Mockery as m;
+use Psr\EventDispatcher\EventDispatcherInterface;
+use Takemo101\Chubby\Hook\Hook;
 
 describe(
     'CsrfMiddleware',
@@ -19,10 +22,10 @@ describe(
                 /** @var TestCase $this */
 
                 $context = new SessionContext(new MemorySession());
-                $request = $context->withContext($this->createRequest('POST', '/'));
+                $request = $context->withRequest($this->createRequest('POST', '/'));
 
                 $response = $this->createResponse();
-                $handler = Mockery::mock(RequestHandlerInterface::class);
+                $handler = m::mock(RequestHandlerInterface::class);
 
                 $handler->shouldReceive('handle')->andReturn($response);
 
@@ -44,7 +47,13 @@ describe(
                 $context = new SessionContext($session);
 
                 $response = $this->createResponse();
-                $handler = Mockery::mock(RequestHandlerInterface::class);
+                $handler = m::mock(RequestHandlerInterface::class);
+
+                $dispatcher = m::mock(EventDispatcherInterface::class);
+                $hook = m::mock(Hook::class);
+
+                $dispatcher->shouldReceive('dispatch');
+                $hook->shouldReceive('do');
 
                 $handler->shouldReceive('handle')->andReturn($response);
 
@@ -56,9 +65,13 @@ describe(
                 $tokenPair = $guard->generateToken();
 
                 $request = $context
-                    ->withContext($this->createRequest('POST', '/'))->withParsedBody($tokenPair);
+                    ->withRequest($this->createRequest('POST', '/'))->withParsedBody($tokenPair);
 
-                $actual = (new Csrf($factory))->process($request, $handler);
+                $actual = (new Csrf(
+                    factory: $factory,
+                    dispatcher: $dispatcher,
+                    hook: $hook,
+                ))->process($request, $handler);
 
                 expect($actual)->toBe($response);
 
@@ -72,4 +85,4 @@ describe(
             }
         );
     }
-)->group('csrf-middleware', 'middleware');
+)->group('CsrfMiddleware', 'middleware');

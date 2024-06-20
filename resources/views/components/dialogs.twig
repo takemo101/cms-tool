@@ -1,42 +1,87 @@
 {% macro confirm(options = {
     title: 'Update',
-    message: '更新しますか？',
-    var: 'open',
-    submit: null,
+    message: '変更内容を保存しますか？',
+    OK: 'OK',
+    Cancel: 'Cancel',
 }) %}
-    {% set var = options.var ?? 'open' %}
-
     <dialog
         class="dialog"
-        x-show="{{ var }}"
-        x-dialog.noscroll="{{ var }} = false">
+        x-data="{
+            defaults: {
+                title: '{{ options.title }}',
+                message: '{{ options.message }}',
+                open: () => true,
+                ok: () => {},
+            },
+            data: {
+                title: '',
+                message: '',
+                open: () => true,
+                ok: () => {},
+            },
+            show: false,
+            /**
+             * Open dialog
+             *
+             * @param {Object} options - { title: string, message: string, open: function, ok: function }
+             * @return {void}
+             */
+            open(options) {
+                this.data = {
+                    ...this.defaults,
+                    ...options,
+                };
+
+                if (this.data.open()) {
+                    this.show = true;
+                }
+            },
+            /**
+             * Close dialog
+             *
+             * @return {void}
+             */
+            close() {
+                this.show = false;
+            },
+            /**
+             * OK click event
+             *
+             * @return {void}
+             */
+            handleOKClick() {
+                this.data.ok();
+                this.close();
+            },
+        }"
+        x-show="show"
+        x-dialog.noscroll="close"
+        @open-dialog.window="open($event.detail)">
         <div class="dialog-layout">
             <div class="dialog-header">
-                <span class="dialog-header__title">{{ options.title }}</span>
+                <span class="dialog-header__title" x-text="data.title"></span>
                 <button
                     class="dialog-header__close"
                     type="button"
-                    @click="{{ var }} = false">
+                    @click="close">
                     X
                 </button>
             </div>
             <div class="w:full py:30">
-                <p class="f:gray-52">
-                    {{ options.message }}
-                </p>
+                <p class="f:gray-52" x-text="data.message"></p>
             </div>
             <div class="dialog-footer">
                 <button
                     type="button"
-                    @click="{{ var }} = false"
+                    @click="close"
                     class="form-btn form-btn--secondary">
-                    Cancel
+                    {{ options.Cancel }}
                 </button>
                 <button
                     type="button"
-                    @click="{{ options.submit }}"
+                    @click="handleOKClick"
                     class="form-btn form-btn--primary">
-                    OK
+                    {{ options.OK }}
                 </button>
             </div>
         </div>

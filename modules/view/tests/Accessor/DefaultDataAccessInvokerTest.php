@@ -1,18 +1,18 @@
 <?php
 
-use CmsTool\View\Accessor\DefaultDataAccessInvoker;
+use CmsTool\View\Accessor\DataAccessInvoker;
 use DI\FactoryInterface;
 use Mockery as m;
 
 describe(
-    'DefaultDataAccessInvoker',
+    'DataAccessInvoker',
     function () {
         beforeEach(function () {
             // Create a mock for the FactoryInterface
             $this->factory = m::mock(FactoryInterface::class);
 
-            // Create a new instance of the DefaultDataAccessInvoker class
-            $this->invoker = new DefaultDataAccessInvoker($this->factory);
+            // Create a new instance of the DataAccessInvoker class
+            $this->invoker = new DataAccessInvoker($this->factory);
         });
 
         it('invokes a closure accessor', function () {
@@ -64,7 +64,7 @@ describe(
                 ->toThrow(RuntimeException::class);
         });
     }
-)->group('DefaultDataAccessInvoker', 'accessor');
+)->group('DataAccessInvoker', 'accessor');
 
 class TestAccessor
 {

@@ -1,16 +1,16 @@
 <?php
 
-use CmsTool\Session\NativePhpSessionFactory;
 use Takemo101\CmsTool\Support\Session\FlashErrorMessages;
 use Takemo101\CmsTool\Support\Session\FlashOldInputs;
+use Takemo101\CmsTool\Support\Toast\FlashToast;
 
 return [
-    'factory' => NativePhpSessionFactory::class,
 
     // FlashSession classes
     'flashes' => [
         FlashErrorMessages::class,
         FlashOldInputs::class,
+        FlashToast::class,
     ],
 
     // PhpSession options

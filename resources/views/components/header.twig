@@ -1,5 +1,3 @@
-{% import "cms-tool::components.dialogs" as dialogs %}
-
 <nav class="header z:999">
     <div class="header__inner">
         <div class="flex flex:row">
@@ -11,10 +9,18 @@
             <h1 class="header__title">{{ config('app.name') }}</h1>
         </div>
 
-        <div class="as:center" x-data="{ open: false }">
+        <div class="as:center" x-data="{
+            handleLogoutClick() {
+                this.$dispatch('open-dialog', {
+                    title: 'Logout',
+                    message: 'ログアウトしますか？',
+                    ok: () => this.$refs.form.submit(),
+                });
+            }
+        }">
             <button
                 class="header__btn"
-                @click.prevent="open = true">
+                @click.prevent="handleLogoutClick">
                 ログアウト
             </button>
             {{ form_open({
@@ -23,11 +29,6 @@
                 'x-ref': 'form',
             }) }}
             {{ form_close() }}
-            {{ dialogs.confirm({
-                title: 'Logout',
-                message: 'ログアウトしますか？',
-                submit: '$refs.form.submit()',
-            }) }}
 
         </div>
     </div>

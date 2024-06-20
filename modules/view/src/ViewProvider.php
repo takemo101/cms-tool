@@ -3,10 +3,10 @@
 namespace CmsTool\View;
 
 use CmsTool\View\Accessor\DataAccessAdapter;
-use CmsTool\View\Accessor\DataAccessInvoker;
 use CmsTool\View\Accessor\DataAccessors;
 use CmsTool\View\Accessor\DataAccessorsFactory;
-use CmsTool\View\Accessor\DefaultDataAccessInvoker;
+use CmsTool\View\Component\Components;
+use CmsTool\View\Component\ComponentsFactory;
 use CmsTool\View\Contract\TemplateFinder;
 use CmsTool\View\Contract\TemplateRenderer;
 use CmsTool\View\Html\Filter\AppendMethodOverrideInputFilter;
@@ -33,7 +33,7 @@ use Twig\Environment;
 use Twig\Extension\ExtensionInterface;
 use Twig\Loader\LoaderInterface;
 use Stringable;
-use Takemo101\Chubby\Bootstrap\DefinitionHelper;
+use Takemo101\Chubby\Bootstrap\Support\ConfigBasedDefinitionReplacer;
 use Takemo101\Chubby\Config\ConfigPhpRepository;
 
 use function DI\get;
@@ -54,21 +54,14 @@ class ViewProvider implements Provider
     public function register(Definitions $definitions): void
     {
         $definitions->add([
-            TemplateFinder::class => DefinitionHelper::createReplaceable(
-                TemplateFinder::class,
-                'view.finder',
+            TemplateFinder::class => new ConfigBasedDefinitionReplacer(
                 DefaultTemplateFinder::class,
+                'view.finder',
                 true,
             ),
-            TemplateRenderer::class => DefinitionHelper::createReplaceable(
-                TemplateRenderer::class,
-                'view.renderer',
+            TemplateRenderer::class => new ConfigBasedDefinitionReplacer(
                 TwigTemplateRenderer::class,
-            ),
-            DataAccessInvoker::class => DefinitionHelper::createReplaceable(
-                DataAccessInvoker::class,
-                'view.invoker',
-                DefaultDataAccessInvoker::class,
+                'view.renderer',
             ),
             DataAccessors::class => function (
                 DataAccessorsFactory $factory,
@@ -79,6 +72,16 @@ class ViewProvider implements Provider
                 $hook->doTyped($accessors);
 
                 return $accessors;
+            },
+            Components::class => function (
+                ComponentsFactory $factory,
+                Hook $hook,
+            ) {
+                $components = $factory->create();
+
+                $hook->doTyped($components);
+
+                return $components;
             },
             TwigFactory::class => function (
                 ContainerInterface $container,

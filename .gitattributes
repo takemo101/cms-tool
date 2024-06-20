@@ -17,3 +17,10 @@ phpunit.xml.dist.bak    export-ignore
 Taskfile.yml            export-ignore
 docker-compose.yaml     export-ignore
 pint.json               export-ignore
+biome.json              export-ignore
+tsconfig.json           export-ignore
+yarn.lock               export-ignore
+vite.config.js          export-ignore
+package.json            export-ignore
+package-lock.json       export-ignore
+bun.lockb               export-ignore

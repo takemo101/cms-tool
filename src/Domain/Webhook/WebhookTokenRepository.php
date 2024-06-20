@@ -2,8 +2,6 @@
 
 namespace Takemo101\CmsTool\Domain\Webhook;
 
-use CmsTool\Theme\ActiveTheme;
-
 interface WebhookTokenRepository
 {
     /**

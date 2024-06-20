@@ -17,12 +17,10 @@ readonly class ChangeAdminAccountRequest
         #[NotBlank]
         #[Length(min: 4, max: 50)]
         public string $name,
-
         #[NotBlank]
         #[Email]
         #[Length(max: 100)]
         public string $email,
-
         #[AtLeastOneOf(
             [
                 new Blank(),
@@ -35,7 +33,6 @@ readonly class ChangeAdminAccountRequest
             ],
         )]
         public string $password,
-
         #[EqualTo(propertyPath: 'password')]
         public string $passwordConfirmation,
     ) {

@@ -14,7 +14,6 @@ readonly class LoginRequest
         #[NotBlank]
         #[Email]
         public string $email,
-
         #[NotBlank]
         #[Length(min: PlainPassword::MinLenth, max: PlainPassword::MaxLength)]
         #[Regex(pattern: '/^[a-zA-Z0-9]+$/')]

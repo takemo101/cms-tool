@@ -1,25 +1,9 @@
 <?php
 
-use CmsTool\Theme\DefaultThemeAssetFinfoFactory;
-use CmsTool\Theme\DefaultThemeFinder;
-use CmsTool\Theme\DefaultThemeAccessor;
-use Takemo101\CmsTool\Infra\JsonAccess\JsonAccessActiveThemeIdMatcher;
 use Takemo101\CmsTool\Preset\MicroCms\Blog\BlogHook;
 use Takemo101\CmsTool\Preset\MicroCms\Blog\BlogRoute;
 
 return [
-
-    // ThemeFinder implementation class name
-    'finder' => DefaultThemeFinder::class,
-
-    // ThemeAccessor implementation class name
-    'accessor' => DefaultThemeAccessor::class,
-
-    // ThemeAssetFinfoFactory implementation class name
-    'factory' => DefaultThemeAssetFinfoFactory::class,
-
-    // ActiveThemeIdMatcher implementation class name
-    'matcher' => JsonAccessActiveThemeIdMatcher::class,
 
     // Directory to place themes
     'locations' => [

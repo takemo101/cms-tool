@@ -2,22 +2,27 @@
 
 namespace Takemo101\CmsTool;
 
+use CmsTool\Session\Middleware\SessionStart;
 use CmsTool\Support\Translation\TranslationAccessor;
 use CmsTool\Theme\Contract\ThemeFinder;
 use CmsTool\View\Contract\TemplateFinder;
 use CmsTool\View\Html\Filter\FormAppendFilters;
 use Psr\Container\ContainerInterface;
+use Slim\App as Slim;
+use Slim\Middleware\MethodOverrideMiddleware;
 use Takemo101\Chubby\ApplicationContainer;
+use Takemo101\Chubby\ApplicationHookTags;
 use Takemo101\Chubby\Bootstrap\Definitions;
 use Takemo101\Chubby\Bootstrap\Provider\Provider;
 use Takemo101\Chubby\Config\ConfigRepository;
 use Takemo101\Chubby\Filesystem\LocalFilesystem;
 use Takemo101\Chubby\Hook\Hook;
+use Takemo101\Chubby\Http\GlobalMiddlewareCollection;
+use Takemo101\CmsTool\Http\Middleware\CacheControl;
 use Takemo101\CmsTool\Http\Session\AdminSessionFactory;
 use Takemo101\CmsTool\Http\Session\DefaultAdminSessionFactory;
 use Takemo101\CmsTool\Support\FormAppendFilter\AppendCsrfInputFilter;
 use Takemo101\CmsTool\Support\Theme\ActiveThemeFunctionLoader;
-use Takemo101\CmsTool\Support\Uri\ApplicationUrl;
 use Takemo101\CmsTool\Support\VendorPath;
 use Takemo101\CmsTool\Support\Webhook\CacheCleanWebhookHandler;
 use Takemo101\CmsTool\Support\Webhook\WebhookHandler;
@@ -50,14 +55,6 @@ class CmsToolProvider implements Provider
     public function register(Definitions $definitions): void
     {
         $definitions->add([
-            ApplicationUrl::class => function (
-                ConfigRepository $config,
-            ) {
-                /** @var string */
-                $uri = $config->get('app.url', '');
-
-                return ApplicationUrl::fromString($uri);
-            },
             VendorPath::class => fn () => new VendorPath(
                 dirname(__DIR__, 1),
                 'src',
@@ -131,6 +128,7 @@ class CmsToolProvider implements Provider
         $this->bootTheme($hook, $path);
         $this->bootHtml($hook);
         $this->bootTranslation($hook);
+        $this->bootGlobalMiddleware($hook);
 
         /** @var ActiveThemeFunctionLoader */
         $functionLoader = $container->get(ActiveThemeFunctionLoader::class);
@@ -216,6 +214,29 @@ class CmsToolProvider implements Provider
                         $path->getResourcePath('lang'),
                     );
                 }
+            );
+    }
+
+    /**
+     * Boot global middleware.
+     *
+     * @param Hook $hook
+     * @return void
+     */
+    private function bootGlobalMiddleware(Hook $hook): void
+    {
+        $hook
+            ->onTyped(
+                fn (GlobalMiddlewareCollection $middlewares) => $middlewares->add(
+                    CacheControl::class,
+                    SessionStart::class,
+                ),
+            )
+            ->on(
+                ApplicationHookTags::Http_AfterAddRoutingMiddleware,
+                fn (Slim $slim) => $slim->add(
+                    new MethodOverrideMiddleware(),
+                ),
             );
     }
 }

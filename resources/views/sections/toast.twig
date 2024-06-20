@@ -1,0 +1,7 @@
+<script>
+    {% if style.isSuccessStyle() %}
+        Toastr.success('{{ message }}');
+    {% else %}
+        Toastr.error('{{ message }}');
+    {% endif %}
+</script>

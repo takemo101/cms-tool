@@ -27,11 +27,11 @@ describe(
 
                 $formOpenFunction = $functions[0];
                 expect($formOpenFunction->getName())->toBe('form_open');
-                expect($formOpenFunction->getCallable())->toBe([$builder, 'buildOpen']);
+                expect($formOpenFunction->getCallable())->toBeInstanceOf(Closure::class);
 
                 $formCloseFunction = $functions[1];
                 expect($formCloseFunction->getName())->toBe('form_close');
-                expect($formCloseFunction->getCallable())->toBe([$builder, 'buildClose']);
+                expect($formCloseFunction->getCallable())->toBeInstanceOf(Closure::class);
             }
         );
     }

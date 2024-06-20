@@ -49,10 +49,10 @@ use Takemo101\CmsTool\Http\Middleware\GuideToInstallation;
 use Takemo101\CmsTool\Http\Middleware\InsertTrackingCode;
 use Takemo101\CmsTool\Http\Middleware\WhenUninstalled;
 use Takemo101\CmsTool\Http\Middleware\WhenUnpublished;
-use Takemo101\CmsTool\Infra\Listener\AdminSessionContextSetupListener;
+use Takemo101\CmsTool\Infra\Listener\AdminSessionSetupListener;
 use Takemo101\CmsTool\Infra\Listener\ClearCacheListener;
 use Takemo101\CmsTool\Infra\Listener\CreateRobotsTxtListener;
-use Takemo101\CmsTool\Infra\Listener\CsrfGuardContextSetupListener;
+use Takemo101\CmsTool\Infra\Listener\CsrfGuardSetupListener;
 use Takemo101\CmsTool\Infra\Listener\DeleteRobotsTxtListener;
 use Takemo101\CmsTool\Infra\Listener\RequestParameterSetupListener;
 use Takemo101\CmsTool\Infra\Storage\LocalPublicStoragePath;
@@ -66,8 +66,8 @@ hook()
     )
     ->onTyped(
         fn (EventRegister $register) => $register
-            ->on(AdminSessionContextSetupListener::class)
-            ->on(CsrfGuardContextSetupListener::class)
+            ->on(AdminSessionSetupListener::class)
+            ->on(CsrfGuardSetupListener::class)
             ->on(RequestParameterSetupListener::class)
             ->on(CreateRobotsTxtListener::class)
             ->on(DeleteRobotsTxtListener::class)

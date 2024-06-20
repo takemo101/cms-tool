@@ -16,7 +16,7 @@ class AdminSessionContext extends AbstractContext
      * @param AdminSession $session
      */
     public function __construct(
-        private AdminSession $session,
+        private readonly AdminSession $session,
     ) {
         //
     }

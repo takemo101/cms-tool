@@ -3,13 +3,20 @@
 namespace CmsTool\Session\Middleware;
 
 use CmsTool\Session\Contract\SessionFactory;
+use CmsTool\Session\Event\SessionStarted;
+use CmsTool\Session\Flash\FlashSessions;
 use CmsTool\Session\Flash\FlashSessionsContext;
 use CmsTool\Session\Flash\FlashSessionsFactory;
 use CmsTool\Session\SessionContext;
+use CmsTool\Session\SessionHookTags;
+use Odan\Session\SessionInterface;
+use Odan\Session\SessionManagerInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Takemo101\Chubby\Hook\Hook;
 
 class SessionStart implements MiddlewareInterface
 {
@@ -18,10 +25,14 @@ class SessionStart implements MiddlewareInterface
      *
      * @param SessionFactory $sessionFactory
      * @param FlashSessionsFactory $flashSessionsFactory
+     * @param EventDispatcherInterface $dispatcher
+     * @param Hook $hook
      */
     public function __construct(
-        private SessionFactory $sessionFactory,
-        private FlashSessionsFactory $flashSessionsFactory,
+        private readonly SessionFactory $sessionFactory,
+        private readonly FlashSessionsFactory $flashSessionsFactory,
+        private readonly EventDispatcherInterface $dispatcher,
+        private readonly Hook $hook,
     ) {
         //
     }
@@ -49,11 +60,44 @@ class SessionStart implements MiddlewareInterface
         $sessionContext = new SessionContext($session);
         $flashSessionsContext = new FlashSessionsContext($flashSessions);
 
-        $response = $handler->handle(
-            $flashSessionsContext->withRequest(
-                $sessionContext->withRequest($request),
+        $request = $flashSessionsContext->withRequest(
+            $sessionContext->withRequest($request),
+        );
+
+        $this->hook->do(
+            tag: SessionInterface::class,
+            parameter: $session,
+        );
+
+        $this->hook->do(
+            tag: SessionManagerInterface::class,
+            parameter: $session,
+        );
+
+        $this->hook->do(
+            tag: FlashSessions::class,
+            parameter: $flashSessions,
+        );
+
+        $this->hook->do(
+            tag: SessionHookTags::SessionStarted,
+            parameter: $session,
+        );
+
+        $this->hook->do(
+            tag: SessionHookTags::FlashSessionStarted,
+            parameter: $flashSessions,
+        );
+
+        $this->dispatcher->dispatch(
+            new SessionStarted(
+                request: $request,
+                session: $session,
+                flashSessions: $flashSessions,
             ),
         );
+
+        $response = $handler->handle($request);
 
         $session->save();
 

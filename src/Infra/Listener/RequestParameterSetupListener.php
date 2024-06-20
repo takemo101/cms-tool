@@ -2,20 +2,19 @@
 
 namespace Takemo101\CmsTool\Infra\Listener;
 
-use CmsTool\Session\Flash\FlashSessionsContext;
+use CmsTool\Session\Event\SessionStarted;
 use Takemo101\Chubby\Event\Attribute\AsEventListener;
-use Takemo101\Chubby\Http\Event\BeforeControllerExecution;
 use Takemo101\CmsTool\Support\Session\FlashOldInputs;
 
-#[AsEventListener(BeforeControllerExecution::class)]
+#[AsEventListener(SessionStarted::class)]
 class RequestParameterSetupListener
 {
     /**
-     * @param BeforeControllerExecution $event
+     * @param SessionStarted $event
      * @return void
      */
     public function __invoke(
-        BeforeControllerExecution $event
+        SessionStarted $event
     ): void {
         $request = $event->getRequest();
 
@@ -27,8 +26,7 @@ class RequestParameterSetupListener
 
         // Put old inputs to flash session.
         if (!empty($params)) {
-            FlashSessionsContext::fromRequest($request)
-                ?->getFlashSessions()
+            $event->getFlashSessions()
                 ->get(FlashOldInputs::class)
                 ->put($params);
         }

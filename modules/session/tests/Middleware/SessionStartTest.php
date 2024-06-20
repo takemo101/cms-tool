@@ -10,6 +10,8 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Mockery as m;
+use Psr\EventDispatcher\EventDispatcherInterface;
+use Takemo101\Chubby\Hook\Hook;
 use Takemo101\Chubby\Http\Context\RequestContext;
 
 beforeEach(function () {
@@ -17,6 +19,11 @@ beforeEach(function () {
     $this->request = m::mock(ServerRequestInterface::class);
     $this->handler = m::mock(RequestHandlerInterface::class);
     $this->response = m::mock(ResponseInterface::class);
+    $this->dispatcher = m::mock(EventDispatcherInterface::class);
+    $this->hook = m::mock(Hook::class);
+
+    $this->dispatcher->shouldReceive('dispatch');
+    $this->hook->shouldReceive('do');
 });
 
 
@@ -43,8 +50,10 @@ describe(
                 $this->handler->shouldReceive('handle')->andReturn($this->response);
 
                 $middleware = new SessionStart(
-                    $this->sessionFactory,
-                    $flashSessionsFactory
+                    sessionFactory: $this->sessionFactory,
+                    flashSessionsFactory: $flashSessionsFactory,
+                    dispatcher: $this->dispatcher,
+                    hook: $this->hook,
                 );
 
                 $actual = $middleware->process($this->request, $this->handler);
@@ -67,8 +76,10 @@ describe(
                 $this->request->shouldReceive('getAttribute')->andReturn(new RequestContext());
 
                 $middleware = new SessionStart(
-                    $this->sessionFactory,
-                    $flashSessionsFactory
+                    sessionFactory: $this->sessionFactory,
+                    flashSessionsFactory: $flashSessionsFactory,
+                    dispatcher: $this->dispatcher,
+                    hook: $this->hook,
                 );
 
                 $actual = $middleware->process($this->request, $this->handler);

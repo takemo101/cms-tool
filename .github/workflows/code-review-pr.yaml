@@ -8,8 +8,7 @@ on:
     pull_request:
         types: [opened, synchronize]
         branches:
-            - feat/**
-            - fix/**
+            - develop
 
 jobs:
     chatgpt-review:

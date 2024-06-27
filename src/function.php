@@ -53,6 +53,7 @@ use Takemo101\CmsTool\Infra\Listener\CsrfGuardSetupListener;
 use Takemo101\CmsTool\Infra\Listener\DeleteRobotsTxtListener;
 use Takemo101\CmsTool\Infra\Listener\RequestParameterSetupListener;
 use Takemo101\CmsTool\Infra\Storage\LocalPublicStoragePath;
+use Takemo101\CmsTool\Support\Htmx\HtmxAccess;
 use Takemo101\CmsTool\Support\Theme\ActiveThemeRouteRegister;
 
 hook()
@@ -227,7 +228,9 @@ hook()
                                     $proxy->delete(
                                         '/seo/{target:favicon|icon}',
                                         [SiteSeoController::class, 'deleteImage'],
-                                    )->setName('admin.seo.delete.image');
+                                    )
+                                        ->setName('admin.seo.delete.image')
+                                        ->add(HtmxAccess::class);
 
                                     $proxy->get(
                                         '/tracking-code',

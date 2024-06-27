@@ -14,7 +14,7 @@ use Takemo101\Chubby\Support\ServiceLocator;
 /**
  * 継承による汎用的なレスポンス処理を提供する抽象クラス
  */
-abstract class AbstractResponse implements ResponseRenderer, ContainerInjectable
+abstract class AbstractResponseRenderer implements ResponseRenderer, ContainerInjectable
 {
     /**
      * @var ApplicationContainer|null

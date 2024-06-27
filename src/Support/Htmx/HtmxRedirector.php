@@ -2,7 +2,7 @@
 
 namespace Takemo101\CmsTool\Support\Htmx;
 
-use App\Support\Htmx\HtmxResponse;
+use App\Support\Htmx\HtmxRenderer;
 use Fig\Http\Message\StatusCodeInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -35,7 +35,7 @@ class HtmxRedirector implements MiddlewareInterface
             (new HtmxRequest($request))->isHtmx() &&
             $this->isRedirectionResponse($response)
         ) {
-            $response = HtmxResponse::redirect($response->getHeaderLine('Location'))
+            $response = HtmxRenderer::redirect($response->getHeaderLine('Location'))
                 ->render(
                     request: $request,
                     response: $response,

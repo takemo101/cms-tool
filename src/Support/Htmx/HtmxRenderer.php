@@ -3,7 +3,7 @@
 namespace App\Support\Htmx;
 
 
-use App\Support\Shared\AbstractResponse;
+use App\Support\Shared\AbstractResponseRenderer;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
@@ -11,7 +11,7 @@ use Psr\Http\Message\ServerRequestInterface;
  *
  * ref: https://htmx.org/reference/#response_headers
  */
-class HtmxResponse extends AbstractResponse
+class HtmxRenderer extends AbstractResponseRenderer
 {
     /**
      * Set HX-Retarget header

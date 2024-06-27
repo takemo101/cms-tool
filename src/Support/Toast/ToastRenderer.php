@@ -31,8 +31,6 @@ class ToastRenderer implements ResponseRenderer, Arrayable, ContainerInjectable
      */
     public const ToastMessageKey = 'toast-message';
 
-    private ?ApplicationContainer $container = null;
-
     /**
      * constructor
      *

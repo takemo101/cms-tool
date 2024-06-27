@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Support\Shared;
+namespace Takemo101\CmsTool\Support\Shared;
 
 use Fig\Http\Message\StatusCodeInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -123,7 +123,9 @@ abstract class AbstractResponseRenderer implements ResponseRenderer, ContainerIn
                 default => $content,
             };
 
-            $response->getBody()->write($content);
+            if ($content) {
+                $response->getBody()->write($content);
+            }
         }
 
         // Set status code

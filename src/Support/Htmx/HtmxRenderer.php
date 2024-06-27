@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Support\Htmx;
+namespace Takemo101\CmsTool\Support\Htmx;
 
 
-use App\Support\Shared\AbstractResponseRenderer;
+use Takemo101\CmsTool\Support\Shared\AbstractResponseRenderer;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**

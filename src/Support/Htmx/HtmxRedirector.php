@@ -2,7 +2,6 @@
 
 namespace Takemo101\CmsTool\Support\Htmx;
 
-use App\Support\Htmx\HtmxRenderer;
 use Fig\Http\Message\StatusCodeInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;

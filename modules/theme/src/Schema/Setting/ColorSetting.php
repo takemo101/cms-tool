@@ -39,7 +39,7 @@ class ColorSetting extends AbstractInputSetting
      *   id: string,
      *   label: string,
      *   default?: string,
-     * }
+     * } $data
      */
     public static function fromArray(array $data): static
     {

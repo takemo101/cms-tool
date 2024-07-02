@@ -39,7 +39,7 @@ class CheckboxSetting extends AbstractInputSetting
      *   id: string,
      *   label: string,
      *   default?: boolean,
-     * }
+     * } $data
      */
     public static function fromArray(array $data): static
     {

@@ -17,18 +17,23 @@ class SelectSetting extends AbstractInputSetting
     public const DefaultValueIfNotSet = '';
 
     /**
+     * @var SelectOption[]
+     */
+    public readonly array $options;
+
+    /**
      * constructor
      *
      * @param string $id
      * @param string $label
-     * @param SelectOption[] $options
      * @param string|null $default
+     * @param SelectOption ...$options
      */
     public function __construct(
         string $id,
         string $label,
-        public readonly array $options = [],
         mixed $default = null,
+        SelectOption ...$options,
     ) {
         parent::__construct(
             id: $id,
@@ -40,6 +45,8 @@ class SelectSetting extends AbstractInputSetting
             empty($options) === false,
             'The setting options must not be empty',
         );
+
+        $this->options = $options;
     }
 
     /**
@@ -69,21 +76,21 @@ class SelectSetting extends AbstractInputSetting
      *     label: string,
      *   }[],
      *   default?: string,
-     * }
+     * } $data
      */
     public static function fromArray(array $data): static
     {
         return new self(
-            id: $data['id'],
-            label: $data['label'],
-            options: array_map(
-                fn (array $option) => new SelectOption(
+            $data['id'],
+            $data['label'],
+            $data['default']  ?? static::DefaultValueIfNotSet,
+            ...array_map(
+                fn (array $option): SelectOption => new SelectOption(
                     value: $option['value'],
                     label: $option['label'],
                 ),
                 $data['options'],
             ),
-            default: $data['default']  ?? static::DefaultValueIfNotSet,
         );
     }
 }

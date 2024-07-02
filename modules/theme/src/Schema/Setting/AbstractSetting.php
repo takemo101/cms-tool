@@ -4,6 +4,11 @@ namespace CmsTool\Theme\Schema\Setting;
 
 use CmsTool\Theme\Schema\SchemeSettingType;
 
+/**
+ * Abstract setting
+ *
+ * @immutable
+ */
 abstract class AbstractSetting
 {
     /**

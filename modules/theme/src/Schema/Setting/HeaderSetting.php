@@ -38,7 +38,7 @@ class HeaderSetting extends AbstractSetting
      * @param array{
      *   title: string,
      *   description?: string,
-     * }
+     * } $data
      */
     public static function fromArray(array $data): static
     {

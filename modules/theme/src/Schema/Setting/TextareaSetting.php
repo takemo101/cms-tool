@@ -40,7 +40,7 @@ class TextareaSetting extends AbstractTextInputSetting
      *   label: string,
      *   default?: string,
      *   placeholder?: string,
-     * }
+     * } $data
      */
     public static function fromArray(array $data): static
     {

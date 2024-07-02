@@ -42,7 +42,7 @@ class NumberSetting extends AbstractTextInputSetting
      *   label: string,
      *   default?: integer|float,
      *   placeholder?: string,
-     * }
+     * } $data
      */
     public static function fromArray(array $data): static
     {

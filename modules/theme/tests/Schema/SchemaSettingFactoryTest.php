@@ -1,5 +1,6 @@
 <?php
 
+use CmsTool\Theme\Exception\ArrayKeyMissingException;
 use CmsTool\Theme\Schema\SchemaSettingFactory;
 use CmsTool\Theme\Schema\Setting\CheckboxSetting;
 use CmsTool\Theme\Schema\Setting\ColorSetting;
@@ -119,19 +120,20 @@ describe(
             expect($setting)->toBeInstanceOf(TextSetting::class);
         });
 
-        it('throws an exception for undefined type', function (
-            array $data,
-        ) {
+        it('throws an exception for missing required array key', function () {
             $factory = new SchemaSettingFactory();
 
-            expect(fn () => $factory->create($data))->toThrow(InvalidArgumentException::class);
-        })->with([
-            fn () => [
+            expect(fn () => $factory->create([
+                'typo' => 'undefined',
+            ]))->toThrow(ArrayKeyMissingException::class);
+        });
+
+        it('throws an exception for undefined type', function () {
+            $factory = new SchemaSettingFactory();
+
+            expect(fn () => $factory->create([
                 'type' => 'unknown',
-            ],
-            fn () => [
-                'typo' => 'text',
-            ],
-        ]);
+            ]))->toThrow(\InvalidArgumentException::class);
+        });
     }
 )->group('SchemaSettingFactory', 'schema');

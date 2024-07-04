@@ -2,7 +2,8 @@
 
 namespace CmsTool\Theme\Schema\Setting;
 
-use CmsTool\Theme\Schema\SchemeSettingType;
+use CmsTool\Theme\Schema\SchemaSettingType;
+use LogicException;
 
 /**
  * Abstract setting
@@ -12,11 +13,26 @@ use CmsTool\Theme\Schema\SchemeSettingType;
 abstract class AbstractSetting
 {
     /**
+     * The type of schema setting
+     *
+     * @var SchemaSettingType
+     */
+    public const Type = SchemaSettingType::Unknown;
+
+    /**
      * Get the type of schema setting
      *
-     * @return SchemeSettingType
+     * @return SchemaSettingType
+     * @throws LogicException If the type is unknown
      */
-    abstract public function type(): SchemeSettingType;
+    public function type(): SchemaSettingType
+    {
+        if (static::Type->isUnknown()) {
+            throw new LogicException('Type is unknown');
+        }
+
+        return static::Type;
+    }
 
     /**
      * Create a new instance from an array

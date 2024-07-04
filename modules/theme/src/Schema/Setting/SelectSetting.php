@@ -2,7 +2,8 @@
 
 namespace CmsTool\Theme\Schema\Setting;
 
-use CmsTool\Theme\Schema\SchemeSettingType;
+use CmsTool\Theme\Exception\ArrayKeyMissingException;
+use CmsTool\Theme\Schema\SchemaSettingType;
 
 /**
  * Text input setting
@@ -11,6 +12,11 @@ use CmsTool\Theme\Schema\SchemeSettingType;
  */
 class SelectSetting extends AbstractInputSetting
 {
+    /**
+     * @var SchemaSettingType
+     */
+    public const Type = SchemaSettingType::Select;
+
     /**
      * @var string
      */
@@ -51,22 +57,6 @@ class SelectSetting extends AbstractInputSetting
 
     /**
      * {@inheritDoc}
-     */
-    public function cast(mixed $value): mixed
-    {
-        return (string) $value;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function type(): SchemeSettingType
-    {
-        return SchemeSettingType::Select;
-    }
-
-    /**
-     * {@inheritDoc}
      *
      * @param array{
      *   id: string,
@@ -80,16 +70,26 @@ class SelectSetting extends AbstractInputSetting
      */
     public static function fromArray(array $data): static
     {
+        /**
+         * @var array{
+         *   value: string,
+         *   label: string,
+         * }[]|string[] $options
+         */
+        $options = $data['options'] ?? [];
+
         return new self(
-            $data['id'],
-            $data['label'],
+            $data['id'] ?? ArrayKeyMissingException::throw('id'),
+            $data['label'] ?? ArrayKeyMissingException::throw('label'),
             $data['default']  ?? static::DefaultValueIfNotSet,
             ...array_map(
-                fn (array $option): SelectOption => new SelectOption(
-                    value: $option['value'],
-                    label: $option['label'],
-                ),
-                $data['options'],
+                // If the option is a string, create a new SelectOption with the same value and label
+                function (string|array $option) {
+                    return is_string($option)
+                        ? new SelectOption($option, $option)
+                        : new SelectOption($option['value'], $option['label']);
+                },
+                $options,
             ),
         );
     }

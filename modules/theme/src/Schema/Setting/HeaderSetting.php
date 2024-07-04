@@ -2,7 +2,8 @@
 
 namespace CmsTool\Theme\Schema\Setting;
 
-use CmsTool\Theme\Schema\SchemeSettingType;
+use CmsTool\Theme\Exception\ArrayKeyMissingException;
+use CmsTool\Theme\Schema\SchemaSettingType;
 
 /**
  * Setting to display a header on the theme settings page
@@ -11,6 +12,11 @@ use CmsTool\Theme\Schema\SchemeSettingType;
  */
 class HeaderSetting extends AbstractSetting
 {
+    /**
+     * @var SchemaSettingType
+     */
+    public const Type = SchemaSettingType::Header;
+
     /**
      * constructor
      *
@@ -26,14 +32,6 @@ class HeaderSetting extends AbstractSetting
 
     /**
      * {@inheritDoc}
-     */
-    public function type(): SchemeSettingType
-    {
-        return SchemeSettingType::Header;
-    }
-
-    /**
-     * {@inheritDoc}
      *
      * @param array{
      *   title: string,
@@ -43,7 +41,7 @@ class HeaderSetting extends AbstractSetting
     public static function fromArray(array $data): static
     {
         return new self(
-            title: $data['title'],
+            title: $data['title'] ?? ArrayKeyMissingException::throw('title'),
             description: $data['description'] ?? null,
         );
     }

@@ -2,7 +2,8 @@
 
 namespace CmsTool\Theme\Schema\Setting;
 
-use CmsTool\Theme\Schema\SchemeSettingType;
+use CmsTool\Theme\Exception\ArrayKeyMissingException;
+use CmsTool\Theme\Schema\SchemaSettingType;
 
 /**
  * Multiline input setting
@@ -12,25 +13,14 @@ use CmsTool\Theme\Schema\SchemeSettingType;
 class TextareaSetting extends AbstractTextInputSetting
 {
     /**
+     * @var SchemaSettingType
+     */
+    public const Type = SchemaSettingType::Textarea;
+
+    /**
      * @var string
      */
     public const DefaultValueIfNotSet = '';
-
-    /**
-     * {@inheritDoc}
-     */
-    public function cast(mixed $value): mixed
-    {
-        return (string) $value;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function type(): SchemeSettingType
-    {
-        return SchemeSettingType::Textarea;
-    }
 
     /**
      * {@inheritDoc}
@@ -45,8 +35,8 @@ class TextareaSetting extends AbstractTextInputSetting
     public static function fromArray(array $data): static
     {
         return new self(
-            id: $data['id'],
-            label: $data['label'],
+            id: $data['id'] ?? ArrayKeyMissingException::throw('id'),
+            label: $data['label'] ?? ArrayKeyMissingException::throw('label'),
             default: $data['default'] ?? static::DefaultValueIfNotSet,
             placeholder: $data['placeholder'] ?? null,
         );

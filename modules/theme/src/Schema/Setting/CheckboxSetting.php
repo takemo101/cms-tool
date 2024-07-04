@@ -2,7 +2,8 @@
 
 namespace CmsTool\Theme\Schema\Setting;
 
-use CmsTool\Theme\Schema\SchemeSettingType;
+use CmsTool\Theme\Exception\ArrayKeyMissingException;
+use CmsTool\Theme\Schema\SchemaSettingType;
 
 /**
  * Checkbox input setting
@@ -12,25 +13,14 @@ use CmsTool\Theme\Schema\SchemeSettingType;
 class CheckboxSetting extends AbstractInputSetting
 {
     /**
+     * @var SchemaSettingType
+     */
+    public const Type = SchemaSettingType::Checkbox;
+
+    /**
      * @var boolean
      */
     public const DefaultValueIfNotSet = false;
-
-    /**
-     * {@inheritDoc}
-     */
-    public function cast(mixed $value): mixed
-    {
-        return (bool) $value;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function type(): SchemeSettingType
-    {
-        return SchemeSettingType::Checkbox;
-    }
 
     /**
      * {@inheritDoc}
@@ -40,12 +30,13 @@ class CheckboxSetting extends AbstractInputSetting
      *   label: string,
      *   default?: boolean,
      * } $data
+     * @throws ArrayKeyMissingException
      */
     public static function fromArray(array $data): static
     {
         return new self(
-            id: $data['id'],
-            label: $data['label'],
+            id: $data['id'] ?? ArrayKeyMissingException::throw('id'),
+            label: $data['label'] ?? ArrayKeyMissingException::throw('label'),
             default: $data['default'] ?? static::DefaultValueIfNotSet,
         );
     }

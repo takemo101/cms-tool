@@ -2,7 +2,8 @@
 
 namespace CmsTool\Theme\Schema\Setting;
 
-use CmsTool\Theme\Schema\SchemeSettingType;
+use CmsTool\Theme\Exception\ArrayKeyMissingException;
+use CmsTool\Theme\Schema\SchemaSettingType;
 
 /**
  * Color input setting
@@ -12,25 +13,14 @@ use CmsTool\Theme\Schema\SchemeSettingType;
 class ColorSetting extends AbstractInputSetting
 {
     /**
+     * @var SchemaSettingType
+     */
+    public const Type = SchemaSettingType::Color;
+
+    /**
      * @var string
      */
     public const DefaultValueIfNotSet = '#FFFFFF';
-
-    /**
-     * {@inheritDoc}
-     */
-    public function cast(mixed $value): mixed
-    {
-        return (string) $value;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function type(): SchemeSettingType
-    {
-        return SchemeSettingType::Color;
-    }
 
     /**
      * {@inheritDoc}
@@ -40,12 +30,13 @@ class ColorSetting extends AbstractInputSetting
      *   label: string,
      *   default?: string,
      * } $data
+     * @throws ArrayKeyMissingException
      */
     public static function fromArray(array $data): static
     {
         return new self(
-            id: $data['id'],
-            label: $data['label'],
+            id: $data['id'] ?? ArrayKeyMissingException::throw('id'),
+            label: $data['label'] ?? ArrayKeyMissingException::throw('label'),
             default: $data['default'] ?? static::DefaultValueIfNotSet,
         );
     }

@@ -26,6 +26,7 @@ readonly class ChangeThemeMetaInputs
         public AuthorForChangeThemeMetaInputs $author = new AuthorForChangeThemeMetaInputs(),
         public bool $readonly = false,
         public array $extension = [],
+        public array $schema = [],
     ) {
         //
     }

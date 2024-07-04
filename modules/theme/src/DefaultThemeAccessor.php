@@ -20,11 +20,13 @@ class DefaultThemeAccessor implements ThemeAccessor
      * constructor
      *
      * @param ActiveThemeIdMatcher $matcher
+     * @param ThemeMetaFactory $factory
      * @param LocalFilesystem $filesystem
      * @param ThemePathHelper $helper
      */
     public function __construct(
         private readonly ActiveThemeIdMatcher $matcher,
+        private readonly ThemeMetaFactory $factory,
         private readonly LocalFilesystem $filesystem,
         private readonly ThemePathHelper $helper = new ThemePathHelper(new PathHelper()),
     ) {
@@ -84,9 +86,10 @@ class DefaultThemeAccessor implements ThemeAccessor
          *  author:array{
          *   name:string,
          *   link?:?string,
-         *  },
+         *  }|string,
          *  readonly?:bool,
          *  extension?:array<string,mixed>,
+         *  schema?:array<string,mixed>[],
          * }
          */
         $data = json_decode($content, true);
@@ -106,7 +109,7 @@ class DefaultThemeAccessor implements ThemeAccessor
             id: $themeId,
             directory: $directory,
             active: $this->matcher->isMatch($themeId),
-            meta: ThemeMeta::fromArray($data),
+            meta: $this->factory->create($data),
         );
 
         $this->cache[$path] = $theme;

@@ -29,7 +29,7 @@ class TextSetting extends AbstractTextInputSetting
     public function toArray(): array
     {
         return [
-            'id' => $this->id,
+            'id' => $this->id->value(),
             'label' => $this->label,
             'default' => $this->default,
             'placeholder' => $this->placeholder,

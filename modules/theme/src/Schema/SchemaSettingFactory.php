@@ -58,7 +58,6 @@ class SchemaSettingFactory
             $data['type'] ?? ArrayKeyMissingException::throw('type'),
         );
 
-
         $class = $this->getSettingClass($type);
 
         return $class::fromArray($data);
@@ -74,7 +73,7 @@ class SchemaSettingFactory
     private function getSettingClass(SchemaSettingType $type): string
     {
         if (!$this->map->contains($type)) {
-            throw new InvalidArgumentException("Undefined setting type: {$type}");
+            throw new InvalidArgumentException("Undefined setting type: {$type->value}");
         }
 
         return $this->map[$type];

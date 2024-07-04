@@ -73,7 +73,10 @@ readonly class SchemaSettings implements Arrayable
             'id' => $this->id,
             'title' => $this->title,
             'settings' => array_map(
-                fn (AbstractSetting $setting) => $setting->toArray(),
+                fn (AbstractSetting $setting) => [
+                    "type" => $setting->type()->value,
+                    ...$setting->toArray(),
+                ],
                 $this->settings,
             ),
         ];

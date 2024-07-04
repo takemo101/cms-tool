@@ -3,6 +3,7 @@
 namespace Takemo101\CmsTool\UseCase\Theme\Handler;
 
 use CmsTool\Theme\Contract\ThemeSaver;
+use CmsTool\Theme\Exception\ArrayKeyMissingException;
 use CmsTool\Theme\Exception\NotFoundThemeException;
 use CmsTool\Theme\Theme;
 use CmsTool\Theme\ThemeId;
@@ -35,6 +36,7 @@ class ChangeThemeMetaHandler
      * @param array $payload
      * @return Theme
      * @throws NotFoundDataException
+     * @throws ArrayKeyMissingException
      */
     public function handle(string $id, array $payload): Theme
     {

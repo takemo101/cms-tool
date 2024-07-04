@@ -15,6 +15,11 @@ abstract class AbstractInputSetting extends AbstractSetting
     public const DefaultValueIfNotSet = null;
 
     /**
+     * @var T
+     */
+    public readonly mixed $default;
+
+    /**
      * constructor
      *
      * @param string $id
@@ -24,7 +29,7 @@ abstract class AbstractInputSetting extends AbstractSetting
     public function __construct(
         public readonly string $id,
         public readonly string $label,
-        protected readonly mixed $default = null,
+        mixed $default = null,
     ) {
         assert(
             empty($id) === false,
@@ -35,27 +40,12 @@ abstract class AbstractInputSetting extends AbstractSetting
             empty($label) === false,
             'The setting label must not be empty',
         );
-    }
 
-    /**
-     * Cast the input or output value to the correct type
-     *
-     * @param T|null $value
-     * @return T
-     */
-    abstract public function cast(mixed $value): mixed;
+        assert(
+            static::DefaultValueIfNotSet !== null,
+            'The default value must not be null',
+        );
 
-    /**
-     * Default value for input or output data
-     *
-     * @return T|null
-     */
-    public function default(): mixed
-    {
-        $value = $this->default;
-
-        return $value === null
-            ? static::DefaultValueIfNotSet
-            : $this->cast($value);
+        $this->default = $default ?? static::DefaultValueIfNotSet;
     }
 }

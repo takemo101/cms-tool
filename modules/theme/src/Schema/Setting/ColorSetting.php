@@ -24,6 +24,18 @@ class ColorSetting extends AbstractInputSetting
 
     /**
      * {@inheritDoc}
+     */
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'label' => $this->label,
+            'default' => $this->default,
+        ];
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * @param array{
      *   id: string,

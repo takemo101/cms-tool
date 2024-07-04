@@ -24,6 +24,19 @@ class TextareaSetting extends AbstractTextInputSetting
 
     /**
      * {@inheritDoc}
+     */
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'label' => $this->label,
+            'default' => $this->default,
+            'placeholder' => $this->placeholder,
+        ];
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * @param array{
      *   id: string,

@@ -2,7 +2,12 @@
 
 namespace CmsTool\Theme\Schema\Setting;
 
-readonly class SelectOption
+use Takemo101\Chubby\Contract\Arrayable;
+
+/**
+ * @implements Arrayable<string,mixed>
+ */
+readonly class SelectOption implements Arrayable
 {
     /**
      * constructor
@@ -18,5 +23,16 @@ readonly class SelectOption
             empty($label) === false,
             'The option label must not be empty',
         );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function toArray(): array
+    {
+        return [
+            'value' => $this->value,
+            'label' => $this->label,
+        ];
     }
 }

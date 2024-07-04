@@ -55,6 +55,21 @@ class NumberSetting extends AbstractTextInputSetting
 
     /**
      * {@inheritDoc}
+     */
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'label' => $this->label,
+            'min' => $this->min,
+            'max' => $this->max,
+            'default' => $this->default,
+            'placeholder' => $this->placeholder,
+        ];
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * @param array{
      *   id: string,

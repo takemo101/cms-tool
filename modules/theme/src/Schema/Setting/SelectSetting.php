@@ -57,6 +57,22 @@ class SelectSetting extends AbstractInputSetting
 
     /**
      * {@inheritDoc}
+     */
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'label' => $this->label,
+            'default' => $this->default,
+            'options' => array_map(
+                fn (SelectOption $option) => $option->toArray(),
+                $this->options,
+            ),
+        ];
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * @param array{
      *   id: string,

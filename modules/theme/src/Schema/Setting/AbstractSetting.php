@@ -4,13 +4,15 @@ namespace CmsTool\Theme\Schema\Setting;
 
 use CmsTool\Theme\Schema\SchemaSettingType;
 use LogicException;
+use Takemo101\Chubby\Contract\Arrayable;
 
 /**
  * Abstract setting
  *
+ * @implements Arrayable<string,mixed>
  * @immutable
  */
-abstract class AbstractSetting
+abstract class AbstractSetting implements Arrayable
 {
     /**
      * The type of schema setting

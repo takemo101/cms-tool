@@ -2,11 +2,15 @@
 
 namespace CmsTool\Theme\Schema;
 
+use Takemo101\Chubby\Contract\Arrayable;
+
 /**
  * Manages the input schema settings for customizing themes.
  * Also serves as a collection of schema settings.
+ *
+ * @implements Arrayable<integer,array<string,mixed>>
  */
-readonly class ThemeSchema
+readonly class ThemeSchema implements Arrayable
 {
     /**
      * @var SchemaSettings[]
@@ -46,5 +50,16 @@ readonly class ThemeSchema
     public function isEmpty(): bool
     {
         return empty($this->settings);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function toArray(): array
+    {
+        return array_map(
+            fn (SchemaSettings $settings) => $settings->toArray(),
+            $this->settings,
+        );
     }
 }

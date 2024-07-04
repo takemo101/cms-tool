@@ -32,6 +32,17 @@ class HeaderSetting extends AbstractSetting
 
     /**
      * {@inheritDoc}
+     */
+    public function toArray(): array
+    {
+        return [
+            'title' => $this->title,
+            'description' => $this->description,
+        ];
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * @param array{
      *   title: string,

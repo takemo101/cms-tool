@@ -4,11 +4,14 @@ namespace CmsTool\Theme\Schema;
 
 use CmsTool\Theme\Schema\Setting\AbstractInputSetting;
 use CmsTool\Theme\Schema\Setting\AbstractSetting;
+use Takemo101\Chubby\Contract\Arrayable;
 
 /**
  * Collection of schema settings
+ *
+ * @implements Arrayable<string,mixed>
  */
-readonly class SchemaSettings
+readonly class SchemaSettings implements Arrayable
 {
     /**
      * @var AbstractSetting[]
@@ -59,5 +62,20 @@ readonly class SchemaSettings
         }
 
         $this->settings = $settings;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'title' => $this->title,
+            'settings' => array_map(
+                fn (AbstractSetting $setting) => $setting->toArray(),
+                $this->settings,
+            ),
+        ];
     }
 }

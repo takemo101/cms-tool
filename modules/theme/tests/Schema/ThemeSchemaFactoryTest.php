@@ -6,7 +6,6 @@ use CmsTool\Theme\Schema\ThemeSchema;
 use CmsTool\Theme\Schema\ThemeSchemaFactory;
 use CmsTool\Theme\Schema\SchemaSettings;
 use CmsTool\Theme\Schema\Setting\AbstractSetting;
-use CmsTool\Theme\Schema\Setting\HeaderSetting;
 use Mockery as m;
 
 describe(

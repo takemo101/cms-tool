@@ -2,6 +2,8 @@
 
 namespace CmsTool\Theme\Schema\Setting;
 
+use CmsTool\Theme\Schema\SchemaSettingId;
+
 /**
  * @template T The type of input value corresponding to the schema setting type
  */
@@ -22,20 +24,15 @@ abstract class AbstractInputSetting extends AbstractSetting
     /**
      * constructor
      *
-     * @param string $id
+     * @param SchemaSettingId $id
      * @param string $label
      * @param T|null $default
      */
     public function __construct(
-        public readonly string $id,
+        public readonly SchemaSettingId $id,
         public readonly string $label,
         mixed $default = null,
     ) {
-        assert(
-            empty($id) === false,
-            'The setting ID must not be empty',
-        );
-
         assert(
             empty($label) === false,
             'The setting label must not be empty',

@@ -2,6 +2,8 @@
 
 namespace CmsTool\Theme\Schema\Setting;
 
+use CmsTool\Theme\Schema\SchemaSettingId;
+
 /**
  * Text input setting
  *
@@ -13,13 +15,13 @@ abstract class AbstractTextInputSetting extends AbstractInputSetting
     /**
      * constructor
      *
-     * @param string $id
+     * @param SchemaSettingId $id
      * @param string $label
      * @param T|null $default
      * @param string|null $placeholder
      */
     public function __construct(
-        string $id,
+        SchemaSettingId $id,
         string $label,
         mixed $default = null,
         public readonly ?string $placeholder = null,

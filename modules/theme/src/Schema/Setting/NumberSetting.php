@@ -3,6 +3,7 @@
 namespace CmsTool\Theme\Schema\Setting;
 
 use CmsTool\Theme\Exception\ArrayKeyMissingException;
+use CmsTool\Theme\Schema\SchemaSettingId;
 use CmsTool\Theme\Schema\SchemaSettingType;
 
 /**
@@ -25,7 +26,7 @@ class NumberSetting extends AbstractTextInputSetting
     /**
      * constructor
      *
-     * @param string $id
+     * @param SchemaSettingId $id
      * @param string $label
      * @param integer $min
      * @param integer $max
@@ -33,7 +34,7 @@ class NumberSetting extends AbstractTextInputSetting
      * @param string|null $placeholder
      */
     public function __construct(
-        string $id,
+        SchemaSettingId $id,
         string $label,
         public readonly int $min,
         public readonly int $max,
@@ -59,7 +60,7 @@ class NumberSetting extends AbstractTextInputSetting
     public function toArray(): array
     {
         return [
-            'id' => $this->id,
+            'id' => $this->id->value(),
             'label' => $this->label,
             'min' => $this->min,
             'max' => $this->max,
@@ -83,7 +84,7 @@ class NumberSetting extends AbstractTextInputSetting
     public static function fromArray(array $data): static
     {
         return new self(
-            id: $data['id'] ?? ArrayKeyMissingException::throw('id'),
+            id: new SchemaSettingId($data['id'] ?? ArrayKeyMissingException::throw('id')),
             label: $data['label'] ?? ArrayKeyMissingException::throw('label'),
             min: $data['min'] ?? ArrayKeyMissingException::throw('min'),
             max: $data['max'] ?? ArrayKeyMissingException::throw('max'),

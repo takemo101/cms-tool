@@ -2,6 +2,7 @@
 
 use CmsTool\Theme\Exception\ArrayKeyMissingException;
 use CmsTool\Theme\Schema\SchemaSettingFactory;
+use CmsTool\Theme\Schema\SchemaSettingId;
 use CmsTool\Theme\Schema\ThemeSchema;
 use CmsTool\Theme\Schema\ThemeSchemaFactory;
 use CmsTool\Theme\Schema\SchemaSettings;
@@ -56,14 +57,14 @@ describe(
             $setting = m::mock(AbstractSetting::class);
 
             $schemaSettings1 = new SchemaSettings(
-                'schema1',
+                new SchemaSettingId('schema1'),
                 'Schema 1',
                 $setting,
                 $setting,
             );
 
             $schemaSettings2 = new SchemaSettings(
-                'schema2',
+                new SchemaSettingId('schema2'),
                 'Schema 2',
                 $setting,
                 $setting,

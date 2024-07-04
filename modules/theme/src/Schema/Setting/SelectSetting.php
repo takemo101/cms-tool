@@ -3,6 +3,7 @@
 namespace CmsTool\Theme\Schema\Setting;
 
 use CmsTool\Theme\Exception\ArrayKeyMissingException;
+use CmsTool\Theme\Schema\SchemaSettingId;
 use CmsTool\Theme\Schema\SchemaSettingType;
 
 /**
@@ -30,13 +31,13 @@ class SelectSetting extends AbstractInputSetting
     /**
      * constructor
      *
-     * @param string $id
+     * @param SchemaSettingId $id
      * @param string $label
      * @param string|null $default
      * @param SelectOption ...$options
      */
     public function __construct(
-        string $id,
+        SchemaSettingId $id,
         string $label,
         mixed $default = null,
         SelectOption ...$options,
@@ -61,7 +62,7 @@ class SelectSetting extends AbstractInputSetting
     public function toArray(): array
     {
         return [
-            'id' => $this->id,
+            'id' => $this->id->value(),
             'label' => $this->label,
             'default' => $this->default,
             'options' => array_map(
@@ -95,7 +96,7 @@ class SelectSetting extends AbstractInputSetting
         $options = $data['options'] ?? [];
 
         return new self(
-            $data['id'] ?? ArrayKeyMissingException::throw('id'),
+            new SchemaSettingId($data['id'] ?? ArrayKeyMissingException::throw('id')),
             $data['label'] ?? ArrayKeyMissingException::throw('label'),
             $data['default']  ?? static::DefaultValueIfNotSet,
             ...array_map(

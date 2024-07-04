@@ -32,11 +32,11 @@ readonly class ThemeSchema implements Arrayable
 
         foreach ($settings as $schemaSettings) {
             assert(
-                in_array($schemaSettings->id, $settingsIds) === false,
+                in_array($schemaSettings->id->value(), $settingsIds) === false,
                 'The schema settings ID must be unique',
             );
 
-            $settingsIds[] = $schemaSettings->id;
+            $settingsIds[] = $schemaSettings->id->value();
         }
 
         $this->settings = $settings;

@@ -3,6 +3,7 @@
 namespace CmsTool\Theme\Schema\Setting;
 
 use CmsTool\Theme\Exception\ArrayKeyMissingException;
+use CmsTool\Theme\Schema\SchemaSettingId;
 use CmsTool\Theme\Schema\SchemaSettingType;
 
 /**
@@ -28,7 +29,7 @@ class TextareaSetting extends AbstractTextInputSetting
     public function toArray(): array
     {
         return [
-            'id' => $this->id,
+            'id' => $this->id->value(),
             'label' => $this->label,
             'default' => $this->default,
             'placeholder' => $this->placeholder,
@@ -48,7 +49,7 @@ class TextareaSetting extends AbstractTextInputSetting
     public static function fromArray(array $data): static
     {
         return new self(
-            id: $data['id'] ?? ArrayKeyMissingException::throw('id'),
+            id: new SchemaSettingId($data['id'] ?? ArrayKeyMissingException::throw('id')),
             label: $data['label'] ?? ArrayKeyMissingException::throw('label'),
             default: $data['default'] ?? static::DefaultValueIfNotSet,
             placeholder: $data['placeholder'] ?? null,

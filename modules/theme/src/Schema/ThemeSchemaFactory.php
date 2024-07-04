@@ -54,7 +54,7 @@ class ThemeSchemaFactory
      */
     private function createSchemaSettings(array $data): SchemaSettings
     {
-        $id = $data['id'] ?? ArrayKeyMissingException::throw('id');
+        $id = new SchemaSettingId($data['id'] ?? ArrayKeyMissingException::throw('id'));
         $title = $data['title'] ?? ArrayKeyMissingException::throw('title');
 
         /**

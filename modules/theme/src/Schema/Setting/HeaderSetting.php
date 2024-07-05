@@ -45,11 +45,11 @@ class HeaderSetting extends AbstractSetting
      * {@inheritDoc}
      *
      * @param array{
-     *   title: string,
+     *   title?: string,
      *   description?: string,
      * } $data
      */
-    public static function fromArray(array $data): static
+    public static function fromArray(array $data): self
     {
         return new self(
             title: $data['title'] ?? ArrayKeyMissingException::throw('title'),

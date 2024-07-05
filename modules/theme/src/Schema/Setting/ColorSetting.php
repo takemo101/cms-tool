@@ -9,7 +9,7 @@ use CmsTool\Theme\Schema\SchemaSettingType;
 /**
  * Color input setting
  *
- * @extends AbstractTextInputSetting<string>
+ * @extends AbstractInputSetting<string>
  */
 class ColorSetting extends AbstractInputSetting
 {
@@ -39,13 +39,13 @@ class ColorSetting extends AbstractInputSetting
      * {@inheritDoc}
      *
      * @param array{
-     *   id: string,
-     *   label: string,
+     *   id?: string,
+     *   label?: string,
      *   default?: string,
      * } $data
      * @throws ArrayKeyMissingException
      */
-    public static function fromArray(array $data): static
+    public static function fromArray(array $data): self
     {
         return new self(
             id: new SchemaSettingId($data['id'] ?? ArrayKeyMissingException::throw('id')),

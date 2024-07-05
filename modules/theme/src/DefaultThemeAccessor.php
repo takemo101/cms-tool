@@ -89,7 +89,13 @@ class DefaultThemeAccessor implements ThemeAccessor
          *  }|string,
          *  readonly?:bool,
          *  extension?:array<string,mixed>,
-         *  schema?:array<string,mixed>[],
+         *   schema?:(array{
+         *     id?: string,
+         *     title?: string,
+         *     settings?: (array{
+         *       type: string,
+         *     }&array<string,mixed>)[]
+         *   }&array<string,mixed>)[],
          * }
          */
         $data = json_decode($content, true);

@@ -9,7 +9,7 @@ use CmsTool\Theme\Schema\SchemaSettingType;
 /**
  * Text input setting
  *
- * @extends AbstractTextInputSetting<string>
+ * @extends AbstractInputSetting<string>
  */
 class SelectSetting extends AbstractInputSetting
 {
@@ -76,16 +76,16 @@ class SelectSetting extends AbstractInputSetting
      * {@inheritDoc}
      *
      * @param array{
-     *   id: string,
-     *   label: string,
-     *   options: array{
+     *   id?: string,
+     *   label?: string,
+     *   options?: array{
      *     value: string,
      *     label: string,
      *   }[],
      *   default?: string,
      * } $data
      */
-    public static function fromArray(array $data): static
+    public static function fromArray(array $data): self
     {
         /**
          * @var array{

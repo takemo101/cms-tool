@@ -29,6 +29,9 @@ class SchemaSettingFactory
      */
     public function __construct()
     {
+        /**
+         * @var SplObjectStorage<SchemaSettingType,class-string<AbstractSetting>>
+         */
         $map = new SplObjectStorage();
 
         $map[SchemaSettingType::Checkbox] = CheckboxSetting::class;
@@ -46,7 +49,9 @@ class SchemaSettingFactory
     /**
      * Create setting from array data
      *
-     * @param array<string,mixed> $data
+     * @param array{
+     *   type?: string,
+     * }&array<string,mixed> $data
      * @return AbstractSetting
      * @throws ArrayKeyMissingException
      */
@@ -54,9 +59,9 @@ class SchemaSettingFactory
         array $data,
     ): AbstractSetting {
 
-        $type = SchemaSettingType::from(
-            $data['type'] ?? ArrayKeyMissingException::throw('type'),
-        );
+        $typeString = $data['type'] ?? ArrayKeyMissingException::throw('type');
+
+        $type = SchemaSettingType::from($typeString);
 
         $class = $this->getSettingClass($type);
 

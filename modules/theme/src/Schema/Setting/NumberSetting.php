@@ -30,7 +30,7 @@ class NumberSetting extends AbstractTextInputSetting
      * @param string $label
      * @param integer $min
      * @param integer $max
-     * @param T|null $default
+     * @param integer|float|null $default
      * @param string|null $placeholder
      */
     public function __construct(
@@ -73,15 +73,15 @@ class NumberSetting extends AbstractTextInputSetting
      * {@inheritDoc}
      *
      * @param array{
-     *   id: string,
-     *   label: string,
-     *   min: integer,
-     *   max: integer,
+     *   id?: string,
+     *   label?: string,
+     *   min?: integer,
+     *   max?: integer,
      *   default?: integer|float,
      *   placeholder?: string,
      * } $data
      */
-    public static function fromArray(array $data): static
+    public static function fromArray(array $data): self
     {
         return new self(
             id: new SchemaSettingId($data['id'] ?? ArrayKeyMissingException::throw('id')),

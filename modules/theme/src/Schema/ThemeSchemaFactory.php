@@ -3,6 +3,7 @@
 namespace CmsTool\Theme\Schema;
 
 use CmsTool\Theme\Exception\ArrayKeyMissingException;
+use CmsTool\Theme\Schema\Setting\AbstractSetting;
 
 /**
  * Factory to create theme schema object from schema data
@@ -23,14 +24,20 @@ class ThemeSchemaFactory
     /**
      * Create theme schema object from schema data
      *
-     * @param array<string,mixed>[] $data
+     * @param (array{
+     *   id?: string,
+     *   title?: string,
+     *   settings?: (array{
+     *     type: string,
+     *   }&array<string,mixed>)[]
+     * }&array<string,mixed>)[] $data
      * @return ThemeSchema
      * @throws ArrayKeyMissingException
      */
     public function create(array $data): ThemeSchema
     {
         /**
-         * @var SchemaSetting[]
+         * @var SchemaSettings[]
          */
         $settings = [];
 
@@ -45,10 +52,12 @@ class ThemeSchemaFactory
      * Create schema settings object from schema data
      *
      * @param array{
-     *   id: string,
-     *   title: string,
-     *   settings: array<string,mixed>[]
-     * } $data
+     *   id?: string,
+     *   title?: string,
+     *   settings?: (array{
+     *     type: string,
+     *   }&array<string,mixed>)[],
+     * }&array<string,mixed> $data
      * @return SchemaSettings
      * @throws ArrayKeyMissingException
      */

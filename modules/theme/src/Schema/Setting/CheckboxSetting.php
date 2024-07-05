@@ -9,7 +9,7 @@ use CmsTool\Theme\Schema\SchemaSettingType;
 /**
  * Checkbox input setting
  *
- * @extends AbstractTextInputSetting<boolean>
+ * @extends AbstractInputSetting<boolean>
  */
 class CheckboxSetting extends AbstractInputSetting
 {
@@ -39,13 +39,13 @@ class CheckboxSetting extends AbstractInputSetting
      * {@inheritDoc}
      *
      * @param array{
-     *   id: string,
-     *   label: string,
+     *   id?: string,
+     *   label?: string,
      *   default?: boolean,
      * } $data
      * @throws ArrayKeyMissingException
      */
-    public static function fromArray(array $data): static
+    public static function fromArray(array $data): self
     {
         return new self(
             id: new SchemaSettingId($data['id'] ?? ArrayKeyMissingException::throw('id')),

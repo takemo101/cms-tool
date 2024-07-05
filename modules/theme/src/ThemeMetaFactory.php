@@ -20,20 +20,26 @@ class ThemeMetaFactory
      * Create theme meta object from data
      *
      * @param array{
-     *   uid:string,
-     *   name:string,
-     *   version:string,
+     *   uid?:string,
+     *   name?:string,
+     *   version?:string,
      *   images?:string[],
      *   tags?:string[],
      *   link?:?string,
      *   preset?:?string,
-     *   author:array{
-     *     name:string,
+     *   author?:array{
+     *     name?:string,
      *     link?:?string,
      *   }|string,
      *   readonly?:bool,
      *   extension?:array<string,mixed>,
-     *   schema?:array<string,mixed>[],
+     *   schema?:(array{
+     *     id?: string,
+     *     title?: string,
+     *     settings?: (array{
+     *       type: string,
+     *     }&array<string,mixed>)[]
+     *   }&array<string,mixed>)[],
      * } $data
      * @return ThemeMeta
      * @throws ArrayKeyMissingException
@@ -59,7 +65,7 @@ class ThemeMetaFactory
      * Create author object from data
      *
      * @param array{
-     *   name:string,
+     *   name?:string,
      *   link?:?string,
      * }|string $data
      * @return ThemeAuthor

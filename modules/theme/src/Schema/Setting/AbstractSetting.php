@@ -40,7 +40,7 @@ abstract class AbstractSetting implements Arrayable
      * Create a new instance from an array
      *
      * @param array<string,mixed> $data
-     * @return static
+     * @return self
      */
-    abstract public static function fromArray(array $data): static;
+    abstract public static function fromArray(array $data): self;
 }

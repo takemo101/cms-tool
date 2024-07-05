@@ -40,13 +40,13 @@ class TextSetting extends AbstractTextInputSetting
      * {@inheritDoc}
      *
      * @param array{
-     *   id: string,
-     *   label: string,
+     *   id?: string,
+     *   label?: string,
      *   default?: string,
      *   placeholder?: string,
      * } $data
      */
-    public static function fromArray(array $data): static
+    public static function fromArray(array $data): self
     {
         return new self(
             id: new SchemaSettingId($data['id'] ?? ArrayKeyMissingException::throw('id')),

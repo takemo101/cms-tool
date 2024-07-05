@@ -10,9 +10,9 @@ use CmsTool\Theme\Schema\SchemaSettingId;
 abstract class AbstractInputSetting extends AbstractSetting
 {
     /**
-     * Default value if not set
+     * This needs to be redefined in the inheriting class
      *
-     * @var T
+     * @var mixed
      */
     public const DefaultValueIfNotSet = null;
 
@@ -39,8 +39,8 @@ abstract class AbstractInputSetting extends AbstractSetting
         );
 
         assert(
-            static::DefaultValueIfNotSet !== null,
-            'The default value must not be null',
+            defined("static::DefaultValueIfNotSet"),
+            'The DefaultValueIfNotSet constant must be defined',
         );
 
         $this->default = $default ?? static::DefaultValueIfNotSet;

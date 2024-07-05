@@ -8,7 +8,7 @@ use CmsTool\Theme\Schema\SchemaSettingId;
  * Text input setting
  *
  * @template T The type of input value corresponding to the schema setting type
- * @extends AbstractTextInputSetting<T>
+ * @extends AbstractInputSetting<T>
  */
 abstract class AbstractTextInputSetting extends AbstractInputSetting
 {

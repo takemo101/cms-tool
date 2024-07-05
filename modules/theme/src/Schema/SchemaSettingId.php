@@ -33,7 +33,7 @@ class SchemaSettingId implements Stringable
         );
 
         assert(
-            preg_match(self::Regex, $value),
+            preg_match(self::Regex, $value) !== false,
             'The schema setting id must only contain letters, numbers, and underscores.',
         );
     }

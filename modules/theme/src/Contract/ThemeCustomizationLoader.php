@@ -5,7 +5,7 @@ namespace CmsTool\Theme\Contract;
 use CmsTool\Theme\Exception\ThemeLoadException;
 use CmsTool\Theme\Theme;
 
-interface ThemeDataLoader
+interface ThemeCustomizationLoader
 {
     /**
      * Load theme customization data and return it as an object.

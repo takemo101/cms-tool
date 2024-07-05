@@ -5,7 +5,7 @@ namespace CmsTool\Theme\Contract;
 use CmsTool\Theme\Exception\ThemeSaveException;
 use CmsTool\Theme\Theme;
 
-interface ThemeDataSaver
+interface ThemeCustomizationSaver
 {
     /**
      * Save theme customization data.

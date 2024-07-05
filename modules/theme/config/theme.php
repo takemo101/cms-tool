@@ -4,18 +4,19 @@ use CmsTool\Theme\DefaultActiveThemeIdMatcher;
 use CmsTool\Theme\DefaultThemeAccessor;
 use CmsTool\Theme\DefaultThemeAssetFinfoFactory;
 use CmsTool\Theme\DefaultThemeFinder;
+use CmsTool\Theme\Schema\DefaultThemeCustomizationAccessor;
 
 return [
 
     // ThemeFinder implementation class name
     'finder' => DefaultThemeFinder::class,
 
-    'accessor' => [
+    'accessors' => [
         // ThemeAccessor implementation class name
         'theme' => DefaultThemeAccessor::class,
 
         // ThemeCustomizationAccessor implementation class name
-        'customization' => null,
+        'customization' => DefaultThemeCustomizationAccessor::class,
     ],
 
     // ThemeAssetFinfoFactory implementation class name

@@ -2,7 +2,6 @@
 
 namespace CmsTool\Theme;
 
-use CmsTool\Theme\Exception\ArrayKeyMissingException;
 use Takemo101\Chubby\Contract\Arrayable;
 
 /**

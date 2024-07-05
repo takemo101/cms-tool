@@ -10,11 +10,6 @@ final class ThemeConfig
     public const MetaFilename = 'theme.json';
 
     /**
-     * Filename for the schema information that users input for theme customization
-     */
-    public const SchemaFilename = 'schema.json';
-
-    /**
      * Filename to save the data entered by users based on the schema
      */
     public const InputDataFilename = 'data.json';

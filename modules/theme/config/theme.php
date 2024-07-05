@@ -10,14 +10,19 @@ return [
     // ThemeFinder implementation class name
     'finder' => DefaultThemeFinder::class,
 
-    // ThemeAccessor implementation class name
-    'accessor' => DefaultThemeAccessor::class,
+    'accessor' => [
+        // ThemeAccessor implementation class name
+        'theme' => DefaultThemeAccessor::class,
+
+        // ThemeCustomizationAccessor implementation class name
+        'customization' => null,
+    ],
 
     // ThemeAssetFinfoFactory implementation class name
-    'factory' => DefaultThemeAssetFinfoFactory::class,
+    'asset_finfo_factory' => DefaultThemeAssetFinfoFactory::class,
 
     // ActiveThemeIdMatcher implementation class name
-    'matcher' => DefaultActiveThemeIdMatcher::class,
+    'active_id_matcher' => DefaultActiveThemeIdMatcher::class,
 
     // Directory to place themes
     'locations' => [

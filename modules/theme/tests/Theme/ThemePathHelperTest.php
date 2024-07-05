@@ -1,10 +1,12 @@
 <?php
 
 use CmsTool\Theme\Theme;
+use CmsTool\Theme\ThemeAuthor;
 use CmsTool\Theme\ThemeConfig;
 use CmsTool\Theme\ThemeId;
 use CmsTool\Theme\ThemePathHelper;
 use CmsTool\Theme\ThemeMeta;
+use CmsTool\Theme\ThemeName;
 use Takemo101\Chubby\Filesystem\PathHelper;
 
 beforeEach(function () {
@@ -12,14 +14,16 @@ beforeEach(function () {
         id: new ThemeId('theme-id'),
         directory: '/path/to/theme',
         active: true,
-        meta: ThemeMeta::fromArray([
-            'uid' => 'uid',
-            'name' => 'name',
-            'version' => 'version',
-            'author' => [
-                'name' => 'name',
-            ],
-        ]),
+        meta: new ThemeMeta(
+            uid: 'theme-id',
+            name: new ThemeName('Theme Name'),
+            version: '1.0',
+            images: [],
+            tags: [],
+            link: null,
+            preset: null,
+            author: new ThemeAuthor('Author Name')
+        ),
     );
     $this->helper = new ThemePathHelper(new PathHelper());
 });

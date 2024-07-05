@@ -2,6 +2,7 @@
 
 namespace CmsTool\Theme;
 
+use CmsTool\Theme\Schema\ThemeSchema;
 use Takemo101\Chubby\Contract\Arrayable;
 
 /**
@@ -22,6 +23,7 @@ readonly class ThemeMeta implements Arrayable
      * @param ThemeAuthor $author
      * @param bool $readonly
      * @param array<string,mixed> $extension
+     * @param ThemeSchema $schema
      */
     public function __construct(
         public string $uid,
@@ -34,6 +36,7 @@ readonly class ThemeMeta implements Arrayable
         public ThemeAuthor $author,
         public bool $readonly = false,
         public array $extension = [],
+        public ThemeSchema $schema = new ThemeSchema(),
     ) {
         //
     }
@@ -64,6 +67,7 @@ readonly class ThemeMeta implements Arrayable
             author: $this->author,
             readonly: false, // copy is not readonly
             extension: $this->extension,
+            schema: $this->schema,
         );
     }
 
@@ -83,42 +87,7 @@ readonly class ThemeMeta implements Arrayable
             'author' => $this->author->toArray(),
             'readonly' => $this->readonly,
             'extension' => $this->extension,
+            'schema' => $this->schema->toArray(),
         ];
-    }
-
-    /**
-     * Create a new instance from an array of data.
-     *
-     * @param array{
-     *  uid:string,
-     *  name:string,
-     *  version:string,
-     *  images?:string[],
-     *  tags?:string[],
-     *  link?:?string,
-     *  preset?:?string,
-     *  author:array{
-     *   name:string,
-     *   link?:?string,
-     *  },
-     *  readonly?:bool,
-     *  extension?:array<string,mixed>,
-     * } $data
-     * @return self
-     */
-    public static function fromArray(array $data): self
-    {
-        return new self(
-            uid: $data['uid'],
-            name: new ThemeName($data['name']),
-            version: $data['version'],
-            images: $data['images'] ?? [],
-            tags: $data['tags'] ?? [],
-            link: $data['link'] ?? null,
-            preset: $data['preset'] ?? null,
-            author: ThemeAuthor::fromArray($data['author']),
-            readonly: $data['readonly'] ?? false,
-            extension: $data['extension'] ?? [],
-        );
     }
 }

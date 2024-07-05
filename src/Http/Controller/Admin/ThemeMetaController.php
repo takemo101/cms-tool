@@ -2,7 +2,9 @@
 
 namespace Takemo101\CmsTool\Http\Controller\Admin;
 
+use CmsTool\Support\Validation\HttpValidationErrorException;
 use CmsTool\Support\Validation\RequestValidator;
+use CmsTool\Theme\Exception\ArrayKeyMissingException;
 use CmsTool\Theme\Exception\NotFoundThemeException;
 use CmsTool\Theme\ThemeId;
 use CmsTool\Theme\ThemeQueryService;
@@ -66,7 +68,7 @@ class ThemeMetaController
 
         $payload = $form->getMetaPayload();
 
-        $validator->throwIfFailedInputs(
+        $formRequest = $validator->throwIfFailedInputs(
             $payload,
             $request,
             ChangeThemeMetaInputs::class,
@@ -76,6 +78,15 @@ class ThemeMetaController
             $theme = $handler->handle($id, $payload);
         } catch (NotFoundDataException $e) {
             throw new HttpNotFoundException($request, $e->getMessage(), $e);
+        } catch (ArrayKeyMissingException $e) {
+            throw HttpValidationErrorException::fromMessages(
+                messages: [
+                    "schema[any].settings[any][{$e->getKey()}]" => [
+                        $e->getMessage(),
+                    ],
+                ],
+                request: $request,
+            );
         }
 
         return toast(

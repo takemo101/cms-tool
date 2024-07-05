@@ -3,10 +3,12 @@
 namespace Takemo101\CmsTool\UseCase\Theme\Handler;
 
 use CmsTool\Theme\Contract\ThemeSaver;
+use CmsTool\Theme\Exception\ArrayKeyMissingException;
 use CmsTool\Theme\Exception\NotFoundThemeException;
 use CmsTool\Theme\Theme;
 use CmsTool\Theme\ThemeId;
 use CmsTool\Theme\ThemeMeta;
+use CmsTool\Theme\ThemeMetaFactory;
 use CmsTool\Theme\ThemeQueryService;
 use Takemo101\CmsTool\UseCase\Shared\Exception\NotFoundDataException;
 
@@ -16,10 +18,12 @@ class ChangeThemeMetaHandler
      * constructor
      *
      * @param ThemeQueryService $queryService
+     * @param ThemeMetaFactory $factory
      * @param ThemeSaver $saver
      */
     public function __construct(
         private ThemeQueryService $queryService,
+        private ThemeMetaFactory $factory,
         private ThemeSaver $saver,
     ) {
         //
@@ -32,6 +36,7 @@ class ChangeThemeMetaHandler
      * @param array $payload
      * @return Theme
      * @throws NotFoundDataException
+     * @throws ArrayKeyMissingException
      */
     public function handle(string $id, array $payload): Theme
     {
@@ -46,7 +51,9 @@ class ChangeThemeMetaHandler
             );
         }
 
-        $changeTheme = $theme->changeMeta(ThemeMeta::fromArray($payload));
+        $changeTheme = $theme->changeMeta(
+            $this->factory->create($payload),
+        );
 
         $this->saver->save($changeTheme);
 

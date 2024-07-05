@@ -1,11 +1,24 @@
 <?php
 
-namespace CmsTool\Theme;
+namespace CmsTool\Theme\Schema;
 
 use Stringable;
 
-class ThemeId implements Stringable
+/**
+ * Schema setting ID
+ * The ID is used to reference the data entered based on the schema.
+ *
+ * @immutable
+ */
+class SchemaSettingId implements Stringable
 {
+    /**
+     * Regular expression for the schema setting id.
+     *
+     * @var string
+     */
+    public const Regex = '/^[a-z0-9_]+$/i';
+
     /**
      * constructor
      *
@@ -14,7 +27,15 @@ class ThemeId implements Stringable
     public function __construct(
         private readonly string $value,
     ) {
-        assert($value !== '', 'The theme id cannot be empty.');
+        assert(
+            empty($value) === false,
+            'The schema setting id cannot be empty.',
+        );
+
+        assert(
+            preg_match(self::Regex, $value) !== false,
+            'The schema setting id must only contain letters, numbers, and underscores.',
+        );
     }
 
     /**
@@ -44,15 +65,5 @@ class ThemeId implements Stringable
     public function __toString(): string
     {
         return $this->value;
-    }
-
-    /**
-     * Generate a new id.
-     *
-     * @return self
-     */
-    public static function generate(): self
-    {
-        return new self(uniqid());
     }
 }

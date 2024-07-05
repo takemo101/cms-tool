@@ -17,7 +17,7 @@ readonly class ThemeAuthor implements Arrayable
      */
     public function __construct(
         public string $name,
-        public ?string $link,
+        public ?string $link = null,
     ) {
         //
     }
@@ -31,22 +31,5 @@ readonly class ThemeAuthor implements Arrayable
             'name' => $this->name,
             'link' => $this->link,
         ];
-    }
-
-    /**
-     * Create a new instance from an array of data.
-     *
-     * @param array{
-     *  name:string,
-     *  link?:?string,
-     * } $data
-     * @return self
-     */
-    public static function fromArray(array $data): self
-    {
-        return new self(
-            name: $data['name'],
-            link: $data['link'] ?? null,
-        );
     }
 }

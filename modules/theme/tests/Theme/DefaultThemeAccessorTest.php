@@ -4,19 +4,28 @@ use CmsTool\Theme\Contract\ActiveThemeIdMatcher;
 use CmsTool\Theme\DefaultThemeAccessor;
 use CmsTool\Theme\Exception\ThemeLoadException;
 use CmsTool\Theme\Theme;
+use CmsTool\Theme\ThemeAuthor;
+use CmsTool\Theme\ThemeMeta;
+use CmsTool\Theme\ThemeMetaFactory;
+use CmsTool\Theme\ThemeName;
 use Takemo101\Chubby\Filesystem\LocalFilesystem;
 use Mockery as m;
-
-beforeEach(function () {
-    $this->matcher = m::mock(ActiveThemeIdMatcher::class);
-    $this->filesystem = m::mock(LocalFilesystem::class);
-
-    $this->accessor = new DefaultThemeAccessor($this->matcher, $this->filesystem);
-});
 
 describe(
     'DefaultThemeAccessor',
     function () {
+
+        beforeEach(function () {
+            $this->matcher = m::mock(ActiveThemeIdMatcher::class);
+            $this->filesystem = m::mock(LocalFilesystem::class);
+            $this->factory = m::mock(ThemeMetaFactory::class);
+
+            $this->accessor = new DefaultThemeAccessor(
+                $this->matcher,
+                $this->factory,
+                $this->filesystem,
+            );
+        });
 
         it('loads a theme successfully', function () {
             $path = '/path/to/theme/theme.json';
@@ -28,6 +37,20 @@ describe(
 
             $this->matcher->shouldReceive('isMatch')
                 ->andReturnTrue();
+
+            $this->factory->shouldReceive('create')
+                ->andReturn(
+                    new ThemeMeta(
+                        uid: 'uid',
+                        name: new ThemeName('My Theme'),
+                        version: '1.0',
+                        images: [],
+                        tags: [],
+                        link: null,
+                        preset: null,
+                        author: new ThemeAuthor('name'),
+                    )
+                );
 
             $theme = $this->accessor->load($path);
 

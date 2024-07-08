@@ -11,6 +11,7 @@ use CmsTool\View\Twig\Extension\FunctionsExtension;
 use CmsTool\View\Twig\Extension\RouteExtension;
 use CmsTool\View\Twig\TwigTemplateRenderer;
 use CmsTool\View\View;
+use Takemo101\Chubby\Contract\Renderable;
 use Twig\Extension\StringLoaderExtension;
 
 return [
@@ -76,6 +77,7 @@ return [
         'safe_classes' => [
             Htmlable::class => ['html'],
             View::class => ['html'],
+            Renderable::class => ['html'],
         ],
 
         // Set the class name of the Twig Extension to be enabled

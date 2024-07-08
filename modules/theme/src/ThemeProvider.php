@@ -43,31 +43,6 @@ class ThemeProvider implements Provider
     public function register(Definitions $definitions): void
     {
         $definitions->add([
-            ThemeFinder::class => new ConfigBasedDefinitionReplacer(
-                DefaultThemeFinder::class,
-                'theme.finder',
-                true,
-            ),
-            ThemeAccessor::class => new ConfigBasedDefinitionReplacer(
-                DefaultThemeAccessor::class,
-                'theme.accessors.theme',
-                true,
-            ),
-            ThemeLoader::class => get(ThemeAccessor::class),
-            ThemeSaver::class => get(ThemeAccessor::class),
-            ActiveThemeIdMatcher::class => new ConfigBasedDefinitionReplacer(
-                DefaultActiveThemeIdMatcher::class,
-                'theme.active_id_matcher',
-            ),
-            ThemeAssetFinfoFactory::class => new ConfigBasedDefinitionReplacer(
-                DefaultThemeAssetFinfoFactory::class,
-                'theme.asset_finfo_factory',
-            ),
-            ThemeCustomizationAccessor::class => new ConfigBasedDefinitionReplacer(
-                DefaultThemeCustomizationAccessor::class,
-                'theme.accessors.customization',
-                true,
-            ),
             ThemeCustomizationLoader::class => get(ThemeCustomizationAccessor::class),
             ThemeCustomizationSaver::class => get(ThemeCustomizationAccessor::class),
             ThemeRoutePresets::class => function (
@@ -96,6 +71,18 @@ class ThemeProvider implements Provider
 
                 return $presets;
             },
+            ThemeLoader::class => get(ThemeAccessor::class),
+            ThemeSaver::class => get(ThemeAccessor::class),
+            ...ConfigBasedDefinitionReplacer::createDependencyDefinitions(
+                dependencies: [
+                    ThemeFinder::class => DefaultThemeFinder::class,
+                    ThemeAccessor::class => DefaultThemeAccessor::class,
+                    ActiveThemeIdMatcher::class => DefaultActiveThemeIdMatcher::class,
+                    ThemeAssetFinfoFactory::class => DefaultThemeAssetFinfoFactory::class,
+                    ThemeCustomizationAccessor::class => DefaultThemeCustomizationAccessor::class,
+                ],
+                configKeyPrefix: 'theme',
+            )
         ]);
     }
 

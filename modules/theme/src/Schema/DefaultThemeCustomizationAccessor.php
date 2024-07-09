@@ -17,10 +17,15 @@ class DefaultThemeCustomizationAccessor implements ThemeCustomizationAccessor
      */
     private array $cache = [];
 
+    /**
+     * constructor
+     *
+     * @param LocalFilesystem $filesystem
+     * @param [type] $helper
+     */
     public function __construct(
         private readonly LocalFilesystem $filesystem,
-        private readonly ThemePathHelper
-        $helper = new ThemePathHelper(new PathHelper()),
+        private readonly ThemePathHelper $helper = new ThemePathHelper(new PathHelper()),
     ) {
         //
     }
@@ -34,7 +39,7 @@ class DefaultThemeCustomizationAccessor implements ThemeCustomizationAccessor
 
         try {
             $json = json_encode(
-                $theme->meta->toArray(),
+                $theme->extractCustomizationData($data),
                 JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT,
             );
         } catch (\JsonException $e) {
@@ -79,8 +84,6 @@ class DefaultThemeCustomizationAccessor implements ThemeCustomizationAccessor
             throw ThemeLoadException::decodeError($path);
         }
 
-        $schema = $theme->meta->schema;
-
-        return $schema->extractCustomizationData($data);
+        return $theme->extractCustomizationData($data);
     }
 }

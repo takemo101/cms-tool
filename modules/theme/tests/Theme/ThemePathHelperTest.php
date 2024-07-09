@@ -48,6 +48,14 @@ describe(
             expect($actual)->toBe($excepted);
         })->skipOnWindows();
 
+        it('should return the correct theme customization path', function () {
+            $actual = $this->helper->getCustomizationDataPath($this->theme);
+
+            $excepted = $this->theme->directory . '/' . ThemeConfig::CustomizationDataFilename;
+
+            expect($actual)->toBe($excepted);
+        })->skipOnWindows();
+
         it('should return the correct asset path', function () {
             $actual = $this->helper->getAssetPath($this->theme, 'path1', 'path2');
 

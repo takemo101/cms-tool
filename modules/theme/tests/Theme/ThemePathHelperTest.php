@@ -35,41 +35,41 @@ describe(
         it('should return the correct theme path', function () {
             $actual = $this->helper->getThemePath($this->theme, 'path1', 'path2');
 
-            $excepted = $this->theme->directory . '/path1/path2';
+            $expected = $this->theme->directory . '/path1/path2';
 
-            expect($actual)->toBe($excepted);
+            expect($actual)->toBe($expected);
         })->skipOnWindows();
 
         it('should return the correct theme setting path', function () {
             $actual = $this->helper->getThemeSettingPath($this->theme);
 
-            $excepted = $this->theme->directory . '/' . ThemeConfig::MetaFilename;
+            $expected = $this->theme->directory . '/' . ThemeConfig::MetaFilename;
 
-            expect($actual)->toBe($excepted);
+            expect($actual)->toBe($expected);
         })->skipOnWindows();
 
         it('should return the correct theme customization path', function () {
             $actual = $this->helper->getCustomizationDataPath($this->theme);
 
-            $excepted = $this->theme->directory . '/' . ThemeConfig::CustomizationDataFilename;
+            $expected = $this->theme->directory . '/' . ThemeConfig::CustomizationDataFilename;
 
-            expect($actual)->toBe($excepted);
+            expect($actual)->toBe($expected);
         })->skipOnWindows();
 
         it('should return the correct asset path', function () {
             $actual = $this->helper->getAssetPath($this->theme, 'path1', 'path2');
 
-            $excepted = $this->theme->directory . '/' . ThemeConfig::AssetsPath . '/path1/path2';
+            $expected = $this->theme->directory . '/' . ThemeConfig::AssetsPath . '/path1/path2';
 
-            expect($actual)->toBe($excepted);
+            expect($actual)->toBe($expected);
         })->skipOnWindows();
 
         it('should return the correct template path', function () {
             $actual = $this->helper->getTemplatePath($this->theme, 'path1', 'path2');
 
-            $excepted = $this->theme->directory . '/' . ThemeConfig::TemplatesPath . '/path1/path2';
+            $expected = $this->theme->directory . '/' . ThemeConfig::TemplatesPath . '/path1/path2';
 
-            expect($actual)->toBe($excepted);
+            expect($actual)->toBe($expected);
         })->skipOnWindows();
     }
 )->group('ThemePathHelper', 'theme');

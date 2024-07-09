@@ -91,7 +91,7 @@ class Theme
      * @param array<string,array<string,mixed>> $data The theme's customization data
      * @return array<string,array<string,mixed>>
      */
-    public function extractCustomizationData(array $data): array
+    public function extractCustomizationData(array $data = []): array
     {
         return $this->meta->schema->extractCustomizationData($data);
     }

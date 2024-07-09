@@ -86,6 +86,17 @@ class Theme
     }
 
     /**
+     * Extract customization data from the theme
+     *
+     * @param array<string,array<string,mixed>> $data The theme's customization data
+     * @return array<string,array<string,mixed>>
+     */
+    public function extractCustomizationData(array $data = []): array
+    {
+        return $this->meta->schema->extractCustomizationData($data);
+    }
+
+    /**
      * Delete the theme
      * If the theme is active or readonly, an exception will be thrown.
      *

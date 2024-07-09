@@ -64,6 +64,20 @@ class ThemePathHelper
     }
 
     /**
+     * Get theme customization data path
+     *
+     * @param Theme $theme
+     * @return string
+     */
+    public function getCustomizationDataPath(Theme $theme): string
+    {
+        return $this->getThemePath(
+            $theme,
+            ThemeConfig::CustomizationDataFilename,
+        );
+    }
+
+    /**
      * Get asset path
      *
      * @param Theme $theme

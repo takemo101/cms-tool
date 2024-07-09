@@ -1,23 +1,6 @@
 <?php
 
-use CmsTool\Theme\DefaultActiveThemeIdMatcher;
-use CmsTool\Theme\DefaultThemeAccessor;
-use CmsTool\Theme\DefaultThemeAssetFinfoFactory;
-use CmsTool\Theme\DefaultThemeFinder;
-
 return [
-
-    // ThemeFinder implementation class name
-    'finder' => DefaultThemeFinder::class,
-
-    // ThemeAccessor implementation class name
-    'accessor' => DefaultThemeAccessor::class,
-
-    // ThemeAssetFinfoFactory implementation class name
-    'factory' => DefaultThemeAssetFinfoFactory::class,
-
-    // ActiveThemeIdMatcher implementation class name
-    'matcher' => DefaultActiveThemeIdMatcher::class,
 
     // Directory to place themes
     'locations' => [
@@ -38,5 +21,14 @@ return [
     // ThemeHook implementation class name
     'hooks' => [
         // string => class-string<ThemeHook>
+    ],
+
+    // his configuration is used to modify the dependencies for theme.
+    'dependencies' => [
+        // CmsTool\Theme\Contract\ThemeFinder::class => DefaultThemeFinder::class,
+        // CmsTool\Theme\Contract\ThemeAccessor::class => DefaultThemeAccessor::class,
+        // CmsTool\Theme\Contract\ActiveThemeIdMatcher::class => DefaultActiveThemeIdMatcher::class,
+        // CmsTool\Theme\Contract\ThemeAssetFinfoFactory::class => DefaultThemeAssetFinfoFactory::class,
+        // CmsTool\Theme\Contract\ThemeCustomizationAccessor::class => DefaultThemeCustomizationAccessor::class,
     ],
 ];

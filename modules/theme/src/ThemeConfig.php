@@ -12,7 +12,7 @@ final class ThemeConfig
     /**
      * Filename to save the theme's customization data
      */
-    public const CustomDataFilename = 'data.json';
+    public const CustomizationDataFilename = 'data.json';
 
     /**
      * Readme file names that contain the description of the theme in Markdown

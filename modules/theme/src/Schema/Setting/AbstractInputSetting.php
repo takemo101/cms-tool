@@ -45,4 +45,16 @@ abstract class AbstractInputSetting extends AbstractSetting
 
         $this->default = $default ?? static::DefaultValueIfNotSet;
     }
+
+    /**
+     * Extracts the value of the target setting from the theme's customization data.
+     * If the setting is not found in the data, the default value is returned.
+     *
+     * @param array<string,mixed> $data The theme's customization data
+     * @return T
+     */
+    public function extractCustomizationValue(array $data): mixed
+    {
+        return $data[$this->id->value()] ?? $this->default;
+    }
 }

@@ -53,6 +53,29 @@ readonly class ThemeSchema implements Arrayable
     }
 
     /**
+     * Extracts the values of the schema settings from the theme's customization data.
+     * The customization data is passed as an array of key-value pairs for each ID.
+     *
+     * @param array<string,array<string,mixed>> $data The theme's customization data
+     * @return array<integer,array<string,mixed>>
+     */
+    public function extractCustomizationData(array $data): array
+    {
+        /**
+         * @var array<integer,array<string,mixed>>
+         */
+        $result = [];
+
+        foreach ($this->settings as $schemaSettings) {
+            $id = $schemaSettings->id->value();
+
+            $result[$id] = $schemaSettings->extractCustomizationValues($data[$id] ?? []);
+        }
+
+        return $result;
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function toArray(): array

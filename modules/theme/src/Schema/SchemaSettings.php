@@ -60,6 +60,43 @@ readonly class SchemaSettings implements Arrayable
     }
 
     /**
+     * Get the input settings
+     *
+     * @return AbstractInputSetting[]
+     */
+    public function getInputSettings(): array
+    {
+        /** @var AbstractInputSetting[] */
+        $result = array_filter(
+            $this->settings,
+            fn (AbstractSetting $setting) => $setting instanceof AbstractInputSetting,
+        );
+
+        return $result;
+    }
+
+    /**
+     * Extract the values of the settings from the theme's customization data.
+     * The customization data is passed as an array of ID-value pairs.
+     *
+     * @param array<string,mixed> $data The theme's customization data
+     * @return array<string,mixed>
+     */
+    public function extractCustomizationValues(array $data): array
+    {
+        /**
+         * @var array<string,mixed>
+         */
+        $result = [];
+
+        foreach ($this->getInputSettings() as $setting) {
+            $result[$setting->id->value()] = $setting->extractCustomizationValue($data);
+        }
+
+        return $result;
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function toArray(): array

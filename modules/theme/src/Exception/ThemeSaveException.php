@@ -8,6 +8,16 @@ use Throwable;
 class ThemeSaveException extends RuntimeException
 {
     /**
+     * Error code for encoding errors.
+     */
+    public const EncodeErrorCode = 1;
+
+    /**
+     * Error code for json not accessible errors.
+     */
+    public const NotWritableErrorCode = 2;
+
+    /**
      * constructor
      *
      * @param string $path
@@ -17,10 +27,12 @@ class ThemeSaveException extends RuntimeException
     public function __construct(
         private readonly string $path,
         ?string $message = null,
+        int $code = 0,
         ?Throwable $previous = null,
     ) {
         parent::__construct(
-            message: $message ?? "Failed to save theme: {$path}",
+            message: $message ?? "Failed to save theme content: {$path}",
+            code: $code,
             previous: $previous,
         );
     }
@@ -48,6 +60,7 @@ class ThemeSaveException extends RuntimeException
         return new self(
             path: $path,
             message: "Failed to encode theme content: {$path}",
+            code: self::EncodeErrorCode,
             previous: $previous,
         );
     }
@@ -64,6 +77,8 @@ class ThemeSaveException extends RuntimeException
     ): self {
         return new self(
             path: $path,
+            message: "Failed to write theme content: {$path}",
+            code: self::NotWritableErrorCode,
             previous: $previous,
         );
     }

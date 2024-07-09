@@ -21,7 +21,7 @@ class DefaultThemeCustomizationAccessor implements ThemeCustomizationAccessor
      * constructor
      *
      * @param LocalFilesystem $filesystem
-     * @param [type] $helper
+     * @param ThemePathHelper $helper
      */
     public function __construct(
         private readonly LocalFilesystem $filesystem,

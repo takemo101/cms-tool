@@ -57,12 +57,12 @@ readonly class ThemeSchema implements Arrayable
      * The customization data is passed as an array of key-value pairs for each ID.
      *
      * @param array<string,array<string,mixed>> $data The theme's customization data
-     * @return array<integer,array<string,mixed>>
+     * @return array<string,array<string,mixed>>
      */
     public function extractCustomizationData(array $data): array
     {
         /**
-         * @var array<integer,array<string,mixed>>
+         * @var array<string,array<string,mixed>>
          */
         $result = [];
 

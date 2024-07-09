@@ -62,11 +62,11 @@ readonly class SchemaSettings implements Arrayable
     /**
      * Get the input settings
      *
-     * @return AbstractInputSetting[]
+     * @return AbstractInputSetting<mixed>[]
      */
     public function getInputSettings(): array
     {
-        /** @var AbstractInputSetting[] */
+        /** @var AbstractInputSetting<mixed>[] */
         $result = array_filter(
             $this->settings,
             fn (AbstractSetting $setting) => $setting instanceof AbstractInputSetting,

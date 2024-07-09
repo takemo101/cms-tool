@@ -89,7 +89,7 @@ class Theme
      * Extract customization data from the theme
      *
      * @param array<string,array<string,mixed>> $data The theme's customization data
-     * @return array<integer,array<string,mixed>>
+     * @return array<string,array<string,mixed>>
      */
     public function extractCustomizationData(array $data): array
     {

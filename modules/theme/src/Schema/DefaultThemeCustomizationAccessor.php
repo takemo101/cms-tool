@@ -68,6 +68,11 @@ class DefaultThemeCustomizationAccessor implements ThemeCustomizationAccessor
             return $data;
         }
 
+        // If the file does not exist, return the default data
+        if ($this->filesystem->exists($path) === false) {
+            return $theme->extractCustomizationData();
+        }
+
         $content = $this->filesystem->read($path);
 
         if (!$content) {

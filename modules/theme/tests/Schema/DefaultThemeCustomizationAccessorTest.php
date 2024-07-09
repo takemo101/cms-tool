@@ -93,15 +93,21 @@ describe(
             $theme = m::mock(Theme::class);
             $data = ['color' => 'blue'];
             $json = json_encode($data, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT);
+            $path = '/path/to/customization.json';
 
             $this->helper->shouldReceive('getCustomizationDataPath')
                 ->once()
                 ->with($theme)
-                ->andReturn('/path/to/customization.json');
+                ->andReturn($path);
+
+            $this->filesystem->shouldReceive('exists')
+                ->once()
+                ->with($path)
+                ->andReturn(true);
 
             $this->filesystem->shouldReceive('read')
                 ->once()
-                ->with('/path/to/customization.json')
+                ->with($path)
                 ->andReturn($json);
 
             $theme->shouldReceive('extractCustomizationData')
@@ -114,35 +120,46 @@ describe(
             expect($result)->toBe($data);
         });
 
-        it('should throw an exception if the file is not found', function () {
+        it('should load an empty array if the file is not found', function () {
             $theme = m::mock(Theme::class);
+            $path = '/path/to/customization.json';
 
             $this->helper->shouldReceive('getCustomizationDataPath')
                 ->once()
                 ->with($theme)
-                ->andReturn('/path/to/customization.json');
+                ->andReturn($path);
 
-            $this->filesystem->shouldReceive('read')
+            $this->filesystem->shouldReceive('exists')
                 ->once()
-                ->with('/path/to/customization.json')
+                ->with($path)
                 ->andReturn(false);
 
-            expect(function () use ($theme) {
-                $this->accessor->load($theme);
-            })->toThrow(ThemeLoadException::class);
+            $theme->shouldReceive('extractCustomizationData')
+                ->once()
+                ->andReturn([]);
+
+            $result = $this->accessor->load($theme);
+
+            expect($result)->toBe([]);
         });
 
         it('should throw an exception if decoding the data fails', function () {
             $theme = m::mock(Theme::class);
+            $path = '/path/to/customization.json';
 
             $this->helper->shouldReceive('getCustomizationDataPath')
                 ->once()
                 ->with($theme)
-                ->andReturn('/path/to/customization.json');
+                ->andReturn($path);
+
+            $this->filesystem->shouldReceive('exists')
+                ->once()
+                ->with($path)
+                ->andReturn(true);
 
             $this->filesystem->shouldReceive('read')
                 ->once()
-                ->with('/path/to/customization.json')
+                ->with($path)
                 ->andReturn('{"color":"blue"');
 
             expect(function () use ($theme) {

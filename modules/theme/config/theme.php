@@ -23,7 +23,7 @@ return [
         // string => class-string<ThemeHook>
     ],
 
-    // his configuration is used to modify the dependencies for theme.
+    // This configuration is used to modify the dependencies for theme.
     'dependencies' => [
         // CmsTool\Theme\Contract\ThemeFinder::class => DefaultThemeFinder::class,
         // CmsTool\Theme\Contract\ThemeAccessor::class => DefaultThemeAccessor::class,

@@ -21,10 +21,9 @@ use Takemo101\CmsTool\Http\Action\PhpInfoAction;
 use Takemo101\CmsTool\Http\Action\SitePublishAction;
 use Takemo101\CmsTool\Http\Action\StorageAssetAction;
 use Takemo101\CmsTool\Http\Action\Theme\ActiveThemeAssetAction;
-use Takemo101\CmsTool\Http\Action\Theme\HomeAction;
-use Takemo101\CmsTool\Http\Action\Theme\FixedPageAction;
 use Takemo101\CmsTool\Http\Action\WebhookAction;
 use Takemo101\CmsTool\Http\Action\ThemeAssetAction;
+use Takemo101\CmsTool\Http\Action\ThemePreviewAction;
 use Takemo101\CmsTool\Http\Controller\Admin\AdminAccountController;
 use Takemo101\CmsTool\Http\Controller\Admin\BasicSettingController;
 use Takemo101\CmsTool\Http\Controller\Admin\CacheController;
@@ -36,7 +35,6 @@ use Takemo101\CmsTool\Http\Controller\Admin\SiteMetaController;
 use Takemo101\CmsTool\Http\Controller\Admin\SiteSeoController;
 use Takemo101\CmsTool\Http\Controller\Admin\ThemeController;
 use Takemo101\CmsTool\Http\Controller\Admin\ThemeMetaController;
-use Takemo101\CmsTool\Http\Controller\Admin\Tool\ThemeJsonController;
 use Takemo101\CmsTool\Http\Controller\Admin\TrackingCodeController;
 use Takemo101\CmsTool\Http\Controller\Admin\UninstallController;
 use Takemo101\CmsTool\Http\Controller\Admin\WebhookController;
@@ -46,6 +44,7 @@ use Takemo101\CmsTool\Http\Middleware\GuideToInstallation;
 use Takemo101\CmsTool\Http\Middleware\InsertTrackingCode;
 use Takemo101\CmsTool\Http\Middleware\WhenUninstalled;
 use Takemo101\CmsTool\Http\Middleware\WhenUnpublished;
+use Takemo101\CmsTool\Http\Routing\ThemeRouteGroupHandler;
 use Takemo101\CmsTool\Infra\Listener\AdminSessionSetupListener;
 use Takemo101\CmsTool\Infra\Listener\ClearCacheListener;
 use Takemo101\CmsTool\Infra\Listener\CreateRobotsTxtListener;
@@ -54,7 +53,6 @@ use Takemo101\CmsTool\Infra\Listener\DeleteRobotsTxtListener;
 use Takemo101\CmsTool\Infra\Listener\RequestParameterSetupListener;
 use Takemo101\CmsTool\Infra\Storage\LocalPublicStoragePath;
 use Takemo101\CmsTool\Support\Htmx\HtmxAccess;
-use Takemo101\CmsTool\Support\Theme\ActiveThemeRouteRegister;
 
 hook()
     ->onTyped(
@@ -256,6 +254,12 @@ hook()
                                     )->setName('admin.publish');
 
                                     $proxy->group('/theme', function (Proxy $proxy) {
+
+                                        $proxy->get(
+                                            '/preview[/{path:.+}]',
+                                            ThemePreviewAction::class,
+                                        )->setName('admin.theme.preview');
+
                                         $proxy->get(
                                             '',
                                             [ThemeController::class, 'index'],
@@ -314,21 +318,6 @@ hook()
                                         [UninstallController::class, 'uninstall'],
                                     )->setName('admin.uninstall');
 
-                                    $proxy->group(
-                                        '/tool',
-                                        function (Proxy $proxy) {
-                                            $proxy->get(
-                                                '/theme-json',
-                                                [ThemeJsonController::class, 'edit'],
-                                            )->setName('admin.tool.theme-json.edit');
-
-                                            $proxy->post(
-                                                '/theme-json',
-                                                [ThemeJsonController::class, 'generate'],
-                                            )->setName('admin.tool.theme-json.generate');
-                                        }
-                                    );
-
                                     $proxy->post(
                                         '/logout',
                                         [LoginController::class, 'logout'],
@@ -360,24 +349,7 @@ hook()
                         ActiveThemeAssetAction::class,
                     )->setName(ActiveThemeAssetAction::RouteName);
 
-                    $proxy->group('', function (Proxy $proxy) {
-
-                        /** @var ActiveThemeRouteRegister */
-                        $register = container()->get(ActiveThemeRouteRegister::class);
-
-                        $proxy->get(
-                            '/',
-                            HomeAction::class,
-                        )->setName('home');
-
-                        // Set routing for theme
-                        $register->register($proxy);
-
-                        $proxy->get(
-                            '/{path:.+}',
-                            FixedPageAction::class,
-                        )->setName('fixed-page');
-                    })
+                    ThemeRouteGroupHandler::configure($proxy)
                         ->add(InsertTrackingCode::class)
                         ->add(WhenUnpublished::class)
                         ->add(GuideToInstallation::class);

@@ -1,5 +1,6 @@
 <?php
 
+use Takemo101\CmsTool\Infra\JsonAccess\JsonAccessActiveThemeIdMatcher;
 use Takemo101\CmsTool\Preset\MicroCms\Blog\BlogHook;
 use Takemo101\CmsTool\Preset\MicroCms\Blog\BlogRoute;
 
@@ -26,5 +27,10 @@ return [
     'hooks' => [
         // string => class-string<ThemeHook>
         'microcms:blog' => BlogHook::class,
+    ],
+
+    // This configuration is used to modify the dependencies for theme.
+    'dependencies' => [
+        CmsTool\Theme\Contract\ActiveThemeIdMatcher::class => JsonAccessActiveThemeIdMatcher::class,
     ],
 ];

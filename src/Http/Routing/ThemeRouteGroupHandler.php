@@ -11,9 +11,9 @@ use Slim\Interfaces\RouteGroupInterface;
 class ThemeRouteGroupHandler
 {
     /**
-     * Base path for the route group
+     * Base pattern for the route group
      */
-    public const BasePath = '';
+    public const BasePattern = '';
 
     /**
      * constructor
@@ -58,7 +58,7 @@ class ThemeRouteGroupHandler
     public static function configure(Proxy $proxy): RouteGroupInterface
     {
         return $proxy->group(
-            self::BasePath,
+            self::BasePattern,
             self::class,
         );
     }

@@ -265,12 +265,12 @@ hook()
                                             '/active/customization',
                                             [ThemeCustomizationController::class, 'edit'],
                                         )->setName('admin.theme.customization.edit');
-                                        $proxy->patch(
-                                            '/active/customization',
-                                            [ThemeCustomizationController::class, 'update'],
-                                        )->setName('admin.theme.customization.update');
                                         $proxy->put(
-                                            '/active/customization',
+                                            '/active/customization/cache',
+                                            [ThemeCustomizationController::class, 'cache'],
+                                        )->setName('admin.theme.customization.cache');
+                                        $proxy->put(
+                                            '/active/customization/apply',
                                             [ThemeCustomizationController::class, 'apply'],
                                         )->setName('admin.theme.customization.apply');
 

@@ -5,7 +5,6 @@ namespace Takemo101\CmsTool\Http\Action;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Takemo101\Chubby\Http\Factory\SlimFactory;
-use Takemo101\Chubby\Http\Renderer\StaticRenderer;
 use Takemo101\CmsTool\Http\Routing\ThemeRouteGroupHandler;
 
 class ThemePreviewAction
@@ -16,7 +15,7 @@ class ThemePreviewAction
      * @param ServerRequestInterface $request
      * @param SlimFactory $factory
      * @param string $path
-     * @return StaticRenderer
+     * @return ResponseInterface
      */
     public function __invoke(
         ServerRequestInterface $request,

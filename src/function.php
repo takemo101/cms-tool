@@ -34,6 +34,7 @@ use Takemo101\CmsTool\Http\Controller\Admin\RobotsTxtController;
 use Takemo101\CmsTool\Http\Controller\Admin\SiteMetaController;
 use Takemo101\CmsTool\Http\Controller\Admin\SiteSeoController;
 use Takemo101\CmsTool\Http\Controller\Admin\ThemeController;
+use Takemo101\CmsTool\Http\Controller\Admin\ThemeCustomizationController;
 use Takemo101\CmsTool\Http\Controller\Admin\ThemeMetaController;
 use Takemo101\CmsTool\Http\Controller\Admin\TrackingCodeController;
 use Takemo101\CmsTool\Http\Controller\Admin\UninstallController;
@@ -256,9 +257,22 @@ hook()
                                     $proxy->group('/theme', function (Proxy $proxy) {
 
                                         $proxy->get(
-                                            '/preview[/{path:.+}]',
+                                            '/active/preview[/{path:.+}]',
                                             ThemePreviewAction::class,
                                         )->setName('admin.theme.preview');
+
+                                        $proxy->get(
+                                            '/active/customization',
+                                            [ThemeCustomizationController::class, 'edit'],
+                                        )->setName('admin.theme.customization.edit');
+                                        $proxy->patch(
+                                            '/active/customization',
+                                            [ThemeCustomizationController::class, 'update'],
+                                        )->setName('admin.theme.customization.update');
+                                        $proxy->put(
+                                            '/active/customization',
+                                            [ThemeCustomizationController::class, 'apply'],
+                                        )->setName('admin.theme.customization.apply');
 
                                         $proxy->get(
                                             '',

@@ -2,6 +2,7 @@
 
 namespace Takemo101\CmsTool\Http\Action;
 
+use CmsTool\View\Support\RouteParserProxy;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Takemo101\Chubby\Http\Factory\SlimFactory;
@@ -14,12 +15,14 @@ class ThemePreviewAction
      *
      * @param ServerRequestInterface $request
      * @param SlimFactory $factory
+     * @param RouteParserProxy $routeParser
      * @param string|null $path
      * @return ResponseInterface
      */
     public function __invoke(
         ServerRequestInterface $request,
         SlimFactory $factory,
+        RouteParserProxy $routeParser,
         ?string $path = null,
     ): ResponseInterface {
         $slim = $factory->create();
@@ -34,6 +37,10 @@ class ThemePreviewAction
         ThemeRouteGroupHandler::configure($slim);
 
         $slim->addRoutingMiddleware();
+
+        $routeParser->changeRouteParser(
+            $slim->getRouteCollector()->getRouteParser(),
+        );
 
         return $slim->handle($request);
     }

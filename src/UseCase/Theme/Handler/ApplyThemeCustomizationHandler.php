@@ -51,11 +51,11 @@ class ApplyThemeCustomizationHandler
             );
         }
 
-        $extractedData = $theme->extractCustomizationData($data);
+        $normalizedData = $theme->normalizeCustomization($data);
 
         $this->saver->save(
             theme: $theme,
-            data: $extractedData,
+            data: $normalizedData,
         );
 
         $this->cache->clear($themeId);

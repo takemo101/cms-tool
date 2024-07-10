@@ -48,11 +48,11 @@ class CacheThemeCustomizationHandler
             );
         }
 
-        $extractedData = $theme->extractCustomizationData($data);
+        $normalizedData = $theme->normalizeCustomization($data);
 
         $this->cache->put(
             id: $themeId,
-            data: $extractedData,
+            data: $normalizedData,
         );
 
         return $theme;

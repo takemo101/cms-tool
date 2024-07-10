@@ -32,7 +32,7 @@ describe(
                 ->with('/path/to/customization.json', $json)
                 ->andReturn(true);
 
-            $theme->shouldReceive('extractCustomizationData')
+            $theme->shouldReceive('normalizeCustomization')
                 ->once()
                 ->with($data)
                 ->andReturn($data);
@@ -52,7 +52,7 @@ describe(
             $this->filesystem->shouldReceive('write')
                 ->never();
 
-            $theme->shouldReceive('extractCustomizationData')
+            $theme->shouldReceive('normalizeCustomization')
                 ->once()
                 ->with($data)
                 ->andReturn($data);
@@ -78,7 +78,7 @@ describe(
                 ->with('/path/to/customization.json', $json)
                 ->andReturn(false);
 
-            $theme->shouldReceive('extractCustomizationData')
+            $theme->shouldReceive('normalizeCustomization')
                 ->once()
                 ->with($data)
                 ->andReturn($data);
@@ -110,7 +110,7 @@ describe(
                 ->with($path)
                 ->andReturn($json);
 
-            $theme->shouldReceive('extractCustomizationData')
+            $theme->shouldReceive('normalizeCustomization')
                 ->once()
                 ->with($data)
                 ->andReturn($data);
@@ -134,7 +134,7 @@ describe(
                 ->with($path)
                 ->andReturn(false);
 
-            $theme->shouldReceive('extractCustomizationData')
+            $theme->shouldReceive('normalizeCustomization')
                 ->once()
                 ->andReturn([]);
 

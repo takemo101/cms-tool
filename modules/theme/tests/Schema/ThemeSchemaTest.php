@@ -39,7 +39,7 @@ describe(
             $settings = [$schemaSettings1, $schemaSettings2];
             $themeSchema = new ThemeSchema(...$settings);
 
-            expect($themeSchema->extractCustomizationData([]))->toBe([
+            expect($themeSchema->normalizeCustomization([]))->toBe([
                 'setting1' => ['key1' => 'default1'],
                 'setting2' => ['key2' => 'default2'],
             ]);
@@ -69,7 +69,7 @@ describe(
             $settings = [$schemaSettings1, $schemaSettings2];
             $themeSchema = new ThemeSchema(...$settings);
 
-            expect($themeSchema->extractCustomizationData([
+            expect($themeSchema->normalizeCustomization([
                 'setting1' => ['key1' => 'value1'],
                 'setting2' => ['key2' => 'value2'],
             ]))->toBe([

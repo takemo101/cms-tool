@@ -86,14 +86,14 @@ class Theme
     }
 
     /**
-     * Extract customization data from the theme
+     * Normalize the theme's customization data
      *
      * @param array<string,array<string,mixed>> $data The theme's customization data
      * @return array<string,array<string,mixed>>
      */
-    public function extractCustomizationData(array $data = []): array
+    public function normalizeCustomization(array $data = []): array
     {
-        return $this->meta->schema->extractCustomizationData($data);
+        return $this->meta->schema->normalizeCustomization($data);
     }
 
     /**

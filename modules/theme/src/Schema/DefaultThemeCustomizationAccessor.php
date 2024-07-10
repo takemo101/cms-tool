@@ -39,7 +39,7 @@ class DefaultThemeCustomizationAccessor implements ThemeCustomizationAccessor
 
         try {
             $json = json_encode(
-                $theme->extractCustomizationData($data),
+                $theme->normalizeCustomization($data),
                 JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT,
             );
         } catch (\JsonException $e) {
@@ -70,7 +70,7 @@ class DefaultThemeCustomizationAccessor implements ThemeCustomizationAccessor
 
         // If the file does not exist, return the default data
         if ($this->filesystem->exists($path) === false) {
-            return $theme->extractCustomizationData();
+            return $theme->normalizeCustomization();
         }
 
         $content = $this->filesystem->read($path);
@@ -89,6 +89,6 @@ class DefaultThemeCustomizationAccessor implements ThemeCustomizationAccessor
             throw ThemeLoadException::decodeError($path);
         }
 
-        return $theme->extractCustomizationData($data);
+        return $theme->normalizeCustomization($data);
     }
 }

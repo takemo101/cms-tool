@@ -32,10 +32,10 @@ class CacheThemeCustomizationHandler
      *
      * @param string $id
      * @param array<string,array<string,mixed>> $data
-     * @return Theme
+     * @return array{0:Theme,1:array<string,array<string,mixed>>}
      * @throws NotFoundDataException
      */
-    public function handle(string $id, array $data): Theme
+    public function handle(string $id, array $data): array
     {
         $themeId = new ThemeId($id);
 
@@ -55,6 +55,6 @@ class CacheThemeCustomizationHandler
             data: $normalizedData,
         );
 
-        return $theme;
+        return [$theme, $normalizedData];
     }
 }

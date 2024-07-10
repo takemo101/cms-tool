@@ -36,7 +36,7 @@ class ThemeRouteGroupHandler
     public function __invoke(Proxy $proxy): void
     {
         $proxy->get(
-            '/',
+            empty($proxy->getBasePath()) ? '/' : '',
             HomeAction::class,
         )->setName('home');
 

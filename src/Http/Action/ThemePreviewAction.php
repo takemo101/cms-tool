@@ -33,8 +33,6 @@ class ThemePreviewAction
 
         ThemeRouteGroupHandler::configure($slim);
 
-        $slim->getRouteCollector()->getNamedRoute('home')->setPattern('');
-
         $slim->addRoutingMiddleware();
 
         return $slim->handle($request);

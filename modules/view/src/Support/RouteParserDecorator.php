@@ -5,7 +5,7 @@ namespace CmsTool\View\Support;
 use Psr\Http\Message\UriInterface;
 use Slim\Interfaces\RouteParserInterface;
 
-class RouteParserProxy implements RouteParserInterface
+class RouteParserDecorator implements RouteParserInterface
 {
     /**
      * constructor

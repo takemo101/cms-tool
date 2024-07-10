@@ -2,7 +2,7 @@
 
 namespace Takemo101\CmsTool\Http\Action;
 
-use CmsTool\View\Support\RouteParserProxy;
+use CmsTool\View\Support\RouteParserDecorator;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Takemo101\Chubby\Http\Factory\SlimFactory;
@@ -15,14 +15,14 @@ class ThemePreviewAction
      *
      * @param ServerRequestInterface $request
      * @param SlimFactory $factory
-     * @param RouteParserProxy $routeParser
+     * @param RouteParserDecorator $routeParser
      * @param string|null $path
      * @return ResponseInterface
      */
     public function __invoke(
         ServerRequestInterface $request,
         SlimFactory $factory,
-        RouteParserProxy $routeParser,
+        RouteParserDecorator $routeParser,
         ?string $path = null,
     ): ResponseInterface {
         $slim = $factory->create();

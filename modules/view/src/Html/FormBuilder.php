@@ -4,7 +4,7 @@ namespace CmsTool\View\Html;
 
 use CmsTool\View\Html\Filter\FormAppendFilter;
 use CmsTool\View\Html\Filter\FormAppendFilters;
-use CmsTool\View\Support\RouteParserProxy;
+use CmsTool\View\Support\RouteParserDecorator;
 use DI\Attribute\Inject;
 use Slim\Interfaces\RouteParserInterface;
 use Illuminate\Support\Arr;
@@ -22,7 +22,7 @@ class FormBuilder
      * @param FormAppendFilter $appendFilter
      */
     public function __construct(
-        #[Inject(RouteParserProxy::class)]
+        #[Inject(RouteParserDecorator::class)]
         private RouteParserInterface $routeParser,
         private ElementBuilder $builder = new ElementBuilder(),
         #[Inject(FormAppendFilters::class)]

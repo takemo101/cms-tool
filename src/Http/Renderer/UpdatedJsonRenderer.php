@@ -14,11 +14,9 @@ class UpdatedJsonRenderer implements ResponseRenderer
      * constructor
      *
      * @param string $message
-     * @param mixed[] $data
      */
     public function __construct(
         private string $message = 'Updated successfully',
-        private array $data = [],
     ) {
         //
     }
@@ -37,9 +35,8 @@ class UpdatedJsonRenderer implements ResponseRenderer
         return (new JsonRenderer(
             data: [
                 'message' => $this->message,
-                'data' => $this->data,
             ],
-            status: StatusCodeInterface::STATUS_OK,
+            status: StatusCodeInterface::STATUS_NO_CONTENT,
         ))->render($request, $response);
     }
 }

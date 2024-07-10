@@ -49,15 +49,13 @@ class ThemeCustomizationController
      *
      * @param ServerRequestInterface $request
      * @param CacheThemeCustomizationHandler $handler
-     * @param ActiveTheme $activeTheme
      */
-    public function update(
+    public function cache(
         ServerRequestInterface $request,
         CacheThemeCustomizationHandler $handler,
-        ActiveTheme $activeTheme,
     ): UpdatedJsonRenderer {
         try {
-            [$theme, $data] = $handler->handle(
+            $handler->handle(
                 id: $this->activeTheme->id->value(),
                 data: (array) $request->getParsedBody(),
             );
@@ -65,10 +63,7 @@ class ThemeCustomizationController
             throw new HttpNotFoundException($request, $e->getMessage(), $e);
         }
 
-        return new UpdatedJsonRenderer(
-            message: "Updated successfully for {$theme->id} theme.",
-            data: $data,
-        );
+        return new UpdatedJsonRenderer("Updated successfully for {$this->activeTheme->id} theme.");
     }
 
     /**
@@ -76,16 +71,14 @@ class ThemeCustomizationController
      *
      * @param ServerRequestInterface $request
      * @param ApplyThemeCustomizationHandler $handler
-     * @param ActiveTheme $activeTheme
      * @return UpdatedJsonRenderer
      */
     public function apply(
         ServerRequestInterface $request,
         ApplyThemeCustomizationHandler $handler,
-        ActiveTheme $activeTheme,
     ): UpdatedJsonRenderer {
         try {
-            [$theme, $data] = $handler->handle(
+            $handler->handle(
                 id: $this->activeTheme->id->value(),
                 data: (array) $request->getParsedBody(),
             );
@@ -93,9 +86,6 @@ class ThemeCustomizationController
             throw new HttpNotFoundException($request, $e->getMessage(), $e);
         }
 
-        return new UpdatedJsonRenderer(
-            message: "Updated successfully for {$theme->id} theme.",
-            data: $data,
-        );
+        return new UpdatedJsonRenderer("Applied successfully for {$this->activeTheme->id} theme.");
     }
 }

@@ -19,6 +19,11 @@ class TextareaSetting extends AbstractTextInputSetting
     public const Type = SchemaSettingType::Textarea;
 
     /**
+     * @var int
+     */
+    public const LimitLength = 10000;
+
+    /**
      * {@inheritDoc}
      *
      * @return string
@@ -39,6 +44,22 @@ class TextareaSetting extends AbstractTextInputSetting
             'default' => $this->default,
             'placeholder' => $this->placeholder,
         ];
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return string
+     */
+    public function extractCustomizationValue(array $data): mixed
+    {
+        /** @var string */
+        $value = $data[$this->id->value()] ?? $this->default;
+
+        // Limit the length of the value
+        $value = mb_substr($value, 0, self::LimitLength);
+
+        return $value;
     }
 
     /**

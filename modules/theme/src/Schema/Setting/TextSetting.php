@@ -19,6 +19,11 @@ class TextSetting extends AbstractTextInputSetting
     public const Type = SchemaSettingType::Text;
 
     /**
+     * @var int
+     */
+    public const LimitLength = 500;
+
+    /**
      * {@inheritDoc}
      *
      * @return string
@@ -26,6 +31,22 @@ class TextSetting extends AbstractTextInputSetting
     protected function getDefaultValueIfNotSet(): mixed
     {
         return '';
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return string
+     */
+    public function extractCustomizationValue(array $data): mixed
+    {
+        /** @var string */
+        $value = $data[$this->id->value()] ?? $this->default;
+
+        // Limit the length of the value
+        $value = mb_substr($value, 0, self::LimitLength);
+
+        return $value;
     }
 
     /**

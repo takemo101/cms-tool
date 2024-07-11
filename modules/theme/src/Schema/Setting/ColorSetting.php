@@ -19,9 +19,14 @@ class ColorSetting extends AbstractInputSetting
     public const Type = SchemaSettingType::Color;
 
     /**
-     * @var string
+     * {@inheritDoc}
+     *
+     * @return string
      */
-    public const DefaultValueIfNotSet = '#FFFFFF';
+    protected function getDefaultValueIfNotSet(): mixed
+    {
+        return '#FFFFFF';
+    }
 
     /**
      * {@inheritDoc}
@@ -50,7 +55,7 @@ class ColorSetting extends AbstractInputSetting
         return new self(
             id: new SchemaSettingId($data['id'] ?? ArrayKeyMissingException::throw('id')),
             label: $data['label'] ?? ArrayKeyMissingException::throw('label'),
-            default: $data['default'] ?? static::DefaultValueIfNotSet,
+            default: $data['default'] ?? null,
         );
     }
 }

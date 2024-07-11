@@ -19,11 +19,6 @@ class NumberSetting extends AbstractTextInputSetting
     public const Type = SchemaSettingType::Number;
 
     /**
-     * @var integer
-     */
-    public const DefaultValueIfNotSet = 0;
-
-    /**
      * constructor
      *
      * @param SchemaSettingId $id
@@ -52,6 +47,16 @@ class NumberSetting extends AbstractTextInputSetting
             $this->min <= $this->max,
             'The minimum value must be less than or equal to the maximum value',
         );
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return integer|float
+     */
+    protected function getDefaultValueIfNotSet(): mixed
+    {
+        return 0;
     }
 
     /**
@@ -88,7 +93,7 @@ class NumberSetting extends AbstractTextInputSetting
             label: $data['label'] ?? ArrayKeyMissingException::throw('label'),
             min: $data['min'] ?? ArrayKeyMissingException::throw('min'),
             max: $data['max'] ?? ArrayKeyMissingException::throw('max'),
-            default: $data['default'] ?? self::DefaultValueIfNotSet,
+            default: $data['default'] ?? null,
             placeholder: $data['placeholder'] ?? null,
         );
     }

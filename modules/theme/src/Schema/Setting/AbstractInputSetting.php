@@ -10,13 +10,6 @@ use CmsTool\Theme\Schema\SchemaSettingId;
 abstract class AbstractInputSetting extends AbstractSetting
 {
     /**
-     * This needs to be redefined in the inheriting class
-     *
-     * @var mixed
-     */
-    public const DefaultValueIfNotSet = null;
-
-    /**
      * @var T
      */
     public readonly mixed $default;
@@ -43,8 +36,15 @@ abstract class AbstractInputSetting extends AbstractSetting
             'The DefaultValueIfNotSet constant must be defined',
         );
 
-        $this->default = $default ?? static::DefaultValueIfNotSet;
+        $this->default = $default ?? $this->getDefaultValueIfNotSet();
     }
+
+    /**
+     * Returns the default value if the setting is not found in the theme's customization data.
+     *
+     * @return T
+     */
+    abstract protected function getDefaultValueIfNotSet(): mixed;
 
     /**
      * Extracts the value of the target setting from the theme's customization data.

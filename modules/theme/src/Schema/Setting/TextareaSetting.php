@@ -19,9 +19,14 @@ class TextareaSetting extends AbstractTextInputSetting
     public const Type = SchemaSettingType::Textarea;
 
     /**
-     * @var string
+     * {@inheritDoc}
+     *
+     * @return string
      */
-    public const DefaultValueIfNotSet = '';
+    protected function getDefaultValueIfNotSet(): mixed
+    {
+        return '';
+    }
 
     /**
      * {@inheritDoc}
@@ -51,7 +56,7 @@ class TextareaSetting extends AbstractTextInputSetting
         return new self(
             id: new SchemaSettingId($data['id'] ?? ArrayKeyMissingException::throw('id')),
             label: $data['label'] ?? ArrayKeyMissingException::throw('label'),
-            default: $data['default'] ?? static::DefaultValueIfNotSet,
+            default: $data['default'] ?? null,
             placeholder: $data['placeholder'] ?? null,
         );
     }

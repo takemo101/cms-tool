@@ -35,19 +35,6 @@ class TextareaSetting extends AbstractTextInputSetting
 
     /**
      * {@inheritDoc}
-     */
-    public function toArray(): array
-    {
-        return [
-            'id' => $this->id->value(),
-            'label' => $this->label,
-            'default' => $this->default,
-            'placeholder' => $this->placeholder,
-        ];
-    }
-
-    /**
-     * {@inheritDoc}
      *
      * @return string
      */
@@ -60,6 +47,20 @@ class TextareaSetting extends AbstractTextInputSetting
         $value = mb_substr($value, 0, self::LimitLength);
 
         return $value;
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id->value(),
+            'label' => $this->label,
+            'default' => $this->default,
+            'placeholder' => $this->placeholder,
+        ];
     }
 
     /**

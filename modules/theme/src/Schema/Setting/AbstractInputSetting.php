@@ -31,11 +31,6 @@ abstract class AbstractInputSetting extends AbstractSetting
             'The setting label must not be empty',
         );
 
-        assert(
-            defined("static::DefaultValueIfNotSet"),
-            'The DefaultValueIfNotSet constant must be defined',
-        );
-
         $this->default = $default ?? $this->getDefaultValueIfNotSet();
     }
 

@@ -59,6 +59,7 @@ class TextSetting extends AbstractTextInputSetting
             'label' => $this->label,
             'default' => $this->default,
             'placeholder' => $this->placeholder,
+            'limit' => self::LimitLength,
         ];
     }
 

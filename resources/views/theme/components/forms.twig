@@ -1,0 +1,194 @@
+{% macro text(options = {
+    uid: '',
+    name: 'name',
+    label: '',
+    value: '',
+    placeholder: '',
+    class: '',
+    hint: '',
+}) %}
+    {% if options.label %}
+        <label class="form-label" for="{{ options.uid }}">
+            {{ options.label }}
+        </label>
+    {% endif %}
+    <input
+        class="form-input"
+        type="text"
+        name="{{ options.name }}"
+        value="{{ options.value }}"
+        placeholder="{{ options.placeholder }}"
+        id="{{ options.uid }}"/>
+    {% if options.hint %}
+        <span class="form-hint">
+            {{ options.hint }}
+        </span>
+    {% endif %}
+{% endmacro %}
+
+{% macro number(options = {
+    uid: '',
+    name: 'name',
+    label: '',
+    value: '',
+    min: null,
+    max: null,
+    placeholder: '',
+    class: '',
+    hint: '',
+}) %}
+    {% if options.label %}
+        <label class="form-label" for="{{ options.uid }}">
+            {{ options.label }}
+        </label>
+    {% endif %}
+    <input
+        class="form-input"
+        type="number"
+        {% if options.min is not null %}min="{{ options.min }}"{% endif %}
+        {% if options.max is not null %}max="{{ options.max }}"{% endif %}
+        name="{{ options.name }}"
+        value="{{ options.value }}"
+        placeholder="{{ options.placeholder }}"
+        id="{{ options.uid }}"/>
+    {% if options.hint %}
+        <span class="form-hint">
+            {{ options.hint }}
+        </span>
+    {% endif %}
+{% endmacro %}
+
+{% macro textarea(options = {
+    uid: '',
+    name: 'name',
+    label: '',
+    value: '',
+    rows: 5,
+    placeholder: '',
+    class: '',
+    hint: '',
+}) %}
+    {% if options.label %}
+        <label class="form-label" for="{{ options.uid }}">
+            {{ options.label }}
+        </label>
+    {% endif %}
+    <textarea
+        class="form-input form-input--textarea {{ options.class }}"
+        name="{{ options.name }}"
+        rows="{{ options.rows ?? 5 }}"
+        placeholder="{{ options.placeholder }}"
+        id="{{ options.uid }}">{{ options.value }}</textarea>
+    {% if options.hint %}
+        <span class="form-hint">
+            {{ options.hint }}
+        </span>
+    {% endif %}
+{% endmacro %}
+
+{% macro color(options = {
+    uid: '',
+    name: 'name',
+    label: '',
+    value: '',
+    class: '',
+    hint: '',
+}) %}
+    {% if options.label %}
+        <label class="form-label" for="{{ options.uid }}">
+            {{ options.label }}
+        </label>
+    {% endif %}
+    <input
+        class="form-color"
+        type="color"
+        name="{{ options.name }}"
+        value="{{ options.value }}"
+        id="{{ options.uid }}"/>
+    {% if options.hint %}
+        <span class="form-hint">
+            {{ options.hint }}
+        </span>
+    {% endif %}
+{% endmacro %}
+
+{% macro checkbox(options = {
+    uid: '',
+    name: 'name',
+    label: '',
+    value: true,
+    class: '',
+    hint: '',
+}) %}
+    <label class="form-checkbox {{ options.class }}" for="{{ options.uid }}">
+        <input
+            type="checkbox"
+            name="{{ options.name }}"
+            value="1"
+            id="{{ options.uid }}"
+            {% if options.value %}checked{% endif %}/>
+        <span>{{ options.label }}</span>
+    </label>
+    {% if options.hint %}
+        <span class="form-hint">
+            {{ options.hint }}
+        </span>
+    {% endif %}
+{% endmacro %}
+
+{% macro select(options = {
+    uid: '',
+    name: 'name',
+    label: '',
+    options: [],
+    value: '',
+    class: '',
+    hint: '',
+}) %}
+    {% if options.label %}
+        <label class="form-label" for="{{ options.uid }}">
+            {{ options.label }}
+        </label>
+    {% endif %}
+    <select
+        class="form-select {{ options.class }}"
+        name="{{ options.name }}"
+        id="{{ options.uid }}">
+        {% for option in options.options %}
+            <option value="{{ option.value }}"
+                {% if option.value == options.value %}selected{% endif %}>
+                {{ option.label }}
+            </option>
+        {% endfor %}
+    </select>
+    {% if options.hint %}
+        <span class="form-hint">
+            {{ options.hint }}
+        </span>
+    {% endif %}
+{% endmacro %}
+
+{% macro editor(options = {
+    uid: '',
+    name: 'name',
+    label: '',
+    value: '',
+    hint: '',
+}) %}
+    <div class="form-column" x-data="editor()">
+        {% if options.label %}
+            <label class="form-label" for="{{ options.uid }}">
+                {{ options.label }}
+            </label>
+        {% endif %}
+        <textarea
+            x-ref="editor"
+            name="{{ options.name }}"
+            id="{{ options.uid }}">{{ options.value }}</textarea>
+        {% if options.hint %}
+            <span class="form-hint">
+                {{ options.hint }}
+            </span>
+        {% endif %}
+    </div>
+{% endmacro %}

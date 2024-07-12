@@ -86,14 +86,25 @@ class Theme
     }
 
     /**
-     * Normalize the theme's customization data
+     * Refines the theme's customization data with the default values of the schema settings.
      *
      * @param array<string,array<string,mixed>> $data The theme's customization data
      * @return array<string,array<string,mixed>>
      */
-    public function normalizeCustomization(array $data = []): array
+    public function refineCustomizationWithDefaults(array $data = []): array
     {
-        return $this->meta->schema->normalizeCustomization($data);
+        return $this->meta->schema->refineCustomizationWithDefaults($data);
+    }
+
+    /**
+     * Refines the theme's customization data with the not set values of the schema settings.
+     *
+     * @param array<string,array<string,mixed>> $data The theme's customization data
+     * @return array<string,array<string,mixed>>
+     */
+    public function refineCustomizationWithNotSet(array $data = []): array
+    {
+        return $this->meta->schema->refineCustomizationWithNotSet($data);
     }
 
     /**

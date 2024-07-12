@@ -15,7 +15,7 @@ describe(
             expect($themeSchema->isEmpty())->toBeTrue();
         });
 
-        it('should extract the default customization data from the schema settings', function () {
+        it('should refine the theme\'s customization data with the default values of the schema settings', function () {
             $schemaSettings1 = new SchemaSettings(
                 new SchemaSettingId('setting1'),
                 'Setting 1',
@@ -36,23 +36,25 @@ describe(
                 ),
             );
 
-            $settings = [$schemaSettings1, $schemaSettings2];
-            $themeSchema = new ThemeSchema(...$settings);
+            $themeSchema = new ThemeSchema($schemaSettings1, $schemaSettings2);
 
-            expect($themeSchema->normalizeCustomization([]))->toBe([
+            $customizationData = [];
+            $expectedResult = [
                 'setting1' => ['key1' => 'default1'],
                 'setting2' => ['key2' => 'default2'],
-            ]);
+            ];
+
+            expect($themeSchema->refineCustomizationWithDefaults($customizationData))->toBe($expectedResult);
         });
 
-        it('should extract the customization data from the schema settings', function () {
+        it('should refine the theme\'s customization data with the not set values of the schema settings', function () {
             $schemaSettings1 = new SchemaSettings(
                 new SchemaSettingId('setting1'),
                 'Setting 1',
                 new TextSetting(
                     id: new SchemaSettingId('key1'),
                     label: 'Key 1',
-                    default: 'value1',
+                    default: 'default1',
                 ),
             );
 
@@ -62,20 +64,19 @@ describe(
                 new TextSetting(
                     id: new SchemaSettingId('key2'),
                     label: 'Key 2',
-                    default: 'value2',
+                    default: 'default2',
                 ),
             );
 
-            $settings = [$schemaSettings1, $schemaSettings2];
-            $themeSchema = new ThemeSchema(...$settings);
+            $themeSchema = new ThemeSchema($schemaSettings1, $schemaSettings2);
 
-            expect($themeSchema->normalizeCustomization([
-                'setting1' => ['key1' => 'value1'],
-                'setting2' => ['key2' => 'value2'],
-            ]))->toBe([
-                'setting1' => ['key1' => 'value1'],
-                'setting2' => ['key2' => 'value2'],
-            ]);
+            $customizationData = [];
+            $expectedResult = [
+                'setting1' => ['key1' => ''],
+                'setting2' => ['key2' => ''],
+            ];
+
+            expect($themeSchema->refineCustomizationWithNotSet($customizationData))->toBe($expectedResult);
         });
     }
 )->group('ThemeSchema', 'schema');

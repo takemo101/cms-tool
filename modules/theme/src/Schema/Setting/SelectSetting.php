@@ -56,7 +56,7 @@ class SelectSetting extends AbstractInputSetting
      *
      * @return string
      */
-    protected function getDefaultValueIfNotSet(): mixed
+    protected function getValueIfNotSet(): mixed
     {
         $options = $this->options;
 

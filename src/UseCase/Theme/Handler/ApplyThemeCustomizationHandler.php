@@ -51,7 +51,7 @@ class ApplyThemeCustomizationHandler
             );
         }
 
-        $normalizedData = $theme->normalizeCustomization($data);
+        $normalizedData = $theme->refineCustomizationWithNotSet($data);
 
         $this->saver->save(
             theme: $theme,

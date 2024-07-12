@@ -63,7 +63,7 @@ class ThemePreviewAction
         // If there is a cache, set it as preview data.
         if ($data = $this->cache->get($this->activeTheme->id)) {
             $preview->set(
-                $this->activeTheme->normalizeCustomization($data),
+                $this->activeTheme->refineCustomizationWithDefaults($data),
             );
         }
 

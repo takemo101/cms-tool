@@ -53,13 +53,13 @@ readonly class ThemeSchema implements Arrayable
     }
 
     /**
-     * Normalize the theme's customization data.
+     * Refines the theme's customization data with the default values of the schema settings.
      * The customization data is passed as an array of key-value pairs for each ID.
      *
      * @param array<string,array<string,mixed>> $data The theme's customization data
      * @return array<string,array<string,mixed>>
      */
-    public function normalizeCustomization(array $data): array
+    public function refineCustomizationWithDefaults(array $data): array
     {
         /**
          * @var array<string,array<string,mixed>>
@@ -69,7 +69,30 @@ readonly class ThemeSchema implements Arrayable
         foreach ($this->settings as $schemaSettings) {
             $id = $schemaSettings->id->value();
 
-            $result[$id] = $schemaSettings->extractCustomizationValues($data[$id] ?? []);
+            $result[$id] = $schemaSettings->extractCustomizationValuesOrDefaults($data[$id] ?? []);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Refines the theme's customization data with the not set values of the schema settings.
+     * The customization data is passed as an array of key-value pairs for each ID.
+     *
+     * @param array<string,array<string,mixed>> $data The theme's customization data
+     * @return array<string,array<string,mixed>>
+     */
+    public function refineCustomizationWithNotSet(array $data): array
+    {
+        /**
+         * @var array<string,array<string,mixed>>
+         */
+        $result = [];
+
+        foreach ($this->settings as $schemaSettings) {
+            $id = $schemaSettings->id->value();
+
+            $result[$id] = $schemaSettings->extractCustomizationValuesOrNotSet($data[$id] ?? []);
         }
 
         return $result;

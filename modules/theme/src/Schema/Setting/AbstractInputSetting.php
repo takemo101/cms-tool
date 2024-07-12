@@ -31,7 +31,7 @@ abstract class AbstractInputSetting extends AbstractSetting
             'The setting label must not be empty',
         );
 
-        $this->default = $default ?? $this->getDefaultValueIfNotSet();
+        $this->default = $default ?? $this->getValueIfNotSet();
     }
 
     /**
@@ -39,7 +39,7 @@ abstract class AbstractInputSetting extends AbstractSetting
      *
      * @return T
      */
-    abstract protected function getDefaultValueIfNotSet(): mixed;
+    abstract protected function getValueIfNotSet(): mixed;
 
     /**
      * Extracts the value of the target setting from the theme's customization data.
@@ -48,8 +48,20 @@ abstract class AbstractInputSetting extends AbstractSetting
      * @param array<string,mixed> $data The theme's customization data
      * @return T
      */
-    public function extractCustomizationValue(array $data): mixed
+    public function extractCustomizationValueOrDefault(array $data): mixed
     {
         return $data[$this->id->value()] ?? $this->default;
+    }
+
+    /**
+     * Extracts the value of the target setting from the theme's customization data.
+     * If the setting is not found in the data, the not set value is returned.
+     *
+     * @param array<string,mixed> $data The theme's customization data
+     * @return T
+     */
+    public function extractCustomizationValueOrNotSet(array $data): mixed
+    {
+        return $data[$this->id->value()] ?? $this->getValueIfNotSet();
     }
 }

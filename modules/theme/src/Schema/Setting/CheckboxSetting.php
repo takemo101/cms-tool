@@ -23,9 +23,43 @@ class CheckboxSetting extends AbstractInputSetting
      *
      * @return boolean
      */
-    protected function getDefaultValueIfNotSet(): mixed
+    protected function getValueIfNotSet(): mixed
     {
         return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return boolean
+     */
+    public function extractCustomizationValueOrNotSet(array $data): mixed
+    {
+        /** @var boolean|string */
+        $value = $data[$this->id->value()] ?? $this->getValueIfNotSet();
+
+        if (is_string($value)) {
+            $value = $this->convertStringToBoolean($value);
+        }
+
+        return $value;
+    }
+
+    /**
+     * Converts a string value to a boolean value.
+     *
+     * @param string $value
+     * @return boolean
+     */
+    private function convertStringToBoolean(string $value): bool
+    {
+        $boolValue = filter_var(
+            $value,
+            FILTER_VALIDATE_BOOLEAN,
+            FILTER_NULL_ON_FAILURE,
+        );
+
+        return $boolValue ?? $this->getValueIfNotSet();
     }
 
     /**

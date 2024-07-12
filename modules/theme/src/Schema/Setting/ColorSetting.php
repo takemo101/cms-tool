@@ -23,7 +23,7 @@ class ColorSetting extends AbstractInputSetting
      *
      * @return string
      */
-    protected function getDefaultValueIfNotSet(): mixed
+    protected function getValueIfNotSet(): mixed
     {
         return '#FFFFFF';
     }

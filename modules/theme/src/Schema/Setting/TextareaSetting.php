@@ -28,7 +28,7 @@ class TextareaSetting extends AbstractTextInputSetting
      *
      * @return string
      */
-    protected function getDefaultValueIfNotSet(): mixed
+    protected function getValueIfNotSet(): mixed
     {
         return '';
     }
@@ -38,15 +38,23 @@ class TextareaSetting extends AbstractTextInputSetting
      *
      * @return string
      */
-    public function extractCustomizationValue(array $data): mixed
+    public function extractCustomizationValueOrNotSet(array $data): mixed
     {
         /** @var string */
-        $value = $data[$this->id->value()] ?? $this->default;
+        $value = $data[$this->id->value()] ?? $this->getValueIfNotSet();
 
-        // Limit the length of the value
-        $value = mb_substr($value, 0, self::LimitLength);
+        return $this->sliceStringToLimit($value);
+    }
 
-        return $value;
+    /**
+     * Slice the value to the limit length.
+     *
+     * @param string $value
+     * @return string
+     */
+    private function sliceStringToLimit(string $value): string
+    {
+        return mb_substr($value, 0, self::LimitLength);
     }
 
     /**

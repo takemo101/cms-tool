@@ -30,6 +30,7 @@ class PsrThemeCustomizationTemporaryCache implements ThemeCustomizationTemporary
         $item = $this->pool->getItem($this->buildCacheKey($id));
 
         $item->set($data);
+        $this->pool->save($item);
     }
 
     /**

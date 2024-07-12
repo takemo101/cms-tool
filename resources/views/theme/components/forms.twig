@@ -33,6 +33,7 @@
     value: '',
     min: null,
     max: null,
+    step: null,
     placeholder: '',
     class: '',
     hint: '',
@@ -47,6 +48,7 @@
         type="number"
         {% if options.min is not null %}min="{{ options.min }}"{% endif %}
         {% if options.max is not null %}max="{{ options.max }}"{% endif %}
+        {% if options.step is not null %}step="{{ options.step }}"{% endif %}
         name="{{ options.name }}"
         value="{{ options.value }}"
         placeholder="{{ options.placeholder }}"

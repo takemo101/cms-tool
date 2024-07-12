@@ -6,6 +6,7 @@ use CmsTool\Theme\Exception\ArrayKeyMissingException;
 use CmsTool\Theme\Schema\Setting\AbstractSetting;
 use CmsTool\Theme\Schema\Setting\CheckboxSetting;
 use CmsTool\Theme\Schema\Setting\ColorSetting;
+use CmsTool\Theme\Schema\Setting\EditorSetting;
 use CmsTool\Theme\Schema\Setting\HeaderSetting;
 use CmsTool\Theme\Schema\Setting\NumberSetting;
 use CmsTool\Theme\Schema\Setting\SelectSetting;
@@ -41,6 +42,7 @@ class SchemaSettingFactory
         $map[SchemaSettingType::Select] = SelectSetting::class;
         $map[SchemaSettingType::Textarea] = TextareaSetting::class;
         $map[SchemaSettingType::Text] = TextSetting::class;
+        $map[SchemaSettingType::Editor] = EditorSetting::class;
         // Add more mappings as needed
 
         $this->map = $map;

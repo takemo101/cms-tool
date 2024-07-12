@@ -10,6 +10,7 @@ enum SchemaSettingType: string
 {
     case Text = 'text'; // Single line text input
     case Textarea = 'textarea'; // Multi line text input
+    case Editor = 'editor'; // WYSIWYG editor input
     case Number = 'number'; // Number input
     case Select = 'select'; // Select input
     case Checkbox = 'checkbox'; // Checkbox input

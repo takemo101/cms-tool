@@ -56,7 +56,7 @@ class ThemeCustomizationController
     ): UpdatedJsonRenderer {
         try {
             $handler->handle(
-                id: $this->activeTheme->id->value(),
+                id: $this->activeTheme->id,
                 data: (array) $request->getParsedBody(),
             );
         } catch (NotFoundDataException $e) {
@@ -79,7 +79,7 @@ class ThemeCustomizationController
     ): UpdatedJsonRenderer {
         try {
             $handler->handle(
-                id: $this->activeTheme->id->value(),
+                id: $this->activeTheme->id,
                 data: (array) $request->getParsedBody(),
             );
         } catch (NotFoundDataException $e) {

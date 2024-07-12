@@ -8,6 +8,7 @@ import "github-markdown-css/github-markdown-light.css";
 import "@splidejs/splide/css";
 import Splide from "@splidejs/splide";
 import "./codemirror";
+import CmsEditor from "./suneditor";
 import Toastr from "./support/toastr";
 
 // Definition of MasterCSS custom style
@@ -19,6 +20,9 @@ window.Toastr = new Toastr();
 
 // Register Splide
 window.Splide = Splide;
+
+// Register SunEditor
+window.CmsEditor = new CmsEditor();
 
 // reference: https://dev.to/wtho/get-started-with-alpinejs-and-typescript-4dgf
 

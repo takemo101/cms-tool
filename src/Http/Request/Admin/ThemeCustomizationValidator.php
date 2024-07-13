@@ -126,7 +126,10 @@ class ThemeCustomizationValidator
             ],
             $setting instanceof NumberSetting => [
                 new Assert\Required(),
-                new Assert\Type('numeric'),
+                new Assert\AtLeastOneOf([
+                    new Assert\Blank(),
+                    new Assert\Type('numeric'),
+                ]),
             ],
             $setting instanceof SelectSetting => [
                 new Assert\Required(),

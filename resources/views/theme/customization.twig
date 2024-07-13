@@ -84,7 +84,6 @@
         if (event.detail.xhr.status != 200) {
             Toastr.error('Failed to save data.');
             throw new Error('Failed to save data.');
-            return;
         }
 
         this.$refs.iframe.contentWindow.location.reload();

@@ -72,9 +72,21 @@
     /**
      * Save the changes.
      *
+     * @param {Event} event
      * @returns {void}
      */
-    handleAfterRequest() {
+    handleAfterRequest(event) {
+        if (event.detail.xhr.status == 422) {
+            Toastr.error('入力内容を確認してください');
+            return;
+        }
+
+        if (event.detail.xhr.status != 200) {
+            Toastr.error('Failed to save data.');
+            throw new Error('Failed to save data.');
+            return;
+        }
+
         this.$refs.iframe.contentWindow.location.reload();
         Toastr.success('デザインを保存しました');
         this.changed = false;

@@ -5,6 +5,7 @@ import lang from "suneditor/src/lang";
 import type SunEditor from "suneditor/src/lib/core";
 import {
   fontColor,
+  fontSize,
   formatBlock,
   hiliteColor,
   link,
@@ -22,9 +23,17 @@ export default class CmsEditor {
   public createSimply(element: HTMLElement | string): SunEditor {
     return suneditor.create(element, {
       codeMirror: CodeMirror,
-      plugins: [list, table, link, fontColor, hiliteColor, formatBlock],
+      plugins: [
+        list,
+        table,
+        link,
+        fontColor,
+        fontSize,
+        hiliteColor,
+        formatBlock,
+      ],
       buttonList: [
-        ["formatBlock"],
+        ["formatBlock", "fontSize"],
         ["bold", "underline", "italic", "strike"],
         ["fontColor", "hiliteColor"],
         ["link", "list", "table"],

@@ -2,11 +2,13 @@
 
 namespace Takemo101\CmsTool\Http\Controller\Admin;
 
+use CmsTool\Support\Validation\HttpValidationErrorException;
 use CmsTool\Theme\ActiveTheme;
 use CmsTool\View\View;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
 use Takemo101\CmsTool\Http\Renderer\UpdatedJsonRenderer;
+use Takemo101\CmsTool\Http\Request\Admin\ThemeCustomizationValidator;
 use Takemo101\CmsTool\Http\ViewModel\ThemeCustomizationEditPage;
 use Takemo101\CmsTool\UseCase\Shared\Exception\NotFoundDataException;
 use Takemo101\CmsTool\UseCase\Theme\Handler\ApplyThemeCustomizationHandler;
@@ -48,12 +50,26 @@ class ThemeCustomizationController
      * Save the theme customization data temporarily.
      *
      * @param ServerRequestInterface $request
+     * @param ThemeCustomizationValidator $validator
      * @param CacheThemeCustomizationHandler $handler
      */
     public function cache(
         ServerRequestInterface $request,
+        ThemeCustomizationValidator $validator,
         CacheThemeCustomizationHandler $handler,
     ): UpdatedJsonRenderer {
+        $errors = $validator->validate(
+            body: (array) $request->getParsedBody(),
+            theme: $this->activeTheme,
+        );
+
+        if ($errors->count()) {
+            throw new HttpValidationErrorException(
+                errors: $errors,
+                request: $request,
+            );
+        }
+
         try {
             $handler->handle(
                 id: $this->activeTheme->id,
@@ -70,13 +86,28 @@ class ThemeCustomizationController
      * Apply the theme customization data to the theme file.
      *
      * @param ServerRequestInterface $request
+     * @param ThemeCustomizationValidator $validator
      * @param ApplyThemeCustomizationHandler $handler
      * @return UpdatedJsonRenderer
      */
     public function apply(
         ServerRequestInterface $request,
+        ThemeCustomizationValidator $validator,
         ApplyThemeCustomizationHandler $handler,
     ): UpdatedJsonRenderer {
+
+        $errors = $validator->validate(
+            body: (array) $request->getParsedBody(),
+            theme: $this->activeTheme,
+        );
+
+        if ($errors->count()) {
+            throw new HttpValidationErrorException(
+                errors: $errors,
+                request: $request,
+            );
+        }
+
         try {
             $handler->handle(
                 id: $this->activeTheme->id,

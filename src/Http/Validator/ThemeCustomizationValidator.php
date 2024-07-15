@@ -1,6 +1,6 @@
 <?php
 
-namespace Takemo101\CmsTool\Http\Request\Admin;
+namespace Takemo101\CmsTool\Http\Validator;
 
 use CmsTool\Session\Csrf\CsrfGuard;
 use CmsTool\Theme\Schema\Setting\AbstractInputSetting;
@@ -12,7 +12,7 @@ use CmsTool\Theme\Schema\Setting\SelectOption;
 use CmsTool\Theme\Schema\Setting\SelectSetting;
 use CmsTool\Theme\Schema\Setting\TextareaSetting;
 use CmsTool\Theme\Schema\Setting\TextSetting;
-use CmsTool\Theme\Theme;
+use CmsTool\Theme\Schema\ThemeSchema;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
@@ -42,18 +42,18 @@ class ThemeCustomizationValidator
     /**
      * Validate the body
      *
-     * @param Theme $theme
+     * @param ThemeSchema $schema
      * @param array<string,mixed> $body
      * @return ConstraintViolationListInterface
      */
     public function validate(
-        Theme $theme,
+        ThemeSchema $schema,
         array $body,
     ): ConstraintViolationListInterface {
 
         return $this->validator->validate(
             $this->filter($body),
-            $this->getConstraint($theme),
+            $this->getConstraint($schema),
         );
     }
 
@@ -75,13 +75,11 @@ class ThemeCustomizationValidator
     /**
      * Get symfony validation constraint
      *
-     * @param Theme $theme
+     * @param ThemeSchema $schema
      * @return Constraint
      */
-    private function getConstraint(Theme $theme): Constraint
+    private function getConstraint(ThemeSchema $schema): Constraint
     {
-        $schema = $theme->meta->schema;
-
         $constraints = [];
 
         foreach ($schema->settings as $settings) {
@@ -104,8 +102,9 @@ class ThemeCustomizationValidator
      * @param AbstractInputSetting $setting
      * @return Constraint[]
      */
-    private function createSchemaSettingConstraints(AbstractInputSetting $setting): array
-    {
+    private function createSchemaSettingConstraints(
+        AbstractInputSetting $setting,
+    ): array {
         /** @var Constraint[] */
         $constraints = match (true) {
             $setting instanceof CheckboxSetting => [
@@ -113,7 +112,7 @@ class ThemeCustomizationValidator
                     new Assert\Callback(fn (
                         mixed $value,
                         ExecutionContextInterface $context,
-                    ) => $this->isBoolenaConvertible($value)
+                    ) => $this->isBooleanConvertible($value)
                         ? null
                         : $context->buildViolation('The value must be boolean convertible')
                         ->addViolation()),
@@ -168,7 +167,7 @@ class ThemeCustomizationValidator
      * @param mixed $value
      * @return boolean
      */
-    private function isBoolenaConvertible(
+    private function isBooleanConvertible(
         mixed $value,
     ): bool {
         return filter_var(

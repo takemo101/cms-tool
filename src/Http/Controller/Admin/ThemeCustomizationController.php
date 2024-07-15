@@ -8,7 +8,7 @@ use CmsTool\View\View;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
 use Takemo101\CmsTool\Http\Renderer\UpdatedJsonRenderer;
-use Takemo101\CmsTool\Http\Request\Admin\ThemeCustomizationValidator;
+use Takemo101\CmsTool\Http\Validator\ThemeCustomizationValidator;
 use Takemo101\CmsTool\Http\ViewModel\ThemeCustomizationEditPage;
 use Takemo101\CmsTool\UseCase\Shared\Exception\NotFoundDataException;
 use Takemo101\CmsTool\UseCase\Theme\Handler\ApplyThemeCustomizationHandler;
@@ -60,7 +60,7 @@ class ThemeCustomizationController
     ): UpdatedJsonRenderer {
         $errors = $validator->validate(
             body: (array) $request->getParsedBody(),
-            theme: $this->activeTheme,
+            schema: $this->activeTheme->meta->schema,
         );
 
         if ($errors->count()) {
@@ -98,7 +98,7 @@ class ThemeCustomizationController
 
         $errors = $validator->validate(
             body: (array) $request->getParsedBody(),
-            theme: $this->activeTheme,
+            schema: $this->activeTheme->meta->schema,
         );
 
         if ($errors->count()) {

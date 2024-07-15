@@ -14,7 +14,7 @@ describe(
     'SchemaSettingFactory',
     function () {
         it('creates a CheckboxSetting', function () {
-            $factory = new SchemaSettingFactory();
+            $factory = SchemaSettingFactory::build();
             $data = [
                 'id' => 'dummy',
                 'type' => 'checkbox',
@@ -28,7 +28,7 @@ describe(
         });
 
         it('creates a ColorSetting', function () {
-            $factory = new SchemaSettingFactory();
+            $factory = SchemaSettingFactory::build();
             $data = [
                 'id' => 'dummy',
                 'type' => 'color',
@@ -42,7 +42,7 @@ describe(
         });
 
         it('creates a HeaderSetting', function () {
-            $factory = new SchemaSettingFactory();
+            $factory = SchemaSettingFactory::build();
             $data = [
                 'id' => 'dummy',
                 'type' => 'header',
@@ -55,7 +55,7 @@ describe(
         });
 
         it('creates a NumberSetting', function () {
-            $factory = new SchemaSettingFactory();
+            $factory = SchemaSettingFactory::build();
             $data = [
                 'id' => 'dummy',
                 'type' => 'number',
@@ -71,7 +71,7 @@ describe(
         });
 
         it('creates a SelectSetting', function (array $options) {
-            $factory = new SchemaSettingFactory();
+            $factory = SchemaSettingFactory::build();
             $data = [
                 'id' => 'dummy',
                 'type' => 'select',
@@ -93,7 +93,7 @@ describe(
         ]);
 
         it('creates a TextareaSetting', function () {
-            $factory = new SchemaSettingFactory();
+            $factory = SchemaSettingFactory::build();
             $data = [
                 'id' => 'dummy',
                 'type' => 'textarea',
@@ -107,7 +107,7 @@ describe(
         });
 
         it('creates a TextSetting', function () {
-            $factory = new SchemaSettingFactory();
+            $factory = SchemaSettingFactory::build();
             $data = [
                 'id' => 'dummy',
                 'type' => 'text',
@@ -121,7 +121,7 @@ describe(
         });
 
         it('throws an exception for missing required array key', function () {
-            $factory = new SchemaSettingFactory();
+            $factory = SchemaSettingFactory::build();
 
             expect(fn () => $factory->create([
                 'typo' => 'undefined',
@@ -129,7 +129,7 @@ describe(
         });
 
         it('throws an exception for undefined type', function () {
-            $factory = new SchemaSettingFactory();
+            $factory = SchemaSettingFactory::build();
 
             expect(fn () => $factory->create([
                 'type' => 'unknown',

@@ -16,6 +16,7 @@ use CmsTool\Theme\Hook\ThemeHookPresets;
 use CmsTool\Theme\Routing\ThemeRoute;
 use CmsTool\Theme\Routing\ThemeRoutePresets;
 use CmsTool\Theme\Schema\DefaultThemeCustomizationAccessor;
+use CmsTool\Theme\Schema\SchemaSettingFactory;
 use Takemo101\Chubby\ApplicationContainer;
 use Takemo101\Chubby\Bootstrap\Definitions;
 use Takemo101\Chubby\Bootstrap\Provider\Provider;
@@ -71,6 +72,7 @@ class ThemeProvider implements Provider
 
                 return $presets;
             },
+            SchemaSettingFactory::class => fn () => SchemaSettingFactory::build(),
             ThemeLoader::class => get(ThemeAccessor::class),
             ThemeSaver::class => get(ThemeAccessor::class),
             ...ConfigBasedDefinitionReplacer::createDependencyDefinitions(

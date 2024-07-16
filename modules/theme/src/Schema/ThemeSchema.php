@@ -2,6 +2,7 @@
 
 namespace CmsTool\Theme\Schema;
 
+use CmsTool\Theme\Schema\Setting\AbstractInputSetting;
 use Takemo101\Chubby\Contract\Arrayable;
 
 /**
@@ -43,6 +44,24 @@ readonly class ThemeSchema implements Arrayable
     }
 
     /**
+     * Check if the schema settings contain an input setting
+     *
+     * @return boolean
+     */
+    public function isInputSettingEmpty(): bool
+    {
+        foreach ($this->settings as $schemaSettings) {
+            foreach ($schemaSettings->settings as $setting) {
+                if ($setting instanceof AbstractInputSetting) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * Check if the schema settings are empty
      *
      * @return boolean
@@ -53,13 +72,13 @@ readonly class ThemeSchema implements Arrayable
     }
 
     /**
-     * Extracts the values of the schema settings from the theme's customization data.
+     * Refines the theme's customization data with the default values of the schema settings.
      * The customization data is passed as an array of key-value pairs for each ID.
      *
      * @param array<string,array<string,mixed>> $data The theme's customization data
      * @return array<string,array<string,mixed>>
      */
-    public function extractCustomizationData(array $data): array
+    public function refineCustomizationWithDefaults(array $data): array
     {
         /**
          * @var array<string,array<string,mixed>>
@@ -69,7 +88,30 @@ readonly class ThemeSchema implements Arrayable
         foreach ($this->settings as $schemaSettings) {
             $id = $schemaSettings->id->value();
 
-            $result[$id] = $schemaSettings->extractCustomizationValues($data[$id] ?? []);
+            $result[$id] = $schemaSettings->extractCustomizationValuesOrDefaults($data[$id] ?? []);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Refines the theme's customization data with the not set values of the schema settings.
+     * The customization data is passed as an array of key-value pairs for each ID.
+     *
+     * @param array<string,array<string,mixed>> $data The theme's customization data
+     * @return array<string,array<string,mixed>>
+     */
+    public function refineCustomizationWithNotSet(array $data): array
+    {
+        /**
+         * @var array<string,array<string,mixed>>
+         */
+        $result = [];
+
+        foreach ($this->settings as $schemaSettings) {
+            $id = $schemaSettings->id->value();
+
+            $result[$id] = $schemaSettings->extractCustomizationValuesOrNotSet($data[$id] ?? []);
         }
 
         return $result;

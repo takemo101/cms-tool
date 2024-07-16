@@ -37,12 +37,12 @@
     <body
         class="body {% block body_class %}{% endblock %}">
 
-        <div class="layout {% block layout_class %}{% endblock %}">
+        <div class="{% block layout_class %}{% endblock %}">
             {# header #}
             {% block header %}{% endblock %}
 
             {# main content #}
-            <div class="container">
+            <div class="{% block container_class %}{% endblock %}">
                 {% block content %}{% endblock %}
             </div>
 

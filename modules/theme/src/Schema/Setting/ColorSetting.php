@@ -18,10 +18,41 @@ class ColorSetting extends AbstractInputSetting
      */
     public const Type = SchemaSettingType::Color;
 
+    public const Pattern = '/^#[0-9a-fA-F]{6}$/';
+
     /**
-     * @var string
+     * constructor
+     *
+     * @param SchemaSettingId $id
+     * @param string $label
+     * @param T|null $default
      */
-    public const DefaultValueIfNotSet = '#FFFFFF';
+    public function __construct(
+        SchemaSettingId $id,
+        string $label,
+        mixed $default = null,
+    ) {
+        parent::__construct(
+            id: $id,
+            label: $label,
+            default: $default,
+        );
+
+        assert(
+            preg_match(self::Pattern, $this->default) === 1,
+            'The default value must be a valid hexadecimal color code',
+        );
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return string
+     */
+    protected function getValueIfNotSet(): mixed
+    {
+        return '#FFFFFF';
+    }
 
     /**
      * {@inheritDoc}
@@ -50,7 +81,7 @@ class ColorSetting extends AbstractInputSetting
         return new self(
             id: new SchemaSettingId($data['id'] ?? ArrayKeyMissingException::throw('id')),
             label: $data['label'] ?? ArrayKeyMissingException::throw('label'),
-            default: $data['default'] ?? static::DefaultValueIfNotSet,
+            default: $data['default'] ?? null,
         );
     }
 }

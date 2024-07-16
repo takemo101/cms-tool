@@ -1,5 +1,6 @@
 <?php
 
+use Takemo101\CmsTool\Infra\JsonAccess\JsonAccessActiveThemeIdMatcher;
 use Takemo101\CmsTool\Preset\MicroCms\Blog\BlogHook;
 use Takemo101\CmsTool\Preset\MicroCms\Blog\BlogRoute;
 
@@ -12,6 +13,9 @@ return [
 
     // Directory to place themes when copying
     'copy' => base_path('themes'),
+
+    // Directory to store temporary data related to themes
+    'temporary' => storage_path('themes'),
 
     // ID of the theme used by default
     'default' => env('DEFAULT_THEME', 'simply'),
@@ -26,5 +30,10 @@ return [
     'hooks' => [
         // string => class-string<ThemeHook>
         'microcms:blog' => BlogHook::class,
+    ],
+
+    // This configuration is used to modify the dependencies for theme.
+    'dependencies' => [
+        CmsTool\Theme\Contract\ActiveThemeIdMatcher::class => JsonAccessActiveThemeIdMatcher::class,
     ],
 ];

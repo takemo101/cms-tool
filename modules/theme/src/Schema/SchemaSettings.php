@@ -78,11 +78,12 @@ readonly class SchemaSettings implements Arrayable
     /**
      * Extract the values of the settings from the theme's customization data.
      * The customization data is passed as an array of ID-value pairs.
+     * If a setting is not found in the data, the default value is returned.
      *
      * @param array<string,mixed> $data The theme's customization data
      * @return array<string,mixed>
      */
-    public function extractCustomizationValues(array $data): array
+    public function extractCustomizationValuesOrDefaults(array $data): array
     {
         /**
          * @var array<string,mixed>
@@ -90,7 +91,29 @@ readonly class SchemaSettings implements Arrayable
         $result = [];
 
         foreach ($this->getInputSettings() as $setting) {
-            $result[$setting->id->value()] = $setting->extractCustomizationValue($data);
+            $result[$setting->id->value()] = $setting->extractCustomizationValueOrDefault($data);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Extract the values of the settings from the theme's customization data.
+     * The customization data is passed as an array of ID-value pairs.
+     * If a setting is not found in the data, the not set value is returned.
+     *
+     * @param array<string,mixed> $data The theme's customization data
+     * @return array<string,mixed>
+     */
+    public function extractCustomizationValuesOrNotSet(array $data): array
+    {
+        /**
+         * @var array<string,mixed>
+         */
+        $result = [];
+
+        foreach ($this->getInputSettings() as $setting) {
+            $result[$setting->id->value()] = $setting->extractCustomizationValueOrNotSet($data);
         }
 
         return $result;

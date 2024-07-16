@@ -81,6 +81,14 @@
                             </a>
                         </li>
                         {% endif %}
+                        {% if theme.canBeCustomized() and theme.isActive() %}
+                            <li>
+                                <a class="menu-link"
+                                    href="{{ route('admin.theme.customization.edit') }}">
+                                    カスタマイズ
+                                </a>
+                            </li>
+                        {% endif %}
                         {% if theme.canBeEdited() %}
                             <li>
                                 <a class="menu-link"
@@ -199,6 +207,7 @@
 
         </div>
     </div>
+</div>
 {% endblock %}
 
 {% block footer_js %}

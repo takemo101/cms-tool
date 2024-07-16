@@ -2,9 +2,9 @@
 
 {% block content %}
     {# 新着記事の次のカラムに表示させる内容の変数設定 #}
-    {% set secondColumnTitle = 'TECHNOLOGY' %}
-    {% set secondColumnSubtitle = 'テクノロジー' %}
-    {% set secondColumnCategory = 'technology' %}
+    {% set secondColumnTitle = share.theme.top.second_column_title %}
+    {% set secondColumnSubtitle = share.theme.top.second_column_subtitle %}
+    {% set secondColumnCategory = share.theme.top.second_column_category %}
 
     {% set contents = share.contents_7 %}
     {% set first_content = contents|first %}

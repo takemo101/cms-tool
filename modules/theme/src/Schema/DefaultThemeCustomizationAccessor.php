@@ -7,6 +7,7 @@ use CmsTool\Theme\Exception\ThemeLoadException;
 use CmsTool\Theme\Exception\ThemeSaveException;
 use CmsTool\Theme\Theme;
 use CmsTool\Theme\ThemePathHelper;
+use DI\Attribute\Inject;
 use Takemo101\Chubby\Filesystem\LocalFilesystem;
 use Takemo101\Chubby\Filesystem\PathHelper;
 
@@ -25,6 +26,7 @@ class DefaultThemeCustomizationAccessor implements ThemeCustomizationAccessor
      */
     public function __construct(
         private readonly LocalFilesystem $filesystem,
+        #[Inject(ThemePathHelper::class)]
         private readonly ThemePathHelper $helper = new ThemePathHelper(new PathHelper()),
     ) {
         //
@@ -39,7 +41,7 @@ class DefaultThemeCustomizationAccessor implements ThemeCustomizationAccessor
 
         try {
             $json = json_encode(
-                $theme->extractCustomizationData($data),
+                $theme->refineCustomizationWithDefaults($data),
                 JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT,
             );
         } catch (\JsonException $e) {
@@ -70,7 +72,7 @@ class DefaultThemeCustomizationAccessor implements ThemeCustomizationAccessor
 
         // If the file does not exist, return the default data
         if ($this->filesystem->exists($path) === false) {
-            return $theme->extractCustomizationData();
+            return $theme->refineCustomizationWithDefaults();
         }
 
         $content = $this->filesystem->read($path);
@@ -89,6 +91,6 @@ class DefaultThemeCustomizationAccessor implements ThemeCustomizationAccessor
             throw ThemeLoadException::decodeError($path);
         }
 
-        return $theme->extractCustomizationData($data);
+        return $theme->refineCustomizationWithDefaults($data);
     }
 }

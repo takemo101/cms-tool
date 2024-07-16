@@ -32,5 +32,75 @@
             "category": "category",
             "tag": "tags"
         }
-    }
+    },
+    "schema": [
+        {
+            "id": "top",
+            "title": "トップページ",
+            "settings": [
+                {
+                    "type": "header",
+                    "title": "サイトヘッダー",
+                    "description": "サイトヘッダー表示に関する設定となります。"
+                },
+                {
+                    "type": "text",
+                    "id": "site_subtitle",
+                    "label": "サブタイトル",
+                    "default": "Simply Theme",
+                    "placeholder": "サイトヘッダーのサイト名の右サイドに表示されるサブタイトルの入力"
+                },
+                {
+                    "type": "header",
+                    "title": "カテゴリ記事一覧",
+                    "description": "トップページの新着記事一覧の下に表示される、カテゴリ記事一覧に関する設定となります。"
+                },
+                {
+                    "type": "text",
+                    "id": "second_column_title",
+                    "label": "タイトル",
+                    "default": "TECHNOLOGY",
+                    "placeholder": "記事一覧の上部に表示されるタイトルの入力"
+                },
+                {
+                    "type": "text",
+                    "id": "second_column_subtitle",
+                    "label": "サブタイトル",
+                    "default": "テクノロジー",
+                    "placeholder": "タイトルの右サイドに表示されるサブタイトルの入力"
+                },
+                {
+                    "type": "text",
+                    "id": "second_column_category",
+                    "label": "表示するカテゴリのID",
+                    "default": "technology",
+                    "placeholder": "microCMSのカテゴリIDの入力"
+                }
+            ]
+        },
+        {
+            "id": "about",
+            "title": "Aboutページ",
+            "settings": [
+                {
+                    "type": "header",
+                    "title": "Aboutページの説明文",
+                    "description": "Aboutページに表示される、サイト説明文やフォーム埋め込みの設定となります。"
+                },
+                {
+                    "type": "editor",
+                    "id": "description",
+                    "label": "サイトの説明文",
+                    "default": "<p>サイトの目的や概要などを記述してください。</p>"
+                },
+                {
+                    "type": "text",
+                    "id": "form",
+                    "label": "Googleフォームなどの埋め込みタグ",
+                    "default": "",
+                    "placeholder": "Googleフォームなどのiframe埋め込みタグの入力"
+                }
+            ]
+        }
+    ]
 }

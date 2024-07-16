@@ -12,6 +12,7 @@ use Takemo101\CmsTool\Domain\SiteMeta\SiteMetaRepository;
 use Takemo101\CmsTool\Domain\Theme\ActiveThemeRepository;
 use Takemo101\CmsTool\Domain\Tracking\TrackingCodeRepository;
 use Takemo101\CmsTool\Domain\Webhook\WebhookTokenRepository;
+use Takemo101\CmsTool\Infra\Cache\PsrThemeCustomizationTemporaryCache;
 use Takemo101\CmsTool\Infra\Hash\DefaultPasswordHasher;
 use Takemo101\CmsTool\Infra\JsonAccess\QueryService\JsonAccessAdminAccountQueryService;
 use Takemo101\CmsTool\Infra\JsonAccess\QueryService\JsonAccessInstallSettingQueryService;
@@ -37,6 +38,7 @@ use Takemo101\CmsTool\UseCase\MicroCms\QueryService\Api\MicroCmsApiQueryService;
 use Takemo101\CmsTool\UseCase\MicroCms\QueryService\Content\MicroCmsContentQueryService;
 use Takemo101\CmsTool\UseCase\Shared\Storage\SiteAssetStorage;
 use Takemo101\CmsTool\UseCase\SiteMeta\QueryService\SiteMetaQueryService;
+use Takemo101\CmsTool\UseCase\Theme\Support\ThemeCustomizationTemporaryCache;
 use Takemo101\CmsTool\UseCase\TrackingCode\QueryService\TrackingCodeQueryService;
 
 use function DI\get;
@@ -64,6 +66,8 @@ return [
     MicroCmsApiAccessValidator::class => get(SaloonMicroCmsApiAccessValidator::class),
     PasswordHasher::class => get(DefaultPasswordHasher::class),
     SiteAssetStorage::class => get(LocalSiteAssetStorage::class),
+
+    ThemeCustomizationTemporaryCache::class => get(PsrThemeCustomizationTemporaryCache::class),
 
     Installer::class => get(JsonAccessInstaller::class),
     Uninstaller::class => get(JsonAccessUninstaller::class),

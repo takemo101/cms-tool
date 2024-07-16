@@ -7,12 +7,13 @@
         <div class="section-narrow-layout">
             <h1 class="text-2xl mb-8">About</h1>
             <div class="prose">
-                <p>
-                    このサイトは、IT技術者のための情報共有サイトです。<br/>
-                    IT技術者の皆さんが、自分の知識や経験を共有することができます。<br/>
-                    是非、皆さんの知識や経験を共有してください。
-                </p>
+                {{ share.theme.about.description|raw }}
             </div>
+            {% if share.theme.about.form %}
+                <div class="w-full mt-8">
+                    {{ share.theme.about.form|raw }}
+                </div>
+            {% endif %}
         </div>
     </section>
 {% endblock %}

@@ -10,7 +10,7 @@ use CmsTool\View\Twig\Extension\FunctionsExtension;
 use CmsTool\View\Twig\Extension\RouteExtension;
 use CmsTool\View\View;
 use Takemo101\CmsTool\Http\Component\ToastComponent;
-use Takemo101\CmsTool\Support\Accessor\ActiveThemeCustomizationDataAccessor;
+use Takemo101\CmsTool\Support\Accessor\ActiveThemeCustomizationAccessor;
 use Takemo101\CmsTool\Support\Accessor\MicroCmsApiAccessor;
 use Takemo101\CmsTool\Support\Accessor\ServerRequestAccessor;
 use Takemo101\CmsTool\Support\Accessor\SiteMetaAccessor;
@@ -124,7 +124,7 @@ return [
         'meta' => SiteMetaAccessor::class,
         'api' => MicroCmsApiAccessor::class,
         'request' => ServerRequestAccessor::class,
-        'theme' => ActiveThemeCustomizationDataAccessor::class,
+        'theme' => ActiveThemeCustomizationAccessor::class,
     ],
 
     // Set up components

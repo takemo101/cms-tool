@@ -19,9 +19,48 @@ class CheckboxSetting extends AbstractInputSetting
     public const Type = SchemaSettingType::Checkbox;
 
     /**
-     * @var boolean
+     * {@inheritDoc}
+     *
+     * @return boolean
      */
-    public const DefaultValueIfNotSet = false;
+    protected function getValueIfNotSet(): mixed
+    {
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return boolean
+     */
+    public function extractCustomizationValueOrNotSet(array $data): mixed
+    {
+        /** @var boolean|string */
+        $value = $data[$this->id->value()] ?? $this->getValueIfNotSet();
+
+        if (is_string($value)) {
+            $value = $this->convertStringToBoolean($value);
+        }
+
+        return $value;
+    }
+
+    /**
+     * Converts a string value to a boolean value.
+     *
+     * @param string $value
+     * @return boolean
+     */
+    private function convertStringToBoolean(string $value): bool
+    {
+        $boolValue = filter_var(
+            $value,
+            FILTER_VALIDATE_BOOLEAN,
+            FILTER_NULL_ON_FAILURE,
+        );
+
+        return $boolValue ?? $this->getValueIfNotSet();
+    }
 
     /**
      * {@inheritDoc}
@@ -50,7 +89,7 @@ class CheckboxSetting extends AbstractInputSetting
         return new self(
             id: new SchemaSettingId($data['id'] ?? ArrayKeyMissingException::throw('id')),
             label: $data['label'] ?? ArrayKeyMissingException::throw('label'),
-            default: $data['default'] ?? static::DefaultValueIfNotSet,
+            default: $data['default'] ?? null,
         );
     }
 }

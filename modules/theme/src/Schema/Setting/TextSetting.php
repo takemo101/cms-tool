@@ -19,9 +19,43 @@ class TextSetting extends AbstractTextInputSetting
     public const Type = SchemaSettingType::Text;
 
     /**
-     * @var string
+     * @var int
      */
-    public const DefaultValueIfNotSet = '';
+    public const LimitLength = 500;
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return string
+     */
+    protected function getValueIfNotSet(): mixed
+    {
+        return '';
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return string
+     */
+    public function extractCustomizationValueOrNotSet(array $data): mixed
+    {
+        /** @var string */
+        $value = $data[$this->id->value()] ?? $this->getValueIfNotSet();
+
+        return $this->sliceStringToLimit($value);
+    }
+
+    /**
+     * Slice the value to the limit length.
+     *
+     * @param string $value
+     * @return string
+     */
+    private function sliceStringToLimit(string $value): string
+    {
+        return mb_substr($value, 0, self::LimitLength);
+    }
 
     /**
      * {@inheritDoc}
@@ -33,6 +67,7 @@ class TextSetting extends AbstractTextInputSetting
             'label' => $this->label,
             'default' => $this->default,
             'placeholder' => $this->placeholder,
+            'limit' => self::LimitLength,
         ];
     }
 
@@ -51,7 +86,7 @@ class TextSetting extends AbstractTextInputSetting
         return new self(
             id: new SchemaSettingId($data['id'] ?? ArrayKeyMissingException::throw('id')),
             label: $data['label'] ?? ArrayKeyMissingException::throw('label'),
-            default: $data['default'] ?? static::DefaultValueIfNotSet,
+            default: $data['default'] ?? null,
             placeholder: $data['placeholder'] ?? null,
         );
     }

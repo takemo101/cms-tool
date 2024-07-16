@@ -6,6 +6,7 @@ use CmsTool\Theme\Exception\ArrayKeyMissingException;
 use CmsTool\Theme\Schema\Setting\AbstractSetting;
 use CmsTool\Theme\Schema\Setting\CheckboxSetting;
 use CmsTool\Theme\Schema\Setting\ColorSetting;
+use CmsTool\Theme\Schema\Setting\EditorSetting;
 use CmsTool\Theme\Schema\Setting\HeaderSetting;
 use CmsTool\Theme\Schema\Setting\NumberSetting;
 use CmsTool\Theme\Schema\Setting\SelectSetting;
@@ -20,30 +21,14 @@ use SplObjectStorage;
 class SchemaSettingFactory
 {
     /**
-     * @var SplObjectStorage<SchemaSettingType,class-string<AbstractSetting>>
-     */
-    private readonly SplObjectStorage $map;
-
-    /**
      * constructor
+     *
+     * @param SplObjectStorage<SchemaSettingType,class-string<AbstractSetting>> $map
      */
-    public function __construct()
-    {
-        /**
-         * @var SplObjectStorage<SchemaSettingType,class-string<AbstractSetting>>
-         */
-        $map = new SplObjectStorage();
-
-        $map[SchemaSettingType::Checkbox] = CheckboxSetting::class;
-        $map[SchemaSettingType::Color] = ColorSetting::class;
-        $map[SchemaSettingType::Header] = HeaderSetting::class;
-        $map[SchemaSettingType::Number] = NumberSetting::class;
-        $map[SchemaSettingType::Select] = SelectSetting::class;
-        $map[SchemaSettingType::Textarea] = TextareaSetting::class;
-        $map[SchemaSettingType::Text] = TextSetting::class;
-        // Add more mappings as needed
-
-        $this->map = $map;
+    public function __construct(
+        private readonly SplObjectStorage $map = new SplObjectStorage(),
+    ) {
+        //
     }
 
     /**
@@ -82,5 +67,31 @@ class SchemaSettingFactory
         }
 
         return $this->map[$type];
+    }
+
+    /**
+     * Build the factory
+     *
+     * @return self
+     */
+    public static function build(): self
+    {
+        /**
+         * @var SplObjectStorage<SchemaSettingType,class-string<AbstractSetting>>
+         */
+        $map = new SplObjectStorage();
+
+        $map[SchemaSettingType::Checkbox] = CheckboxSetting::class;
+        $map[SchemaSettingType::Color] = ColorSetting::class;
+        $map[SchemaSettingType::Header] = HeaderSetting::class;
+        $map[SchemaSettingType::Number] = NumberSetting::class;
+        $map[SchemaSettingType::Select] = SelectSetting::class;
+        $map[SchemaSettingType::Textarea] = TextareaSetting::class;
+        $map[SchemaSettingType::Text] = TextSetting::class;
+        $map[SchemaSettingType::Editor] = EditorSetting::class;
+        // Add more mappings as needed
+
+
+        return new self($map);
     }
 }

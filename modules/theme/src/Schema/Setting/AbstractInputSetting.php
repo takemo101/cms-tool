@@ -10,13 +10,6 @@ use CmsTool\Theme\Schema\SchemaSettingId;
 abstract class AbstractInputSetting extends AbstractSetting
 {
     /**
-     * This needs to be redefined in the inheriting class
-     *
-     * @var mixed
-     */
-    public const DefaultValueIfNotSet = null;
-
-    /**
      * @var T
      */
     public readonly mixed $default;
@@ -38,13 +31,15 @@ abstract class AbstractInputSetting extends AbstractSetting
             'The setting label must not be empty',
         );
 
-        assert(
-            defined("static::DefaultValueIfNotSet"),
-            'The DefaultValueIfNotSet constant must be defined',
-        );
-
-        $this->default = $default ?? static::DefaultValueIfNotSet;
+        $this->default = $default ?? $this->getValueIfNotSet();
     }
+
+    /**
+     * Returns the default value if the setting is not found in the theme's customization data.
+     *
+     * @return T
+     */
+    abstract protected function getValueIfNotSet(): mixed;
 
     /**
      * Extracts the value of the target setting from the theme's customization data.
@@ -53,8 +48,20 @@ abstract class AbstractInputSetting extends AbstractSetting
      * @param array<string,mixed> $data The theme's customization data
      * @return T
      */
-    public function extractCustomizationValue(array $data): mixed
+    public function extractCustomizationValueOrDefault(array $data): mixed
     {
         return $data[$this->id->value()] ?? $this->default;
+    }
+
+    /**
+     * Extracts the value of the target setting from the theme's customization data.
+     * If the setting is not found in the data, the not set value is returned.
+     *
+     * @param array<string,mixed> $data The theme's customization data
+     * @return T
+     */
+    public function extractCustomizationValueOrNotSet(array $data): mixed
+    {
+        return $data[$this->id->value()] ?? $this->getValueIfNotSet();
     }
 }

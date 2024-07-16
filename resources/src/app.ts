@@ -8,6 +8,8 @@ import "github-markdown-css/github-markdown-light.css";
 import "@splidejs/splide/css";
 import Splide from "@splidejs/splide";
 import "./codemirror";
+import type SunEditor from "suneditor/src/lib/core";
+import CmsEditor from "./suneditor";
 import Toastr from "./support/toastr";
 
 // Definition of MasterCSS custom style
@@ -19,6 +21,11 @@ window.Toastr = new Toastr();
 
 // Register Splide
 window.Splide = Splide;
+
+const cmsEditor = new CmsEditor();
+
+// Register SunEditor
+window.CmsEditor = cmsEditor;
 
 // reference: https://dev.to/wtho/get-started-with-alpinejs-and-typescript-4dgf
 
@@ -49,6 +56,24 @@ document.addEventListener("alpine:init", () => {
       const input = this.$refs.input as HTMLInputElement;
 
       input.click();
+    },
+  }));
+
+  Alpine.data<{
+    editor?: SunEditor;
+    init: () => void;
+  }>("editor", () => ({
+    init() {
+      this.$nextTick(() => {
+        const editor = cmsEditor.createSimply(this.$refs.editor);
+
+        editor.onChange = () => {
+          editor.save();
+          this.$dispatch("editor:change");
+        };
+
+        this.editor = editor;
+      });
     },
   }));
 });

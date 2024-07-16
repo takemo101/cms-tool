@@ -106,5 +106,6 @@
     "Mixing numbers from different scripts is not allowed.": "異なる種類の数字を使うことはできません。",
     "Using hidden overlay characters is not allowed.": "隠れたオーバレイ文字は使用できません。",
     "The extension of the file is invalid ({{ extension }}). Allowed extensions are {{ extensions }}.": "ファイルの拡張子が無効です({{ extension }})。有効な拡張子は{{ extensions }}です。",
-    "The access key or service ID is incorrect": "API設定が間違っています"
+    "The access key or service ID is incorrect": "API設定が間違っています",
+    "The value must be boolean convertible": "真偽値に変換可能である必要があります"
 }

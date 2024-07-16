@@ -86,14 +86,36 @@ class Theme
     }
 
     /**
-     * Extract customization data from the theme
+    /**
+     * Can the theme be customized?
+     *
+     * @return bool
+     */
+    public function canBeCustomized(): bool
+    {
+        return !$this->meta->schema->isInputSettingEmpty();
+    }
+
+    /**
+     * Refines the theme's customization data with the default values of the schema settings.
      *
      * @param array<string,array<string,mixed>> $data The theme's customization data
      * @return array<string,array<string,mixed>>
      */
-    public function extractCustomizationData(array $data = []): array
+    public function refineCustomizationWithDefaults(array $data = []): array
     {
-        return $this->meta->schema->extractCustomizationData($data);
+        return $this->meta->schema->refineCustomizationWithDefaults($data);
+    }
+
+    /**
+     * Refines the theme's customization data with the not set values of the schema settings.
+     *
+     * @param array<string,array<string,mixed>> $data The theme's customization data
+     * @return array<string,array<string,mixed>>
+     */
+    public function refineCustomizationWithNotSet(array $data = []): array
+    {
+        return $this->meta->schema->refineCustomizationWithNotSet($data);
     }
 
     /**

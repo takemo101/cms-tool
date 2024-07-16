@@ -85,6 +85,8 @@ class CopyThemeHandler
 
         $this->saver->save($copyTheme);
 
+        $this->copyCustomization($theme, $copyTheme);
+
         return $copyTheme;
     }
 
@@ -100,5 +102,31 @@ class CopyThemeHandler
         } while ($this->finder->exists($copyThemeId));
 
         return $copyThemeId;
+    }
+
+    /**
+     * Copy the customization data of the specified theme.
+     *
+     * @param Theme $fromTheme
+     * @param Theme $toTheme
+     * @return void
+     */
+    private function copyCustomization(
+        Theme $fromTheme,
+        Theme $toTheme,
+    ): void {
+        $toThemeDataPath = $this->helper->getCustomizationDataPath($toTheme);
+
+        if ($this->filesystem->exists($toThemeDataPath)) {
+            return;
+        }
+
+        $fromThemeDataPath = $this->helper->getCustomizationDataPath($fromTheme);
+
+        if (!$this->filesystem->copy($fromThemeDataPath, $toThemeDataPath)) {
+            throw new UseCaseException(
+                message: 'Failed to copy theme customization data.',
+            );
+        }
     }
 }

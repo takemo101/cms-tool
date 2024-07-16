@@ -19,11 +19,6 @@ class SelectSetting extends AbstractInputSetting
     public const Type = SchemaSettingType::Select;
 
     /**
-     * @var string
-     */
-    public const DefaultValueIfNotSet = '';
-
-    /**
      * @var SelectOption[]
      */
     public readonly array $options;
@@ -42,18 +37,30 @@ class SelectSetting extends AbstractInputSetting
         mixed $default = null,
         SelectOption ...$options,
     ) {
-        parent::__construct(
-            id: $id,
-            label: $label,
-            default: $default,
-        );
-
         assert(
             empty($options) === false,
             'The setting options must not be empty',
         );
 
         $this->options = $options;
+
+        parent::__construct(
+            id: $id,
+            label: $label,
+            default: $default,
+        );
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return string
+     */
+    protected function getValueIfNotSet(): mixed
+    {
+        $options = $this->options;
+
+        return $options[0]->value;
     }
 
     /**
@@ -98,7 +105,7 @@ class SelectSetting extends AbstractInputSetting
         return new self(
             new SchemaSettingId($data['id'] ?? ArrayKeyMissingException::throw('id')),
             $data['label'] ?? ArrayKeyMissingException::throw('label'),
-            $data['default']  ?? static::DefaultValueIfNotSet,
+            $data['default'] ?? null,
             ...array_map(
                 // If the option is a string, create a new SelectOption with the same value and label
                 function (string|array $option) {

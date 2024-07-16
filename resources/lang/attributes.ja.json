@@ -5,7 +5,7 @@
     "name": "名前",
     "siteName": "サイト名",
     "key": "APIキー",
-    "service_id": "サービスID",
+    "serviceId": "サービスID",
     "root": {
         "name": "アカウント名",
         "email": "メールアドレス",

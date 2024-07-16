@@ -79,12 +79,20 @@ class ErrorExtension extends AbstractExtension
     /**
      * Is there a error message for the key?
      *
-     * @param string $key
+     * @param string ...$keys
      * @return boolean
      */
-    public function errorHas(string $key): bool
+    public function errorHas(string ...$keys): bool
     {
-        return $this->getErrors()->has($key);
+        $errors = $this->getErrors();
+
+        foreach ($keys as $key) {
+            if ($errors->has($key)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

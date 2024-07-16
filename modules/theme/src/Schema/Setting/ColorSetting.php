@@ -25,7 +25,7 @@ class ColorSetting extends AbstractInputSetting
      *
      * @param SchemaSettingId $id
      * @param string $label
-     * @param T|null $default
+     * @param string|null $default
      */
     public function __construct(
         SchemaSettingId $id,

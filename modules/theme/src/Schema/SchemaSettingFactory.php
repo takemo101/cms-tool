@@ -26,7 +26,7 @@ class SchemaSettingFactory
      * @param SplObjectStorage<SchemaSettingType,class-string<AbstractSetting>> $map
      */
     public function __construct(
-        private readonly SplObjectStorage $map = new SplObjectStorage(),
+        private readonly SplObjectStorage $map,
     ) {
         //
     }

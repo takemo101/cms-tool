@@ -86,6 +86,17 @@ class Theme
     }
 
     /**
+    /**
+     * Can the theme be customized?
+     *
+     * @return bool
+     */
+    public function canBeCustomized(): bool
+    {
+        return !$this->meta->schema->isInputSettingEmpty();
+    }
+
+    /**
      * Refines the theme's customization data with the default values of the schema settings.
      *
      * @param array<string,array<string,mixed>> $data The theme's customization data

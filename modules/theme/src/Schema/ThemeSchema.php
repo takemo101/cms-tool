@@ -2,6 +2,7 @@
 
 namespace CmsTool\Theme\Schema;
 
+use CmsTool\Theme\Schema\Setting\AbstractInputSetting;
 use Takemo101\Chubby\Contract\Arrayable;
 
 /**
@@ -40,6 +41,24 @@ readonly class ThemeSchema implements Arrayable
         }
 
         $this->settings = $settings;
+    }
+
+    /**
+     * Check if the schema settings contain an input setting
+     *
+     * @return boolean
+     */
+    public function isInputSettingEmpty(): bool
+    {
+        foreach ($this->settings as $schemaSettings) {
+            foreach ($schemaSettings->settings as $setting) {
+                if ($setting instanceof AbstractInputSetting) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     /**

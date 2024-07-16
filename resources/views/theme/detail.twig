@@ -81,7 +81,7 @@
                             </a>
                         </li>
                         {% endif %}
-                        {% if theme.canBeCustomized() %}
+                        {% if theme.canBeCustomized() and theme.isActive() %}
                             <li>
                                 <a class="menu-link"
                                     href="{{ route('admin.theme.customization.edit') }}">

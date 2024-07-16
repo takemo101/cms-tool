@@ -209,15 +209,11 @@ const generalStyle = {
     w:full h:max"
     bg:white
     box:border
+
+    mb:20px@sm mb:14px mb:0:last-of-type
   `,
   "card-header": `px:20px@sm px:14px pt:20px@sm pt:14px`,
-  "card-header__title": `mb:20px@sm mb:14px`,
-  "card-header__title--layout": `flex ai:center`,
-  "card-header__title__back": `
-    mr:8px
-    f:20px
-    opacity:0.5:hover
-  `,
+  "card-header__title": `mb:20px@sm mb:14px f:20px f:bold`,
   "card-body": `p:20px@sm p:14px`,
 
   // utility styles
@@ -258,6 +254,22 @@ const generalStyle = {
   `,
 
   // text utility styles
+  "u-page-title": `
+    f:24px f:bold
+    mt:0 mb:24px@sm mb:18px
+  `,
+
+  "u-page-head": `
+    flex ai:center
+    mb:24px@sm mb:18px
+  `,
+  "u-page-head__title": `f:24px f:bold`,
+  "u-page-head__back": `
+    mr:12px
+    f:20px
+    opacity:0.5:hover
+  `,
+
   "u-section": `mb:60px@sm mb:50px`,
   "u-title": `f:18px f:bold mt:0 mb:16px`,
   "u-text": `f:16 lh:1.6rem mt:0 mb:16px`,
@@ -506,7 +518,12 @@ const themeStyle = {
     gap:20px@sm gap:30px
   `,
   "theme-item": `flex:row m:0`,
+  "theme-item__info": `
+    flex flex:col
+    gap:10px
+  `,
   "theme-item__title": `
+    block
     m:0
     f:bold f:16px
     cursor:pointer
@@ -540,6 +557,51 @@ const themeStyle = {
     h:300px
     obj:cover
     m:0 r:5px
+  `,
+
+  // Active theme styles
+  "active-theme": `
+    flex flex:row@sm flex:col
+    gap:20px
+  `,
+  "active-theme__left": `
+    flex-basis:220px
+  `,
+  "active-theme__thumb": `
+    block
+    w:220px@sm h:220px@sm w:full h:300px
+    opacity:0.5:hover
+    p:0
+  `,
+  "active-theme__thumb-img": `
+    block
+    w:full
+    h:full
+    obj:cover
+    m:0 r:5px
+  `,
+  "active-theme__right": `
+    flex-grow:1
+    flex flex:col
+    gap:10px
+  `,
+  "active-theme__right__top": `
+    flex flex:col
+    gap:10px
+  `,
+  "active-theme__right__bottom": `
+    flex-grow:1
+    flex flex:row
+    jc:right ai:end
+    gap:10px
+  `,
+  "active-theme__title": `
+    block
+    m:0
+    f:bold f:20px
+    cursor:pointer
+    opacity:0.5:hover
+    text:none
   `,
 } as const;
 

@@ -6,6 +6,7 @@ use CmsTool\Theme\Contract\ActiveThemeIdMatcher;
 use CmsTool\Theme\Contract\ThemeAccessor;
 use CmsTool\Theme\Exception\ThemeLoadException;
 use CmsTool\Theme\Exception\ThemeSaveException;
+use DI\Attribute\Inject;
 use Takemo101\Chubby\Filesystem\LocalFilesystem;
 use Takemo101\Chubby\Filesystem\PathHelper;
 
@@ -28,6 +29,7 @@ class DefaultThemeAccessor implements ThemeAccessor
         private readonly ActiveThemeIdMatcher $matcher,
         private readonly ThemeMetaFactory $factory,
         private readonly LocalFilesystem $filesystem,
+        #[Inject(ThemePathHelper::class)]
         private readonly ThemePathHelper $helper = new ThemePathHelper(new PathHelper()),
     ) {
         //

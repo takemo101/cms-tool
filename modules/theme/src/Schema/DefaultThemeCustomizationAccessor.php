@@ -7,6 +7,7 @@ use CmsTool\Theme\Exception\ThemeLoadException;
 use CmsTool\Theme\Exception\ThemeSaveException;
 use CmsTool\Theme\Theme;
 use CmsTool\Theme\ThemePathHelper;
+use DI\Attribute\Inject;
 use Takemo101\Chubby\Filesystem\LocalFilesystem;
 use Takemo101\Chubby\Filesystem\PathHelper;
 
@@ -25,6 +26,7 @@ class DefaultThemeCustomizationAccessor implements ThemeCustomizationAccessor
      */
     public function __construct(
         private readonly LocalFilesystem $filesystem,
+        #[Inject(ThemePathHelper::class)]
         private readonly ThemePathHelper $helper = new ThemePathHelper(new PathHelper()),
     ) {
         //

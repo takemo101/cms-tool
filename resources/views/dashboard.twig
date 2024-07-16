@@ -8,118 +8,118 @@
 {% import "cms-tool::components.dialogs" as dialogs %}
 
 {% block content_right %}
+<h2 class="u-page-title">ダッシュボード</h2>
+
 <div class="card">
     <div class="card-header">
-        <h2 class="card-header__title">ダッシュボード</h2>
+        <h3 class="card-header__title">サイトの公開状態</h3>
         <hr class="divider" />
     </div>
     <div class="card-body">
-        <div>
-            <p class="u-text">
-                {{ auth.name }}さん、こんにちは！
-            </p>
-        </div>
-        <h3 class="u-title">サイトの公開状態</h3>
-        <div>
-            <p class="u-text">
+        <p class="u-text">
+            {% if isPublished %}
+                サイトは公開されています。<br/>
+                <a
+                    class="link"
+                    target="_blank"
+                    href="{{ route('home') }}">
+                    コチラから
+                </a>
+                サイトを確認できます。
+            {% else %}
+                サイトは非公開です。<br/>
+                以下のボタンをクリックするとサイトを公開できます。
+            {% endif %}
+        </p>
+        <div x-data="{
+            isPublished: {{ isPublished ? 'true' : 'false' }},
+            handleUpdateClick() {
+                this.$dispatch('open-dialog', {
+                    message: this.isPublished ? 'サイトを非公開にしますか？' : 'サイトを公開しますか？',
+                    ok: () => this.$refs.form.submit(),
+                });
+            }
+        }">
+            {{ form_open({
+                route: [
+                    'admin.publish',
+                    {status: isPublished ? 'unpublished' : 'published'},
+                ],
+                method: 'patch',
+                'x-ref': 'form',
+            }) }}
                 {% if isPublished %}
-                    サイトは公開されています。<br/>
-                    <a
-                        class="link"
-                        target="_blank"
-                        href="{{ route('home') }}">
-                        コチラから
-                    </a>
-                    サイトを確認できます。
+                    {{ forms.button({
+                        label: 'サイトを非公開にする',
+                        class: 'form-btn--secondary',
+                        click: 'handleUpdateClick',
+                    }) }}
                 {% else %}
-                    サイトは非公開です。<br/>
-                    以下のボタンをクリックするとサイトを公開できます。
+                    {{ forms.button({
+                        label: 'サイトを公開する',
+                        class: 'form-btn--primary',
+                        click: 'handleUpdateClick',
+                    }) }}
                 {% endif %}
-            </p>
-            <div class="mb:16px" x-data="{
-                isPublished: {{ isPublished ? 'true' : 'false' }},
-                handleUpdateClick() {
-                    this.$dispatch('open-dialog', {
-                        message: this.isPublished ? 'サイトを非公開にしますか？' : 'サイトを公開しますか？',
-                        ok: () => this.$refs.form.submit(),
-                    });
-                }
-            }">
-                {{ form_open({
-                    route: [
-                        'admin.publish',
-                        {status: isPublished ? 'unpublished' : 'published'},
-                    ],
-                    method: 'patch',
-                    'x-ref': 'form',
-                }) }}
-                    {% if isPublished %}
-                        {{ forms.button({
-                            label: 'サイトを非公開にする',
-                            class: 'form-btn--secondary',
-                            click: 'handleUpdateClick',
-                        }) }}
-                    {% else %}
-                        {{ forms.button({
-                            label: 'サイトを公開する',
-                            class: 'form-btn--primary',
-                            click: 'handleUpdateClick',
-                        }) }}
-                    {% endif %}
-                {{ form_close() }}
-            </div>
+            {{ form_close() }}
         </div>
-        <h3 class="u-title">操作方法</h3>
-        <div>
-            <ul class="u-list">
-                <li>
-                    <a
-                        class="link"
-                        href="https://document.microcms.io/manual/create-api"
-                        target="_blank">
-                        APIスキーマ作成
-                    </a>
-                </li>
-                <li>
-                    <a
-                        class="link"
-                        href="https://document.microcms.io/manual/create-content"
-                        target="_blank">
-                        コンテンツ作成
-                    </a>
-                </li>
-                <li>
-                    <a class="link" href="{{ route('admin.basic.edit') }}">
-                        基本設定
-                    </a>
-                </li>
-                <li>
-                    <a class="link" href="{{ route('admin.seo.edit') }}">
-                        SEOの設定
-                    </a>
-                </li>
-                <li>
-                    <a class="link" href="{{ route('admin.theme.index') }}">
-                        テーマの変更
-                    </a>
-                </li>
-                <li>
-                    <a class="link" href="{{ route('admin.webhook.edit') }}">
-                        Webhookの設定
-                    </a>
-                </li>
-                <li>
-                    <a class="link" href="{{ route('admin.cache.confirm') }}">
-                        キャッシュクリア
-                    </a>
-                </li>
-                <li>
-                    <a class="link" href="{{ route('admin.uninstall.confirm') }}">
-                        アンインストール
-                    </a>
-                </li>
-            </ul>
-        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-header__title">操作方法</h3>
+        <hr class="divider" />
+    </div>
+    <div class="card-body">
+        <ul class="u-list">
+            <li>
+                <a
+                    class="link"
+                    href="https://document.microcms.io/manual/create-api"
+                    target="_blank">
+                    APIスキーマ作成
+                </a>
+            </li>
+            <li>
+                <a
+                    class="link"
+                    href="https://document.microcms.io/manual/create-content"
+                    target="_blank">
+                    コンテンツ作成
+                </a>
+            </li>
+            <li>
+                <a class="link" href="{{ route('admin.basic.edit') }}">
+                    基本設定
+                </a>
+            </li>
+            <li>
+                <a class="link" href="{{ route('admin.seo.edit') }}">
+                    SEOの設定
+                </a>
+            </li>
+            <li>
+                <a class="link" href="{{ route('admin.theme.index') }}">
+                    テーマの変更
+                </a>
+            </li>
+            <li>
+                <a class="link" href="{{ route('admin.webhook.edit') }}">
+                    Webhookの設定
+                </a>
+            </li>
+            <li>
+                <a class="link" href="{{ route('admin.cache.confirm') }}">
+                    キャッシュクリア
+                </a>
+            </li>
+            <li>
+                <a class="link" href="{{ route('admin.uninstall.confirm') }}">
+                    アンインストール
+                </a>
+            </li>
+        </ul>
     </div>
 </div>
 {% endblock %}

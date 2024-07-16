@@ -8,15 +8,19 @@
 {% import "cms-tool::components.alerts" as alerts %}
 
 {% block content_right %}
+<h2 class="u-page-title">基本設定</h2>
+
 <div class="card">
     <div class="card-header">
-        <h2 class="card-header__title">基本設定</h2>
+        <h3 class="card-header__title">サイト設定</h3>
         <hr class="divider" />
     </div>
     <div class="card-body">
-        {{ alerts.error() }}
+        {% if error_has('siteName') %}
+            {{ alerts.error() }}
+        {% endif %}
 
-        <div class="mb:20px" x-data="{
+        <div x-data="{
             handleUpdateClick() {
                 this.$dispatch('open-dialog', {
                     open: () => this.$refs.form.reportValidity(),
@@ -48,8 +52,19 @@
                 </div>
             {{ form_close() }}
         </div>
+    </div>
+</div>
 
-        <h3 class="u-title">microCMS API設定</h3>
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-header__title">microCMS API設定</h3>
+        <hr class="divider" />
+    </div>
+    <div class="card-body">
+        {% if error_has('key', 'serviceId') %}
+            {{ alerts.error() }}
+        {% endif %}
+
         <div x-data="{
             handleUpdateClick() {
                 this.$dispatch('open-dialog', {

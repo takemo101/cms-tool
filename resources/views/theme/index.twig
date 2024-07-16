@@ -4,10 +4,52 @@
 
 {% block current %}theme{% endblock %}
 
+{% import "cms-tool::components.alerts" as alerts %}
+
 {% block content_right %}
+<h2 class="u-page-title">テーマ</h2>
+
 <div class="card">
     <div class="card-header">
-        <h2 class="card-header__title">テーマ</h2>
+        <h3 class="card-header__title">選択中のテーマ</h3>
+        <hr class="divider" />
+    </div>
+    <div class="card-body">
+        <div class="active-theme">
+            <div class="active-theme__left">
+                <a class="active-theme__thumb" href="{{ route('admin.theme.detail', {
+                    id: activeTheme.id
+                }) }}">
+                    <img
+                        class="active-theme__thumb-img"
+                        src="{{ activeTheme.meta.thumbnail() ? theme(activeTheme.id, activeTheme.meta.thumbnail()) : vendor('example.jpeg') }}"
+                        alt="{{ activeTheme.meta.name }}" />
+                </a>
+            </div>
+            <div class="active-theme__right">
+                <h3 class="active-theme__title">{{ activeTheme.meta.name }}</h3>
+                <div class="active-theme__tags">
+                    {% for tag in activeTheme.meta.tags %}
+                        <span class="active-theme__tags-item">
+                            {{ tag }}
+                        </span>
+                    {% endfor %}
+                </div>
+                {% if activeTheme.meta.author.name %}
+                <div class="mt:10px">
+                    <span class="f:12px f:bold f:gray-62">
+                        {{ activeTheme.meta.author.name }}
+                    </span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-header__title">利用可能なテーマ</h3>
         <hr class="divider" />
     </div>
     <div class="card-body">
@@ -19,11 +61,6 @@
                     href="{{ route('admin.theme.detail', {
                     id: theme.id
                 }) }}">
-                    {% if theme.isActive() %}
-                        <span class="theme-item__thumb-active">
-                            選択テーマ
-                        </span>
-                    {% endif %}
                     <img
                         class="theme-item__thumb-img"
                         src="{{ theme.meta.thumbnail() ? theme(theme.id, theme.meta.thumbnail()) : vendor('example.jpeg') }}"
@@ -47,6 +84,13 @@
             </div>
         {% endfor %}
         </div>
+        {% if themes is empty %}
+            {{ alerts.info({
+                title: 'Info',
+                message: '利用可能なテーマはありません。',
+                close: false,
+            }) }}
+        {% endif %}
     </div>
 </div>
 {% endblock %}

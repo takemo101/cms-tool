@@ -9,6 +9,11 @@
             <div class="prose">
                 {{ share.theme.about.description|raw }}
             </div>
+            {% if share.theme.about.form %}
+                <div class="w-full mt-8">
+                    {{ share.theme.about.form|raw }}
+                </div>
+            {% endif %}
         </div>
     </section>
 {% endblock %}

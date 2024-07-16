@@ -85,13 +85,20 @@
                 {
                     "type": "header",
                     "title": "Aboutページの説明文",
-                    "description": "Aboutページに表示される、サイト説明文の設定となります。"
+                    "description": "Aboutページに表示される、サイト説明文やフォーム埋め込みの設定となります。"
                 },
                 {
                     "type": "editor",
                     "id": "description",
                     "label": "サイトの説明文",
                     "default": "<p>サイトの目的や概要などを記述してください。</p>"
+                },
+                {
+                    "type": "text",
+                    "id": "form",
+                    "label": "Googleフォームなどの埋め込みタグ",
+                    "default": "",
+                    "placeholder": "Googleフォームなどのiframe埋め込みタグの入力"
                 }
             ]
         }

@@ -121,7 +121,7 @@
         <div class="cstm-panel">
             <div class="cstm-panel__header">
                 <div>
-                    <a href="{{ route('admin.theme.index') }}" class="link" x-on:click="handleLinkClick">
+                    <a href="{{ route('admin.theme.detail', { id: theme.id }) }}" class="link" x-on:click="handleLinkClick">
                         <i class="fas fa-times"></i>
                         終了する
                     </a>

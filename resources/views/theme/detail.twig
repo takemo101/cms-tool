@@ -81,6 +81,14 @@
                             </a>
                         </li>
                         {% endif %}
+                        {% if theme.canBeCustomized() %}
+                            <li>
+                                <a class="menu-link"
+                                    href="{{ route('admin.theme.customization.edit') }}">
+                                    カスタマイズ
+                                </a>
+                            </li>
+                        {% endif %}
                         {% if theme.canBeEdited() %}
                             <li>
                                 <a class="menu-link"

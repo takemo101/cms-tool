@@ -14,6 +14,9 @@ return [
     // Directory to place themes when copying
     'copy' => base_path('themes'),
 
+    // Directory to store temporary data related to themes
+    'temporary' => storage_path('themes'),
+
     // ID of the theme used by default
     'default' => env('DEFAULT_THEME', 'simply'),
 

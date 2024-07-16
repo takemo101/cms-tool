@@ -9,7 +9,7 @@
                         <a href="{{ route('home') }}">
                             <h1 class="text-3xl font-bold">{{ share.meta.name }}</h1>
                         </a>
-                        <span class="text-sm">Simply Theme</span>
+                        <span class="text-sm">{{ share.theme.top.site_subtitle }}</span>
                     </div>
                     {% if not isPlain %}
                         <div class="hidden sm:flex items-center space-x-4">

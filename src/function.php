@@ -43,6 +43,7 @@ use Takemo101\CmsTool\Http\Middleware\AdminAuth;
 use Takemo101\CmsTool\Http\Middleware\AdminSessionStart;
 use Takemo101\CmsTool\Http\Middleware\GuideToInstallation;
 use Takemo101\CmsTool\Http\Middleware\InsertTrackingCode;
+use Takemo101\CmsTool\Http\Middleware\VerifyActiveThemeCustomizability;
 use Takemo101\CmsTool\Http\Middleware\WhenUninstalled;
 use Takemo101\CmsTool\Http\Middleware\WhenUnpublished;
 use Takemo101\CmsTool\Http\Routing\ThemeRouteGroupHandler;
@@ -256,23 +257,25 @@ hook()
 
                                     $proxy->group('/theme', function (Proxy $proxy) {
 
-                                        $proxy->get(
-                                            '/active/preview[/{path:.+}]',
-                                            ThemePreviewAction::class,
-                                        )->setName('admin.theme.preview');
+                                        $proxy->group('', function (Proxy $proxy) {
+                                            $proxy->get(
+                                                '/active/preview[/{path:.+}]',
+                                                ThemePreviewAction::class,
+                                            )->setName('admin.theme.preview');
 
-                                        $proxy->get(
-                                            '/active/customization',
-                                            [ThemeCustomizationController::class, 'edit'],
-                                        )->setName('admin.theme.customization.edit');
-                                        $proxy->put(
-                                            '/active/customization/cache',
-                                            [ThemeCustomizationController::class, 'cache'],
-                                        )->setName('admin.theme.customization.cache');
-                                        $proxy->put(
-                                            '/active/customization/apply',
-                                            [ThemeCustomizationController::class, 'apply'],
-                                        )->setName('admin.theme.customization.apply');
+                                            $proxy->get(
+                                                '/active/customization',
+                                                [ThemeCustomizationController::class, 'edit'],
+                                            )->setName('admin.theme.customization.edit');
+                                            $proxy->put(
+                                                '/active/customization/cache',
+                                                [ThemeCustomizationController::class, 'cache'],
+                                            )->setName('admin.theme.customization.cache');
+                                            $proxy->put(
+                                                '/active/customization/apply',
+                                                [ThemeCustomizationController::class, 'apply'],
+                                            )->setName('admin.theme.customization.apply');
+                                        })->add(VerifyActiveThemeCustomizability::class);
 
                                         $proxy->get(
                                             '',

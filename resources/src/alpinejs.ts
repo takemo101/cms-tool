@@ -44,4 +44,19 @@ export default function init() {
       });
     },
   }));
+
+  Alpine.data("inputGuide", (maxLength) => ({
+    value: "",
+    maxLength: maxLength as number,
+    init() {
+      this.$watch("value", (value) => {
+        if (value.length > this.maxLength) {
+          this.value = value.substring(0, this.maxLength);
+        }
+      });
+    },
+    get guideText() {
+      return `${this.value.length.toLocaleString()} / ${this.maxLength.toLocaleString()}`;
+    },
+  }));
 }

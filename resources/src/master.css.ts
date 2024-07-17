@@ -58,6 +58,7 @@ const generalStyle = {
 
   // form styles
   "form-column": `flex flex:col my:1rem`,
+  "form-column__inner": `flex flex:col`,
   "form-label": `f:14px f:bold mb:0.5rem`,
   "form-input": `
     b:1px|solid|gray-82
@@ -196,10 +197,21 @@ const generalStyle = {
     p:4px ml:4px
   `,
 
+  "form-bottom": `
+    flex flex:row
+    mt:4px
+    gap:10px
+  `,
+  "form-guide": `
+    d:block
+    flex-grow:1
+    t:right
+    f:12px f:gray-52
+    white-space:nowrap
+  `,
   "form-hint": `
     d:block
-    mt:4px
-    f:12px f:gray-62
+    f:12px f:gray-52
   `,
 
   // card styles

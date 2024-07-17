@@ -93,12 +93,14 @@
                         }) }}
                     </div>
                 {% elseif setting.type == 'editor' %}
-                    {{ forms.editor({
-                        uid: setting.uid,
-                        name: name,
-                        label: setting.label,
-                        value: value,
-                    }) }}
+                    <div class="form-column">
+                        {{ forms.editor({
+                            uid: setting.uid,
+                            name: name,
+                            label: setting.label,
+                            value: value,
+                        }) }}
+                    </div>
                 {% elseif setting.type == 'header' %}
                     <div class="mb:16px">
                         <h4 class="f:16px">

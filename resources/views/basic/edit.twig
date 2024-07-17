@@ -40,6 +40,7 @@
                             label:'サイト名',
                             value: meta.name,
                             required: true,
+                            maxLength: 50,
                         }) }}
                     </div>
                 </div>
@@ -95,6 +96,7 @@
                             placeholder: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
                             required: true,
                             hint: 'microCMS管理画面の「サービス設定 > APIキー」からキーを作成できます',
+                            maxLength: 100,
                         }) }}
                     </div>
                     <div class="form-column">
@@ -104,6 +106,7 @@
                             value: api.serviceId,
                             required: true,
                             hint: 'microCMS管理画面の「重要な操作 > サービスIDの変更」から確認できます',
+                            maxLength: 100,
                         }) }}
                     </div>
                 </div>

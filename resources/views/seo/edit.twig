@@ -41,6 +41,7 @@
                         label:'サイトタイトル',
                         value: seo.title,
                         hint: 'metaタグのtitleに使用されます',
+                        maxLength: 50,
                     }) }}
                 </div>
                 <div class="form-column">
@@ -49,6 +50,7 @@
                         label:'サイト説明',
                         value: seo.description,
                         hint: 'metaタグのdescriptionに使用されます',
+                        maxLength: 200,
                     }) }}
                 </div>
                 <div class="form-column">
@@ -58,6 +60,7 @@
                         value: seo.keywords,
                         hint: 'キーワードはカンマ区切りで入力してください',
                         placeholder: 'ビジネス,情報,IT',
+                        maxLength: 100,
                     }) }}
                 </div>
                 <div class="form-column" x-data="files">

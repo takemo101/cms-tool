@@ -26,6 +26,7 @@
                         label:'サイト名',
                         value: setting.meta.name,
                         required: true,
+                        maxLength: 50,
                     }) }}
                 </div>
 
@@ -38,6 +39,7 @@
                         label:'アカウント名',
                         value: setting.root.name,
                         required: true,
+                        maxLength: 100,
                     }) }}
                 </div>
                 <div class="form-column">
@@ -48,6 +50,7 @@
                         label:'メールアドレス',
                         value: setting.root.email,
                         required: true,
+                        maxLength: 100,
                     }) }}
                 </div>
                 <div class="form-column">
@@ -56,6 +59,7 @@
                         type: 'password',
                         label:'パスワード',
                         required: true,
+                        maxLength: 50,
                     }) }}
                 </div>
             </div>

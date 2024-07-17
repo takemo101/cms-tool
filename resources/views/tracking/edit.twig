@@ -37,6 +37,7 @@
                         label:'Head',
                         value: tracking.head,
                         hint: '<head>タグ内に挿入されるコードです。Google Analyticsなどのトラッキングコードを設置する場合に利用します',
+                        maxLength: 5000,
                     }) }}
                 </div>
                 <div class="form-column">
@@ -45,6 +46,7 @@
                         label:'Body',
                         value: tracking.body,
                         hint: '<body>タグ内に挿入されるコードです。Google Tag Managerなどのタグマネージャーを設置する場合に利用します',
+                        maxLength: 5000,
                     }) }}
                 </div>
                 <div class="form-column">
@@ -53,6 +55,7 @@
                         label:'Footer',
                         value: tracking.footer,
                         hint: '</body>直前に挿入されるコードです。Google Adsenseなどの広告コードを設置する場合に利用します',
+                        maxLength: 5000,
                     }) }}
                 </div>
             </div>

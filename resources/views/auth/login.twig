@@ -20,7 +20,7 @@
         {{ form_open({route: 'admin.login.post', method: 'post'}) }}
             <div class="mb:30">
                 <div class="form-column">
-                    {{ forms.input({
+                    {{ forms.plain({
                         name: 'email',
                         label:'メールアドレス',
                         type: 'email',
@@ -28,7 +28,7 @@
                     }) }}
                 </div>
                 <div class="form-column">
-                    {{ forms.input({
+                    {{ forms.plain({
                         type: 'password',
                         name: 'password',
                         label:'パスワード',

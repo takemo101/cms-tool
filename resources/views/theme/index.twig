@@ -22,8 +22,10 @@
                 }) }}">
                     <img
                         class="active-theme__thumb-img"
-                        src="{{ activeTheme.meta.thumbnail() ? theme(activeTheme.id, activeTheme.meta.thumbnail()) : vendor('example.jpeg') }}"
-                        alt="{{ activeTheme.meta.name }}" />
+                        src="{{ vendor('loading.svg') }}"
+                        data-src="{{ activeTheme.meta.thumbnail() ? theme(activeTheme.id, activeTheme.meta.thumbnail()) : vendor('example.jpeg') }}"
+                        alt="{{ activeTheme.meta.name }}"
+                        x-intersect="lazyImage($el)" />
                 </a>
             </div>
             <div class="active-theme__right">
@@ -85,8 +87,10 @@
                 }) }}">
                     <img
                         class="theme-item__thumb-img"
-                        src="{{ theme.meta.thumbnail() ? theme(theme.id, theme.meta.thumbnail()) : vendor('example.jpeg') }}"
-                        alt="{{ theme.meta.name }}" />
+                        src="{{ vendor('loading.svg') }}"
+                        data-src="{{ theme.meta.thumbnail() ? theme(theme.id, theme.meta.thumbnail()) : vendor('example.jpeg') }}"
+                        alt="{{ theme.meta.name }}"
+                        x-intersect="lazyImage($el)" />
                 </a>
                 <div class="theme-item__info">
                     <a

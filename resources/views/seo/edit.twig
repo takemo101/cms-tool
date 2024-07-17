@@ -110,7 +110,10 @@
                                         href="{{ storage(seo.favicon) }}"
                                         target="_blank"
                                         class="form-prev__img">
-                                        <img src="{{ storage(seo.favicon) }}">
+                                        <img
+                                            src="{{ vendor('loading.svg') }}"
+                                            data-src="{{ storage(seo.favicon) }}"
+                                            x-intersect="lazyImage($el)" />
                                     </a>
                                     <button
                                         class="form-prev__btn-del"
@@ -170,7 +173,10 @@
                                         href="{{ storage(seo.icon) }}"
                                         target="_blank"
                                         class="form-prev__img">
-                                        <img src="{{ storage(seo.icon) }}">
+                                        <img
+                                            src="{{ vendor('loading.svg') }}"
+                                            data-src="{{ storage(seo.icon) }}"
+                                            x-intersect="lazyImage($el)" />
                                     </a>
                                     <button
                                         class="form-prev__btn-del"

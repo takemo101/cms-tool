@@ -24,6 +24,42 @@
     </div>
 {% endmacro %}
 
+{% macro plain(options = {
+    name: 'name',
+    key: null,
+    label: '',
+    value: '',
+    type: 'text',
+    placeholder: '',
+    required: true,
+    class: '',
+    hint: '',
+}) %}
+    {% if options.label %}
+        <label class="form-label" for="{{ options.name }}">
+            {{ options.label }}
+            {% if options.required %}
+                <span class="form-required">必須</span>
+            {% endif %}
+        </label>
+    {% endif %}
+    <input
+        class="form-input {{ options.class }}"
+        type="{{ options.type ?? 'text' }}"
+        name="{{ options.name }}"
+        value="{{ options.type != 'password' ? old(options.key ?? options.name, options.value) : '' }}"
+        id="{{ options.name }}"
+        placeholder="{{ options.placeholder }}"
+        {% if options.required %}required{% endif %}/>
+    <div class="form-bottom">
+        {% if options.hint %}
+            <span class="form-hint">
+                {{ options.hint }}
+            </span>
+        {% endif %}
+    </div>
+{% endmacro %}
+
 {% macro input(options = {
     name: 'name',
     key: null,
@@ -88,7 +124,6 @@
         {% endif %}
         <textarea
             class="form-input form-input--textarea {{ options.class }}"
-            type="{{ options.type ?? 'text' }}"
             name="{{ options.name }}"
             id="{{ options.name }}"
             rows="{{ options.rows ?? 5 }}"

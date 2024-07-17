@@ -26,6 +26,10 @@ window.Splide = Splide;
 // Register AlpineJS
 window.Alpine = Alpine;
 
+window.lazyImage = (el: HTMLImageElement) => {
+  el.src = el.dataset.src as string;
+};
+
 // Register AlpineJS components
 // reference: https://www.raymondcamden.com/2022/06/03/image-upload-preview-in-alpinejs
 document.addEventListener("alpine:init", initAlpineJs);

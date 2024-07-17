@@ -11,5 +11,6 @@ declare global {
     Alpine: Alpine;
     CodeMirror: CodeMirror;
     Toastr: Toastr;
+    lazyImage: (el: HTMLImageElement) => void;
   }
 }

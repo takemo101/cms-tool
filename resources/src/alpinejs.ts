@@ -27,10 +27,13 @@ export default function init() {
     },
   }));
 
+  type Editor = SunEditor | undefined;
+
   Alpine.data<{
-    editor?: SunEditor;
+    editor: Editor;
     init: () => void;
   }>("editor", () => ({
+    editor: undefined,
     init() {
       this.$nextTick(() => {
         const editor = createSimply(this.$refs.editor);

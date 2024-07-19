@@ -8,6 +8,7 @@ use Slim\Interfaces\RouteCollectorProxyInterface;
 use Takemo101\CmsTool\Preset\MicroCms\Shared\Action\ContentDetailAction;
 use Takemo101\CmsTool\Preset\MicroCms\Shared\Action\ContentIndexAction;
 use Takemo101\CmsTool\Preset\MicroCms\Shared\Action\TaxonomyIndexAction;
+use Takemo101\CmsTool\Preset\MicroCms\Shared\Action\TaxonomyIndexActionEndpoints;
 use Takemo101\CmsTool\Support\Shared\ImmutableArrayObject;
 
 class BlogRoute implements ThemeRoute
@@ -79,8 +80,10 @@ class BlogRoute implements ThemeRoute
         $proxy->get(
             "/{$ext->signatures->category}/{id}",
             new TaxonomyIndexAction(
-                taxonomyEndpoint: $ext->endpoints->category,
-                contentEndpoint: $ext->endpoints->blog,
+                endpoints: new TaxonomyIndexActionEndpoints(
+                    taxonomy: $ext->endpoints->category,
+                    content: $ext->endpoints->blog,
+                ),
                 relation: $ext->fields->category,
                 signature: $ext->signatures->category,
             ),
@@ -90,8 +93,10 @@ class BlogRoute implements ThemeRoute
         $proxy->get(
             "/{$ext->signatures->tag}/{id}",
             new TaxonomyIndexAction(
-                taxonomyEndpoint: $ext->endpoints->tag,
-                contentEndpoint: $ext->endpoints->blog,
+                endpoints: new TaxonomyIndexActionEndpoints(
+                    taxonomy: $ext->endpoints->tag,
+                    content: $ext->endpoints->blog,
+                ),
                 relation: $ext->fields->tag,
                 signature: $ext->signatures->tag,
                 multiple: true,

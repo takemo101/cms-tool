@@ -26,7 +26,15 @@ class ContentDetailAction
         private readonly string $endpoint,
         private readonly string $signature,
     ) {
-        //
+        assert(
+            empty($endpoint) === false,
+            'The endpoint must not be empty',
+        );
+
+        assert(
+            empty($signature) === false,
+            'The signature must not be empty',
+        );
     }
 
     /**

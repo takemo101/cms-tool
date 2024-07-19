@@ -17,18 +17,21 @@ abstract class AbstractTextInputSetting extends AbstractInputSetting
      *
      * @param SchemaSettingId $id
      * @param string $label
+     * @param string $hint
      * @param T|null $default
      * @param string|null $placeholder
      */
     public function __construct(
         SchemaSettingId $id,
         string $label,
+        string $hint = '',
         mixed $default = null,
         public readonly ?string $placeholder = null,
     ) {
         parent::__construct(
             id: $id,
             label: $label,
+            hint: $hint,
             default: $default,
         );
     }

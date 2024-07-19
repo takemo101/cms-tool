@@ -31,6 +31,7 @@ class NumberSetting extends AbstractTextInputSetting
      * @param integer $min
      * @param integer $max
      * @param integer|float $step
+     * @param string $hint
      * @param integer|float|null $default
      * @param string|null $placeholder
      */
@@ -40,12 +41,14 @@ class NumberSetting extends AbstractTextInputSetting
         public readonly int $min,
         public readonly int $max,
         public readonly int|float $step = self::Step,
+        string $hint = '',
         mixed $default = null,
         ?string $placeholder = null,
     ) {
         parent::__construct(
             id: $id,
             label: $label,
+            hint: $hint,
             default: $default,
             placeholder: $placeholder,
         );
@@ -158,6 +161,7 @@ class NumberSetting extends AbstractTextInputSetting
             'min' => $this->min,
             'max' => $this->max,
             'step' => $this->step ?? 1,
+            'hint' => $this->hint,
             'default' => $this->default,
             'placeholder' => $this->placeholder,
         ];
@@ -172,6 +176,7 @@ class NumberSetting extends AbstractTextInputSetting
      *   min?: integer,
      *   max?: integer,
      *   step?: integer|float,
+     *   hint?: string,
      *   default?: integer|float,
      *   placeholder?: string,
      * } $data
@@ -184,6 +189,7 @@ class NumberSetting extends AbstractTextInputSetting
             min: $data['min'] ?? ArrayKeyMissingException::throw('min'),
             max: $data['max'] ?? ArrayKeyMissingException::throw('max'),
             step: $data['step'] ?? self::Step,
+            hint: $data['hint'] ?? '',
             default: $data['default'] ?? null,
             placeholder: $data['placeholder'] ?? null,
         );

@@ -28,12 +28,14 @@ class SelectSetting extends AbstractInputSetting
      *
      * @param SchemaSettingId $id
      * @param string $label
+     * @param string $hint
      * @param string|null $default
      * @param SelectOption ...$options
      */
     public function __construct(
         SchemaSettingId $id,
         string $label,
+        string $hint = '',
         mixed $default = null,
         SelectOption ...$options,
     ) {
@@ -47,6 +49,7 @@ class SelectSetting extends AbstractInputSetting
         parent::__construct(
             id: $id,
             label: $label,
+            hint: $hint,
             default: $default,
         );
     }
@@ -71,6 +74,7 @@ class SelectSetting extends AbstractInputSetting
         return [
             'id' => $this->id->value(),
             'label' => $this->label,
+            'hint' => $this->hint,
             'default' => $this->default,
             'options' => array_map(
                 fn (SelectOption $option) => $option->toArray(),
@@ -89,6 +93,7 @@ class SelectSetting extends AbstractInputSetting
      *     value: string,
      *     label: string,
      *   }[],
+     *   hint?: string,
      *   default?: string,
      * } $data
      */
@@ -105,6 +110,7 @@ class SelectSetting extends AbstractInputSetting
         return new self(
             new SchemaSettingId($data['id'] ?? ArrayKeyMissingException::throw('id')),
             $data['label'] ?? ArrayKeyMissingException::throw('label'),
+            $data['hint'] ?? '',
             $data['default'] ?? null,
             ...array_map(
                 // If the option is a string, create a new SelectOption with the same value and label

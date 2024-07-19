@@ -2,6 +2,7 @@
 
 namespace CmsTool\Theme;
 
+use DI\Attribute\Inject;
 use Takemo101\Chubby\Filesystem\PathHelper;
 
 class ThemePathHelper
@@ -10,9 +11,12 @@ class ThemePathHelper
      * constructor
      *
      * @param PathHelper $helper
+     * @param string $temporaryDirectory
      */
     public function __construct(
-        private PathHelper $helper,
+        private readonly PathHelper $helper,
+        #[Inject('config.theme.temporary')]
+        private readonly string $temporaryDirectory = 'tmp',
     ) {
         //
     }
@@ -64,6 +68,26 @@ class ThemePathHelper
     }
 
     /**
+     * Get theme customization data path
+     * If the theme is readonly, return a temporary path
+     *
+     * @param Theme $theme
+     * @return string
+     */
+    public function getCustomizationDataPath(Theme $theme): string
+    {
+        return $theme->isReadonly()
+            ? $this->getTemporaryPath(
+                'customization',
+                "{$theme->id}-data.json",
+            )
+            : $this->getThemePath(
+                $theme,
+                ThemeConfig::CustomizationDataFilename,
+            );
+    }
+
+    /**
      * Get asset path
      *
      * @param Theme $theme
@@ -91,6 +115,20 @@ class ThemePathHelper
         return $this->getThemePath(
             $theme,
             ThemeConfig::TemplatesPath,
+            ...$paths,
+        );
+    }
+
+    /**
+     * Get temporary path
+     *
+     * @param string ...$paths
+     * @return string
+     */
+    public function getTemporaryPath(string ...$paths): string
+    {
+        return $this->helper->join(
+            $this->temporaryDirectory,
             ...$paths,
         );
     }

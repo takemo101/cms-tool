@@ -2,6 +2,7 @@
 
 namespace Takemo101\CmsTool\Http\Request\Admin;
 
+use EventSauce\ObjectHydrator\PropertyCasters\CastListToType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Valid;
 use Symfony\Component\Validator\Constraints\Type;
@@ -26,6 +27,9 @@ readonly class ChangeThemeMetaInputs
         public AuthorForChangeThemeMetaInputs $author = new AuthorForChangeThemeMetaInputs(),
         public bool $readonly = false,
         public array $extension = [],
+        #[CastListToType(SchemaForChangeThemeMetaInputs::class)]
+        #[Valid]
+        public array $schema = [],
     ) {
         //
     }

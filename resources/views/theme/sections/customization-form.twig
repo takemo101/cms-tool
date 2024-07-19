@@ -1,0 +1,126 @@
+{% import "cms-tool::theme.components.forms" as forms %}
+{% import "cms-tool::components.alerts" as alerts %}
+
+{{ alerts.info({
+    title: 'Info',
+    message: 'カスタマイズ内容を変更して「保存」ボタンを押すことで、テーマデザインに反映されます。',
+    class: 'mb:20px',
+}) }}
+
+{% for settings in schema %}
+    <div x-data="{
+        show: true,
+        toggle() {
+            this.show = !this.show;
+        },
+    }">
+        <div x-on:click="toggle" class="cstm-title">
+            <div class="cstm-title__inner">
+                <h3 class="cstm-title__text">
+                    {{ settings.title }}
+                </h3>
+                <div class="cstm-title__icon">
+                    <i x-show="show" class="fas fa-chevron-up"></i>
+                    <i x-show="!show" class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </div>
+        <div x-show="show" class="my:20px">
+            {% for setting in settings.settings %}
+                {% set name = settings.id ~ '[' ~ setting.id ~ ']' %}
+                {% set value = data[settings.id][setting.id] %}
+
+                {% if setting.type == 'color' %}
+                    <div class="form-column">
+                        {{ forms.color({
+                            uid: setting.uid,
+                            name: name,
+                            label: setting.label,
+                            value: value,
+                            hint: setting.hint,
+                        }) }}
+                    </div>
+                {% elseif setting.type == 'text' %}
+                    <div class="form-column">
+                        {{ forms.text({
+                            uid: setting.uid,
+                            name: name,
+                            label: setting.label,
+                            value: value,
+                            hint: setting.hint,
+                            placeholder: setting.placeholder,
+                        }) }}
+                    </div>
+                {% elseif setting.type == 'number' %}
+                    <div class="form-column">
+                        {{ forms.number({
+                            uid: setting.uid,
+                            name: name,
+                            label: setting.label,
+                            min: setting.min,
+                            max: setting.max,
+                            step: setting.step,
+                            value: value,
+                            hint: setting.hint,
+                            placeholder: setting.placeholder,
+                        }) }}
+                    </div>
+                {% elseif setting.type == 'select' %}
+                    <div class="form-column">
+                        {{ forms.select({
+                            uid: setting.uid,
+                            name: name,
+                            label: setting.label,
+                            value: value,
+                            options: setting.options,
+                            hint: setting.hint,
+                        }) }}
+                    </div>
+                {% elseif setting.type == 'checkbox' %}
+                    <div class="form-column">
+                        {{ forms.checkbox({
+                            uid: setting.uid,
+                            name: name,
+                            label: setting.label,
+                            value: value,
+                            hint: setting.hint,
+                        }) }}
+                    </div>
+                {% elseif setting.type == 'textarea' %}
+                    <div class="form-column">
+                        {{ forms.textarea({
+                            uid: setting.uid,
+                            name: name,
+                            label: setting.label,
+                            value: value,
+                            rows: 5,
+                            hint: setting.hint,
+                            placeholder: setting.placeholder,
+                        }) }}
+                    </div>
+                {% elseif setting.type == 'editor' %}
+                    <div class="form-column">
+                        {{ forms.editor({
+                            uid: setting.uid,
+                            name: name,
+                            label: setting.label,
+                            hint: setting.hint,
+                            value: value,
+                        }) }}
+                    </div>
+                {% elseif setting.type == 'header' %}
+                    <div class="mb:16px">
+                        <h4 class="f:16px">
+                            {{ setting.title }}
+                        </h4>
+                        {% if setting.description %}
+                            <p class="mt:8px f:14px">
+                                {{ setting.description }}
+                            </p>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+{% endfor %}

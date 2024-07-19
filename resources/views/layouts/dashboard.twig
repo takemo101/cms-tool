@@ -1,5 +1,8 @@
 {% extends 'cms-tool::layouts.master' %}
 
+{% block layout_class %}layout{% endblock %}
+{% block container_class %}container{% endblock %}
+
 {% block header %}
     {% include 'cms-tool::components.header' %}
 {% endblock %}
@@ -7,7 +10,7 @@
 {% import "cms-tool::components.dialogs" as dialogs %}
 
 {% block content %}
-   {% set current = block('current') is defined ? block('current') : '' %}
+    {% set current = block('current') is defined ? block('current') : '' %}
     <div class="half-column">
         <div class="half-column__left">
             {% include 'cms-tool::components.sidebar' with {'current': current} %}

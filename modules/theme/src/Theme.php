@@ -86,6 +86,39 @@ class Theme
     }
 
     /**
+    /**
+     * Can the theme be customized?
+     *
+     * @return bool
+     */
+    public function canBeCustomized(): bool
+    {
+        return !$this->meta->schema->isInputSettingEmpty();
+    }
+
+    /**
+     * Refines the theme's customization data with the default values of the schema settings.
+     *
+     * @param array<string,array<string,mixed>> $data The theme's customization data
+     * @return array<string,array<string,mixed>>
+     */
+    public function refineCustomizationWithDefaults(array $data = []): array
+    {
+        return $this->meta->schema->refineCustomizationWithDefaults($data);
+    }
+
+    /**
+     * Refines the theme's customization data with the not set values of the schema settings.
+     *
+     * @param array<string,array<string,mixed>> $data The theme's customization data
+     * @return array<string,array<string,mixed>>
+     */
+    public function refineCustomizationWithNotSet(array $data = []): array
+    {
+        return $this->meta->schema->refineCustomizationWithNotSet($data);
+    }
+
+    /**
      * Delete the theme
      * If the theme is active or readonly, an exception will be thrown.
      *

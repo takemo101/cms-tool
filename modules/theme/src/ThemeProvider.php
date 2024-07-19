@@ -5,6 +5,9 @@ namespace CmsTool\Theme;
 use CmsTool\Theme\Contract\ActiveThemeIdMatcher;
 use CmsTool\Theme\Contract\ThemeAccessor;
 use CmsTool\Theme\Contract\ThemeAssetFinfoFactory;
+use CmsTool\Theme\Contract\ThemeCustomizationAccessor;
+use CmsTool\Theme\Contract\ThemeCustomizationLoader;
+use CmsTool\Theme\Contract\ThemeCustomizationSaver;
 use CmsTool\Theme\Contract\ThemeFinder;
 use CmsTool\Theme\Contract\ThemeLoader;
 use CmsTool\Theme\Contract\ThemeSaver;
@@ -12,6 +15,8 @@ use CmsTool\Theme\Hook\ThemeHook;
 use CmsTool\Theme\Hook\ThemeHookPresets;
 use CmsTool\Theme\Routing\ThemeRoute;
 use CmsTool\Theme\Routing\ThemeRoutePresets;
+use CmsTool\Theme\Schema\DefaultThemeCustomizationAccessor;
+use CmsTool\Theme\Schema\SchemaSettingFactory;
 use Takemo101\Chubby\ApplicationContainer;
 use Takemo101\Chubby\Bootstrap\Definitions;
 use Takemo101\Chubby\Bootstrap\Provider\Provider;
@@ -39,26 +44,8 @@ class ThemeProvider implements Provider
     public function register(Definitions $definitions): void
     {
         $definitions->add([
-            ThemeFinder::class => new ConfigBasedDefinitionReplacer(
-                DefaultThemeFinder::class,
-                'theme.finder',
-                true,
-            ),
-            ThemeAccessor::class => new ConfigBasedDefinitionReplacer(
-                DefaultThemeAccessor::class,
-                'theme.accessor',
-                true,
-            ),
-            ThemeLoader::class => get(ThemeAccessor::class),
-            ThemeSaver::class => get(ThemeAccessor::class),
-            ActiveThemeIdMatcher::class => new ConfigBasedDefinitionReplacer(
-                DefaultActiveThemeIdMatcher::class,
-                'theme.matcher',
-            ),
-            ThemeAssetFinfoFactory::class => new ConfigBasedDefinitionReplacer(
-                DefaultThemeAssetFinfoFactory::class,
-                'theme.factory',
-            ),
+            ThemeCustomizationLoader::class => get(ThemeCustomizationAccessor::class),
+            ThemeCustomizationSaver::class => get(ThemeCustomizationAccessor::class),
             ThemeRoutePresets::class => function (
                 ConfigRepository $config,
                 Hook $hook,
@@ -85,6 +72,19 @@ class ThemeProvider implements Provider
 
                 return $presets;
             },
+            SchemaSettingFactory::class => fn () => SchemaSettingFactory::build(),
+            ThemeLoader::class => get(ThemeAccessor::class),
+            ThemeSaver::class => get(ThemeAccessor::class),
+            ...ConfigBasedDefinitionReplacer::createDependencyDefinitions(
+                dependencies: [
+                    ThemeFinder::class => DefaultThemeFinder::class,
+                    ThemeAccessor::class => DefaultThemeAccessor::class,
+                    ActiveThemeIdMatcher::class => DefaultActiveThemeIdMatcher::class,
+                    ThemeAssetFinfoFactory::class => DefaultThemeAssetFinfoFactory::class,
+                    ThemeCustomizationAccessor::class => DefaultThemeCustomizationAccessor::class,
+                ],
+                configKeyPrefix: 'theme',
+            )
         ]);
     }
 

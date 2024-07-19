@@ -44,6 +44,11 @@ class SupportProvider implements Provider
     public const ProviderName = 'support';
 
     /**
+     * @var string Symfony Validator loadValidatorMetadata method name.
+     */
+    public const LoadValidatorMetadataMethod = 'loadValidatorMetadata';
+
+    /**
      * Execute Bootstrap providing process.
      *
      * @param Definitions $definitions
@@ -165,6 +170,7 @@ class SupportProvider implements Provider
                 TranslatorInterface $translator,
             ) {
                 return Validation::createValidatorBuilder()
+                    ->addMethodMapping(self::LoadValidatorMetadataMethod)
                     ->enableAttributeMapping()
                     ->setTranslator($translator)
                     ->setTranslationDomain(SymfonyTranslationProxy::ValidationDomain)

@@ -11,6 +11,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
 use Takemo101\CmsTool\Domain\Theme\NotFoundThemeIdException;
 use Takemo101\CmsTool\Http\ViewModel\ThemeDetailPage;
+use Takemo101\CmsTool\Http\ViewModel\ThemeIndexPage;
 use Takemo101\CmsTool\Infra\Event\ThemeActivated;
 use Takemo101\CmsTool\Support\Toast\ToastRenderer;
 use Takemo101\CmsTool\Support\Toast\ToastStyle;
@@ -22,19 +23,17 @@ use Takemo101\CmsTool\UseCase\Theme\Handler\DeleteThemeHandler;
 class ThemeController
 {
     /**
-     * @param ServerRequestInterface $request
      * @param ThemeQueryService $queryService
      * @return View
      */
     public function index(
-        ServerRequestInterface $request,
         ThemeQueryService $queryService,
     ): View {
         $themes = $queryService->getAll();
 
         return view(
             'cms-tool::theme.index',
-            compact('themes'),
+            new ThemeIndexPage($themes),
         );
     }
 

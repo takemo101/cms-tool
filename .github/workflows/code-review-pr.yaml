@@ -1,0 +1,30 @@
+name: ChatGPT CodeReview
+
+permissions:
+    contents: read
+    pull-requests: write
+
+on:
+    pull_request:
+        types: [opened, synchronize]
+        branches:
+            - develop
+
+jobs:
+    chatgpt-review:
+        runs-on: ubuntu-latest
+        timeout-minutes: 60
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            - name: ChatGPT CodeReview
+              uses: anc95/ChatGPT-CodeReview@main
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+                  LANGUAGE: Japanese
+                  MODEL: gpt-3.5-turbo
+                  PROMPT: |
+                      あなたはGitHubのプルリクエストをレビューする日本人の上級開発者です。
+                      ソースコードの問題点があれば、日本語でコメントしてください。

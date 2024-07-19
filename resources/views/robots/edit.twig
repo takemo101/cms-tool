@@ -8,9 +8,11 @@
 {% import "cms-tool::components.alerts" as alerts %}
 
 {% block content_right %}
+<h2 class="u-page-title">robots.txt</h2>
+
 <div class="card">
     <div class="card-header">
-        <h2 class="card-header__title">robots.txt編集</h2>
+        <h3 class="card-header__title">robots.txt編集</h3>
         <hr class="divider" />
     </div>
     <div class="card-body" x-data="{
@@ -36,6 +38,7 @@
                         value: content,
                         rows: 20,
                         hint: 'robots.txtはbotがサイトをクロールする際に参照するファイルで、検索エンジンにインデックスされたくないページがある場合は、ここに設定を記述してください。',
+                        maxLength: 10000,
                     }) }}
                 </div>
             </div>

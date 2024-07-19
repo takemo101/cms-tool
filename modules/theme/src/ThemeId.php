@@ -12,7 +12,7 @@ class ThemeId implements Stringable
      * @param string $value
      */
     public function __construct(
-        private string $value,
+        private readonly string $value,
     ) {
         assert($value !== '', 'The theme id cannot be empty.');
     }

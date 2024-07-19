@@ -3,8 +3,6 @@
 namespace Takemo101\CmsTool\Support\Toast;
 
 use CmsTool\Session\Flash\FlashSessionsContext;
-use CmsTool\Session\SessionContext;
-use LogicException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Takemo101\Chubby\ApplicationContainer;
@@ -30,8 +28,6 @@ class ToastRenderer implements ResponseRenderer, Arrayable, ContainerInjectable
      * @var string
      */
     public const ToastMessageKey = 'toast-message';
-
-    private ?ApplicationContainer $container = null;
 
     /**
      * constructor

@@ -1,0 +1,187 @@
+{% extends 'cms-tool::theme.layouts.customization' %}
+
+{% block title %}カスタマイズ {{ theme.meta.name }}{% endblock %}
+
+{% block content %}
+<div class="full-column" x-data="{
+    changed: false,
+    mode: 'pc', // pc or mobile
+    /**
+     * @returns {void}
+     */
+    changePCMode() {
+        this.mode = 'pc';
+    },
+    /**
+     * @returns {void}
+     */
+    changeMobileMode() {
+        this.mode = 'mobile';
+    },
+    /**
+     * @returns {boolean}
+     */
+    get isPCMode() {
+        return this.mode === 'pc';
+    },
+    /**
+     * @returns {boolean}
+     */
+    get isMobileMode() {
+        return this.mode === 'mobile';
+    },
+    /**
+     * Click event handler for the link.
+     *
+     * @param {Event} event
+     * @returns {void}
+     */
+    handleLinkClick(event) {
+        if (!this.changed) {
+            return;
+        }
+
+        event.preventDefault();
+        this.$dispatch('open-dialog', {
+            title: 'Leave',
+            message: '変更内容が保存されていませんが、このまま移動しますか？',
+            ok: () => {
+                window.location.href = event.target.href;
+            },
+        });
+    },
+    /**
+     * Click event handler for the save button.
+     *
+     * @returns {void}
+     */
+    handleSaveClick() {
+        this.$dispatch('open-dialog', {
+            title: 'Save',
+            open: () => {
+                const result = this.$refs.form.reportValidity();
+                if (!result) {
+                    Toastr.error('入力内容を確認してください');
+                }
+
+                return result;
+            },
+            ok: () => this.$refs.form.requestSubmit(),
+        });
+    },
+    /**
+     * Save the changes.
+     *
+     * @param {Event} event
+     * @returns {void}
+     */
+    handleAfterRequest(event) {
+        if (event.detail.xhr.status == 422) {
+            Toastr.error('入力内容を確認してください');
+            return;
+        }
+
+        if (event.detail.xhr.status != 204) {
+            const message = event.detail.xhr.responseText || 'Failed to save data.';
+            Toastr.error(message);
+            throw new Error(message);
+        }
+
+        this.$refs.iframe.contentWindow.location.reload();
+        Toastr.success('デザインを保存しました');
+        this.changed = false;
+    },
+    /**
+     * Perform temporary save if there are any changes in the input.
+     *
+     * @returns {void}
+     */
+    handleChange() {
+        if (!this.changed) {
+            this.changed = true;
+        }
+
+        const formData =　new FormData(this.$refs.form);
+
+        fetch('{{ route('admin.theme.customization.cache') }}', {
+            method: 'POST',
+            body: formData,
+        }).then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to temporarily save data.');
+            }
+
+            this.$refs.iframe.contentWindow.location.reload();
+        }).catch(error => {
+            Toastr.error(error.message || 'Failed to temporarily save data.');
+        });
+    }
+}">
+    <div class="full-column__left">
+        <div class="cstm-panel">
+            <div class="cstm-panel__header">
+                <div>
+                    <a href="{{ route('admin.theme.detail', { id: theme.id }) }}" class="link" x-on:click="handleLinkClick">
+                        <i class="fas fa-times"></i>
+                        終了する
+                    </a>
+                </div>
+                <div class="cstm-panel__header__group">
+                    <div class="device-switch">
+                        <div x-on:click="changePCMode" class="device-switch__btn" :class="{
+                            'active': isPCMode,
+                            'inactive': !isPCMode,
+                        }">
+                            <i class="fas fa-desktop"></i>
+                        </div>
+                        <div x-on:click="changeMobileMode" class="device-switch__btn" :class="{
+                            'active': isMobileMode,
+                            'inactive': !isMobileMode,
+                        }">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                    </div>
+                    <div class="h:full">
+                        <button type="button"
+                            x-on:click="handleSaveClick"
+                            class="cstm-save-btn"
+                            :class="{
+                                'active': changed,
+                                'inactive': !changed,
+                            }" :disabled="!changed">
+                            保存
+                            <i class="fas fa-check"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="cstm-panel__body"
+                x-on:change.throttle.500ms="handleChange"
+                x-on:editor:change.throttle.500ms="handleChange"
+                x-on:htmx:after-request="handleAfterRequest">
+                <div class="cstm-panel__body__inner">
+                    {{ form_open({
+                        method: 'put',
+                        id: 'form',
+                        'hx-put': route('admin.theme.customization.apply'),
+                        'x-ref': 'form',
+                    }) }}
+                        {{ include('cms-tool::theme.sections.customization-form', {
+                            schema: schema,
+                            data: data,
+                        }) }}
+                    {{ form_close() }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="full-column__right">
+        <iframe src="{{ route('admin.theme.preview') }}"
+            :class="{
+                'w:375px': isMobileMode,
+                'w:full': isPCMode,
+            }"
+            frameborder="0" loading="lazy" x-ref="iframe"></iframe>
+    </div>
+</div>
+{% endblock %}

@@ -19,8 +19,7 @@ class TaxonomyIndexAction extends AbstractIndexAction
     /**
      * constructor
      *
-     * @param string $taxonomyEndpoint
-     * @param string $contentEndpoint
+     * @param TaxonomyIndexActionEndpoints $endpoints
      * @param string $relation
      * @param string $signature
      * @param integer $limit
@@ -28,15 +27,34 @@ class TaxonomyIndexAction extends AbstractIndexAction
      * @param boolean $multiple
      */
     public function __construct(
-        private readonly string $taxonomyEndpoint,
-        private readonly string $contentEndpoint,
+        private readonly TaxonomyIndexActionEndpoints $endpoints,
         private readonly string $relation,
         private readonly string $signature,
         private readonly int $limit = 10,
         private readonly ?string $order = null,
         private readonly bool $multiple = false,
     ) {
-        //
+        assert(
+            empty($relation) === false,
+            'The relation must not be empty',
+        );
+
+        assert(
+            empty($signature) === false,
+            'The signature must not be empty',
+        );
+
+        assert(
+            $limit > 0,
+            'The limit must be greater than 0',
+        );
+
+        if ($order) {
+            assert(
+                empty($order) === false,
+                'The order must not be empty',
+            );
+        }
     }
 
     /**
@@ -56,7 +74,7 @@ class TaxonomyIndexAction extends AbstractIndexAction
         string $id,
     ): View {
         $taxonomy = $queryService->getOne(
-            endpoint: $this->taxonomyEndpoint,
+            endpoint: $this->endpoints->taxonomy,
             id: $id,
         );
 
@@ -72,7 +90,7 @@ class TaxonomyIndexAction extends AbstractIndexAction
         $operator = $this->multiple ? 'contains' : 'equals';
 
         $result = $queryService->getList(
-            endpoint: $this->contentEndpoint,
+            endpoint: $this->endpoints->content,
             pager: new Pager(
                 page: $this->getPage($params),
                 limit: $this->getLimit($params, $this->limit),

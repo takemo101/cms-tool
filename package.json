@@ -28,6 +28,7 @@
     "alpinejs": "^3.13.3",
     "codemirror": "5",
     "github-markdown-css": "^5.5.0",
+    "suneditor": "^2.46.3",
     "toastify-js": "^1.12.0"
   }
 }

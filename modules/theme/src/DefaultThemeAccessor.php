@@ -6,6 +6,7 @@ use CmsTool\Theme\Contract\ActiveThemeIdMatcher;
 use CmsTool\Theme\Contract\ThemeAccessor;
 use CmsTool\Theme\Exception\ThemeLoadException;
 use CmsTool\Theme\Exception\ThemeSaveException;
+use DI\Attribute\Inject;
 use Takemo101\Chubby\Filesystem\LocalFilesystem;
 use Takemo101\Chubby\Filesystem\PathHelper;
 
@@ -20,12 +21,15 @@ class DefaultThemeAccessor implements ThemeAccessor
      * constructor
      *
      * @param ActiveThemeIdMatcher $matcher
+     * @param ThemeMetaFactory $factory
      * @param LocalFilesystem $filesystem
      * @param ThemePathHelper $helper
      */
     public function __construct(
         private readonly ActiveThemeIdMatcher $matcher,
+        private readonly ThemeMetaFactory $factory,
         private readonly LocalFilesystem $filesystem,
+        #[Inject(ThemePathHelper::class)]
         private readonly ThemePathHelper $helper = new ThemePathHelper(new PathHelper()),
     ) {
         //
@@ -84,9 +88,16 @@ class DefaultThemeAccessor implements ThemeAccessor
          *  author:array{
          *   name:string,
          *   link?:?string,
-         *  },
+         *  }|string,
          *  readonly?:bool,
          *  extension?:array<string,mixed>,
+         *   schema?:(array{
+         *     id?: string,
+         *     title?: string,
+         *     settings?: (array{
+         *       type: string,
+         *     }&array<string,mixed>)[]
+         *   }&array<string,mixed>)[],
          * }
          */
         $data = json_decode($content, true);
@@ -106,7 +117,7 @@ class DefaultThemeAccessor implements ThemeAccessor
             id: $themeId,
             directory: $directory,
             active: $this->matcher->isMatch($themeId),
-            meta: ThemeMeta::fromArray($data),
+            meta: $this->factory->create($data),
         );
 
         $this->cache[$path] = $theme;

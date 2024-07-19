@@ -58,7 +58,8 @@ const generalStyle = {
 
   // form styles
   "form-column": `flex flex:col my:1rem`,
-  "form-label": `f:bold mb:1rem`,
+  "form-column__inner": `flex flex:col`,
+  "form-label": `f:14px f:bold mb:0.5rem`,
   "form-input": `
     b:1px|solid|gray-82
     outline-color:${Colors.Primary}
@@ -66,6 +67,14 @@ const generalStyle = {
     appearance:none
   `,
   "form-input--textarea": `min-w:full max-w:full`,
+  "form-color": `
+    h:40px w:full
+    b:1px|solid|gray-82
+    outline-color:${Colors.Primary}
+    p:3px r:5px
+    cursor:pointer
+    appearance:none
+  `,
   "form-select": `
     b:1px|solid|gray-82
     px:10px r:5px h:41px lh:41px
@@ -74,6 +83,23 @@ const generalStyle = {
     outline-color:${Colors.Primary}
     appearance:none
     bg:url(/vendor/assets/arrow.png) bg:18 bg:no-repeat bg:center|right bg:transparent
+  `,
+  "form-checkbox": `
+    mb:5px
+    inline-flex
+    ai:center
+
+    appearance:none>input
+    w:26px>input h:26px>input
+    f:${Colors.Primary}>input
+    outline-color:gray-82>input
+    bg:gray-82>input
+    bg:${Colors.Primary}>input:checked
+    b:1px|solid|gray-82>input
+    mr:8px>input
+    r:5px>input
+
+    f:bold>span
   `,
   "form-btn": `
     m:0;
@@ -171,10 +197,21 @@ const generalStyle = {
     p:4px ml:4px
   `,
 
+  "form-bottom": `
+    flex flex:row
+    mt:4px
+    gap:10px
+  `,
+  "form-guide": `
+    d:block
+    flex-grow:1
+    t:right
+    f:12px f:gray-52
+    white-space:nowrap
+  `,
   "form-hint": `
     d:block
-    mt:4px
-    f:12px f:gray-62
+    f:12px f:gray-52
   `,
 
   // card styles
@@ -184,15 +221,11 @@ const generalStyle = {
     w:full h:max"
     bg:white
     box:border
+
+    mb:20px@sm mb:14px mb:0:last-of-type
   `,
   "card-header": `px:20px@sm px:14px pt:20px@sm pt:14px`,
-  "card-header__title": `mb:20px@sm mb:14px`,
-  "card-header__title--layout": `flex ai:center`,
-  "card-header__title__back": `
-    mr:8px
-    f:20px
-    opacity:0.5:hover
-  `,
+  "card-header__title": `mb:20px@sm mb:14px f:20px f:bold`,
   "card-body": `p:20px@sm p:14px`,
 
   // utility styles
@@ -233,6 +266,22 @@ const generalStyle = {
   `,
 
   // text utility styles
+  "u-page-title": `
+    f:24px f:bold
+    mt:0 mb:24px@sm mb:18px
+  `,
+
+  "u-page-head": `
+    flex ai:center
+    mb:24px@sm mb:18px
+  `,
+  "u-page-head__title": `f:24px f:bold`,
+  "u-page-head__back": `
+    mr:12px
+    f:20px
+    opacity:0.5:hover
+  `,
+
   "u-section": `mb:60px@sm mb:50px`,
   "u-title": `f:18px f:bold mt:0 mb:16px`,
   "u-text": `f:16 lh:1.6rem mt:0 mb:16px`,
@@ -321,6 +370,103 @@ const halfColumnLayoutStyle = {
   `,
 } as const;
 
+const customizationColumnLayoutStyle = {
+  "full-column": `
+    w:full h:100vh
+    flex flex:row@sm flex:col-reverse
+  `,
+  "full-column__left": `
+    h:100vh@sm h:45vh
+    flex-basis:460px@md flex-basis:400@sm flex-basis:40%
+  `,
+  "full-column__right": `
+    h:100vh@sm h:55vh
+    flex-grow:1@sm flex-grow:0
+    flex-basis:auto@sm flex-basis:60%
+    flex
+    jc:center
+    p:20px@sm p:14px
+
+    h:full>iframe
+    bg:white>iframe
+    r:5px>iframe
+    b:1px|solid|gray-82>iframe
+  `,
+} as const;
+
+const customizationPanelStyle = {
+  "cstm-panel": `
+    w:full h:full
+    bg:white
+    flex flex:col
+    br:1px|solid|gray-82@sm br:none
+    bt:none@sm bt:1px|solid|gray-82
+  `,
+  "cstm-panel__header": `
+    flex-basis:70px
+    flex flex:row
+    px:20px@sm px:14px
+    bb:1px|solid|gray-82@
+    ai:center jc:space-between
+  `,
+  "cstm-panel__body": `
+    flex-basis:full
+    overflow-y:scroll
+  `,
+  "cstm-panel__body__inner": `
+    p:20px@sm p:14px
+  `,
+  "cstm-panel__header__group": `
+    flex flex:row gap:14px
+    h:42px
+  `,
+  "device-switch": `
+    flex flex:row
+    r:5px
+    bg:gray-82 p:6px h:full
+  `,
+  "device-switch__btn": `
+    inline-block
+    w:40px h:30px
+    lh:30px t:center
+    r:5px
+    cursor:pointer
+
+    bg:white.active
+    f:black.active>i
+
+    f:white.inactive>i
+  `,
+  "cstm-save-btn": `
+    h:42px w:80px
+    lh:42px f:bold
+    r:5px
+
+    bg:${Colors.Primary}.active
+    f:white.active
+    cursor:pointer.active
+    opacity:0.5:hover.active
+
+    f:${Colors.Secondary}.inactive>i
+    cursor:default.inactive
+    opacity:0.5.inactive
+  `,
+  "cstm-title": `
+    mb:8px bb:1|solid|gray-82
+  `,
+  "cstm-title__inner": `
+    rel
+    lh:2
+    cursor:pointer
+    opacity:0.5:hover
+  `,
+  "cstm-title__text": `:18px`,
+  "cstm-title__icon": `
+    abs
+    right:0 top:0
+  `,
+} as const;
+
 const dialogStyle = {
   dialog: `
     p:0
@@ -384,7 +530,12 @@ const themeStyle = {
     gap:20px@sm gap:30px
   `,
   "theme-item": `flex:row m:0`,
+  "theme-item__info": `
+    flex flex:col
+    gap:10px
+  `,
   "theme-item__title": `
+    block
     m:0
     f:bold f:16px
     cursor:pointer
@@ -418,6 +569,51 @@ const themeStyle = {
     h:300px
     obj:cover
     m:0 r:5px
+  `,
+
+  // Active theme styles
+  "active-theme": `
+    flex flex:row@sm flex:col
+    gap:20px
+  `,
+  "active-theme__left": `
+    flex-basis:220px
+  `,
+  "active-theme__thumb": `
+    block
+    w:220px@sm h:220px@sm w:full h:300px
+    opacity:0.5:hover
+    p:0
+  `,
+  "active-theme__thumb-img": `
+    block
+    w:full
+    h:full
+    obj:cover
+    m:0 r:5px
+  `,
+  "active-theme__right": `
+    flex-grow:1
+    flex flex:col
+    gap:10px
+  `,
+  "active-theme__right__top": `
+    flex flex:col
+    gap:10px
+  `,
+  "active-theme__right__bottom": `
+    flex-grow:1
+    flex flex:row
+    jc:right ai:end
+    gap:10px
+  `,
+  "active-theme__title": `
+    block
+    m:0
+    f:bold f:20px
+    cursor:pointer
+    opacity:0.5:hover
+    text:none
   `,
 } as const;
 
@@ -469,6 +665,8 @@ const style = {
   ...centerLayoutStyle,
   ...headerNavStyle,
   ...halfColumnLayoutStyle,
+  ...customizationColumnLayoutStyle,
+  ...customizationPanelStyle,
   ...dialogStyle,
   ...sidebarNavStyle,
   ...themeStyle,

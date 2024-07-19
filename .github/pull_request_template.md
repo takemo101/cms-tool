@@ -1,10 +1,14 @@
-## Overview
-<!-- Provide a brief overview of the changes made in this pull request. -->
+## 概要
 
-## Changes
-<!-- List the changes made in this pull request. -->
-1. Add a new feature
-2. Fix a bug
+<!-- プルリクエストの概要の説明文 -->
 
-## Remarks
-<!-- Add any remarks you want to make here. -->
+## 変更内容
+
+<!-- プルリクエストの大まかな変更内容を箇条書き -->
+
+1. XXX 機能を追加
+2. XXX の不具合修正
+
+## 備考
+
+<!-- その他注意事項やTodoなどあれば -->

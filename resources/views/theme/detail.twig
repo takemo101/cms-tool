@@ -8,16 +8,20 @@
 {% import "cms-tool::components.dialogs" as dialogs %}
 
 {% block content_right %}
+<div class="u-page-head">
+    <a class="u-page-head__back" href="{{ route('admin.theme.index') }}">
+        <i class="fas fa-chevron-left"></i>
+    </a>
+    <h2 class="u-page-head__title">テーマ詳細</h2>
+</div>
+
 <div class="card">
-    {% include 'cms-tool::components.card-header' with {
-        title: 'テーマ',
-        back: route('admin.theme.index')
-    } %}
+    <div class="card-header">
+        <h3 class="card-header__title">{{ theme.meta.name }}</h3>
+        <hr class="divider" />
+    </div>
     <div class="card-body">
         <div class="flex flex:col">
-            <h3 class="f:18px f:bold mt:0 mb:16px">
-                {{ theme.meta.name }}
-            </h3>
             {% if theme.meta.images is not empty %}
                 <div class="splide overflow:hidden r:5px mb:16px">
                     <div class="splide__track">
@@ -72,6 +76,14 @@
                     <ul class="menu menu--right"
                         x-show="open"
                         x-on:click.away="open = false">
+                        {% if theme.canBeCustomized() and theme.isActive() %}
+                            <li>
+                                <a class="menu-link"
+                                    href="{{ route('admin.theme.customization.edit') }}">
+                                    カスタマイズ
+                                </a>
+                            </li>
+                        {% endif %}
                         {% if theme.meta.link %}
                         <li>
                             <a class="menu-link"
@@ -199,6 +211,7 @@
 
         </div>
     </div>
+</div>
 {% endblock %}
 
 {% block footer_js %}

@@ -37,6 +37,7 @@
                             name: name,
                             label: setting.label,
                             value: value,
+                            hint: setting.hint,
                         }) }}
                     </div>
                 {% elseif setting.type == 'text' %}
@@ -46,6 +47,7 @@
                             name: name,
                             label: setting.label,
                             value: value,
+                            hint: setting.hint,
                             placeholder: setting.placeholder,
                         }) }}
                     </div>
@@ -59,6 +61,7 @@
                             max: setting.max,
                             step: setting.step,
                             value: value,
+                            hint: setting.hint,
                             placeholder: setting.placeholder,
                         }) }}
                     </div>
@@ -70,6 +73,7 @@
                             label: setting.label,
                             value: value,
                             options: setting.options,
+                            hint: setting.hint,
                         }) }}
                     </div>
                 {% elseif setting.type == 'checkbox' %}
@@ -79,6 +83,7 @@
                             name: name,
                             label: setting.label,
                             value: value,
+                            hint: setting.hint,
                         }) }}
                     </div>
                 {% elseif setting.type == 'textarea' %}
@@ -89,6 +94,7 @@
                             label: setting.label,
                             value: value,
                             rows: 5,
+                            hint: setting.hint,
                             placeholder: setting.placeholder,
                         }) }}
                     </div>
@@ -98,6 +104,7 @@
                             uid: setting.uid,
                             name: name,
                             label: setting.label,
+                            hint: setting.hint,
                             value: value,
                         }) }}
                     </div>

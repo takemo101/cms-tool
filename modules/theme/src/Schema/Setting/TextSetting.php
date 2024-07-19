@@ -65,9 +65,9 @@ class TextSetting extends AbstractTextInputSetting
         return [
             'id' => $this->id->value(),
             'label' => $this->label,
+            'hint' => $this->hint,
             'default' => $this->default,
             'placeholder' => $this->placeholder,
-            'limit' => self::LimitLength,
         ];
     }
 
@@ -77,6 +77,7 @@ class TextSetting extends AbstractTextInputSetting
      * @param array{
      *   id?: string,
      *   label?: string,
+     *   hint?: string,
      *   default?: string,
      *   placeholder?: string,
      * } $data
@@ -86,6 +87,7 @@ class TextSetting extends AbstractTextInputSetting
         return new self(
             id: new SchemaSettingId($data['id'] ?? ArrayKeyMissingException::throw('id')),
             label: $data['label'] ?? ArrayKeyMissingException::throw('label'),
+            hint: $data['hint'] ?? '',
             default: $data['default'] ?? null,
             placeholder: $data['placeholder'] ?? null,
         );

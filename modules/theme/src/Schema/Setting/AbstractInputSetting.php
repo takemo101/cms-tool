@@ -19,11 +19,13 @@ abstract class AbstractInputSetting extends AbstractSetting
      *
      * @param SchemaSettingId $id
      * @param string $label
+     * @param string $hint
      * @param T|null $default
      */
     public function __construct(
         public readonly SchemaSettingId $id,
         public readonly string $label,
+        public readonly string $hint = '',
         mixed $default = null,
     ) {
         assert(

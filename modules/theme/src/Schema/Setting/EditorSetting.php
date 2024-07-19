@@ -65,6 +65,7 @@ class EditorSetting extends AbstractInputSetting
         return [
             'id' => $this->id->value(),
             'label' => $this->label,
+            'hint' => $this->hint,
             'default' => $this->default,
         ];
     }
@@ -75,6 +76,7 @@ class EditorSetting extends AbstractInputSetting
      * @param array{
      *   id?: string,
      *   label?: string,
+     *   hint?: string,
      *   default?: string,
      * } $data
      */
@@ -83,6 +85,7 @@ class EditorSetting extends AbstractInputSetting
         return new self(
             id: new SchemaSettingId($data['id'] ?? ArrayKeyMissingException::throw('id')),
             label: $data['label'] ?? ArrayKeyMissingException::throw('label'),
+            hint: $data['hint'] ?? '',
             default: $data['default'] ?? null,
         );
     }

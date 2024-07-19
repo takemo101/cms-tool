@@ -98,7 +98,8 @@
                     "id": "form",
                     "label": "Googleフォームなどの埋め込みタグ",
                     "default": "",
-                    "placeholder": "Googleフォームなどのiframe埋め込みタグの入力"
+                    "placeholder": "Googleフォームなどのiframe埋め込みタグの入力",
+                    "hint": "フォームの横幅を最大幅にするには、iframeタグにwidth=\"100%\"を追加してください。"
                 }
             ]
         }

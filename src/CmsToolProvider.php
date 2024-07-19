@@ -31,6 +31,11 @@ use Takemo101\CmsTool\Support\Webhook\WebhookHandlers;
 class CmsToolProvider implements Provider
 {
     /**
+     * @var string CmsTool Version number.
+     */
+    public const Version = '0.1.1';
+
+    /**
      * constructor
      *
      * @param LocalFilesystem $filesystem

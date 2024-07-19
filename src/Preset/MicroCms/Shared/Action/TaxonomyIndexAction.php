@@ -34,7 +34,27 @@ class TaxonomyIndexAction extends AbstractIndexAction
         private readonly ?string $order = null,
         private readonly bool $multiple = false,
     ) {
-        //
+        assert(
+            empty($relation) === false,
+            'The relation must not be empty',
+        );
+
+        assert(
+            empty($signature) === false,
+            'The signature must not be empty',
+        );
+
+        assert(
+            $limit > 0,
+            'The limit must be greater than 0',
+        );
+
+        if ($order) {
+            assert(
+                empty($order) === false,
+                'The order must not be empty',
+            );
+        }
     }
 
     /**

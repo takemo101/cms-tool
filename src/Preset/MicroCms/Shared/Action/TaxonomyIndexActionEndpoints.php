@@ -14,6 +14,14 @@ readonly class TaxonomyIndexActionEndpoints
         public string $taxonomy,
         public string $content,
     ) {
-        //
+        assert(
+            empty($taxonomy) === false,
+            'The taxonomy endpoint must not be empty',
+        );
+
+        assert(
+            empty($content) === false,
+            'The content endpoint must not be empty',
+        );
     }
 }

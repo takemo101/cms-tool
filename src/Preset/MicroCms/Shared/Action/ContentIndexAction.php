@@ -31,7 +31,20 @@ class ContentIndexAction extends AbstractIndexAction
         private readonly ?string $order = null,
         private readonly ?string $filter = null,
     ) {
-        //
+        assert(
+            empty($endpoint) === false,
+            'The endpoint must not be empty',
+        );
+
+        assert(
+            empty($signature) === false,
+            'The signature must not be empty',
+        );
+
+        assert(
+            $limit > 0,
+            'The limit must be greater than 0',
+        );
     }
 
     /**

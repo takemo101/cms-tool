@@ -17,12 +17,14 @@
     hint: '',
     class: '',
 }) %}
-    <span class="form-hint {{ options.class }}">
-        {{ options.hint }}
-    </span>
+    <div class="form-bottom">
+        <span class="form-hint {{ options.class }}">
+            {{ options.hint }}
+        </span>
+    </div>
 {% endmacro %}
 
-{% macro input(options = {
+{% macro plain(options = {
     name: 'name',
     key: null,
     label: '',
@@ -49,11 +51,54 @@
         id="{{ options.name }}"
         placeholder="{{ options.placeholder }}"
         {% if options.required %}required{% endif %}/>
-    {% if options.hint %}
-        <span class="form-hint">
-            {{ options.hint }}
-        </span>
-    {% endif %}
+    <div class="form-bottom">
+        {% if options.hint %}
+            <span class="form-hint">
+                {{ options.hint }}
+            </span>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{% macro input(options = {
+    name: 'name',
+    key: null,
+    label: '',
+    value: '',
+    type: 'text',
+    placeholder: '',
+    required: true,
+    class: '',
+    hint: '',
+    maxLength: 100,
+}) %}
+    <div class="form-column__inner" x-data="inputGuide({{ options.maxLength ?? 100 }})">
+        {% if options.label %}
+            <label class="form-label" for="{{ options.name }}">
+                {{ options.label }}
+                {% if options.required %}
+                    <span class="form-required">必須</span>
+                {% endif %}
+            </label>
+        {% endif %}
+        <input
+            class="form-input {{ options.class }}"
+            type="{{ options.type ?? 'text' }}"
+            name="{{ options.name }}"
+            value="{{ options.type != 'password' ? old(options.key ?? options.name, options.value) : '' }}"
+            id="{{ options.name }}"
+            placeholder="{{ options.placeholder }}"
+            {% if options.required %}required{% endif %}
+            x-model.fill="value"/>
+        <div class="form-bottom">
+            {% if options.hint %}
+                <span class="form-hint">
+                    {{ options.hint }}
+                </span>
+            {% endif %}
+            <span class="form-guide" x-text="guideText"></span>
+        </div>
+    </div>
 {% endmacro %}
 
 {% macro textarea(options = {
@@ -66,28 +111,34 @@
     required: true,
     class: '',
     hint: '',
+    maxLength: 1000,
 }) %}
-    {% if options.label %}
-        <label class="form-label" for="{{ options.name }}">
-            {{ options.label }}
-            {% if options.required %}
-                <span class="form-required">必須</span>
+    <div class="form-column__inner" x-data="inputGuide({{ options.maxLength ?? 1000 }})">
+        {% if options.label %}
+            <label class="form-label" for="{{ options.name }}">
+                {{ options.label }}
+                {% if options.required %}
+                    <span class="form-required">必須</span>
+                {% endif %}
+            </label>
+        {% endif %}
+        <textarea
+            class="form-input form-input--textarea {{ options.class }}"
+            name="{{ options.name }}"
+            id="{{ options.name }}"
+            rows="{{ options.rows ?? 5 }}"
+            placeholder="{{ options.placeholder }}"
+            {% if options.required %}required{% endif %}
+            x-model.fill="value">{{ old(options.key ?? options.name, options.value) }}</textarea>
+        <div class="form-bottom">
+            {% if options.hint %}
+                <span class="form-hint">
+                    {{ options.hint }}
+                </span>
             {% endif %}
-        </label>
-    {% endif %}
-    <textarea
-        class="form-input form-input--textarea {{ options.class }}"
-        type="{{ options.type ?? 'text' }}"
-        name="{{ options.name }}"
-        id="{{ options.name }}"
-        rows="{{ options.rows ?? 5 }}"
-        placeholder="{{ options.placeholder }}"
-        {% if options.required %}required{% endif %}>{{ old(options.key ?? options.name, options.value) }}</textarea>
-    {% if options.hint %}
-        <span class="form-hint">
-            {{ options.hint }}
-        </span>
-    {% endif %}
+            <span class="form-guide" x-text="guideText"></span>
+        </div>
+    </div>
 {% endmacro %}
 
 {% macro select(options = {
@@ -120,9 +171,11 @@
         {% endfor %}
     </select>
     {% if options.hint %}
-        <span class="form-hint">
-            {{ options.hint }}
-        </span>
+        <div class="form-bottom">
+            <span class="form-hint">
+                {{ options.hint }}
+            </span>
+        </div>
     {% endif %}
 {% endmacro %}
 

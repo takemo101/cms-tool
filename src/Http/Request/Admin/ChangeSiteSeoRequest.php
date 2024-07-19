@@ -11,9 +11,9 @@ readonly class ChangeSiteSeoRequest
     public function __construct(
         #[Length(max: 50)]
         public string $title,
-        #[Length(max: 50)]
+        #[Length(max: 200)]
         public string $description,
-        #[Length(max: 50)]
+        #[Length(max: 100)]
         public string $keywords,
         #[File(mimeTypes: ['image/png', 'image/jpeg'])]
         public ?UploadedFileInterface $favicon = null,

@@ -40,6 +40,7 @@ readonly class SchemaForChangeThemeMetaInputs
                             'select',
                             'textarea',
                             'text',
+                            'editor',
                         ])
                     ]),
                     'id' => new Optional([

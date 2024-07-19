@@ -4,10 +4,76 @@
 
 {% block current %}theme{% endblock %}
 
+{% import "cms-tool::components.alerts" as alerts %}
+
 {% block content_right %}
+<h2 class="u-page-title">テーマ</h2>
+
 <div class="card">
     <div class="card-header">
-        <h2 class="card-header__title">テーマ</h2>
+        <h3 class="card-header__title">選択中のテーマ</h3>
+        <hr class="divider" />
+    </div>
+    <div class="card-body">
+        <div class="active-theme">
+            <div class="active-theme__left">
+                <a class="active-theme__thumb" href="{{ route('admin.theme.detail', {
+                    id: activeTheme.id
+                }) }}">
+                    <img
+                        class="active-theme__thumb-img"
+                        src="{{ vendor('loading.svg') }}"
+                        data-src="{{ activeTheme.meta.thumbnail() ? theme(activeTheme.id, activeTheme.meta.thumbnail()) : vendor('example.jpeg') }}"
+                        alt="{{ activeTheme.meta.name }}"
+                        x-intersect="lazyImage($el)" />
+                </a>
+            </div>
+            <div class="active-theme__right">
+                <div class="active-theme__right__top">
+                    <a class="active-theme__title" href="{{ route('admin.theme.detail', {
+                        id: activeTheme.id
+                    }) }}">
+                        <h4>{{ activeTheme.meta.name }}</h4>
+                    </a>
+                    <div class="theme-tags">
+                        {% for tag in activeTheme.meta.tags %}
+                            <span class="theme-tags__item">
+                                {{ tag }}
+                            </span>
+                        {% endfor %}
+                    </div>
+                    {% if activeTheme.meta.author.name %}
+                    <div>
+                        <span class="f:12px f:bold f:gray-62">
+                            {{ activeTheme.meta.author.name }}
+                        </span>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="active-theme__right__bottom">
+                    <a
+                        class="form-btn form-btn--primary"
+                        href="{{ route('admin.theme.detail', {
+                        id: activeTheme.id
+                    }) }}">
+                        詳細
+                    </a>
+                    {% if activeTheme.canBeCustomized() %}
+                        <a
+                            class="form-btn form-btn--secondary"
+                            href="{{ route('admin.theme.customization.edit') }}">
+                            カスタマイズ
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-header__title">利用可能なテーマ</h3>
         <hr class="divider" />
     </div>
     <div class="card-body">
@@ -19,34 +85,46 @@
                     href="{{ route('admin.theme.detail', {
                     id: theme.id
                 }) }}">
-                    {% if theme.isActive() %}
-                        <span class="theme-item__thumb-active">
-                            選択テーマ
-                        </span>
-                    {% endif %}
                     <img
                         class="theme-item__thumb-img"
-                        src="{{ theme.meta.thumbnail() ? theme(theme.id, theme.meta.thumbnail()) : vendor('example.jpeg') }}"
-                        alt="{{ theme.meta.name }}" />
+                        src="{{ vendor('loading.svg') }}"
+                        data-src="{{ theme.meta.thumbnail() ? theme(theme.id, theme.meta.thumbnail()) : vendor('example.jpeg') }}"
+                        alt="{{ theme.meta.name }}"
+                        x-intersect="lazyImage($el)" />
                 </a>
-                <h3 class="theme-item__title mb:10px">{{ theme.meta.name }}</h3>
-                <div class="theme-tags">
-                    {% for tag in theme.meta.tags %}
-                        <span class="theme-tags__item">
-                            {{ tag }}
+                <div class="theme-item__info">
+                    <a
+                        class="theme-item__title"
+                        href="{{ route('admin.theme.detail', {
+                        id: theme.id
+                    }) }}">
+                        <h4>{{ theme.meta.name }}</h4>
+                    </a>
+                    <div class="theme-tags">
+                        {% for tag in theme.meta.tags %}
+                            <span class="theme-tags__item">
+                                {{ tag }}
+                            </span>
+                        {% endfor %}
+                    </div>
+                    {% if theme.meta.author.name %}
+                    <div>
+                        <span class="f:12px f:bold f:gray-62">
+                            {{ theme.meta.author.name }}
                         </span>
-                    {% endfor %}
+                    </div>
+                    {% endif %}
                 </div>
-                {% if theme.meta.author.name %}
-                <div class="mt:10px">
-                    <span class="f:12px f:bold f:gray-62">
-                        {{ theme.meta.author.name }}
-                    </span>
-                </div>
-                {% endif %}
             </div>
         {% endfor %}
         </div>
+        {% if themes is empty %}
+            {{ alerts.info({
+                title: 'Info',
+                message: '利用可能なテーマはありません。',
+                close: false,
+            }) }}
+        {% endif %}
     </div>
 </div>
 {% endblock %}

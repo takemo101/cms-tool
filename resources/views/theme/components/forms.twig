@@ -7,23 +7,29 @@
     class: '',
     hint: '',
 }) %}
-    {% if options.label %}
-        <label class="form-label" for="{{ options.uid }}">
-            {{ options.label }}
-        </label>
-    {% endif %}
-    <input
-        class="form-input"
-        type="text"
-        name="{{ options.name }}"
-        value="{{ options.value }}"
-        placeholder="{{ options.placeholder }}"
-        id="{{ options.uid }}"/>
-    {% if options.hint %}
-        <span class="form-hint">
-            {{ options.hint }}
-        </span>
-    {% endif %}
+    <div class="form-column__inner" x-data="inputGuide(500)">
+        {% if options.label %}
+            <label class="form-label" for="{{ options.uid }}">
+                {{ options.label }}
+            </label>
+        {% endif %}
+        <input
+            class="form-input"
+            type="text"
+            name="{{ options.name }}"
+            value="{{ options.value }}"
+            placeholder="{{ options.placeholder }}"
+            id="{{ options.uid }}"
+            x-model.fill="value"/>
+        <div class="form-bottom">
+            {% if options.hint %}
+                <span class="form-hint">
+                    {{ options.hint }}
+                </span>
+            {% endif %}
+            <span class="form-guide" x-text="guideText"></span>
+        </div>
+    </div>
 {% endmacro %}
 
 {% macro number(options = {
@@ -54,9 +60,11 @@
         placeholder="{{ options.placeholder }}"
         id="{{ options.uid }}"/>
     {% if options.hint %}
-        <span class="form-hint">
-            {{ options.hint }}
-        </span>
+        <div class="form-bottom">
+            <span class="form-hint">
+                {{ options.hint }}
+            </span>
+        </div>
     {% endif %}
 {% endmacro %}
 
@@ -70,22 +78,28 @@
     class: '',
     hint: '',
 }) %}
-    {% if options.label %}
-        <label class="form-label" for="{{ options.uid }}">
-            {{ options.label }}
-        </label>
-    {% endif %}
-    <textarea
-        class="form-input form-input--textarea {{ options.class }}"
-        name="{{ options.name }}"
-        rows="{{ options.rows ?? 5 }}"
-        placeholder="{{ options.placeholder }}"
-        id="{{ options.uid }}">{{ options.value }}</textarea>
-    {% if options.hint %}
-        <span class="form-hint">
-            {{ options.hint }}
-        </span>
-    {% endif %}
+    <div class="form-column__inner" x-data="inputGuide(10000)">
+        {% if options.label %}
+            <label class="form-label" for="{{ options.uid }}">
+                {{ options.label }}
+            </label>
+        {% endif %}
+        <textarea
+            class="form-input form-input--textarea {{ options.class }}"
+            name="{{ options.name }}"
+            rows="{{ options.rows ?? 5 }}"
+            placeholder="{{ options.placeholder }}"
+            id="{{ options.uid }}"
+            x-model.fill="value">{{ options.value }}</textarea>
+        <div class="form-bottom">
+            {% if options.hint %}
+                <span class="form-hint">
+                    {{ options.hint }}
+                </span>
+            {% endif %}
+            <span class="form-guide" x-text="guideText"></span>
+        </div>
+    </div>
 {% endmacro %}
 
 {% macro color(options = {
@@ -108,9 +122,11 @@
         value="{{ options.value }}"
         id="{{ options.uid }}"/>
     {% if options.hint %}
-        <span class="form-hint">
-            {{ options.hint }}
-        </span>
+        <div class="form-bottom">
+            <span class="form-hint">
+                {{ options.hint }}
+            </span>
+        </div>
     {% endif %}
 {% endmacro %}
 
@@ -132,9 +148,11 @@
         <span>{{ options.label }}</span>
     </label>
     {% if options.hint %}
-        <span class="form-hint">
-            {{ options.hint }}
-        </span>
+        <div class="form-bottom">
+            <span class="form-hint">
+                {{ options.hint }}
+            </span>
+        </div>
     {% endif %}
 {% endmacro %}
 
@@ -164,9 +182,11 @@
         {% endfor %}
     </select>
     {% if options.hint %}
-        <span class="form-hint">
-            {{ options.hint }}
-        </span>
+        <div class="form-bottom">
+            <span class="form-hint">
+                {{ options.hint }}
+            </span>
+        </div>
     {% endif %}
 {% endmacro %}
 
@@ -177,7 +197,7 @@
     value: '',
     hint: '',
 }) %}
-    <div class="form-column overflow-x:hidden" x-data="editor()">
+    <div class="form-column__inner overflow-x:hidden" x-data="editor()">
         {% if options.label %}
             <label class="form-label" for="{{ options.uid }}">
                 {{ options.label }}
@@ -188,9 +208,11 @@
             name="{{ options.name }}"
             id="{{ options.uid }}">{{ options.value }}</textarea>
         {% if options.hint %}
-            <span class="form-hint">
-                {{ options.hint }}
-            </span>
+            <div class="form-bottom">
+                <span class="form-hint">
+                    {{ options.hint }}
+                </span>
+            </div>
         {% endif %}
     </div>
 {% endmacro %}

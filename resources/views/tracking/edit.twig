@@ -1,6 +1,6 @@
 {% extends 'cms-tool::layouts.dashboard' %}
 
-{% block title %}トラッキングコード設定{% endblock %}
+{% block title %}トラッキングコード{% endblock %}
 
 {% block current %}tracking{% endblock %}
 
@@ -8,9 +8,11 @@
 {% import "cms-tool::components.alerts" as alerts %}
 
 {% block content_right %}
+<h2 class="u-page-title">トラッキングコード</h2>
+
 <div class="card">
     <div class="card-header">
-        <h2 class="card-header__title">トラッキングコード設定</h2>
+        <h3 class="card-header__title">トラッキングコードの設定</h3>
         <hr class="divider" />
     </div>
     <div class="card-body" x-data="{
@@ -35,6 +37,7 @@
                         label:'Head',
                         value: tracking.head,
                         hint: '<head>タグ内に挿入されるコードです。Google Analyticsなどのトラッキングコードを設置する場合に利用します',
+                        maxLength: 5000,
                     }) }}
                 </div>
                 <div class="form-column">
@@ -43,6 +46,7 @@
                         label:'Body',
                         value: tracking.body,
                         hint: '<body>タグ内に挿入されるコードです。Google Tag Managerなどのタグマネージャーを設置する場合に利用します',
+                        maxLength: 5000,
                     }) }}
                 </div>
                 <div class="form-column">
@@ -51,6 +55,7 @@
                         label:'Footer',
                         value: tracking.footer,
                         hint: '</body>直前に挿入されるコードです。Google Adsenseなどの広告コードを設置する場合に利用します',
+                        maxLength: 5000,
                     }) }}
                 </div>
             </div>

@@ -6,7 +6,7 @@ class HookTags
 {
     /**
      * A hook tag called when registering an active theme route.
-     * The Hook method takes the `` RoutecollectorProxyInterface`` as an argument.
+     * The Hook method takes the `` RouteCollectorProxyInterface`` as an argument.
      */
     public const RegisterThemeRoute = 'register_theme_route';
 

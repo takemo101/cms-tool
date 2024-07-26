@@ -26,6 +26,6 @@ return [
     // Built-in server flag
     'built_in_server' => (bool) env(
         ServeCommand::BuiltInServerEnvironment,
-        php_sapi_name() === 'cli-server', // 環境変数BUILT_IN_SERVERが設定されていなければ、built-in serverが動いているかどうかを判定
+        php_sapi_name() === 'cli-server', // 「BUILT_IN_SERVER」環境変数が設定されていなければ、built-in serverが稼働しているかどうかを判定する
     ),
 ];

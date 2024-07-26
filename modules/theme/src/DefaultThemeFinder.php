@@ -21,12 +21,15 @@ class DefaultThemeFinder implements ThemeFinder
      * @param LocalFilesystem $filesystem
      * @param PathHelper $helper
      * @param string[] $locations
+     * @param string[] $paths
      */
     public function __construct(
         protected readonly LocalFilesystem $filesystem,
         protected readonly PathHelper $helper = new PathHelper(),
         #[Inject('config.theme.locations')]
         private array $locations = [],
+        #[Inject('config.theme.paths')]
+        private array $paths = [],
     ) {
         //
     }
@@ -55,6 +58,10 @@ class DefaultThemeFinder implements ThemeFinder
         }
 
         if ($path = $this->findInLocations($id)) {
+            return $this->themes[$id->value()] = $path;
+        }
+
+        if ($path = $this->findInPaths($id)) {
             return $this->themes[$id->value()] = $path;
         }
 
@@ -119,6 +126,30 @@ class DefaultThemeFinder implements ThemeFinder
     }
 
     /**
+     * Get the path to the theme file from the paths.
+     *
+     * @param ThemeId $id
+     * @return string|null
+     */
+    private function findInPaths(ThemeId $id): ?string
+    {
+        foreach ($this->paths as $themeDirectoryPath) {
+            // The basename of the path string is treated as the theme ID.
+            $basename = $this->helper->basename($themeDirectoryPath);
+
+            if ($basename !== $id->value()) {
+                continue;
+            }
+
+            $path = $this->helper->join($themeDirectoryPath, ThemeConfig::MetaFilename);
+
+            if ($this->filesystem->exists($path)) {
+                return $path;
+            }
+        }
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function addLocation(string $location): void
@@ -130,6 +161,17 @@ class DefaultThemeFinder implements ThemeFinder
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public function addPath(string $path): void
+    {
+        $this->paths = array_unique([
+            ...$this->paths,
+            $this->filesystem->realpath($path) ?? $path,
+        ]);
+    }
+
+    /**
      * Get the locations to search for themes.
      *
      * @return array<string,string>
@@ -137,5 +179,15 @@ class DefaultThemeFinder implements ThemeFinder
     public function getLocations(): array
     {
         return $this->locations;
+    }
+
+    /**
+     * Get the paths to search for themes.
+     *
+     * @return array<string,string>
+     */
+    public function getPaths(): array
+    {
+        return $this->paths;
     }
 }

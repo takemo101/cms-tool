@@ -42,7 +42,7 @@ interface ThemeFinder
     /**
      * Add a path to the finder.
      *
-     * @param string $path Theme directory path
+     * @param string $path The directory path where theme.json is located.
      * @return void
      */
     public function addPath(string $path): void;

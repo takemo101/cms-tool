@@ -74,7 +74,7 @@ class DefaultThemeFinder implements ThemeFinder
     public function findAll(): array
     {
         /** @var array<string,string> */
-        $themes = [];
+        $themes = $this->themes;
 
         foreach ($this->locations as $location) {
             $pattern = $this->helper->join($location, '*');
@@ -93,6 +93,20 @@ class DefaultThemeFinder implements ThemeFinder
                 if ($this->filesystem->exists($path)) {
                     $themes[$id] = $path;
                 }
+            }
+        }
+
+        foreach ($this->paths as $directory) {
+            $currentThemeId = $this->getThemeIdFromDirectoryPath($directory);
+
+            if (isset($themes[$currentThemeId->value()])) {
+                continue;
+            }
+
+            $path = $this->helper->join($directory, ThemeConfig::MetaFilename);
+
+            if ($this->filesystem->exists($path)) {
+                $themes[$currentThemeId->value()] = $path;
             }
         }
 
@@ -133,20 +147,31 @@ class DefaultThemeFinder implements ThemeFinder
      */
     private function findInPaths(ThemeId $id): ?string
     {
-        foreach ($this->paths as $themeDirectoryPath) {
-            // The basename of the path string is treated as the theme ID.
-            $basename = $this->helper->basename($themeDirectoryPath);
+        foreach ($this->paths as $directory) {
+            $currentThemeId = $this->getThemeIdFromDirectoryPath($directory);
 
-            if ($basename !== $id->value()) {
+            if (!$currentThemeId->equals($id)) {
                 continue;
             }
 
-            $path = $this->helper->join($themeDirectoryPath, ThemeConfig::MetaFilename);
+            $path = $this->helper->join($directory, ThemeConfig::MetaFilename);
 
             if ($this->filesystem->exists($path)) {
                 return $path;
             }
         }
+    }
+
+    /**
+     * Get the theme ID from the theme directory path.
+     *
+     * @param string $directoryPath
+     * @return ThemeId
+     */
+    private function getThemeIdFromDirectoryPath(string $directoryPath): ThemeId
+    {
+        // The basename of the path string is treated as the theme ID.
+        return new ThemeId($this->helper->basename($directoryPath));
     }
 
     /**

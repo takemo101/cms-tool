@@ -114,5 +114,24 @@ describe(
             // Expect the locations array to contain the new location
             expect($finder->getLocations())->toContain($location);
         });
+
+        it('adds a new path', function () {
+            $filesystem = m::mock(LocalFilesystem::class);
+            $helper = new PathHelper();
+            $finder = new DefaultThemeFinder($filesystem, $helper);
+
+            $path = '/new/path/to/themes';
+
+            // Mock the filesystem's realpath method to return the path
+            $filesystem->shouldReceive('realpath')
+                ->with($path)
+                ->andReturn($path);
+
+            // Call the addPath method
+            $finder->addPath($path);
+
+            // Expect the paths array to contain the new path
+            expect($finder->getPaths())->toContain($path);
+        });
     },
 )->group('DefaultThemeFinder', 'theme');

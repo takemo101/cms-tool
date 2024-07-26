@@ -160,6 +160,8 @@ class DefaultThemeFinder implements ThemeFinder
                 return $path;
             }
         }
+
+        return null;
     }
 
     /**

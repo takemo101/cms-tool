@@ -71,7 +71,7 @@ class ActiveThemeFunctionLoader
         }
 
         $this->hook->doTyped($activeTheme);
-        $this->hook->do(HookTags::LoadedActiveTheme, $activeTheme);
+        $this->hook->do(HookTags::ActiveThemeLoaded, $activeTheme);
     }
 
     /**

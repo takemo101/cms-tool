@@ -11,6 +11,11 @@ return [
         base_path('themes'),
     ],
 
+    // Directory paths for each theme
+    'paths' => [
+        // Specify the path to the directory of the theme that contains theme.json
+    ],
+
     // Directory to place themes when copying
     'copy' => base_path('themes'),
 

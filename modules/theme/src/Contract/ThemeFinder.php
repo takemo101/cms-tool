@@ -38,4 +38,12 @@ interface ThemeFinder
      * @return void
      */
     public function addLocation(string $location): void;
+
+    /**
+     * Add a path to the finder.
+     *
+     * @param string $path The directory path where theme.json is located.
+     * @return void
+     */
+    public function addPath(string $path): void;
 }

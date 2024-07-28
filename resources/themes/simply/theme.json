@@ -102,6 +102,52 @@
                     "hint": "フォームの横幅を最大幅にするには、iframeタグにwidth=\"100%\"を追加してください。"
                 }
             ]
+        },
+        {
+            "id": "detail",
+            "title": "詳細ページ",
+            "settings": [
+                {
+                    "type": "header",
+                    "title": "目次設定",
+                    "description": "記事詳細ページの上部に表示される目次の設定となります。"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "table_of_contents_show",
+                    "label": "目次を表示する",
+                    "default": true
+                },
+                {
+                    "type": "select",
+                    "id": "table_of_contents_level",
+                    "label": "見出しレベル",
+                    "default": 3,
+                    "options": [
+                        {
+                            "label": "h2",
+                            "value": "2"
+                        },
+                        {
+                            "label": "h3",
+                            "value": "3"
+                        },
+                        {
+                            "label": "h4",
+                            "value": "4"
+                        },
+                        {
+                            "label": "h5",
+                            "value": "5"
+                        },
+                        {
+                            "label": "h6",
+                            "value": "6"
+                        }
+                    ],
+                    "hint": "設定したレベルまでの見出しを目次に表示します。"
+                }
+            ]
         }
     ]
 }

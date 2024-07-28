@@ -42,6 +42,11 @@
                     <img src="{{ content.eyecatch.url }}" class="w-full">
                 {% endif %}
                 <div class="overflow-hidden sm:p-12 p-6 bg-white">
+
+                    {% include 'components.content-titles' with {
+                        content: content.content,
+                    } %}
+
                     <div class="prose">
                         {{ content.content|raw }}
                     </div>

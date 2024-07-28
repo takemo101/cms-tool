@@ -6,19 +6,19 @@ class HookTags
 {
     /**
      * A hook tag called when registering an active theme route.
-     * The Hook method takes the `` RoutecollectorProxyInterface`` as an argument.
+     * The Hook method takes the `` RouteCollectorProxyInterface`` as an argument.
      */
-    public const RegisterThemeRoute = 'register_theme_route';
+    public const ActiveThemeRouteRegistered = 'cmstool.active_theme_route_registered';
 
     /**
      * Hook tag called when loading the active theme
      * The Hook method takes the ``ActiveTheme`` as an argument.
      */
-    public const LoadedActiveTheme = 'loaded_active_theme';
+    public const ActiveThemeLoaded = 'cmstool.active_theme_loaded';
 
     /**
      * Hook tag called when the administrator session is started.
      * The Hook method takes the ``AdminSession`` as an argument.
      */
-    public const AdminSessionStarted = 'admin_session_started';
+    public const AdminSessionStarted = 'cmstool.admin_session_started';
 };

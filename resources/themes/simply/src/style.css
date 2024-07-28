@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 垂直表示のレイアウトやコンテンツを表示するコンテナ（セクション）など */
 .section-layout {
     @apply container mx-auto px-4 py-12;
 }
@@ -30,6 +31,7 @@
     @apply mb-12;
 }
 
+/* 記事一覧&詳細のタグ */
 .tag {
     @apply flex flex-wrap content-center gap-2;
 }
@@ -38,6 +40,7 @@
     @apply before:content-['#'] bg-gray-200 text-gray-800 text-sm py-1 px-3;
 }
 
+/* 記事詳細の目次 */
 .toc-outer {
     @apply sm:px-12 sm:py-10 px-6 py-4 sm:mb-12 mb-6 bg-gray-200;
 }
@@ -65,7 +68,7 @@
 [data-level="5"] { --level: 3; }
 [data-level="6"] { --level: 4; }
 
-
+/* 記事詳細の記事内容 */
 .prose pre {
     background-color: #0d1117;
 }

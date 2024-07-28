@@ -1,4 +1,4 @@
-{% if share.theme.detail.table_of_contents_show %}
+{% if show ?? true %}
 
     {% set titles = content_titles(content).select(1, share.theme.detail.table_of_contents_level) %}
 

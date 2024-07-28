@@ -13,6 +13,13 @@ use RuntimeException;
 class HeaderTitlesCreator
 {
     /**
+     * Prefix for encoding XML in UTF-8.
+     *
+     * @var string
+     */
+    public const EncodingPrefix = '<?xml encoding="utf-8">';
+
+    /**
      * constructor
      */
     public function __construct()
@@ -32,7 +39,11 @@ class HeaderTitlesCreator
     public function create(string $content): HeaderTitles
     {
         $dom = new DOMDocument();
-        $dom->loadHTML($content);
+
+        // Prevent errors when there are duplicate ID attributes in h tags
+        @$dom->loadHTML(
+            self::EncodingPrefix . $content,
+        );
 
         $xpath = new DOMXPath($dom);
 

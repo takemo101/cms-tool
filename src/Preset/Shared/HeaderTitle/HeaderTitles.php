@@ -42,6 +42,27 @@ readonly class HeaderTitles implements Countable, IteratorAggregate
     }
 
     /**
+     * Select only the titles with the specified range of levels and create a new instance
+     *
+     * @param integer $start
+     * @param integer $end
+     * @return self
+     */
+    public function select(
+        int $start = 1,
+        int $end = 6,
+    ): self {
+        $titles = [];
+        foreach ($this->titles as $title) {
+            if ($title->level >= $start && $title->level <= $end) {
+                $titles[] = $title;
+            }
+        }
+
+        return new self(...$titles);
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function count(): int

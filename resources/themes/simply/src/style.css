@@ -41,6 +41,9 @@
 .toc-outer {
     @apply sm:px-12 sm:py-10 px-6 py-4 sm:mb-12 mb-6 bg-gray-200;
 }
+.toc-title {
+    @apply sm:text-base text-xs font-bold text-gray-800 sm:mb-3 mb-2;
+}
 .toc-list {
     @apply m-0;
 }

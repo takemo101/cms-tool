@@ -4,6 +4,10 @@
 
     {% if not titles.isEmpty() %}
         <div class="toc-outer">
+            <h3 class="toc-title">
+                <i class="fas fa-list-ul" aria-hidden="true"></i>
+                INDEX
+            </h3>
             <ul class="toc-list">
                 {% for title in titles %}
                     <li class="toc-list__item" data-level="{{ title.level }}">

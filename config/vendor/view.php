@@ -10,6 +10,7 @@ use CmsTool\View\Twig\Extension\FunctionsExtension;
 use CmsTool\View\Twig\Extension\RouteExtension;
 use CmsTool\View\View;
 use Takemo101\CmsTool\Http\Component\ToastComponent;
+use Takemo101\CmsTool\Preset\Shared\PresetExtension;
 use Takemo101\CmsTool\Support\Accessor\ActiveThemeCustomizationAccessor;
 use Takemo101\CmsTool\Support\Accessor\MicroCmsApiAccessor;
 use Takemo101\CmsTool\Support\Accessor\ServerRequestAccessor;
@@ -97,6 +98,7 @@ return [
             AssetExtension::class,
             TranslationExtension::class,
             MicroCmsExtension::class,
+            PresetExtension::class,
         ],
 
         // Set up functions to be used in Twig

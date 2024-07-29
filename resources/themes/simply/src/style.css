@@ -53,7 +53,7 @@
 .toc-list__item {
     @apply list-none sm:text-base text-xs mb-2 last-of-type:mb-0;
     --level: 0;
-    padding-left: calc(20px * var(--level));
+    margin-left: calc(20px * var(--level));
 }
 .toc-list__item a {
     @apply text-gray-800 underline;

@@ -1,22 +1,16 @@
-{% if share.theme.detail.table_of_contents_show %}
+{% if show ?? true %}
 
-    {% set titles = content_titles(content).select(1, share.theme.detail.table_of_contents_level) %}
+    {% set layers = content_titles(content).select(1, share.theme.detail.table_of_contents_level).layering() %}
 
-    {% if not titles.isEmpty() %}
+    {% if not layers.isEmpty() %}
         <div class="toc-outer">
-            <ul class="toc-list">
-                {% for title in titles %}
-                    <li class="toc-list__item" data-level="{{ title.level }}">
-                        {% if title.hasId() %}
-                            <a href="#{{ title.id }}">
-                                {{ title.title }}
-                            </a>
-                        {% else %}
-                            {{ title.title }}
-                        {% endif %}
-                    </li>
-                {% endfor %}
-            </ul>
+            <h3 class="toc-title">
+                <i class="fas fa-list-ul" aria-hidden="true"></i>
+                INDEX
+            </h3>
+            {% include 'components.content-title-layered-list' with {
+                layers: layers
+            } %}
         </div>
     {% endif %}
 

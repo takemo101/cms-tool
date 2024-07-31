@@ -77,7 +77,17 @@ readonly class HeaderLayer
      */
     public function isBlank(): bool
     {
-        return $this->header !== null;
+        return $this->header === null;
+    }
+
+    /**
+     * Check if the layer is not empty
+     *
+     * @return boolean
+     */
+    public function isNotBlank(): bool
+    {
+        return !$this->isBlank();
     }
 
     /**

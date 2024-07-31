@@ -83,7 +83,8 @@ readonly class HeaderLayer
     /**
      * Get the title properties
      *
-     * @return LayeredHeaderTitle
+     * @param string $name
+     * @return mixed
      */
     public function __get(string $name)
     {

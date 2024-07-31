@@ -54,12 +54,28 @@ readonly class HeaderTitles implements Countable, IteratorAggregate
     ): self {
         $titles = [];
         foreach ($this->titles as $title) {
-            if ($title->level >= $start && $title->level <= $end) {
+            if ($title->level->isWithinRange($start, $end)) {
                 $titles[] = $title;
             }
         }
 
         return new self(...$titles);
+    }
+
+    /**
+     * Create a hierarchical structure of header titles in the content.
+     *
+     * @return HeaderLayers
+     */
+    public function layering(): HeaderLayers
+    {
+        $layers = new HeaderLayers();
+
+        foreach ($this->titles as $title) {
+            $layers = $layers->add($title->toLayered());
+        }
+
+        return new HeaderLayers(...$layers);
     }
 
     /**

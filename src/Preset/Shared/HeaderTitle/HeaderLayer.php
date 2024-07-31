@@ -71,11 +71,11 @@ readonly class HeaderLayer
     }
 
     /**
-     * Check if there is a title
+     * Check if the layer is empty
      *
      * @return boolean
      */
-    public function hasHeaderTitle(): bool
+    public function isBlank(): bool
     {
         return $this->header !== null;
     }

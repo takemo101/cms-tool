@@ -38,7 +38,7 @@ readonly class HeaderTitle extends AbstractHeaderTitle
     {
         return new HeaderLayer(
             level: $this->level,
-            title: new LayeredHeaderTitle(
+            header: new LayeredHeaderTitle(
                 id: $this->id,
                 title: $this->title,
             ),

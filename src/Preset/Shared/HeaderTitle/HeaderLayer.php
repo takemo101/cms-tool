@@ -16,12 +16,12 @@ readonly class HeaderLayer
      *
      * @param HeaderTitleLevel $level
      * @param HeaderLayers $layers
-     * @param LayeredHeaderTitle|null $title
+     * @param LayeredHeaderTitle|null $header
      */
     public function __construct(
         public HeaderTitleLevel $level,
         public HeaderLayers $layers = new HeaderLayers(),
-        public ?LayeredHeaderTitle $title = null,
+        public ?LayeredHeaderTitle $header = null,
     ) {
         //
     }
@@ -42,7 +42,7 @@ readonly class HeaderLayer
         return new self(
             level: $this->level,
             layers: $layers,
-            title: $this->title,
+            header: $this->header,
         );
     }
 
@@ -66,7 +66,7 @@ readonly class HeaderLayer
                     )->add($layer)
                 )
                 : $this->layers->add($layer),
-            title: $this->title,
+            header: $this->header,
         );
     }
 
@@ -77,7 +77,7 @@ readonly class HeaderLayer
      */
     public function hasHeaderTitle(): bool
     {
-        return $this->title !== null;
+        return $this->header !== null;
     }
 
     /**
@@ -88,8 +88,8 @@ readonly class HeaderLayer
     public function __get(string $name)
     {
         return match ($name) {
-            'title' => $this->title?->title,
-            'id' => $this->title?->id,
+            'title' => $this->header?->title,
+            'id' => $this->header?->id,
             default => null,
         };
     }

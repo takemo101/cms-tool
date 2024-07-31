@@ -9,6 +9,7 @@ export default {
       disc: 'disc',
       circle: 'circle',
       square: 'square',
+      decimal: 'decimal',
     },
     extend: {
       typography: {

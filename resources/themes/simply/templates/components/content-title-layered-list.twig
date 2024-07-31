@@ -1,20 +1,26 @@
 {% if not layers.isEmpty() %}
     <ul class="toc-list">
-        {% for layer in layers %}
-            <li class="toc-list__item" {% if layer.isBlank() %} data-level="{{ layer.level }}" {% endif %}>
-                {% if layer.isBlank() %}
+        {% for index, layer in layers %}
+            <li class="toc-list__item" {% if layer.isNotBlank() %} data-level="{{ layer.level }}" {% endif %}>
+                {% set number = index + 1 %}
+                {% set maker = layer.level.equals(1) ? '' : prefix ~ number ~ separator %}
+
+                {% if layer.isNotBlank() %}
                     <span>
                         {% if layer.header.id %}
                             <a href="#{{ layer.header.id }}">
-                                {{ layer.header.title }}
+                                {{ maker }} {{ layer.header.title }}
                             </a>
                         {% else %}
-                            {{ layer.header.title }}
+                            {{ maker }} {{ layer.header.title }}
                         {% endif %}
                     </span>
                 {% endif %}
                 {% include 'components.content-title-layered-list' with {
-                    layers: layer.layers
+                    layers: layer.layers,
+                    separator: separator,
+                    prefix: maker,
+                    suffix: suffix,
                 } %}
             </li>
         {% endfor %}

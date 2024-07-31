@@ -9,7 +9,10 @@
                 INDEX
             </h3>
             {% include 'components.content-title-layered-list' with {
-                layers: layers
+                layers: layers,
+                separator: '. ',
+                prefix: '',
+                suffix: '.',
             } %}
         </div>
     {% endif %}

@@ -14,6 +14,8 @@ class FileAccessLoggerFactory implements AccessLoggerFactory
 {
     public const LoggerName = 'access';
 
+    public const LineFormat = "%message% %context%\n";
+
     /**
      * constructor
      *
@@ -63,7 +65,9 @@ class FileAccessLoggerFactory implements AccessLoggerFactory
             filePermission: $this->permission,
         );
 
-        $handler->setFormatter(new LineFormatter());
+        $handler->setFormatter(
+            new LineFormatter(self::LineFormat),
+        );
 
         return $handler;
     }

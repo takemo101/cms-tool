@@ -66,7 +66,7 @@ class GenerateEncryptKeyCommand extends Command
 
         if ($dotEnv = $filesystem->read($dotEnvPath)) {
             /** @var string|null */
-            $replaced = preg_replace('/APP_KEY=.*$/m', "APP_KEY={$key}", $dotEnv);
+            $replaced = preg_replace('/APP_KEY=.*$/m', "APP_KEY=\"{$key}\"", $dotEnv);
 
             if ($replaced) {
                 $filesystem->write($dotEnvPath, $replaced);

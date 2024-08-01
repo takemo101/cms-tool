@@ -2,6 +2,9 @@
 
 namespace CmsTool\Support;
 
+use CmsTool\Support\AccessLog\AccessLogger;
+use CmsTool\Support\AccessLog\AccessLoggerFactory;
+use CmsTool\Support\AccessLog\FileAccessLoggerFactory;
 use CmsTool\Support\Encrypt\Command\GenerateEncryptKeyCommand;
 use CmsTool\Support\Encrypt\DefaultEncrypter;
 use CmsTool\Support\Encrypt\EncryptCipher;
@@ -60,9 +63,15 @@ class SupportProvider implements Provider
         $this->registerEncrypt($definitions);
         $this->registerValidation($definitions);
         $this->registerTranslation($definitions);
+        $this->registerAccessLog($definitions);
 
         $definitions->add([
-            //
+            ...ConfigBasedDefinitionReplacer::createDependencyDefinitions(
+                dependencies: [
+                    AccessLoggerFactory::class => FileAccessLoggerFactory::class,
+                ],
+                configKeyPrefix: 'support',
+            )
         ]);
     }
 
@@ -196,6 +205,13 @@ class SupportProvider implements Provider
                 'support.translation.translator',
                 true,
             ),
+        ]);
+    }
+
+    public function registerAccessLog(Definitions $definitions): void
+    {
+        $definitions->add([
+            AccessLogger::class => fn (AccessLoggerFactory $factory) => $factory->create(),
         ]);
     }
 }

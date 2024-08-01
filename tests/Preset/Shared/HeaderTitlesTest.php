@@ -239,7 +239,52 @@ describe(
                         ),
                     ),
                 )
-            ]
+            ],
+            fn () => [
+                [
+                    new HeaderTitle('3', 'Title 1', new HeaderTitleLevel(3)),
+                    new HeaderTitle('4', 'Title 2', new HeaderTitleLevel(4)),
+                    new HeaderTitle('5', 'Title 3', new HeaderTitleLevel(5)),
+                ],
+                new HeaderLayers(
+                    new HeaderLayer(
+                        new HeaderTitleLevel(1),
+                        new HeaderLayers(
+                            new HeaderLayer(
+                                new HeaderTitleLevel(2),
+                                new HeaderLayers(
+                                    new HeaderLayer(
+                                        new HeaderTitleLevel(3),
+                                        new HeaderLayers(
+                                            new HeaderLayer(
+                                                new HeaderTitleLevel(4),
+                                                new HeaderLayers(
+                                                    new HeaderLayer(
+                                                        new HeaderTitleLevel(5),
+                                                        new HeaderLayers(),
+                                                        new LayeredHeaderTitle(
+                                                            '5',
+                                                            'Title 3',
+                                                        ),
+                                                    ),
+                                                ),
+                                                new LayeredHeaderTitle(
+                                                    '4',
+                                                    'Title 2',
+                                                ),
+                                            ),
+                                        ),
+                                        new LayeredHeaderTitle(
+                                            '3',
+                                            'Title 1',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                )
+            ],
         ]);
     },
 )->group('HeaderTitles', 'preset');

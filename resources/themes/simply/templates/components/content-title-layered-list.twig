@@ -1,7 +1,7 @@
 {% if not layers.isEmpty() %}
     <ul class="toc-list">
         {% for index, layer in layers %}
-            <li class="toc-list__item" {% if layer.isNotBlank() %} data-level="{{ layer.level }}" {% endif %}>
+            <li class="toc-list__item" data-level="{{ layer.level }}">
                 {% set number = index + 1 %}
                 {% set maker = layer.level.equals(1) ? '' : prefix ~ number ~ separator %}
 

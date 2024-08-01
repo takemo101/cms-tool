@@ -7,6 +7,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Takemo101\Chubby\Config\ConfigRepository;
 use Takemo101\Chubby\Console\Command\Command;
 use Takemo101\Chubby\Filesystem\LocalFilesystem;
+use Takemo101\Chubby\Support\ApplicationPath;
 
 /**
  * Command to delete log files
@@ -23,15 +24,17 @@ class AccessLogCleanCommand extends Command
      * @param OutputInterface $output
      * @param ConfigRepository $config
      * @param LocalFilesystem $filesystem
+     * @param ApplicationPath $path
      * @return integer
      */
     public function handle(
         OutputInterface $output,
         ConfigRepository $config,
         LocalFilesystem $filesystem,
+        ApplicationPath $path,
     ) {
         /** @var string */
-        $directory = $config->get('support.access_log.file.path', storage_path('access'));
+        $directory = $config->get('support.access_log.file.path', $path->getStoragePath('access'));
 
         if (!$filesystem->exists($directory)) {
             $output->writeln('<info>Access log directory not found.</info>');

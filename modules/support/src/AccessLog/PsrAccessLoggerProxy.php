@@ -9,7 +9,6 @@ use Psr\Log\LoggerInterface;
  */
 class PsrAccessLoggerProxy implements AccessLogger
 {
-
     /**
      * Log sprintf format
      */

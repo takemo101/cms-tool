@@ -7,7 +7,9 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Mockery as m;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\UriInterface;
+use Takemo101\Chubby\Hook\Hook;
 
 describe(
     'AccessLog',
@@ -15,6 +17,8 @@ describe(
         beforeEach(function () {
             // Create mock objects
             $this->logger = m::mock(AccessLogger::class);
+            $this->hook = m::mock(Hook::class);
+            $this->dispatcher = m::mock(EventDispatcherInterface::class);
             $this->request = m::mock(ServerRequestInterface::class);
             $this->response = m::mock(ResponseInterface::class);
             $this->handler = m::mock(RequestHandlerInterface::class);
@@ -24,6 +28,8 @@ describe(
             // Set the enabled flag to true
             $accessLog = new AccessLog(
                 $this->logger,
+                $this->hook,
+                $this->dispatcher,
                 true,
             );
 
@@ -60,7 +66,11 @@ describe(
             $this->handler->shouldReceive('handle')->with($this->request)->andReturn($this->response);
 
             // Mock the methods of AccessLogger
-            $this->logger->shouldReceive('write'); // ->with($expectedLogEntry);
+            $this->logger->shouldReceive('write')->once();
+
+            // Mock the methods of Hook and EventDispatcherInterface
+            $this->hook->shouldReceive('doTyped')->once();
+            $this->dispatcher->shouldReceive('dispatch')->once();
 
             // Call the process method
             $result = $accessLog->process($this->request, $this->handler);
@@ -73,6 +83,8 @@ describe(
             // Set the enabled flag to false
             $accessLog = new AccessLog(
                 $this->logger,
+                $this->hook,
+                $this->dispatcher,
                 false,
             );
 
@@ -81,6 +93,10 @@ describe(
 
             // Mock the methods of AccessLogger
             $this->logger->shouldNotReceive('write');
+
+            // Mock the methods of Hook and EventDispatcherInterface
+            $this->hook->shouldNotReceive('doTyped');
+            $this->dispatcher->shouldNotReceive('dispatch');
 
             // Call the process method
             $result = $accessLog->process($this->request, $this->handler);

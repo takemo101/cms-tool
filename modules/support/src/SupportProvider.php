@@ -4,6 +4,7 @@ namespace CmsTool\Support;
 
 use CmsTool\Support\AccessLog\AccessLogger;
 use CmsTool\Support\AccessLog\AccessLoggerFactory;
+use CmsTool\Support\AccessLog\Command\AccessLogCleanCommand;
 use CmsTool\Support\AccessLog\FileAccessLoggerFactory;
 use CmsTool\Support\Encrypt\Command\GenerateEncryptKeyCommand;
 use CmsTool\Support\Encrypt\DefaultEncrypter;
@@ -106,6 +107,7 @@ class SupportProvider implements Provider
             fn (CommandCollection $commands) => $commands->add(
                 GenerateEncryptKeyCommand::class,
                 AddTranslationTextCommand::class,
+                AccessLogCleanCommand::class,
             ),
         );
     }

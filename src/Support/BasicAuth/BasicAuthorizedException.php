@@ -1,6 +1,6 @@
 <?php
 
-namespace Takemo101\CmsTool\Http\Exception;
+namespace Takemo101\CmsTool\Support\BasicAuth;
 
 use Exception;
 use Fig\Http\Message\StatusCodeInterface;

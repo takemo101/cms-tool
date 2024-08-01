@@ -1,6 +1,6 @@
 <?php
 
-namespace Takemo101\CmsTool\Http\Middleware;
+namespace Takemo101\CmsTool\Support\BasicAuth;
 
 use CmsTool\Support\Hash\Hasher;
 use Takemo101\CmsTool\Support\BasicAuth\BasicAuthenticator;

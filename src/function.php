@@ -42,7 +42,7 @@ use Takemo101\CmsTool\Http\Controller\Admin\UninstallController;
 use Takemo101\CmsTool\Http\Controller\Admin\WebhookController;
 use Takemo101\CmsTool\Http\Middleware\AdminAuth;
 use Takemo101\CmsTool\Http\Middleware\AdminSessionStart;
-use Takemo101\CmsTool\Http\Middleware\BasicAuth;
+use Takemo101\CmsTool\Support\BasicAuth\BasicAuth;
 use Takemo101\CmsTool\Http\Middleware\GuideToInstallation;
 use Takemo101\CmsTool\Http\Middleware\InsertTrackingCode;
 use Takemo101\CmsTool\Http\Middleware\VerifyActiveThemeCustomizability;

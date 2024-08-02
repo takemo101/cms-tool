@@ -2,7 +2,6 @@
 
 namespace Takemo101\CmsTool\Console;
 
-use CmsTool\Support\Encrypt\EncryptCipher;
 use CmsTool\Support\Hash\Hasher;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -89,11 +88,17 @@ class GenerateBasicAuthPasswordCommand extends Command
 
         if ($dotEnv = $filesystem->read($dotEnvPath)) {
 
+            // Generate a random string and create a replacement key.
+            $random = bin2hex(random_bytes(8));
+            $replaceKey = "### ----{$random}---- ###";
+
             // Replace $ with \$ to avoid error
-            $password = str_replace('$', '\$', $password);
+            $escapedPassword = str_replace('$', '\$', $password);
 
             /** @var string|null */
-            $replaced = preg_replace('/BASIC_AUTH_PASSWORD=.*$/m', "BASIC_AUTH_PASSWORD=\"{$password}\"", $dotEnv);
+            $replaced = preg_replace('/BASIC_AUTH_PASSWORD=.*$/m', $replaceKey, $dotEnv);
+
+            $replaced = str_replace($replaceKey, "BASIC_AUTH_PASSWORD=\"{$escapedPassword}\"", $replaced);
 
             if ($replaced) {
                 $filesystem->write($dotEnvPath, $replaced);

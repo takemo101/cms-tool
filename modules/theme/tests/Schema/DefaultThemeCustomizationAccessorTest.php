@@ -37,6 +37,10 @@ describe(
                 ->with($data)
                 ->andReturn($data);
 
+            $theme->shouldReceive('isReadonly')
+                ->once()
+                ->andReturn(false);
+
             $this->accessor->save($theme, $data);
         });
 
@@ -56,6 +60,10 @@ describe(
                 ->once()
                 ->with($data)
                 ->andReturn($data);
+
+            $theme->shouldReceive('isReadonly')
+                ->once()
+                ->andReturn(false);
 
             expect(
                 fn () =>
@@ -82,6 +90,10 @@ describe(
                 ->once()
                 ->with($data)
                 ->andReturn($data);
+
+            $theme->shouldReceive('isReadonly')
+                ->once()
+                ->andReturn(false);
 
             expect(
                 fn () =>
@@ -165,6 +177,52 @@ describe(
             expect(function () use ($theme) {
                 $this->accessor->load($theme);
             })->toThrow(ThemeLoadException::class);
+        });
+
+        it('should save the customization data to a temporary directory if the theme is readonly', function () {
+            $theme = m::mock(Theme::class);
+            $data = ['color' => 'blue'];
+            $json = json_encode($data, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT);
+
+            $dataPath = '/path/to/customization.json';
+
+            $directoryPath = '/path/to';
+
+            $this->helper->shouldReceive('getCustomizationDataPath')
+                ->once()
+                ->with($theme)
+                ->andReturn($dataPath);
+
+            $this->helper->shouldReceive('getTemporaryPath')
+                ->once()
+                ->with($theme)
+                ->andReturn($directoryPath);
+
+            $this->filesystem->shouldReceive('exists')
+                ->once()
+                ->with($directoryPath)
+                ->andReturn(false);
+
+            $this->filesystem->shouldReceive('makeDirectory')
+                ->once()
+                ->with($directoryPath)
+                ->andReturn(true);
+
+            $this->filesystem->shouldReceive('write')
+                ->once()
+                ->with($dataPath, $json)
+                ->andReturn(true);
+
+            $theme->shouldReceive('refineCustomizationWithDefaults')
+                ->once()
+                ->with($data)
+                ->andReturn($data);
+
+            $theme->shouldReceive('isReadonly')
+                ->once()
+                ->andReturn(true);
+
+            $this->accessor->save($theme, $data);
         });
     }
 )->group('DefaultThemeCustomizationAccessor', 'schema');

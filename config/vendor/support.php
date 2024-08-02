@@ -33,4 +33,22 @@ return [
             ],
         ]
     ],
+
+    'access_log' => [
+
+        // Enable access log writing
+        'enabled' => (bool) env('ACCESS_LOG_ENABLED', false),
+
+        // File
+        'file' => [
+            // Log directory path
+            'path' => storage_path('access'),
+
+            // Log file name
+            'filename' => 'access.log',
+
+            // Log file permission
+            'permission' => 0777,
+        ]
+    ],
 ];

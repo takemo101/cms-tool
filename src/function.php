@@ -4,6 +4,7 @@
 // Here, mainly configure routing and middleware.
 
 use CmsTool\Session\Middleware\Csrf;
+use CmsTool\Support\AccessLog\Middleware\AccessLog;
 use Psr\Container\ContainerInterface;
 use Slim\Interfaces\RouteCollectorProxyInterface as Proxy;
 use Takemo101\Chubby\Console\CommandCollection;
@@ -372,7 +373,8 @@ hook()
                     ThemeRouteGroupHandler::configure($proxy)
                         ->add(InsertTrackingCode::class)
                         ->add(WhenUnpublished::class)
-                        ->add(GuideToInstallation::class);
+                        ->add(GuideToInstallation::class)
+                        ->add(AccessLog::class);
                 }
             )
                 ->add(Csrf::class);

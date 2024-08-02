@@ -52,4 +52,27 @@ return [
             ],
         ]
     ],
+
+    'access_log' => [
+
+        // Enable access log writing
+        'enabled' => (bool) env('ACCESS_LOG_ENABLED', false),
+
+        // File
+        'file' => [
+            // Log directory path
+            'path' => storage_path('access'),
+
+            // Log file name
+            'filename' => 'access.log',
+
+            // Log file permission
+            'permission' => 0777,
+        ]
+    ],
+
+    // This configuration is used to modify the dependencies for the support module
+    'dependencies' => [
+        // \CmsTool\Support\AccessLog\AccessLoggerFactory::class => CmsTool\Support\AccessLog\FileAccessLoggerFactory::class,
+    ],
 ];

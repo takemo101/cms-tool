@@ -1,7 +1,6 @@
 <?php
 
 use CmsTool\View\Contract\Htmlable;
-use CmsTool\View\DefaultTemplateFinder;
 use CmsTool\View\Twig\Extension\ComponentExtension;
 use CmsTool\View\Twig\Extension\ConfigExtension;
 use CmsTool\View\Twig\Extension\RequestExtension;
@@ -9,18 +8,11 @@ use CmsTool\View\Twig\Extension\FiltersExtension;
 use CmsTool\View\Twig\Extension\FormExtension;
 use CmsTool\View\Twig\Extension\FunctionsExtension;
 use CmsTool\View\Twig\Extension\RouteExtension;
-use CmsTool\View\Twig\TwigTemplateRenderer;
 use CmsTool\View\View;
 use Takemo101\Chubby\Contract\Renderable;
 use Twig\Extension\StringLoaderExtension;
 
 return [
-
-    // TemplateFinder implementation class name
-    'finder' => DefaultTemplateFinder::class,
-
-    // TemplateRenderer implementation class name
-    'renderer' => TwigTemplateRenderer::class,
 
     'locations' => [
         base_path('resources/views'),
@@ -117,5 +109,11 @@ return [
     // Set up components
     'components' => [
         // 'name' => class-string<object&callable>,
+    ],
+
+    // This configuration is used to modify the dependencies for the view.
+    'dependencies' => [
+        // CmsTool\View\Contract\TemplateFinder::class => CmsTool\View\DefaultTemplateFinder::class,
+        // CmsTool\View\Contract\TemplateRenderer::class => CmsTool\View\Twig\TwigTemplateRenderer::class,
     ],
 ];

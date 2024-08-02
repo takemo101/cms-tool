@@ -54,15 +54,6 @@ class ViewProvider implements Provider
     public function register(Definitions $definitions): void
     {
         $definitions->add([
-            TemplateFinder::class => new ConfigBasedDefinitionReplacer(
-                DefaultTemplateFinder::class,
-                'view.finder',
-                true,
-            ),
-            TemplateRenderer::class => new ConfigBasedDefinitionReplacer(
-                TwigTemplateRenderer::class,
-                'view.renderer',
-            ),
             DataAccessors::class => function (
                 DataAccessorsFactory $factory,
                 Hook $hook,
@@ -159,6 +150,13 @@ class ViewProvider implements Provider
 
                 return $filters;
             },
+            ...ConfigBasedDefinitionReplacer::createDependencyDefinitions(
+                dependencies: [
+                    TemplateFinder::class => DefaultTemplateFinder::class,
+                    TemplateRenderer::class => TwigTemplateRenderer::class,
+                ],
+                configKeyPrefix: 'view',
+            )
         ]);
     }
 

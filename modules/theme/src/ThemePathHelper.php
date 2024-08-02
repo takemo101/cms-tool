@@ -4,7 +4,11 @@ namespace CmsTool\Theme;
 
 use DI\Attribute\Inject;
 use Takemo101\Chubby\Filesystem\PathHelper;
+use BadMethodCallException;
 
+/**
+ * @mixin PathHelper
+ */
 class ThemePathHelper
 {
     /**
@@ -78,8 +82,8 @@ class ThemePathHelper
     {
         return $theme->isReadonly()
             ? $this->getTemporaryPath(
-                'customization',
-                "{$theme->id}-data.json",
+                $theme,
+                ThemeConfig::CustomizationDataFilename,
             )
             : $this->getThemePath(
                 $theme,
@@ -122,13 +126,15 @@ class ThemePathHelper
     /**
      * Get temporary path
      *
+     * @param Theme $theme
      * @param string ...$paths
      * @return string
      */
-    public function getTemporaryPath(string ...$paths): string
+    public function getTemporaryPath(Theme $theme, string ...$paths): string
     {
         return $this->helper->join(
             $this->temporaryDirectory,
+            $theme->id->value(),
             ...$paths,
         );
     }
@@ -153,5 +159,22 @@ class ThemePathHelper
     public function extractThemeId(string $path): ThemeId
     {
         return new ThemeId($this->helper->basename($path));
+    }
+
+    /**
+     * Call helper method
+     *
+     * @param string $name
+     * @param mixed[] $arguments
+     * @return mixed
+     * @throws BadMethodCallException
+     */
+    public function __call(string $name, array $arguments): mixed
+    {
+        if (method_exists($this->helper, $name)) {
+            return $this->helper->{$name}(...$arguments);
+        }
+
+        throw new BadMethodCallException("Method {$name} does not exist");
     }
 }

@@ -39,6 +39,8 @@ class DefaultThemeCustomizationAccessor implements ThemeCustomizationAccessor
     {
         $path = $this->helper->getCustomizationDataPath($theme);
 
+        $this->makeReadonlyThemeDirectory($theme);
+
         try {
             $json = json_encode(
                 $theme->refineCustomizationWithDefaults($data),
@@ -92,5 +94,22 @@ class DefaultThemeCustomizationAccessor implements ThemeCustomizationAccessor
         }
 
         return $theme->refineCustomizationWithDefaults($data);
+    }
+
+    /**
+     * Make a temporary directory if the theme is readonly.
+     *
+     * @param Theme $theme
+     * @return void
+     */
+    private function makeReadonlyThemeDirectory(Theme $theme): void
+    {
+        if ($theme->isReadonly()) {
+            $directory = $this->helper->getTemporaryPath($theme);
+
+            if (!$this->filesystem->exists($directory)) {
+                $this->filesystem->makeDirectory($directory);
+            }
+        }
     }
 }

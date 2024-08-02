@@ -11,6 +11,7 @@ use Takemo101\Chubby\Event\EventRegister;
 use Takemo101\Chubby\Http\ErrorHandler\ErrorResponseRenders;
 use Takemo101\Chubby\Http\SlimHttp;
 use Takemo101\Chubby\Support\ApplicationSummary;
+use Takemo101\CmsTool\Console\GenerateBasicAuthPasswordCommand;
 use Takemo101\CmsTool\Console\StorageLinkCommand;
 use Takemo101\CmsTool\Error\SystemErrorPageRender;
 use Takemo101\CmsTool\Error\ThemeErrorPageRender;
@@ -41,6 +42,7 @@ use Takemo101\CmsTool\Http\Controller\Admin\UninstallController;
 use Takemo101\CmsTool\Http\Controller\Admin\WebhookController;
 use Takemo101\CmsTool\Http\Middleware\AdminAuth;
 use Takemo101\CmsTool\Http\Middleware\AdminSessionStart;
+use Takemo101\CmsTool\Support\BasicAuth\BasicAuth;
 use Takemo101\CmsTool\Http\Middleware\GuideToInstallation;
 use Takemo101\CmsTool\Http\Middleware\InsertTrackingCode;
 use Takemo101\CmsTool\Http\Middleware\VerifyActiveThemeCustomizability;
@@ -60,6 +62,7 @@ hook()
     ->onTyped(
         fn (CommandCollection $commands) => $commands->add(
             StorageLinkCommand::class,
+            GenerateBasicAuthPasswordCommand::class,
         ),
     )
     ->onTyped(
@@ -359,7 +362,7 @@ hook()
                             })->add(AdminSessionStart::class)
                                 ->add(GuideToInstallation::class);
                         }
-                    );
+                    )->add(BasicAuth::class);
 
                     $proxy->get(
                         '/assets/{path:.+}',

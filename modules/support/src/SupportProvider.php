@@ -6,6 +6,8 @@ use CmsTool\Support\Encrypt\Command\GenerateEncryptKeyCommand;
 use CmsTool\Support\Encrypt\DefaultEncrypter;
 use CmsTool\Support\Encrypt\EncryptCipher;
 use CmsTool\Support\Encrypt\Encrypter;
+use CmsTool\Support\Hash\BcryptHasher;
+use CmsTool\Support\Hash\Hasher;
 use CmsTool\Support\JsonAccess\JsonArrayAccessor;
 use CmsTool\Support\JsonAccess\JsonArrayLoader;
 use CmsTool\Support\JsonAccess\JsonArraySaver;
@@ -58,6 +60,7 @@ class SupportProvider implements Provider
     {
         $this->registerJsonAccess($definitions);
         $this->registerEncrypt($definitions);
+        $this->registerHash($definitions);
         $this->registerValidation($definitions);
         $this->registerTranslation($definitions);
 
@@ -153,6 +156,22 @@ class SupportProvider implements Provider
             Encrypter::class => new ConfigBasedDefinitionReplacer(
                 DefaultEncrypter::class,
                 'support.encrypt.encrypter',
+            ),
+        ]);
+    }
+
+    /**
+     * Execute Hash providing process.
+     *
+     * @param Definitions $definitions
+     * @return void
+     */
+    public function registerHash(Definitions $definitions): void
+    {
+        $definitions->add([
+            Hasher::class => new ConfigBasedDefinitionReplacer(
+                BcryptHasher::class,
+                'support.hash.hasher',
             ),
         ]);
     }

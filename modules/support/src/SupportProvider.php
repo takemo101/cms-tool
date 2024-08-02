@@ -64,7 +64,6 @@ class SupportProvider implements Provider
     {
         $this->registerJsonAccess($definitions);
         $this->registerEncrypt($definitions);
-        $this->registerHash($definitions);
         $this->registerValidation($definitions);
         $this->registerTranslation($definitions);
         $this->registerAccessLog($definitions);
@@ -72,6 +71,11 @@ class SupportProvider implements Provider
         $definitions->add([
             ...ConfigBasedDefinitionReplacer::createDependencyDefinitions(
                 dependencies: [
+                    Encrypter::class => DefaultEncrypter::class,
+                    Hasher::class => BcryptHasher::class,
+                    JsonArrayAccessor::class => DefaultJsonAccessor::class,
+                    TranslationAccessor::class => TranslationJsonFileAccessor::class,
+                    Translator::class => DefaultTranslator::class,
                     AccessLoggerFactory::class => FileAccessLoggerFactory::class,
                 ],
                 configKeyPrefix: 'support',
@@ -124,10 +128,6 @@ class SupportProvider implements Provider
     public function registerJsonAccess(Definitions $definitions): void
     {
         $definitions->add([
-            JsonArrayAccessor::class => new ConfigBasedDefinitionReplacer(
-                DefaultJsonAccessor::class,
-                'support.json.accessor',
-            ),
             JsonArrayLoader::class => get(JsonArrayAccessor::class),
             JsonArraySaver::class => get(JsonArrayAccessor::class),
         ]);
@@ -164,26 +164,6 @@ class SupportProvider implements Provider
                     $cipher,
                 );
             },
-            Encrypter::class => new ConfigBasedDefinitionReplacer(
-                DefaultEncrypter::class,
-                'support.encrypt.encrypter',
-            ),
-        ]);
-    }
-
-    /**
-     * Execute Hash providing process.
-     *
-     * @param Definitions $definitions
-     * @return void
-     */
-    public function registerHash(Definitions $definitions): void
-    {
-        $definitions->add([
-            Hasher::class => new ConfigBasedDefinitionReplacer(
-                BcryptHasher::class,
-                'support.hash.hasher',
-            ),
         ]);
     }
 
@@ -214,18 +194,8 @@ class SupportProvider implements Provider
     {
         $definitions->add([
             TranslatorInterface::class => get(SymfonyTranslationProxy::class),
-            TranslationAccessor::class => new ConfigBasedDefinitionReplacer(
-                TranslationJsonFileAccessor::class,
-                'support.translation.accessor',
-                true,
-            ),
             TranslationLoader::class => get(TranslationAccessor::class),
             TranslationSaver::class => get(TranslationAccessor::class),
-            Translator::class => new ConfigBasedDefinitionReplacer(
-                DefaultTranslator::class,
-                'support.translation.translator',
-                true,
-            ),
         ]);
     }
 

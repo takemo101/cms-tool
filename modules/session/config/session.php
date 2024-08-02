@@ -26,6 +26,7 @@ return [
         'persistent_token_mode' => true,
     ],
 
+    // This configuration is used to modify the dependencies for session.
     'dependencies' => [
         // CmsTool\Session\Contract\SessionFactory::class => CmsTool\Session\NativePhpSessionFactory::class,
     ],

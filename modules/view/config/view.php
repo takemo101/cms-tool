@@ -111,7 +111,7 @@ return [
         // 'name' => class-string<object&callable>,
     ],
 
-    // This configuration is used to modify the dependencies for the view.
+    // This configuration is used to modify the dependencies for view.
     'dependencies' => [
         // CmsTool\View\Contract\TemplateFinder::class => CmsTool\View\DefaultTemplateFinder::class,
         // CmsTool\View\Contract\TemplateRenderer::class => CmsTool\View\Twig\TwigTemplateRenderer::class,

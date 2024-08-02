@@ -71,5 +71,15 @@ describe(
 
             expect($actual)->toBe($expected);
         })->skipOnWindows();
+
+        it('should call PathHelper method', function (string $method) {
+            $actual = $this->helper->{$method}('/path/to/file.txt');
+
+            expect($actual)->not->toBeEmpty();
+        })->with([
+            'dirname',
+            'basename',
+            'extension',
+        ]);
     }
 )->group('ThemePathHelper', 'theme');

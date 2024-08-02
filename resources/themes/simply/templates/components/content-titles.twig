@@ -1,6 +1,6 @@
 {% if show ?? true %}
 
-    {% set layers = content_titles(content).select(1, share.theme.detail.table_of_contents_level).layering() %}
+    {% set layers = content|content_titles.select(1, share.theme.detail.table_of_contents_level).layering() %}
 
     {% if not layers.isEmpty() %}
         <div class="toc-outer">
@@ -9,7 +9,10 @@
                 INDEX
             </h3>
             {% include 'components.content-title-layered-list' with {
-                layers: layers
+                layers: layers,
+                separator: '. ',
+                prefix: '',
+                suffix: '.',
             } %}
         </div>
     {% endif %}

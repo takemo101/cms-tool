@@ -60,9 +60,11 @@ readonly class HeaderTitleLevel implements Stringable
      * @param self $level
      * @return boolean
      */
-    public function equals(self $level): bool
+    public function equals(int|self $level): bool
     {
-        return $this->level === $level->level;
+        $otherLevel = $level instanceof self ? $level->level : $level;
+
+        return $this->level === $otherLevel;
     }
 
     /**

@@ -71,7 +71,27 @@ readonly class HeaderTitles implements Countable, IteratorAggregate
     {
         $layers = new HeaderLayers();
 
-        foreach ($this->titles as $title) {
+        $titles = $this->titles;
+
+        /** @var HeaderTitle|null */
+        $first = array_shift($titles);
+
+        if ($first === null) {
+            return $layers;
+        }
+
+        // If the first title is the top level, add it to the layers.
+        $layers = $first->level->isTop()
+            ? $layers->add($first->toLayered())
+            : $layers->add(
+                (
+                    new HeaderLayer(
+                        level: new HeaderTitleLevel(HeaderTitleLevel::Top),
+                    )
+                )->add($first->toLayered()),
+            );
+
+        foreach ($titles as $title) {
             $layers = $layers->add($title->toLayered());
         }
 

@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 垂直表示のレイアウトやコンテンツを表示するコンテナ（セクション）など */
+.section-layout {
+  @apply container mx-auto px-4 py-12;
+}
+
+.section-narrow-layout {
+  @apply container lg:max-w-4xl mx-auto px-4 pt-12;
+}
+.section-narrow {
+  @apply last-of-type:pb-20;
+}
+
+.section-header {
+  @apply flex items-center space-x-4;
+  &__title {
+    @apply sm:text-3xl text-2xl font-bold;
+  }
+  &__subtitle {
+    @apply sm:text-base text-sm text-gray-600;
+  }
+  &__to-link {
+    @apply sm:text-base text-sm hover:opacity-60;
+  }
+}
+
+.list-title {
+  @apply mb-12;
+}
+
+/* 記事一覧&詳細のタグ */
+.tag {
+  @apply flex flex-wrap content-center gap-2;
+}
+
+.tag-label {
+  @apply before:content-['#'] bg-gray-200 text-gray-800 text-sm py-1 px-3;
+}
+
+/* 記事詳細の目次 */
+.toc-outer {
+  @apply sm:px-12 sm:py-10 px-6 py-4 sm:mb-12 mb-6 bg-gray-200;
+}
+.toc-title {
+  @apply sm:text-base text-xs font-bold text-gray-800 sm:mb-3 mb-2;
+}
+.toc-list {
+  @apply m-0;
+  &__item {
+    @apply list-none list-inside sm:text-base text-xs ml-[20px];
+    &[data-level] {
+      @apply leading-7;
+    }
+    &[data-level="1"] > span {
+      @apply font-bold;
+    }
+    &[data-level="1"],
+    &[data-level="2"] {
+      @apply ml-0;
+    }
+    a {
+      @apply text-gray-800 hover:underline;
+    }
+  }
+}
+/* 記事詳細の記事内容 */
+.prose pre {
+  background-color: #0d1117;
+}

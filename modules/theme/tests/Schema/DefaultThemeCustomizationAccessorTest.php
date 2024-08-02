@@ -27,6 +27,11 @@ describe(
                 ->with($theme)
                 ->andReturn('/path/to/customization.json');
 
+            $this->helper->shouldReceive('makeTemporaryDirectoryOrSkip')
+                ->once()
+                ->with($theme, $this->filesystem)
+                ->andReturnNull();
+
             $this->filesystem->shouldReceive('write')
                 ->once()
                 ->with('/path/to/customization.json', $json)
@@ -48,6 +53,11 @@ describe(
                 ->once()
                 ->with($theme)
                 ->andReturn('/path/to/customization.json');
+
+            $this->helper->shouldReceive('makeTemporaryDirectoryOrSkip')
+                ->once()
+                ->with($theme, $this->filesystem)
+                ->andReturnNull();
 
             $this->filesystem->shouldReceive('write')
                 ->never();
@@ -72,6 +82,11 @@ describe(
                 ->once()
                 ->with($theme)
                 ->andReturn('/path/to/customization.json');
+
+            $this->helper->shouldReceive('makeTemporaryDirectoryOrSkip')
+                ->once()
+                ->with($theme, $this->filesystem)
+                ->andReturnNull();
 
             $this->filesystem->shouldReceive('write')
                 ->once()

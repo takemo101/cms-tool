@@ -39,6 +39,13 @@ class DefaultThemeCustomizationAccessor implements ThemeCustomizationAccessor
     {
         $path = $this->helper->getCustomizationDataPath($theme);
 
+        // If the theme is read-only, there is a possibility that the path to the temporary directory does not exist,
+        // so we need to add a process to create the directory before the save operation.
+        $this->helper->makeTemporaryDirectoryOrSkip(
+            theme: $theme,
+            filesystem: $this->filesystem,
+        );
+
         try {
             $json = json_encode(
                 $theme->refineCustomizationWithDefaults($data),

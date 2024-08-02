@@ -18,10 +18,6 @@ return [
         'cost' => 10,
     ],
 
-    'json' => [
-        //
-    ],
-
     'translation' => [
 
         // Settings for translation by file

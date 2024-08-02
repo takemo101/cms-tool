@@ -31,11 +31,13 @@ class CacheProvider implements Provider
     public function register(Definitions $definitions): void
     {
         $definitions->add([
-            CacheItemPoolFactory::class => new ConfigBasedDefinitionReplacer(
-                FilesystemCacheItemPoolFactory::class,
-                'cache.factory',
-            ),
             CacheItemPoolInterface::class => fn (CacheItemPoolFactory $factory) => $factory->create(),
+            ...ConfigBasedDefinitionReplacer::createDependencyDefinitions(
+                dependencies: [
+                    CacheItemPoolFactory::class => FilesystemCacheItemPoolFactory::class,
+                ],
+                configKeyPrefix: 'cache',
+            )
         ]);
     }
 

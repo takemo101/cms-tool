@@ -1,10 +1,6 @@
 <?php
 
-use CmsTool\Session\NativePhpSessionFactory;
-
 return [
-    // SessionFactory implementation class name
-    'factory' => NativePhpSessionFactory::class,
 
     // FlashSession classes
     'flashes' => [
@@ -28,5 +24,9 @@ return [
         'strength' => 16,
 
         'persistent_token_mode' => true,
-    ]
+    ],
+
+    'dependencies' => [
+        // CmsTool\Session\Contract\SessionFactory::class => CmsTool\Session\NativePhpSessionFactory::class,
+    ],
 ];

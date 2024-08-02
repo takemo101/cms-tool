@@ -34,10 +34,6 @@ class SessionProvider implements Provider
     {
         $definitions->add([
             'csrf' => get(CsrfGuard::class),
-            SessionFactory::class => new ConfigBasedDefinitionReplacer(
-                NativePhpSessionFactory::class,
-                'session.factory',
-            ),
             FlashSessionsFactory::class => function (
                 ConfigRepository $config,
                 Hook $hook,
@@ -51,6 +47,12 @@ class SessionProvider implements Provider
 
                 return $factory;
             },
+            ...ConfigBasedDefinitionReplacer::createDependencyDefinitions(
+                dependencies: [
+                    SessionFactory::class => NativePhpSessionFactory::class,
+                ],
+                configKeyPrefix: 'session',
+            ),
         ]);
     }
 

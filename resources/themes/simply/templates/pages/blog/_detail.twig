@@ -67,6 +67,11 @@
                             {% endfor %}
                         </div>
                     {% endif %}
+
+                    {% include 'components.content-prev-next-link' with {
+                        helper: helper,
+                        show: share.theme.detail.prev_next_show,
+                    } %}
                 </div>
 
             </article>

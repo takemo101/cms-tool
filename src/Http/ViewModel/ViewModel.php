@@ -12,6 +12,11 @@ use Takemo101\Chubby\Contract\Arrayable;
 abstract class ViewModel implements Arrayable
 {
     /**
+    * @var string The method name to retrieve data in bulk
+     */
+    public const DataMethod = '__data';
+
+    /**
      * @var string[] Method excluding data
      */
     protected const IgnoreMethods = [
@@ -28,7 +33,7 @@ abstract class ViewModel implements Arrayable
         // Method excluding data
         $ignoreMethods = [
             '__construct',
-            '__data',
+            static::DataMethod,
             'toArray',
             ...static::IgnoreMethods,
         ];
@@ -58,8 +63,8 @@ abstract class ViewModel implements Arrayable
                     ]
                 ),
             ...(
-                method_exists($this, '__data')
-                ? container()->call([$this, '__data'])
+                method_exists($this, static::DataMethod)
+                ? container()->call([$this, static::DataMethod])
                 : []
             ),
         ];

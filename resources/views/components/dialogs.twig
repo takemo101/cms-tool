@@ -1,8 +1,8 @@
 {% macro confirm(options = {
     title: 'Update',
     message: '変更内容を保存しますか？',
-    OK: 'OK',
-    Cancel: 'Cancel',
+    ok: 'OK',
+    cancel: 'Cancel',
 }) %}
     <dialog
         class="dialog"
@@ -75,13 +75,13 @@
                     type="button"
                     @click="close"
                     class="form-btn form-btn--secondary">
-                    {{ options.Cancel }}
+                    {{ options.cancel }}
                 </button>
                 <button
                     type="button"
                     @click="handleOKClick"
                     class="form-btn form-btn--primary">
-                    {{ options.OK }}
+                    {{ options.ok }}
                 </button>
             </div>
         </div>

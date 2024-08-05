@@ -222,7 +222,7 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
         $key = $this->buildCacheKey([
             ...$apiQuery->toQuery(),
             'endpoint' => $endpoint,
-        ]);;
+        ]);
 
         /** @var array<string,mixed> */
         $json = $this->cache->get(
@@ -286,7 +286,7 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
         $key = $this->buildCacheKey([
             ...$apiQuery->toQuery(),
             'endpoint' => $endpoint,
-        ]);;
+        ]);
 
         /** @var array<string,mixed> */
         $json = $this->cache->get(

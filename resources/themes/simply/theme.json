@@ -146,6 +146,17 @@
                         }
                     ],
                     "hint": "設定したレベルまでの見出しを目次に表示します。"
+                },
+                {
+                    "type": "header",
+                    "title": "ページナビ",
+                    "description": "次の記事や前の記事へのリンクを表示するページナビの設定となります。"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "prev_next_show",
+                    "label": "ページナビを表示する",
+                    "default": true
                 }
             ]
         }

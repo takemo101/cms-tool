@@ -6,6 +6,7 @@ use ArrayIterator;
 use Countable;
 use DOMElement;
 use IteratorAggregate;
+use Takemo101\CmsTool\Support\Shared\HasCamelCaseAccess;
 use Traversable;
 
 /**
@@ -15,6 +16,8 @@ use Traversable;
  */
 readonly class HeaderTitles implements Countable, IteratorAggregate
 {
+    use HasCamelCaseAccess;
+
     /**
      * @var HeaderTitle[]
      */

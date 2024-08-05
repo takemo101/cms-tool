@@ -69,6 +69,20 @@ interface MicroCmsContentQueryService
     ): ?ArrayObject;
 
     /**
+     * Get the first content
+     *
+     * @param string $endpoint
+     * @param MicroCmsContentGetOneQuery $query
+     * @param bool $cache
+     * @return ArrayObject|null
+     */
+    public function getFirst(
+        string $endpoint,
+        MicroCmsContentGetListQuery $query = new MicroCmsContentGetListQuery(),
+        bool $cache = true,
+    ): ?ArrayObject;
+
+    /**
      * Get Microcms content list
      *
      * @param string $endpoint

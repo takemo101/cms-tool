@@ -28,7 +28,7 @@ class ContentIndexAction extends AbstractIndexAction
         private readonly string $endpoint,
         private readonly string $signature,
         private readonly int $limit = 10,
-        private readonly ?string $order = null,
+        private readonly ?string $order = 'publishedAt',
         private readonly ?string $filter = null,
     ) {
         assert(

@@ -1,0 +1,41 @@
+{% if (show ?? true) %}
+    {% set prev_next = helper.get_prev_next() %}
+    {% set prev = prev_next.prev %}
+    {% set next = prev_next.next %}
+    {% if prev_next.has_prev_or_next() %}
+        <div class="mt-8">
+            <ul class="pn-nav">
+                {% if prev %}
+                    <li class="pn-nav__item">
+                        <a href="{{ route('blog.detail', {id: prev.id}) }}"
+                            title="{{ prev.title }}"
+                            class="pn-nav__item__link">
+                            <div class="pn-nav__item__link-arrow">
+                                <i class="fas fa-chevron-left"></i>
+                            </div>
+                            <div class="pn-nav__item__link-main">
+                                <small class="pn-nav__item__link-main__subtitle">前の記事</small>
+                                <span class="pn-nav__item__link-main__title">{{ prev.title }}</span>
+                            </div>
+                        </a>
+                    </li>
+                {% endif %}
+                {% if next %}
+                    <li class="pn-nav__item">
+                        <a href="{{ route('blog.detail', {id: next.id}) }}"
+                            title="{{ next.title }}"
+                            class="pn-nav__item__link">
+                            <div class="pn-nav__item__link-main">
+                                <small class="pn-nav__item__link-main__subtitle">次の記事</small>
+                                <span class="pn-nav__item__link-main__title">{{ next.title }}</span>
+                            </div>
+                            <div class="pn-nav__item__link-arrow">
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    {% endif %}
+{% endif %}

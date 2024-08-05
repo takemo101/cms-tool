@@ -3,6 +3,7 @@
 namespace Takemo101\CmsTool\Preset\Shared\HeaderTitle;
 
 use Stringable;
+use Takemo101\CmsTool\Support\Shared\HasCamelCaseAccess;
 
 /**
  * ValueObject representing the hierarchical level of a header title
@@ -11,6 +12,8 @@ use Stringable;
  */
 readonly class HeaderTitleLevel implements Stringable
 {
+    use HasCamelCaseAccess;
+
     /**
      * @var integer[]
      */

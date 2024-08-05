@@ -57,6 +57,7 @@ class BlogHook implements ThemeHook
                         TaxonomiesAccessor::class,
                         [
                             'endpoint' => $endpoints->blog,
+                            'orders' => '-publishedAt',
                         ]
                     )
                     ->add(

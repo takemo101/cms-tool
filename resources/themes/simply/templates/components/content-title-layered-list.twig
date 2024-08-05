@@ -1,18 +1,18 @@
-{% if not layers.isEmpty() %}
+{% if not layers.is_empty() %}
     <ul class="toc-list">
         {% for index, layer in layers %}
             <li class="toc-list__item" data-level="{{ layer.level }}">
                 {% set number = index + 1 %}
                 {% set maker = layer.level.equals(1) ? '' : prefix ~ number ~ separator %}
 
-                {% if layer.isNotBlank() %}
+                {% if layer.is_not_blank() %}
                     <span>
                         {% if layer.header.id %}
                             <a href="#{{ layer.header.id }}">
-                                {{ maker }} {{ layer.header.title }}
+                                {{ maker }} {{ layer.title }}
                             </a>
                         {% else %}
-                            {{ maker }} {{ layer.header.title }}
+                            {{ maker }} {{ layer.title }}
                         {% endif %}
                     </span>
                 {% endif %}

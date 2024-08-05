@@ -64,6 +64,7 @@ class BlogRoute implements ThemeRoute
             new ContentIndexAction(
                 endpoint: $ext->endpoints->blog,
                 signature: $ext->signatures->blog,
+                order: '-publishedAt',
             ),
         )
             ->setName('blog.index');
@@ -73,6 +74,7 @@ class BlogRoute implements ThemeRoute
             new ContentDetailAction(
                 endpoint: $ext->endpoints->blog,
                 signature: $ext->signatures->blog,
+                orderField: 'publishedAt',
             ),
         )
             ->setName('blog.detail');

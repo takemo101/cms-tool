@@ -66,6 +66,33 @@
     }
   }
 }
+
+/* 記事詳細の次の記事と前の記事のページナビゲーション */
+.pn-nav {
+  @apply flex sm:items-stretch sm:flex-row flex-col sm:gap-x-6 gap-y-6;
+
+  &__item {
+    @apply flex-1;
+
+    &__link {
+      @apply flex h-full items-center border border-gray-200 hover:bg-gray-200;
+      &-arrow {
+        @apply sm:py-6 py-4 px-2 flex-none sm:text-2xl text-lg;
+      }
+      &-main {
+        @apply flex flex-col sm:p-6 p-4 w-full;
+
+        &__subtitle {
+          @apply text-sm text-gray-600;
+        }
+        &__title {
+          @apply sm:text-base text-sm;
+        }
+      }
+    }
+  }
+}
+
 /* 記事詳細の記事内容 */
 .prose pre {
   background-color: #0d1117;

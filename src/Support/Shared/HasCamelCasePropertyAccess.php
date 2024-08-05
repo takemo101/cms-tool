@@ -14,7 +14,9 @@ trait HasCamelCasePropertyAccess
      */
     protected function __properties(): array
     {
-        return [];
+        return [
+            // 'exampleProperty' => $this->example,
+        ];
     }
 
     /**

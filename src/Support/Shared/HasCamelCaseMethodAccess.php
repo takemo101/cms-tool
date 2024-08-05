@@ -16,7 +16,9 @@ trait HasCamelCaseMethodAccess
      */
     protected function __methods(): array
     {
-        return [];
+        return [
+            // 'exampleMethod' => fn() => 'example',
+        ];
     }
 
     /**

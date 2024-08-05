@@ -2,6 +2,8 @@
 
 namespace Takemo101\CmsTool\Preset\Shared\HeaderTitle;
 
+use Takemo101\CmsTool\Support\Shared\HasCamelCaseAccess;
+
 /**
  * Data class representing the hierarchical structure of header titles in the content.
  *
@@ -11,6 +13,8 @@ namespace Takemo101\CmsTool\Preset\Shared\HeaderTitle;
  */
 readonly class HeaderLayer
 {
+    use HasCamelCaseAccess;
+
     /**
      * constructor
      *
@@ -91,17 +95,13 @@ readonly class HeaderLayer
     }
 
     /**
-     * Get the title properties
-     *
-     * @param string $name
-     * @return mixed
+     * {@inheritdoc}
      */
-    public function __get(string $name)
+    protected function __properties(): array
     {
-        return match ($name) {
+        return [
             'title' => $this->header?->title,
             'id' => $this->header?->id,
-            default => null,
-        };
+        ];
     }
 }

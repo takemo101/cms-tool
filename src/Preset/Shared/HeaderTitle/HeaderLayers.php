@@ -5,6 +5,7 @@ namespace Takemo101\CmsTool\Preset\Shared\HeaderTitle;
 use ArrayIterator;
 use Countable;
 use IteratorAggregate;
+use Takemo101\CmsTool\Support\Shared\HasCamelCaseAccess;
 use Traversable;
 
 /**
@@ -14,6 +15,8 @@ use Traversable;
  */
 readonly class HeaderLayers implements Countable, IteratorAggregate
 {
+    use HasCamelCaseAccess;
+
     /**
      * @var HeaderLayer[]
      */

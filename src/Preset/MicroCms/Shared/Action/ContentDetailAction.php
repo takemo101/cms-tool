@@ -2,6 +2,8 @@
 
 namespace Takemo101\CmsTool\Preset\MicroCms\Shared\Action;
 
+use ArrayObject;
+use Closure;
 use CmsTool\View\View;
 use CmsTool\View\ViewCreator;
 use Psr\Http\Message\ServerRequestInterface;
@@ -9,6 +11,7 @@ use Slim\Exception\HttpNotFoundException;
 use Takemo101\CmsTool\Preset\Shared\Exception\NotFoundThemeTemplateException;
 use Takemo101\CmsTool\Preset\Shared\LayeredTemplateNamesCreator;
 use Takemo101\CmsTool\Preset\MicroCms\Shared\ViewModel\ContentDetailPage;
+use Takemo101\CmsTool\UseCase\MicroCms\QueryService\Content\MicroCmsContentGetListQuery;
 use Takemo101\CmsTool\UseCase\MicroCms\QueryService\Content\MicroCmsContentQueryService;
 
 class ContentDetailAction
@@ -21,10 +24,12 @@ class ContentDetailAction
      *
      * @param string $endpoint
      * @param string $signature
+     * @param string $orderField The field name for the basic sorting order of the content
      */
     public function __construct(
         private readonly string $endpoint,
         private readonly string $signature,
+        private readonly string $orderField = 'publishedAt',
     ) {
         assert(
             empty($endpoint) === false,
@@ -82,8 +87,44 @@ class ContentDetailAction
             $templateNames,
             new ContentDetailPage(
                 content: $content,
+                prevAndNextContentsGenerator: $this->createPrevAndNextGenerator($queryService, $content),
                 isDraft: !empty($draftKey),
             )
         ) ?? throw new NotFoundThemeTemplateException($templateNames);
+    }
+
+    /**
+     * Create a closure to retrieve the next and previous content.
+     *
+     * @param MicroCmsContentQueryService $queryService
+     * @param ArrayObject $content
+     * @return Closure():array{0: ?ArrayObject, 1: ?ArrayObject}
+     */
+    private function createPrevAndNextGenerator(
+        MicroCmsContentQueryService $queryService,
+        ArrayObject $content,
+    ): Closure {
+        return function () use ($queryService, $content) {
+            /** @var string */
+            $value = $content->{$this->orderField};
+            $field = $this->orderField;
+
+            return [
+                $queryService->getFirst(
+                    endpoint: $this->endpoint,
+                    query: new MicroCmsContentGetListQuery(
+                        orders: "-{$field}",
+                        filters: "{$field}[less_than]{$value}",
+                    ),
+                ),
+                $queryService->getFirst(
+                    endpoint: $this->endpoint,
+                    query: new MicroCmsContentGetListQuery(
+                        orders: $field,
+                        filters: "{$field}[greater_than]{$value}",
+                    ),
+                ),
+            ];
+        };
     }
 }

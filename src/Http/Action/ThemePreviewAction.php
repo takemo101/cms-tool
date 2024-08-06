@@ -3,12 +3,12 @@
 namespace Takemo101\CmsTool\Http\Action;
 
 use CmsTool\Theme\ActiveTheme;
+use CmsTool\Theme\Schema\ThemeCustomizationPreviewer;
 use CmsTool\View\Support\RouteParserDecorator;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Takemo101\Chubby\Http\Factory\SlimFactory;
 use Takemo101\CmsTool\Http\Routing\ThemeRouteGroupHandler;
-use Takemo101\CmsTool\Support\Accessor\ThemeCustomizationPreview;
 use Takemo101\CmsTool\UseCase\Theme\Support\ThemeCustomizationTemporaryCache;
 
 class ThemePreviewAction
@@ -34,13 +34,13 @@ class ThemePreviewAction
      * Handle theme preview
      *
      * @param ServerRequestInterface $request
-     * @param ThemeCustomizationPreview $preview
+     * @param ThemeCustomizationPreviewer $previewer
      * @param string|null $path
      * @return ResponseInterface
      */
     public function __invoke(
         ServerRequestInterface $request,
-        ThemeCustomizationPreview $preview,
+        ThemeCustomizationPreviewer $previewer,
         ?string $path = null,
     ): ResponseInterface {
         $slim = $this->factory->create();
@@ -62,7 +62,8 @@ class ThemePreviewAction
 
         // If there is a cache, set it as preview data.
         if ($data = $this->cache->get($this->activeTheme->id)) {
-            $preview->set(
+            $previewer->set(
+                $this->activeTheme->id,
                 $this->activeTheme->refineCustomizationWithDefaults($data),
             );
         }

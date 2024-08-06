@@ -18,7 +18,7 @@ class MicroCmsImageApiQueryBuilder
         }
 
         // Remove query parameters from the URL.
-        $url = strtok($url, '?') ?: $url;
+        $exceptedQueryUrl = $this->exceptQuery($url);
 
         $object = ImmutableArrayObject::of($params);
 
@@ -29,11 +29,22 @@ class MicroCmsImageApiQueryBuilder
             ...$this->buildDprQuery($object),
         ]);
 
-        return $url . (
+        return $exceptedQueryUrl . (
             empty($query)
             ? ''
             : '?' . http_build_query($query)
         );
+    }
+
+    /**
+     * Remove query parameters from the URL.
+     *
+     * @param string $url
+     * @return string
+     */
+    private function exceptQuery(string $url): string
+    {
+        return strtok($url, '?') ?: $url;
     }
 
     /**

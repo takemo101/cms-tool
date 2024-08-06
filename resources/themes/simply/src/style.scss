@@ -40,6 +40,15 @@
   @apply before:content-['#'] bg-gray-200 text-gray-800 text-sm py-1 px-3;
 }
 
+/* 記事詳細のカードレイアウト */
+.cont-card {
+  @apply mx-auto w-full border border-gray-200;
+
+  &__inner {
+    @apply overflow-hidden sm:p-12 p-6 bg-white;
+  }
+}
+
 /* 記事詳細の目次 */
 .toc-outer {
   @apply sm:px-12 sm:py-10 px-6 py-4 sm:mb-12 mb-6 bg-gray-200;
@@ -89,6 +98,36 @@
           @apply sm:text-base text-sm;
         }
       }
+    }
+  }
+}
+
+/* 記事詳細のプロフィール */
+.prof-title {
+  @apply sm:text-xl text-base font-bold mb-4;
+}
+.prof-cont {
+  @apply flex sm:flex-row flex-col items-stretch gap-6;
+
+  &__avatar {
+    @apply sm:w-1/4 w-full flex sm:items-center justify-center;
+
+    img {
+      @apply sm:w-full w-4/5 rounded-full;
+    }
+  }
+
+  &__main {
+    @apply sm:w-3/4  w-full flex items-center;
+
+    &__name {
+      @apply mb-2 text-base font-bold;
+    }
+    &__bio {
+      @apply mb-2 text-base;
+    }
+    &__links {
+      @apply flex items-stretch gap-4 text-2xl;
     }
   }
 }

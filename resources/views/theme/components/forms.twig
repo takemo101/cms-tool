@@ -2,6 +2,7 @@
     uid: '',
     name: 'name',
     label: '',
+    format: 'text',
     value: '',
     placeholder: '',
     class: '',
@@ -15,7 +16,7 @@
         {% endif %}
         <input
             class="form-input"
-            type="text"
+            type="{{ options.format ?? 'text' }}"
             name="{{ options.name }}"
             value="{{ options.value }}"
             placeholder="{{ options.placeholder }}"

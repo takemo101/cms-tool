@@ -35,6 +35,7 @@ class ThemeCustomizationFetcher
     {
         $preview = $this->previewer->get($theme->id);
 
+        // If there is preview data, return it.
         return $preview !== false
             ? $preview
             : $this->loader->load($theme);

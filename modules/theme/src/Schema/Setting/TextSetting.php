@@ -24,6 +24,33 @@ class TextSetting extends AbstractTextInputSetting
     public const LimitLength = 500;
 
     /**
+     * constructor
+     *
+     * @param SchemaSettingId $id
+     * @param string $label
+     * @param TextInputFormat $format
+     * @param string $hint
+     * @param string|null $default
+     * @param string|null $placeholder
+     */
+    public function __construct(
+        SchemaSettingId $id,
+        string $label,
+        public readonly TextInputFormat $format = TextInputFormat::Text,
+        string $hint = '',
+        mixed $default = null,
+        ?string $placeholder = null,
+    ) {
+        parent::__construct(
+            id: $id,
+            label: $label,
+            hint: $hint,
+            default: $default,
+            placeholder: $placeholder,
+        );
+    }
+
+    /**
      * {@inheritDoc}
      *
      * @return string
@@ -65,6 +92,7 @@ class TextSetting extends AbstractTextInputSetting
         return [
             'id' => $this->id->value(),
             'label' => $this->label,
+            'format' => $this->format->value,
             'hint' => $this->hint,
             'default' => $this->default,
             'placeholder' => $this->placeholder,
@@ -77,6 +105,7 @@ class TextSetting extends AbstractTextInputSetting
      * @param array{
      *   id?: string,
      *   label?: string,
+     *   format?: string,
      *   hint?: string,
      *   default?: string,
      *   placeholder?: string,
@@ -87,6 +116,10 @@ class TextSetting extends AbstractTextInputSetting
         return new self(
             id: new SchemaSettingId($data['id'] ?? ArrayKeyMissingException::throw('id')),
             label: $data['label'] ?? ArrayKeyMissingException::throw('label'),
+            // If no format is specified or an invalid value is specified, use the default value.
+            format: TextInputFormat::tryFrom(
+                $data['format'] ?? TextInputFormat::default()->value,
+            ) ?? TextInputFormat::default(),
             hint: $data['hint'] ?? '',
             default: $data['default'] ?? null,
             placeholder: $data['placeholder'] ?? null,

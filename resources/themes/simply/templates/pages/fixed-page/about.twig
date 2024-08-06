@@ -1,11 +1,14 @@
 {% extends 'layouts.master' %}
 
-{% block title %}{{ share.meta.name }}について{% endblock %}
+{% block title %}このサイトについて{% endblock %}
 
 {% block content %}
     <section class="section-narrow bg-gray-100 text-black">
         <div class="section-narrow-layout">
-            <h1 class="text-2xl mb-8">About</h1>
+            <div class="page-header">
+                <h1 class="page-header__title">ABOUT SITE</h1>
+                <small class="page-header__subtitle">このサイトについて</small>
+            </div>
             <div class="prose">
                 {{ share.theme.about.description|raw }}
             </div>

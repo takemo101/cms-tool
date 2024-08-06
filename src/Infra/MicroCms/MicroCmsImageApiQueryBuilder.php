@@ -17,6 +17,9 @@ class MicroCmsImageApiQueryBuilder
             return null;
         }
 
+        // Remove query parameters from the URL.
+        $url = strtok($url, '?') ?: $url;
+
         $object = ImmutableArrayObject::of($params);
 
         $query = array_filter([

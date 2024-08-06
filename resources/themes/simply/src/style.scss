@@ -27,6 +27,17 @@
   }
 }
 
+.page-header {
+  @apply mb-8 flex items-center space-x-4;
+
+  &__title {
+    @apply sm:text-3xl text-2xl font-bold;
+  }
+  &__subtitle {
+    @apply sm:text-base text-sm text-gray-600;
+  }
+}
+
 .list-title {
   @apply mb-12;
 }

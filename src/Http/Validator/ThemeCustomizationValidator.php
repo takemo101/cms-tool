@@ -11,6 +11,7 @@ use CmsTool\Theme\Schema\Setting\NumberSetting;
 use CmsTool\Theme\Schema\Setting\SelectOption;
 use CmsTool\Theme\Schema\Setting\SelectSetting;
 use CmsTool\Theme\Schema\Setting\TextareaSetting;
+use CmsTool\Theme\Schema\Setting\TextInputFormat;
 use CmsTool\Theme\Schema\Setting\TextSetting;
 use CmsTool\Theme\Schema\ThemeSchema;
 use Symfony\Component\Validator\Constraint;
@@ -40,20 +41,26 @@ class ThemeCustomizationValidator
     }
 
     /**
-     * Validate the body
+     * Validate the body.
+     * $isStrict is used when performing strict validation during data saving.
      *
      * @param ThemeSchema $schema
      * @param array<string,mixed> $body
+     * @param bool $isStrict Check if the body is strict
      * @return ConstraintViolationListInterface
      */
     public function validate(
         ThemeSchema $schema,
         array $body,
+        bool $isStrict = false,
     ): ConstraintViolationListInterface {
 
         return $this->validator->validate(
             $this->filter($body),
-            $this->getConstraint($schema),
+            $this->getConstraint(
+                schema: $schema,
+                isStrict: $isStrict,
+            ),
         );
     }
 
@@ -76,10 +83,13 @@ class ThemeCustomizationValidator
      * Get symfony validation constraint
      *
      * @param ThemeSchema $schema
+     * @param bool $isStrict Check if the body is strict
      * @return Constraint
      */
-    private function getConstraint(ThemeSchema $schema): Constraint
-    {
+    private function getConstraint(
+        ThemeSchema $schema,
+        bool $isStrict = false,
+    ): Constraint {
         $constraints = [];
 
         foreach ($schema->settings as $settings) {
@@ -87,7 +97,10 @@ class ThemeCustomizationValidator
             $settingsConstraints = [];
 
             foreach ($settings->getInputSettings() as $setting) {
-                $settingsConstraints[$setting->id->value()] = $this->createSchemaSettingConstraints($setting);
+                $settingsConstraints[$setting->id->value()] = $this->createSchemaSettingConstraints(
+                    setting: $setting,
+                    isStrict: $isStrict,
+                );
             }
 
             $constraints[$settings->id->value()] = new Assert\Collection($settingsConstraints);
@@ -100,10 +113,12 @@ class ThemeCustomizationValidator
      * Create schema setting constraints
      *
      * @param AbstractInputSetting $setting
+     * @param bool $isStrict Check if the body is strict
      * @return Constraint[]
      */
     private function createSchemaSettingConstraints(
         AbstractInputSetting $setting,
+        bool $isStrict = false,
     ): array {
         /** @var Constraint[] */
         $constraints = match (true) {
@@ -147,7 +162,25 @@ class ThemeCustomizationValidator
             ],
             $setting instanceof TextSetting => [
                 new Assert\Required(),
-                new Assert\Type('string'),
+                ...(
+                    $isStrict
+                    ? match ($setting->format) {
+                        TextInputFormat::Email => [
+                            new Assert\Type('string'),
+                            new Assert\Email(),
+                        ],
+                        TextInputFormat::Url =>
+                        [
+                            new Assert\Type('string'),
+                            new Assert\Url(),
+                        ],
+                        default => [
+                            new Assert\Type('string'),
+                        ],
+                    }
+                    : [
+                        new Assert\Type('string')
+                    ]),
                 new Assert\Length(max: TextSetting::LimitLength),
             ],
             $setting instanceof EditorSetting => [

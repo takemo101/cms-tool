@@ -157,6 +157,74 @@
                     "id": "prev_next_show",
                     "label": "ページナビを表示する",
                     "default": true
+                },
+                {
+                    "type": "header",
+                    "title": "執筆者プロフィール設定",
+                    "description": "記事詳細ページの下部に表示される執筆者プロフィールの設定となります。"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "profile_show",
+                    "label": "執筆者プロフィールを表示する",
+                    "default": true
+                },
+                {
+                    "type": "text",
+                    "id": "profile_name",
+                    "label": "執筆者名",
+                    "default": "執筆者名",
+                    "placeholder": "10文字以内の執筆者名の入力"
+                },
+                {
+                    "type": "textarea",
+                    "id": "profile_biography",
+                    "label": "プロフィール",
+                    "default": "プロフィールの説明文",
+                    "placeholder": "500文字以内のプロフィールの説明文の入力"
+                },
+                {
+                    "type": "text",
+                    "id": "profile_avatar",
+                    "label": "プロフィール画像",
+                    "placeholder": "https:// から始まるプロフィール画像のURLの入力",
+                    "hint": "プロフィール画像はmicroCMSなどにアップロードしてURLを入力してください。"
+                },
+                {
+                    "type": "text",
+                    "id": "profile_link",
+                    "label": "SNS以外のリンク",
+                    "placeholder": "https:// から始まるURLの入力"
+                },
+                {
+                    "type": "text",
+                    "id": "profile_sns_x",
+                    "label": "XのURL",
+                    "placeholder": "https:// から始まるXのURLの入力"
+                },
+                {
+                    "type": "text",
+                    "id": "profile_sns_facebook",
+                    "label": "FacebookのURL",
+                    "placeholder": "https:// から始まるFacebookのURLの入力"
+                },
+                {
+                    "type": "text",
+                    "id": "profile_sns_instagram",
+                    "label": "InstagramのURL",
+                    "placeholder": "https:// から始まるInstagramのURLの入力"
+                },
+                {
+                    "type": "text",
+                    "id": "profile_sns_youtube",
+                    "label": "YouTubeのチャンネルURL",
+                    "placeholder": "https:// から始まるYouTubeのチャンネルURLの入力"
+                },
+                {
+                    "type": "text",
+                    "id": "profile_sns_github",
+                    "label": "GithubのURL",
+                    "placeholder": "https:// から始まるGithubのURLの入力"
                 }
             ]
         }

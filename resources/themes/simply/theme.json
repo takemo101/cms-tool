@@ -178,17 +178,23 @@
                 },
                 {
                     "type": "textarea",
-                    "id": "profile_description",
+                    "id": "profile_biography",
                     "label": "プロフィール",
                     "default": "プロフィールの説明文",
                     "placeholder": "500文字以内のプロフィールの説明文の入力"
                 },
                 {
                     "type": "text",
-                    "id": "profile_image",
+                    "id": "profile_avatar",
                     "label": "プロフィール画像",
                     "placeholder": "https:// から始まるプロフィール画像のURLの入力",
                     "hint": "プロフィール画像はmicroCMSなどにアップロードしてURLを入力してください。"
+                },
+                {
+                    "type": "text",
+                    "id": "profile_link",
+                    "label": "SNS以外のリンク",
+                    "placeholder": "https:// から始まるURLの入力"
                 },
                 {
                     "type": "text",
@@ -213,6 +219,12 @@
                     "id": "profile_sns_youtube",
                     "label": "YouTubeのチャンネルURL",
                     "placeholder": "https:// から始まるYouTubeのチャンネルURLの入力"
+                },
+                {
+                    "type": "text",
+                    "id": "profile_sns_github",
+                    "label": "GithubのURL",
+                    "placeholder": "https:// から始まるGithubのURLの入力"
                 }
             ]
         }

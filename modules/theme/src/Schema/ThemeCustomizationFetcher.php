@@ -3,7 +3,6 @@
 namespace CmsTool\Theme\Schema;
 
 use CmsTool\Theme\Contract\ThemeCustomizationLoader;
-use CmsTool\Theme\Schema\ThemeCustomizationPreviewer;
 use CmsTool\Theme\Theme;
 
 /**

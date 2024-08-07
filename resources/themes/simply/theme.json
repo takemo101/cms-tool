@@ -187,6 +187,7 @@
                     "type": "text",
                     "id": "profile_avatar",
                     "label": "プロフィール画像",
+                    "format": "url",
                     "placeholder": "https:// から始まるプロフィール画像のURLの入力",
                     "hint": "プロフィール画像はmicroCMSなどにアップロードしてURLを入力してください。"
                 },
@@ -194,36 +195,42 @@
                     "type": "text",
                     "id": "profile_link",
                     "label": "SNS以外のリンク",
+                    "format": "url",
                     "placeholder": "https:// から始まるURLの入力"
                 },
                 {
                     "type": "text",
                     "id": "profile_sns_x",
                     "label": "XのURL",
+                    "format": "url",
                     "placeholder": "https:// から始まるXのURLの入力"
                 },
                 {
                     "type": "text",
                     "id": "profile_sns_facebook",
                     "label": "FacebookのURL",
+                    "format": "url",
                     "placeholder": "https:// から始まるFacebookのURLの入力"
                 },
                 {
                     "type": "text",
                     "id": "profile_sns_instagram",
                     "label": "InstagramのURL",
+                    "format": "url",
                     "placeholder": "https:// から始まるInstagramのURLの入力"
                 },
                 {
                     "type": "text",
                     "id": "profile_sns_youtube",
                     "label": "YouTubeのチャンネルURL",
+                    "format": "url",
                     "placeholder": "https:// から始まるYouTubeのチャンネルURLの入力"
                 },
                 {
                     "type": "text",
                     "id": "profile_sns_github",
                     "label": "GithubのURL",
+                    "format": "url",
                     "placeholder": "https:// から始まるGithubのURLの入力"
                 }
             ]

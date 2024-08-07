@@ -99,7 +99,7 @@ const generalStyle = {
     mr:8px>input
     r:5px>input
 
-    f:bold>span
+    f:14px>span f:bold>span
   `,
   "form-btn": `
     m:0;

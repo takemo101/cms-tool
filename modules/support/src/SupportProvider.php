@@ -10,6 +10,8 @@ use CmsTool\Support\Encrypt\Command\GenerateEncryptKeyCommand;
 use CmsTool\Support\Encrypt\DefaultEncrypter;
 use CmsTool\Support\Encrypt\EncryptCipher;
 use CmsTool\Support\Encrypt\Encrypter;
+use CmsTool\Support\Feed\FeedGenerator;
+use CmsTool\Support\Feed\Rss2FeedGenerator;
 use CmsTool\Support\Hash\BcryptHasher;
 use CmsTool\Support\Hash\Hasher;
 use CmsTool\Support\JsonAccess\JsonArrayAccessor;
@@ -77,6 +79,7 @@ class SupportProvider implements Provider
                     TranslationAccessor::class => TranslationJsonFileAccessor::class,
                     Translator::class => DefaultTranslator::class,
                     AccessLoggerFactory::class => FileAccessLoggerFactory::class,
+                    FeedGenerator::class => Rss2FeedGenerator::class,
                 ],
                 configKeyPrefix: 'support',
             )

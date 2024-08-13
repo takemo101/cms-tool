@@ -57,6 +57,7 @@ use Takemo101\CmsTool\Infra\Listener\CsrfGuardSetupListener;
 use Takemo101\CmsTool\Infra\Listener\DeleteRobotsTxtListener;
 use Takemo101\CmsTool\Infra\Listener\RequestParameterSetupListener;
 use Takemo101\CmsTool\Infra\Storage\LocalPublicStoragePath;
+use Takemo101\CmsTool\Preset\Shared\Feed\FeedActionAndResponseRenderer;
 use Takemo101\CmsTool\Support\Htmx\HtmxAccess;
 
 hook()
@@ -369,6 +370,11 @@ hook()
                         '/assets/{path:.+}',
                         ActiveThemeAssetAction::class,
                     )->setName(ActiveThemeAssetAction::RouteName);
+
+                    $proxy->get(
+                        '/feed',
+                        FeedActionAndResponseRenderer::class,
+                    )->setName('feed');
 
                     ThemeRouteGroupHandler::configure($proxy)
                         ->add(InsertTrackingCode::class)

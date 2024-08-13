@@ -2,7 +2,6 @@
 
 namespace Takemo101\CmsTool\Support\Htmx;
 
-
 use Takemo101\CmsTool\Support\Shared\AbstractResponseRenderer;
 use Psr\Http\Message\ServerRequestInterface;
 

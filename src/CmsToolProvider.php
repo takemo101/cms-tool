@@ -3,6 +3,7 @@
 namespace Takemo101\CmsTool;
 
 use CmsTool\Session\Middleware\SessionStart;
+use CmsTool\Support\Feed\FeedGenerator;
 use CmsTool\Support\Translation\TranslationAccessor;
 use CmsTool\Theme\Contract\ThemeFinder;
 use CmsTool\View\Contract\TemplateFinder;
@@ -23,6 +24,8 @@ use Takemo101\CmsTool\Support\BasicAuth\BasicAuthFactory;
 use Takemo101\CmsTool\Http\Middleware\CacheControl;
 use Takemo101\CmsTool\Http\Session\AdminSessionFactory;
 use Takemo101\CmsTool\Http\Session\DefaultAdminSessionFactory;
+use Takemo101\CmsTool\Preset\Shared\Feed\FeedLinkHtml;
+use Takemo101\CmsTool\Preset\Shared\Feed\FeedActionAndResponseRenderer;
 use Takemo101\CmsTool\Support\FormAppendFilter\AppendCsrfInputFilter;
 use Takemo101\CmsTool\Support\Theme\ActiveThemeFunctionLoader;
 use Takemo101\CmsTool\Support\VendorPath;
@@ -64,7 +67,7 @@ class CmsToolProvider implements Provider
     public function register(Definitions $definitions): void
     {
         $definitions->add([
-            VendorPath::class => fn () => new VendorPath(
+            VendorPath::class => fn() => new VendorPath(
                 dirname(__DIR__, 1),
                 'src',
                 'config',
@@ -118,8 +121,22 @@ class CmsToolProvider implements Provider
                     enabled: $enabled,
                 );
             },
-            HeadHtmls::class => fn (Hook $hook) => $hook->doTyped(
-                new HeadHtmls(),
+            HeadHtmls::class => fn(
+                Hook $hook,
+                FeedLinkHtml $feedLink,
+            ) => $hook->doTyped(
+                new HeadHtmls($feedLink),
+            ),
+            FeedActionAndResponseRenderer::class => fn(
+                Hook $hook,
+                FeedGenerator $generator,
+                ApplicationContainer $container,
+
+            ) => $hook->doTyped(
+                new FeedActionAndResponseRenderer(
+                    generator: $generator,
+                    container: $container,
+                ),
             ),
         ]);
     }
@@ -176,7 +193,7 @@ class CmsToolProvider implements Provider
     {
         $hook
             ->onTyped(
-                fn (TemplateFinder $finder) => $finder->addNamespace(
+                fn(TemplateFinder $finder) => $finder->addNamespace(
                     'cms-tool',
                     $path->getResourcePath('views'),
                 )
@@ -194,7 +211,7 @@ class CmsToolProvider implements Provider
     {
         $hook
             ->onTyped(
-                fn (ThemeFinder $finder) => $finder->addLocation(
+                fn(ThemeFinder $finder) => $finder->addLocation(
                     $path->getResourcePath('themes'),
                 )
             );
@@ -256,14 +273,14 @@ class CmsToolProvider implements Provider
     {
         $hook
             ->onTyped(
-                fn (GlobalMiddlewareCollection $middlewares) => $middlewares->add(
+                fn(GlobalMiddlewareCollection $middlewares) => $middlewares->add(
                     CacheControl::class,
                     SessionStart::class,
                 ),
             )
             ->on(
                 ApplicationHookTags::Http_AfterAddRoutingMiddleware,
-                fn (Slim $slim) => $slim->add(
+                fn(Slim $slim) => $slim->add(
                     new MethodOverrideMiddleware(),
                 ),
             );

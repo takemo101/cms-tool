@@ -28,6 +28,8 @@
 
         <title>{{ metaTitle }}{% block title_separator %}｜{% endblock %}{% block title_suffix %}{{ share.meta.name }}{% endblock %}</title>
 
+        {{ share.section.head }}
+
         {# css #}
         {% block css %}{% endblock %}
         <link rel="stylesheet" href="{{ asset('app.css') }}">

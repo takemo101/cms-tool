@@ -30,6 +30,7 @@ use Takemo101\CmsTool\Support\Webhook\CacheCleanWebhookHandler;
 use Takemo101\CmsTool\Support\Webhook\WebhookHandler;
 use Takemo101\CmsTool\Support\Webhook\WebhookHandlers;
 use Takemo101\CmsTool\Support\BasicAuth\BasicAuthUsers;
+use Takemo101\CmsTool\Support\Htmlable\HeadHtmls;
 
 class CmsToolProvider implements Provider
 {
@@ -116,7 +117,10 @@ class CmsToolProvider implements Provider
                     realm: $realm,
                     enabled: $enabled,
                 );
-            }
+            },
+            HeadHtmls::class => fn (Hook $hook) => $hook->doTyped(
+                new HeadHtmls(),
+            ),
         ]);
     }
 

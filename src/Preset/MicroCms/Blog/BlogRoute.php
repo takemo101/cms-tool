@@ -24,6 +24,8 @@ class BlogRoute implements ThemeRoute
             $theme->meta->extension,
         );
 
+        $order = 'publishedAt';
+
         /**
          * @var object{
          *  endpoints: object{
@@ -64,7 +66,7 @@ class BlogRoute implements ThemeRoute
             new ContentIndexAction(
                 endpoint: $ext->endpoints->blog,
                 signature: $ext->signatures->blog,
-                order: '-publishedAt',
+                order: "-{$order}",
             ),
         )
             ->setName('blog.index');
@@ -74,7 +76,7 @@ class BlogRoute implements ThemeRoute
             new ContentDetailAction(
                 endpoint: $ext->endpoints->blog,
                 signature: $ext->signatures->blog,
-                orderField: 'publishedAt',
+                orderField: $order,
             ),
         )
             ->setName('blog.detail');
@@ -105,5 +107,15 @@ class BlogRoute implements ThemeRoute
             ),
         )
             ->setName('blog.tag');
+
+        $proxy->get(
+            '/feed',
+            new BlogFeedAction(
+                endpoint: $ext->endpoints->blog,
+                order: $order,
+                limit: 20,
+            ),
+        )
+            ->setName('blog.feed');
     }
 }

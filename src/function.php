@@ -57,17 +57,18 @@ use Takemo101\CmsTool\Infra\Listener\CsrfGuardSetupListener;
 use Takemo101\CmsTool\Infra\Listener\DeleteRobotsTxtListener;
 use Takemo101\CmsTool\Infra\Listener\RequestParameterSetupListener;
 use Takemo101\CmsTool\Infra\Storage\LocalPublicStoragePath;
+use Takemo101\CmsTool\Preset\Shared\Feed\FeedActionAndResponseRenderer;
 use Takemo101\CmsTool\Support\Htmx\HtmxAccess;
 
 hook()
     ->onTyped(
-        fn (CommandCollection $commands) => $commands->add(
+        fn(CommandCollection $commands) => $commands->add(
             StorageLinkCommand::class,
             GenerateBasicAuthPasswordCommand::class,
         ),
     )
     ->onTyped(
-        fn (EventRegister $register) => $register
+        fn(EventRegister $register) => $register
             ->on(AdminSessionSetupListener::class)
             ->on(CsrfGuardSetupListener::class)
             ->on(RequestParameterSetupListener::class)
@@ -369,6 +370,11 @@ hook()
                         '/assets/{path:.+}',
                         ActiveThemeAssetAction::class,
                     )->setName(ActiveThemeAssetAction::RouteName);
+
+                    $proxy->get(
+                        '/feed',
+                        FeedActionAndResponseRenderer::class,
+                    )->setName('feed');
 
                     ThemeRouteGroupHandler::configure($proxy)
                         ->add(InsertTrackingCode::class)

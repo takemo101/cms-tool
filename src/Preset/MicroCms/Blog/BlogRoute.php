@@ -107,15 +107,5 @@ class BlogRoute implements ThemeRoute
             ),
         )
             ->setName('blog.tag');
-
-        $proxy->get(
-            '/feed',
-            new BlogFeedAction(
-                endpoint: $ext->endpoints->blog,
-                order: $order,
-                limit: 20,
-            ),
-        )
-            ->setName('blog.feed');
     }
 }

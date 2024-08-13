@@ -3,29 +3,25 @@
 namespace CmsTool\Support\Feed;
 
 /**
- * Data class for feed output.
+/**
+ * Data class representing the meta information of the feed output by the feed generator.
  *
  * @immutable
  */
-readonly class FeedOutput
+readonly class FeedOutputMeta
 {
     /**
      * constructor
      *
-     * @param string $output
      * @param string $charset
      * @param string $contentType
+     * @param string $mimeType
      */
     public function __construct(
-        public string $output,
         public string $charset = 'UTF-8',
         public string $contentType = 'application/xml',
+        public string $mimeType = 'application/rss+xml',
     ) {
-        assert(
-            empty($output) === false,
-            'The output must not be empty.'
-        );
-
         assert(
             empty($charset) === false,
             'The charset must not be empty.'
@@ -34,6 +30,11 @@ readonly class FeedOutput
         assert(
             empty($contentType) === false,
             'The content type must not be empty.'
+        );
+
+        assert(
+            empty($mimeType) === false,
+            'The MIME type must not be empty.'
         );
     }
 }

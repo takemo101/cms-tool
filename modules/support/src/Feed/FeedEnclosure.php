@@ -13,13 +13,13 @@ readonly class FeedEnclosure
      * constructor
      *
      * @param string $url
-     * @param integer $length
-     * @param string $type
+     * @param integer|null $length
+     * @param string|null $type
      */
     public function __construct(
         public string $url,
-        public int $length,
-        public string $type,
+        public ?int $length = null,
+        public ?string $type = null,
     ) {
         //
     }

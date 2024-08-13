@@ -167,8 +167,14 @@ class Rss2FeedGenerator implements FeedGenerator
             $enclosureElement = $this->helper->createElement($xml, 'enclosure');
 
             $enclosureElement->setAttribute('url', $enclosure->url);
-            $enclosureElement->setAttribute('length', (string) $enclosure->length);
-            $enclosureElement->setAttribute('type', $enclosure->type);
+
+            if ($length = $enclosure->length) {
+                $enclosureElement->setAttribute('length', (string) $length);
+            }
+
+            if ($type = $enclosure->type) {
+                $enclosureElement->setAttribute('type', $type);
+            }
 
             $itemElement->appendChild($enclosureElement);
         }

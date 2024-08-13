@@ -5,6 +5,7 @@ namespace Takemo101\CmsTool\Preset\MicroCms\Blog;
 use CmsTool\Support\Feed\Feed;
 use CmsTool\Support\Feed\FeedAuthor;
 use CmsTool\Support\Feed\FeedCategories;
+use CmsTool\Support\Feed\FeedEnclosure;
 use CmsTool\Support\Feed\FeedGenerator;
 use CmsTool\Support\Feed\FeedItem;
 use CmsTool\Support\Feed\FeedItems;
@@ -24,6 +25,9 @@ use DateTimeImmutable;
  *   updatedAt: string,
  *   content: string,
  *   id: string,
+ *   eyecatch?: object{
+ *     url: string,
+ *   },
  *   category?: object{
  *     name: string,
  *   }
@@ -77,7 +81,16 @@ class BlogFeedRenderer implements ResponseRenderer
                 fn(object $content) => new FeedItem(
                     title: $content->title,
                     published: new DateTimeImmutable($content->{$order} ?? $updated),
-                    content: $content->content,
+                    // If there is a featured image in the content, embed the image instead of the enclosure.
+                    content: (
+                        $content->eyecatch
+                        ? sprintf(
+                            '<img src="%s" alt="%s" />',
+                            $content->eyecatch->url,
+                            $content->title,
+                        )
+                        : ''
+                    ) . $content->content,
                     link: $this->uri->withPath(
                         route('blog.detail', [
                             'id' => $content->id,
@@ -87,6 +100,11 @@ class BlogFeedRenderer implements ResponseRenderer
                     author: new FeedAuthor(
                         name: $siteMeta->name,
                     ),
+                    enclosure: $content->eyecatch
+                        ? new FeedEnclosure(
+                            url: $content->eyecatch->url,
+                        )
+                        : null,
                     categories: $content->category
                         ? new FeedCategories(
                             $content->category->name,

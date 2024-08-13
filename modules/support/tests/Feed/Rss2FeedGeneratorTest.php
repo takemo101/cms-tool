@@ -3,7 +3,7 @@
 use CmsTool\Support\Feed\Feed;
 use CmsTool\Support\Feed\FeedItem;
 use CmsTool\Support\Feed\Rss2FeedGenerator;
-use CmsTool\Support\Feed\FeedOutput;
+use CmsTool\Support\Feed\FeedOutputMeta;
 use CmsTool\Support\Feed\DOMDocumentHelper;
 use CmsTool\Support\Feed\FeedItems;
 use Mockery as m;
@@ -57,13 +57,10 @@ describe('Rss2FeedGenerator', function () {
 XML;
 
         // Assert the generated output
-        expect($output)->toBeInstanceOf(FeedOutput::class);
-        expect($output->output)->toBe($expected);
-        expect($output->charset)->toBe('UTF-8');
-        expect($output->contentType)->toBe('application/xml');
+        expect($output)->toBe($expected);
 
         // Assert the generated output is valid XML
         $xml = new DOMDocument();
-        expect($xml->loadXML($output->output))->toBeTrue();
+        expect($xml->loadXML($output))->toBeTrue();
     });
 })->group('Rss2FeedGenerator', 'feed');

@@ -4,7 +4,7 @@ namespace Takemo101\CmsTool\Preset\Shared\Action;
 
 use Takemo101\CmsTool\UseCase\Shared\QueryService\Pager;
 
-abstract class AbstractIndexAction
+abstract class AbstractIndexable
 {
     /** @var string */
     public const PageKey = 'page';

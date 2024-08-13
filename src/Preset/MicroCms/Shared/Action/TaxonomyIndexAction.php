@@ -6,7 +6,7 @@ use CmsTool\View\View;
 use CmsTool\View\ViewCreator;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
-use Takemo101\CmsTool\Preset\Shared\Action\AbstractIndexAction;
+use Takemo101\CmsTool\Preset\Shared\Action\AbstractIndexable;
 use Takemo101\CmsTool\Preset\Shared\Exception\NotFoundThemeTemplateException;
 use Takemo101\CmsTool\Preset\Shared\LayeredTemplateNamesCreator;
 use Takemo101\CmsTool\Preset\MicroCms\Shared\ViewModel\TaxonomyIndexPage;
@@ -14,7 +14,7 @@ use Takemo101\CmsTool\UseCase\MicroCms\QueryService\Content\MicroCmsContentGetLi
 use Takemo101\CmsTool\UseCase\MicroCms\QueryService\Content\MicroCmsContentQueryService;
 use Takemo101\CmsTool\UseCase\Shared\QueryService\Pager;
 
-class TaxonomyIndexAction extends AbstractIndexAction
+class TaxonomyIndexAction extends AbstractIndexable
 {
     /**
      * constructor

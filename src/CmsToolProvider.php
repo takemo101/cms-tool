@@ -3,6 +3,7 @@
 namespace Takemo101\CmsTool;
 
 use CmsTool\Session\Middleware\SessionStart;
+use CmsTool\Support\Feed\FeedGenerator;
 use CmsTool\Support\Translation\TranslationAccessor;
 use CmsTool\Theme\Contract\ThemeFinder;
 use CmsTool\View\Contract\TemplateFinder;
@@ -18,22 +19,28 @@ use Takemo101\Chubby\Config\ConfigRepository;
 use Takemo101\Chubby\Filesystem\LocalFilesystem;
 use Takemo101\Chubby\Hook\Hook;
 use Takemo101\Chubby\Http\GlobalMiddlewareCollection;
+use Takemo101\CmsTool\Support\BasicAuth\BasicAuth;
+use Takemo101\CmsTool\Support\BasicAuth\BasicAuthFactory;
 use Takemo101\CmsTool\Http\Middleware\CacheControl;
 use Takemo101\CmsTool\Http\Session\AdminSessionFactory;
 use Takemo101\CmsTool\Http\Session\DefaultAdminSessionFactory;
+use Takemo101\CmsTool\Preset\Shared\Feed\FeedLinkHtml;
+use Takemo101\CmsTool\Preset\Shared\Feed\FeedActionAndResponseRenderer;
 use Takemo101\CmsTool\Support\FormAppendFilter\AppendCsrfInputFilter;
 use Takemo101\CmsTool\Support\Theme\ActiveThemeFunctionLoader;
 use Takemo101\CmsTool\Support\VendorPath;
 use Takemo101\CmsTool\Support\Webhook\CacheCleanWebhookHandler;
 use Takemo101\CmsTool\Support\Webhook\WebhookHandler;
 use Takemo101\CmsTool\Support\Webhook\WebhookHandlers;
+use Takemo101\CmsTool\Support\BasicAuth\BasicAuthUsers;
+use Takemo101\CmsTool\Support\Htmlable\HeadHtmls;
 
 class CmsToolProvider implements Provider
 {
     /**
      * @var string CmsTool Version number.
      */
-    public const Version = '0.1.3';
+    public const Version = '0.1.4';
 
     /**
      * constructor
@@ -97,6 +104,39 @@ class CmsToolProvider implements Provider
 
                 return $handlers;
             },
+            BasicAuth::class => function (
+                BasicAuthFactory $factory,
+                ConfigRepository $config,
+            ) {
+                /** @var boolean */
+                $enabled = $config->get('system.basic_auth.enabled', false);
+                /** @var string */
+                $realm = $config->get('system.basic_auth.realm', 'Web');
+                /** @var array<string,string> */
+                $users = $config->get('system.basic_auth.users', []);
+
+                return $factory->create(
+                    users: new BasicAuthUsers($users),
+                    realm: $realm,
+                    enabled: $enabled,
+                );
+            },
+            HeadHtmls::class => fn (
+                Hook $hook,
+                FeedLinkHtml $feedLink,
+            ) => $hook->doTyped(
+                new HeadHtmls($feedLink),
+            ),
+            FeedActionAndResponseRenderer::class => fn (
+                Hook $hook,
+                FeedGenerator $generator,
+                ApplicationContainer $container,
+            ) => $hook->doTyped(
+                new FeedActionAndResponseRenderer(
+                    generator: $generator,
+                    container: $container,
+                ),
+            ),
         ]);
     }
 

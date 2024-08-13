@@ -9,49 +9,40 @@ use DOMElement;
  *
  * @immutable
  */
-readonly class HeaderTitle
+readonly class HeaderTitle extends AbstractHeaderTitle
 {
-    /**
-     * @var integer[]
-     */
-    public const LevelRange = [1, 2, 3, 4, 5, 6];
-
     /**
      * constructor
      *
      * @param string $id
      * @param string $title
-     * @param integer $level header level 1 to 6
+     * @param HeaderTitleLevel $level header level 1 to 6
      */
     public function __construct(
-        public string $id,
-        public string $title,
-        public int $level,
+        string $id,
+        string $title,
+        public HeaderTitleLevel $level,
     ) {
-        assert(
-            in_array($level, self::LevelRange),
-            'Level is invalid',
+        parent::__construct(
+            id: $id,
+            title: $title,
         );
     }
 
     /**
-     * Check if there is an ID
+     * Create to HeaderLayer
      *
-     * @return boolean
+     * @return HeaderLayer
      */
-    public function hasId(): bool
+    public function toLayered(): HeaderLayer
     {
-        return $this->id !== '';
-    }
-
-    /**
-     * Check if there is a title
-     *
-     * @return boolean
-     */
-    public function hasTitle(): bool
-    {
-        return $this->title !== '';
+        return new HeaderLayer(
+            level: $this->level,
+            header: new LayeredHeaderTitle(
+                id: $this->id,
+                title: $this->title,
+            ),
+        );
     }
 
     /**
@@ -65,7 +56,7 @@ readonly class HeaderTitle
         return new self(
             $element->getAttribute('id'),
             $element->textContent,
-            (int)str_replace('h', '', $element->tagName),
+            HeaderTitleLevel::fromHTagString($element->tagName),
         );
     }
 }

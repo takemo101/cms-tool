@@ -2,10 +2,18 @@
 
 namespace CmsTool\Support;
 
+use CmsTool\Support\AccessLog\AccessLogger;
+use CmsTool\Support\AccessLog\AccessLoggerFactory;
+use CmsTool\Support\AccessLog\Command\AccessLogCleanCommand;
+use CmsTool\Support\AccessLog\FileAccessLoggerFactory;
 use CmsTool\Support\Encrypt\Command\GenerateEncryptKeyCommand;
 use CmsTool\Support\Encrypt\DefaultEncrypter;
 use CmsTool\Support\Encrypt\EncryptCipher;
 use CmsTool\Support\Encrypt\Encrypter;
+use CmsTool\Support\Feed\FeedGenerator;
+use CmsTool\Support\Feed\Rss2FeedGenerator;
+use CmsTool\Support\Hash\BcryptHasher;
+use CmsTool\Support\Hash\Hasher;
 use CmsTool\Support\JsonAccess\JsonArrayAccessor;
 use CmsTool\Support\JsonAccess\JsonArrayLoader;
 use CmsTool\Support\JsonAccess\JsonArraySaver;
@@ -60,9 +68,21 @@ class SupportProvider implements Provider
         $this->registerEncrypt($definitions);
         $this->registerValidation($definitions);
         $this->registerTranslation($definitions);
+        $this->registerAccessLog($definitions);
 
         $definitions->add([
-            //
+            ...ConfigBasedDefinitionReplacer::createDependencyDefinitions(
+                dependencies: [
+                    Encrypter::class => DefaultEncrypter::class,
+                    Hasher::class => BcryptHasher::class,
+                    JsonArrayAccessor::class => DefaultJsonAccessor::class,
+                    TranslationAccessor::class => TranslationJsonFileAccessor::class,
+                    Translator::class => DefaultTranslator::class,
+                    AccessLoggerFactory::class => FileAccessLoggerFactory::class,
+                    FeedGenerator::class => Rss2FeedGenerator::class,
+                ],
+                configKeyPrefix: 'support',
+            )
         ]);
     }
 
@@ -97,6 +117,7 @@ class SupportProvider implements Provider
             fn (CommandCollection $commands) => $commands->add(
                 GenerateEncryptKeyCommand::class,
                 AddTranslationTextCommand::class,
+                AccessLogCleanCommand::class,
             ),
         );
     }
@@ -110,10 +131,6 @@ class SupportProvider implements Provider
     public function registerJsonAccess(Definitions $definitions): void
     {
         $definitions->add([
-            JsonArrayAccessor::class => new ConfigBasedDefinitionReplacer(
-                DefaultJsonAccessor::class,
-                'support.json.accessor',
-            ),
             JsonArrayLoader::class => get(JsonArrayAccessor::class),
             JsonArraySaver::class => get(JsonArrayAccessor::class),
         ]);
@@ -150,10 +167,6 @@ class SupportProvider implements Provider
                     $cipher,
                 );
             },
-            Encrypter::class => new ConfigBasedDefinitionReplacer(
-                DefaultEncrypter::class,
-                'support.encrypt.encrypter',
-            ),
         ]);
     }
 
@@ -184,18 +197,15 @@ class SupportProvider implements Provider
     {
         $definitions->add([
             TranslatorInterface::class => get(SymfonyTranslationProxy::class),
-            TranslationAccessor::class => new ConfigBasedDefinitionReplacer(
-                TranslationJsonFileAccessor::class,
-                'support.translation.accessor',
-                true,
-            ),
             TranslationLoader::class => get(TranslationAccessor::class),
             TranslationSaver::class => get(TranslationAccessor::class),
-            Translator::class => new ConfigBasedDefinitionReplacer(
-                DefaultTranslator::class,
-                'support.translation.translator',
-                true,
-            ),
+        ]);
+    }
+
+    public function registerAccessLog(Definitions $definitions): void
+    {
+        $definitions->add([
+            AccessLogger::class => fn (AccessLoggerFactory $factory) => $factory->create(),
         ]);
     }
 }

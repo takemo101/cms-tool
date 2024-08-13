@@ -4,7 +4,7 @@ namespace Takemo101\CmsTool\Support\Accessor;
 
 use ArrayObject;
 use CmsTool\Theme\ActiveTheme;
-use CmsTool\Theme\Contract\ThemeCustomizationAccessor;
+use CmsTool\Theme\Schema\ThemeCustomizationFetcher;
 use Takemo101\CmsTool\Support\Shared\ImmutableArrayObject;
 
 class ActiveThemeCustomizationAccessor
@@ -12,14 +12,12 @@ class ActiveThemeCustomizationAccessor
     /**
      * constructor
      *
-     * @param ThemeCustomizationPreview $preview
      * @param ActiveTheme $activeTheme
-     * @param ThemeCustomizationAccessor $accessor
+     * @param ThemeCustomizationFetcher $fetcher
      */
     public function __construct(
-        private readonly ThemeCustomizationPreview $preview,
         private readonly ActiveTheme $activeTheme,
-        private readonly ThemeCustomizationAccessor $accessor,
+        private readonly ThemeCustomizationFetcher $fetcher,
     ) {
         //
     }
@@ -29,13 +27,6 @@ class ActiveThemeCustomizationAccessor
      */
     public function __invoke(): ArrayObject
     {
-        $data = $this->preview->get();
-
-        return ImmutableArrayObject::of(
-            // If the preview data is set, return it.
-            $data !== false
-                ? $data
-                : $this->accessor->load($this->activeTheme),
-        );
+        return ImmutableArrayObject::of($this->fetcher->get($this->activeTheme));
     }
 }

@@ -4,6 +4,13 @@ export default {
     "./templates/**/*.{html,twig}",
   ],
   theme: {
+    listStyleType: {
+      none: 'none',
+      disc: 'disc',
+      circle: 'circle',
+      square: 'square',
+      decimal: 'decimal',
+    },
     extend: {
       typography: {
         DEFAULT: {

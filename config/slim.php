@@ -2,9 +2,6 @@
 
 // Slim framework configuration
 
-use Takemo101\Chubby\Http\Configurer\DefaultSlimConfigurer;
-use Takemo101\Chubby\Http\ErrorHandler\ErrorHandler;
-use Takemo101\Chubby\Http\Factory\DefaultSlimFactory;
 
 return [
 

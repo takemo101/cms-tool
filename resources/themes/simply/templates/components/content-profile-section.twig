@@ -1,0 +1,54 @@
+{% if show ?? true %}
+    <section class="section-narrow bg-gray-100">
+        <div class="section-narrow-layout">
+            <div class="cont-card">
+                <div class="cont-card__inner">
+                    <h3 class="prof-title">この記事を書いた人</h3>
+                    <div class="prof-cont">
+                        <div class="prof-cont__avatar">
+                            <img src="{{ avatar ? microcms_img(avatar, {h: 300}) : asset('empty-avatar.png') }}">
+                        </div>
+                        <div class="prof-cont__main">
+                            <div>
+                                <h4 class="prof-cont__main__name">{{ name }}</h4>
+                                <p class="prof-cont__main__bio">{{ biography|nl2br }}</p>
+                                <div class="prof-cont__main__links">
+                                    {% if link %}
+                                        <a href="{{ link }}" target="_blank" class="text-blue-600">
+                                            <i class="fas fa-link"></i>
+                                        </a>
+                                    {% endif %}
+                                    {% if x %}
+                                        <a href="{{ x }}" target="_blank" class="text-black">
+                                            <i class="fab fa-x-twitter"></i>
+                                        </a>
+                                    {% endif %}
+                                    {% if facebook %}
+                                        <a href="{{ facebook }}" target="_blank" class="text-blue-500">
+                                            <i class="fab fa-facebook"></i>
+                                        </a>
+                                    {% endif %}
+                                    {% if instagram %}
+                                        <a href="{{ instagram }}" target="_blank" class="text-pink-500">
+                                            <i class="fab fa-instagram"></i>
+                                        </a>
+                                    {% endif %}
+                                    {% if youtube %}
+                                        <a href="{{ youtube }}" target="_blank" class="text-red-500">
+                                            <i class="fab fa-youtube"></i>
+                                        </a>
+                                    {% endif %}
+                                    {% if github %}
+                                        <a href="{{ github }}" target="_blank" class="text-black">
+                                            <i class="fab fa-github"></i>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endif %}

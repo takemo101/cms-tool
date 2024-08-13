@@ -1,0 +1,28 @@
+{% if not layers.is_empty() %}
+    <ul class="toc-list">
+        {% for index, layer in layers %}
+            <li class="toc-list__item" data-level="{{ layer.level }}">
+                {% set number = index + 1 %}
+                {% set maker = layer.level.equals(1) ? '' : prefix ~ number ~ separator %}
+
+                {% if layer.is_not_blank() %}
+                    <span>
+                        {% if layer.header.id %}
+                            <a href="#{{ layer.header.id }}">
+                                {{ maker }} {{ layer.title }}
+                            </a>
+                        {% else %}
+                            {{ maker }} {{ layer.title }}
+                        {% endif %}
+                    </span>
+                {% endif %}
+                {% include 'components.content-title-layered-list' with {
+                    layers: layer.layers,
+                    separator: separator,
+                    prefix: maker,
+                    suffix: suffix,
+                } %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}

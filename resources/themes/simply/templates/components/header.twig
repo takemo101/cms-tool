@@ -39,13 +39,6 @@
         <div class="container mx-auto px-4">
             <div class="py-4 sm:overflow-auto overflow-x-scroll">
                 <nav class="flex space-x-6 text-black min-w-max">
-                    <a
-                        class="hover:opacity-60"
-                        href="{{ route('fixed-page', {
-                            path: 'about'
-                        }) }}">
-                        {{ share.meta.name }}について
-                    </a>
                     {% for c in share.categories %}
                         <a
                             class="hover:opacity-60"
@@ -55,6 +48,13 @@
                             {{ c.name }}
                         </a>
                     {% endfor %}
+                    <a
+                        class="hover:opacity-60"
+                        href="{{ route('fixed-page', {
+                            path: 'about'
+                        }) }}">
+                        About Site
+                    </a>
                 </nav>
             </div>
         </div>

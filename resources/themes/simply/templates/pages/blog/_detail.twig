@@ -37,14 +37,15 @@
                 </h1>
             </div>
 
-            <article class="mx-auto w-full border border-gray-200">
+            <article class="cont-card">
                 {% if content.eyecatch %}
                     <img src="{{ content.eyecatch.url }}" class="w-full">
                 {% endif %}
-                <div class="overflow-hidden sm:p-12 p-6 bg-white">
+                <div class="cont-card__inner">
 
                     {% include 'components.content-titles' with {
                         content: content.content,
+                        show: share.theme.detail.table_of_contents_show,
                     } %}
 
                     <div class="prose">
@@ -66,12 +67,30 @@
                             {% endfor %}
                         </div>
                     {% endif %}
+
+                    {% include 'components.content-prev-next-link' with {
+                        helper: helper,
+                        show: share.theme.detail.prev_next_show,
+                    } %}
                 </div>
 
             </article>
 
         </div>
     </section>
+
+    {% include 'components.content-profile-section' with {
+        name: share.theme.detail.profile_name,
+        biography: share.theme.detail.profile_biography,
+        avatar: share.theme.detail.profile_avatar,
+        link: share.theme.detail.profile_link,
+        x: share.theme.detail.profile_sns_x,
+        facebook: share.theme.detail.profile_sns_facebook,
+        instagram: share.theme.detail.profile_sns_instagram,
+        youtube: share.theme.detail.profile_sns_youtube,
+        github: share.theme.detail.profile_sns_github,
+        show: share.theme.detail.profile_show,
+    } %}
 
     <section class="section-narrow bg-gray-100 text-black">
         {% include 'components.relateds' with {

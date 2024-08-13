@@ -51,7 +51,7 @@ class HeaderTitlesCreator
         $nodeList = $xpath->query(
             implode(
                 '|',
-                array_map(fn (int $level) => "//h{$level}", HeaderTitle::LevelRange),
+                array_map(fn (int $level) => "//h{$level}", HeaderTitleLevel::Range),
             ),
         );
 

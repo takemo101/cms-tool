@@ -6,6 +6,7 @@ use ArrayIterator;
 use Countable;
 use DOMElement;
 use IteratorAggregate;
+use Takemo101\CmsTool\Support\Shared\HasCamelCaseAccess;
 use Traversable;
 
 /**
@@ -15,6 +16,8 @@ use Traversable;
  */
 readonly class HeaderTitles implements Countable, IteratorAggregate
 {
+    use HasCamelCaseAccess;
+
     /**
      * @var HeaderTitle[]
      */
@@ -54,12 +57,48 @@ readonly class HeaderTitles implements Countable, IteratorAggregate
     ): self {
         $titles = [];
         foreach ($this->titles as $title) {
-            if ($title->level >= $start && $title->level <= $end) {
+            if ($title->level->isWithinRange($start, $end)) {
                 $titles[] = $title;
             }
         }
 
         return new self(...$titles);
+    }
+
+    /**
+     * Create a hierarchical structure of header titles in the content.
+     *
+     * @return HeaderLayers
+     */
+    public function layering(): HeaderLayers
+    {
+        $layers = new HeaderLayers();
+
+        $titles = $this->titles;
+
+        /** @var HeaderTitle|null */
+        $first = array_shift($titles);
+
+        if ($first === null) {
+            return $layers;
+        }
+
+        // If the first title is the top level, add it to the layers.
+        $layers = $first->level->isTop()
+            ? $layers->add($first->toLayered())
+            : $layers->add(
+                (
+                    new HeaderLayer(
+                        level: new HeaderTitleLevel(HeaderTitleLevel::Top),
+                    )
+                )->add($first->toLayered()),
+            );
+
+        foreach ($titles as $title) {
+            $layers = $layers->add($title->toLayered());
+        }
+
+        return new HeaderLayers(...$layers);
     }
 
     /**

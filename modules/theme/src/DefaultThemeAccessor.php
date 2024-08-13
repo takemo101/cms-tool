@@ -43,9 +43,10 @@ class DefaultThemeAccessor implements ThemeAccessor
         $path = $this->helper->getThemeSettingPath($theme);
 
         try {
+            // Since theme.json may be manually edited, prioritize readability and do not escape Unicode and slashes.
             $json = json_encode(
                 $theme->meta->toArray(),
-                JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT,
+                JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT,
             );
         } catch (\JsonException $e) {
             throw ThemeSaveException::encodeError($path, $e);

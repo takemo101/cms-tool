@@ -99,6 +99,6 @@ class ThemeMetaController
                 )
                 : redirect()->back(),
             style: ToastStyle::Update,
-        );;
+        );
     }
 }

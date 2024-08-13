@@ -1,0 +1,149 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 垂直表示のレイアウトやコンテンツを表示するコンテナ（セクション）など */
+.section-layout {
+  @apply container mx-auto px-4 py-12;
+}
+
+.section-narrow-layout {
+  @apply container lg:max-w-4xl mx-auto px-4 pt-12;
+}
+.section-narrow {
+  @apply last-of-type:pb-20;
+}
+
+.section-header {
+  @apply flex items-center space-x-4;
+  &__title {
+    @apply sm:text-3xl text-2xl font-bold;
+  }
+  &__subtitle {
+    @apply sm:text-base text-sm text-gray-600;
+  }
+  &__to-link {
+    @apply sm:text-base text-sm hover:opacity-60;
+  }
+}
+
+.page-header {
+  @apply mb-8 flex items-center space-x-4;
+
+  &__title {
+    @apply sm:text-3xl text-2xl font-bold;
+  }
+  &__subtitle {
+    @apply sm:text-base text-sm text-gray-600;
+  }
+}
+
+.list-title {
+  @apply mb-12;
+}
+
+/* 記事一覧&詳細のタグ */
+.tag {
+  @apply flex flex-wrap content-center gap-2;
+}
+
+.tag-label {
+  @apply before:content-['#'] bg-gray-200 text-gray-800 text-sm py-1 px-3;
+}
+
+/* 記事詳細のカードレイアウト */
+.cont-card {
+  @apply mx-auto w-full border border-gray-200;
+
+  &__inner {
+    @apply overflow-hidden sm:p-12 p-6 bg-white;
+  }
+}
+
+/* 記事詳細の目次 */
+.toc-outer {
+  @apply sm:px-12 sm:py-10 px-6 py-4 sm:mb-12 mb-6 bg-gray-200;
+}
+.toc-title {
+  @apply sm:text-base text-xs font-bold text-gray-800 sm:mb-3 mb-2;
+}
+.toc-list {
+  @apply m-0;
+  &__item {
+    @apply list-none list-inside sm:text-base text-xs ml-[20px];
+    &[data-level] {
+      @apply leading-7;
+    }
+    &[data-level="1"] > span {
+      @apply font-bold;
+    }
+    &[data-level="1"],
+    &[data-level="2"] {
+      @apply ml-0;
+    }
+    a {
+      @apply text-gray-800 hover:underline;
+    }
+  }
+}
+
+/* 記事詳細の次の記事と前の記事のページナビゲーション */
+.pn-nav {
+  @apply flex sm:items-stretch sm:flex-row flex-col sm:gap-x-6 gap-y-6;
+
+  &__item {
+    @apply flex-1;
+
+    &__link {
+      @apply flex h-full items-center border border-gray-200 hover:bg-gray-200;
+      &-arrow {
+        @apply sm:py-6 py-4 px-2 flex-none sm:text-2xl text-lg;
+      }
+      &-main {
+        @apply flex flex-col sm:p-6 p-4 w-full;
+
+        &__subtitle {
+          @apply text-sm text-gray-600;
+        }
+        &__title {
+          @apply sm:text-base text-sm;
+        }
+      }
+    }
+  }
+}
+
+/* 記事詳細のプロフィール */
+.prof-title {
+  @apply sm:text-xl text-base font-bold mb-4;
+}
+.prof-cont {
+  @apply flex sm:flex-row flex-col items-stretch gap-6;
+
+  &__avatar {
+    @apply sm:w-1/4 w-full flex sm:items-center justify-center;
+
+    img {
+      @apply sm:w-full w-4/5 rounded-full;
+    }
+  }
+
+  &__main {
+    @apply sm:w-3/4  w-full flex items-center;
+
+    &__name {
+      @apply mb-2 text-base font-bold;
+    }
+    &__bio {
+      @apply mb-2 text-base;
+    }
+    &__links {
+      @apply flex items-stretch gap-4 text-2xl;
+    }
+  }
+}
+
+/* 記事詳細の記事内容 */
+.prose pre {
+  background-color: #0d1117;
+}

@@ -5,7 +5,7 @@ namespace Takemo101\CmsTool\Preset\MicroCms\Shared\Action;
 use CmsTool\View\View;
 use CmsTool\View\ViewCreator;
 use Psr\Http\Message\ServerRequestInterface;
-use Takemo101\CmsTool\Preset\Shared\Action\AbstractIndexAction;
+use Takemo101\CmsTool\Preset\Shared\Action\AbstractIndexable;
 use Takemo101\CmsTool\Preset\Shared\Exception\NotFoundThemeTemplateException;
 use Takemo101\CmsTool\Preset\Shared\LayeredTemplateNamesCreator;
 use Takemo101\CmsTool\Preset\MicroCms\Shared\ViewModel\ContentIndexPage;
@@ -13,7 +13,7 @@ use Takemo101\CmsTool\UseCase\MicroCms\QueryService\Content\MicroCmsContentGetLi
 use Takemo101\CmsTool\UseCase\MicroCms\QueryService\Content\MicroCmsContentQueryService;
 use Takemo101\CmsTool\UseCase\Shared\QueryService\Pager;
 
-class ContentIndexAction extends AbstractIndexAction
+class ContentIndexAction extends AbstractIndexable
 {
     /**
      * constructor
@@ -21,14 +21,14 @@ class ContentIndexAction extends AbstractIndexAction
      * @param string $endpoint
      * @param string $signature
      * @param integer $limit
-     * @param string|null $order
+     * @param string $order
      * @param string|null $filter
      */
     public function __construct(
         private readonly string $endpoint,
         private readonly string $signature,
         private readonly int $limit = 10,
-        private readonly ?string $order = null,
+        private readonly string $order = 'publishedAt',
         private readonly ?string $filter = null,
     ) {
         assert(
@@ -44,6 +44,11 @@ class ContentIndexAction extends AbstractIndexAction
         assert(
             $limit > 0,
             'The limit must be greater than 0',
+        );
+
+        assert(
+            empty($order) === false,
+            'The order must not be empty',
         );
     }
 

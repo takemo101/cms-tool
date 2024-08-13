@@ -80,7 +80,6 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
         return empty($json)
             ? null
             : ImmutableArrayObject::of($json);
-        ;
     }
 
     /**
@@ -203,6 +202,68 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
 
     /**
      * {@inheritDoc}
+     */
+    public function getFirst(
+        string $endpoint,
+        MicroCmsContentGetListQuery $query = new MicroCmsContentGetListQuery(),
+        bool $cache = true,
+    ): ?ArrayObject {
+
+        $apiQuery = new MicroCmsGetListQuery(
+            limit: 1,
+            orders: $query->orders,
+            q: $query->q,
+            fields: $query->fields,
+            ids: $query->ids,
+            filters: $query->filters,
+            depth: $query->depth,
+        );
+
+        $key = $this->buildCacheKey([
+            ...$apiQuery->toQuery(),
+            'endpoint' => $endpoint,
+        ]);
+
+        /** @var array<string,mixed> */
+        $json = $this->cache->get(
+            key: $key,
+            callback: function () use (
+                $endpoint,
+                $apiQuery,
+            ): array {
+
+                $connector = $this->factory->create();
+
+                $response = $connector->send(
+                    new MicroCmsGetListRequest(
+                        endpoint: $endpoint,
+                        apiQuery: $apiQuery,
+                    ),
+                );
+
+                if ($response->status() !== 200) {
+                    throw new InfraException('failed to get list');
+                }
+
+                return $response->json();
+            },
+            enabled: $cache,
+        );
+
+        /** @var array<string,mixed> */
+        $contents = $json['contents'] ?? [];
+
+        /** @var ImmutableArrayObject[] */
+        $contents = array_map(
+            fn (array $content) => ImmutableArrayObject::of($content),
+            $contents,
+        );
+
+        return $contents[0] ?? null;
+    }
+
+    /**
+     * {@inheritDoc}
      * @throws InfraException
      */
     public function getList(
@@ -226,7 +287,6 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
             ...$apiQuery->toQuery(),
             'endpoint' => $endpoint,
         ]);
-        ;
 
         /** @var array<string,mixed> */
         $json = $this->cache->get(

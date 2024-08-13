@@ -7,7 +7,6 @@ use CmsTool\Theme\Exception\ArrayKeyMissingException;
 use CmsTool\Theme\Exception\NotFoundThemeException;
 use CmsTool\Theme\Theme;
 use CmsTool\Theme\ThemeId;
-use CmsTool\Theme\ThemeMeta;
 use CmsTool\Theme\ThemeMetaFactory;
 use CmsTool\Theme\ThemeQueryService;
 use Takemo101\CmsTool\UseCase\Shared\Exception\NotFoundDataException;

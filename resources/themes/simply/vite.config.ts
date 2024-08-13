@@ -1,5 +1,5 @@
 import { defineConfig } from "vite";
-import { resolve, join } from 'path';
+import { resolve, join } from 'node:path';
 
 export default defineConfig(({ command }) =>
   command === "build"

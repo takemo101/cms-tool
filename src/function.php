@@ -4,6 +4,7 @@
 // Here, mainly configure routing and middleware.
 
 use CmsTool\Session\Middleware\Csrf;
+use CmsTool\Support\AccessLog\Middleware\AccessLog;
 use Psr\Container\ContainerInterface;
 use Slim\Interfaces\RouteCollectorProxyInterface as Proxy;
 use Takemo101\Chubby\Console\CommandCollection;
@@ -11,6 +12,7 @@ use Takemo101\Chubby\Event\EventRegister;
 use Takemo101\Chubby\Http\ErrorHandler\ErrorResponseRenders;
 use Takemo101\Chubby\Http\SlimHttp;
 use Takemo101\Chubby\Support\ApplicationSummary;
+use Takemo101\CmsTool\Console\GenerateBasicAuthPasswordCommand;
 use Takemo101\CmsTool\Console\StorageLinkCommand;
 use Takemo101\CmsTool\Error\SystemErrorPageRender;
 use Takemo101\CmsTool\Error\ThemeErrorPageRender;
@@ -41,6 +43,7 @@ use Takemo101\CmsTool\Http\Controller\Admin\UninstallController;
 use Takemo101\CmsTool\Http\Controller\Admin\WebhookController;
 use Takemo101\CmsTool\Http\Middleware\AdminAuth;
 use Takemo101\CmsTool\Http\Middleware\AdminSessionStart;
+use Takemo101\CmsTool\Support\BasicAuth\BasicAuth;
 use Takemo101\CmsTool\Http\Middleware\GuideToInstallation;
 use Takemo101\CmsTool\Http\Middleware\InsertTrackingCode;
 use Takemo101\CmsTool\Http\Middleware\VerifyActiveThemeCustomizability;
@@ -54,12 +57,14 @@ use Takemo101\CmsTool\Infra\Listener\CsrfGuardSetupListener;
 use Takemo101\CmsTool\Infra\Listener\DeleteRobotsTxtListener;
 use Takemo101\CmsTool\Infra\Listener\RequestParameterSetupListener;
 use Takemo101\CmsTool\Infra\Storage\LocalPublicStoragePath;
+use Takemo101\CmsTool\Preset\Shared\Feed\FeedActionAndResponseRenderer;
 use Takemo101\CmsTool\Support\Htmx\HtmxAccess;
 
 hook()
     ->onTyped(
         fn (CommandCollection $commands) => $commands->add(
             StorageLinkCommand::class,
+            GenerateBasicAuthPasswordCommand::class,
         ),
     )
     ->onTyped(
@@ -359,17 +364,23 @@ hook()
                             })->add(AdminSessionStart::class)
                                 ->add(GuideToInstallation::class);
                         }
-                    );
+                    )->add(BasicAuth::class);
 
                     $proxy->get(
                         '/assets/{path:.+}',
                         ActiveThemeAssetAction::class,
                     )->setName(ActiveThemeAssetAction::RouteName);
 
+                    $proxy->get(
+                        '/feed',
+                        FeedActionAndResponseRenderer::class,
+                    )->setName('feed');
+
                     ThemeRouteGroupHandler::configure($proxy)
                         ->add(InsertTrackingCode::class)
                         ->add(WhenUnpublished::class)
-                        ->add(GuideToInstallation::class);
+                        ->add(GuideToInstallation::class)
+                        ->add(AccessLog::class);
                 }
             )
                 ->add(Csrf::class);

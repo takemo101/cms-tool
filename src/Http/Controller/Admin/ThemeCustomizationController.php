@@ -61,6 +61,7 @@ class ThemeCustomizationController
         $errors = $validator->validate(
             body: (array) $request->getParsedBody(),
             schema: $this->activeTheme->meta->schema,
+            isStrict: false,
         );
 
         if ($errors->count()) {
@@ -99,6 +100,7 @@ class ThemeCustomizationController
         $errors = $validator->validate(
             body: (array) $request->getParsedBody(),
             schema: $this->activeTheme->meta->schema,
+            isStrict: true,
         );
 
         if ($errors->count()) {

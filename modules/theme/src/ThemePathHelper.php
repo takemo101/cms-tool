@@ -4,7 +4,12 @@ namespace CmsTool\Theme;
 
 use DI\Attribute\Inject;
 use Takemo101\Chubby\Filesystem\PathHelper;
+use BadMethodCallException;
+use Takemo101\Chubby\Filesystem\LocalFilesystem;
 
+/**
+ * @mixin PathHelper
+ */
 class ThemePathHelper
 {
     /**
@@ -78,8 +83,8 @@ class ThemePathHelper
     {
         return $theme->isReadonly()
             ? $this->getTemporaryPath(
-                'customization',
-                "{$theme->id}-data.json",
+                $theme,
+                ThemeConfig::CustomizationDataFilename,
             )
             : $this->getThemePath(
                 $theme,
@@ -120,15 +125,18 @@ class ThemePathHelper
     }
 
     /**
-     * Get temporary path
+     * Get the directory for temporarily storing files such as customization data and assets for read-only themes.
+     * The data for read-only themes will be saved in this directory.
      *
+     * @param Theme $theme
      * @param string ...$paths
      * @return string
      */
-    public function getTemporaryPath(string ...$paths): string
+    public function getTemporaryPath(Theme $theme, string ...$paths): string
     {
         return $this->helper->join(
             $this->temporaryDirectory,
+            $theme->id->value(),
             ...$paths,
         );
     }
@@ -153,5 +161,41 @@ class ThemePathHelper
     public function extractThemeId(string $path): ThemeId
     {
         return new ThemeId($this->helper->basename($path));
+    }
+
+    /**
+     * Make a temporary directory if the theme is readonly.
+     * If the directory already exists, it will be skipped.
+     *
+     * @param Theme $theme
+     * @param LocalFilesystem $filesystem
+     * @return void
+     */
+    public function makeTemporaryDirectoryOrSkip(Theme $theme, LocalFilesystem $filesystem): void
+    {
+        if ($theme->isReadonly()) {
+            $directory = $this->getTemporaryPath($theme);
+
+            if (!$filesystem->exists($directory)) {
+                $filesystem->makeDirectory($directory);
+            }
+        }
+    }
+
+    /**
+     * Call helper method
+     *
+     * @param string $name
+     * @param mixed[] $arguments
+     * @return mixed
+     * @throws BadMethodCallException
+     */
+    public function __call(string $name, array $arguments): mixed
+    {
+        if (method_exists($this->helper, $name)) {
+            return $this->helper->{$name}(...$arguments);
+        }
+
+        throw new BadMethodCallException("Method {$name} does not exist");
     }
 }

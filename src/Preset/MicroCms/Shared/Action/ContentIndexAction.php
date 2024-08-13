@@ -21,14 +21,14 @@ class ContentIndexAction extends AbstractIndexAction
      * @param string $endpoint
      * @param string $signature
      * @param integer $limit
-     * @param string|null $order
+     * @param string $order
      * @param string|null $filter
      */
     public function __construct(
         private readonly string $endpoint,
         private readonly string $signature,
         private readonly int $limit = 10,
-        private readonly ?string $order = 'publishedAt',
+        private readonly string $order = 'publishedAt',
         private readonly ?string $filter = null,
     ) {
         assert(
@@ -44,6 +44,11 @@ class ContentIndexAction extends AbstractIndexAction
         assert(
             $limit > 0,
             'The limit must be greater than 0',
+        );
+
+        assert(
+            empty($order) === false,
+            'The order must not be empty',
         );
     }
 

@@ -3,7 +3,6 @@
 use CmsTool\Support\Feed\Feed;
 use CmsTool\Support\Feed\FeedItem;
 use CmsTool\Support\Feed\Rss2FeedGenerator;
-use CmsTool\Support\Feed\FeedOutputMeta;
 use CmsTool\Support\Feed\DOMDocumentHelper;
 use CmsTool\Support\Feed\FeedItems;
 use Mockery as m;

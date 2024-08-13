@@ -16,6 +16,8 @@ class Rss2FeedGenerator implements FeedGenerator
 
     public const ContentType = 'application/xml';
 
+    public const MimeType = 'application/rss+xml';
+
     /**
      * Constructor
      *
@@ -33,7 +35,7 @@ class Rss2FeedGenerator implements FeedGenerator
     /**
      * {@inheritDoc}
      */
-    public function generate(Feed $feed): FeedOutput
+    public function generate(Feed $feed): string
     {
         $xml = new DOMDocument(version: '1.0', encoding: self::Charset);
 
@@ -56,11 +58,7 @@ class Rss2FeedGenerator implements FeedGenerator
             throw new RuntimeException('Failed to save XML.');
         }
 
-        return new FeedOutput(
-            output: $output,
-            charset: self::Charset,
-            contentType: self::ContentType,
-        );
+        return $output;
     }
 
     /**
@@ -199,5 +197,17 @@ class Rss2FeedGenerator implements FeedGenerator
     private function datetimeToFormatString(DateTimeInterface $date): string
     {
         return $date->format(DATE_RFC2822);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getOutputMeta(): FeedOutputMeta
+    {
+        return new FeedOutputMeta(
+            charset: self::Charset,
+            contentType: self::ContentType,
+            mimeType: self::MimeType,
+        );
     }
 }

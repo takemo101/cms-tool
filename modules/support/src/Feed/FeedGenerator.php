@@ -16,7 +16,14 @@ interface FeedGenerator
      * Generates feed information.
      *
      * @param Feed $feed
-     * @return FeedOutput The feed XML output.
+     * @return string The feed XML output.
      */
-    public function generate(Feed $feed): FeedOutput;
+    public function generate(Feed $feed): string;
+
+    /**
+     * Gets the feed output meta information.
+     *
+     * @return FeedOutputMeta
+     */
+    public function getOutputMeta(): FeedOutputMeta;
 }

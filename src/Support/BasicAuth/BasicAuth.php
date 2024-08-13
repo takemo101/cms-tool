@@ -6,9 +6,6 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Takemo101\CmsTool\Support\BasicAuth\BasicAuthorizedException;
-use Takemo101\CmsTool\Support\BasicAuth\BasicAuthenticator;
-use Takemo101\CmsTool\Support\BasicAuth\BasicAuthHeaderParser;
 
 /**
  * Basic authentication middleware.

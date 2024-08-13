@@ -124,7 +124,7 @@ class BlogFeedCreator extends AbstractIndexable implements FeedCreator
                 /**
                  * @param ContentData $content
                  */
-                fn(object $content) => new FeedItem(
+                fn (object $content) => new FeedItem(
                     title: $content->title,
                     published: new DateTimeImmutable($content->publishedAt),
                     // If there is a featured image in the content, embed the image instead of the enclosure.

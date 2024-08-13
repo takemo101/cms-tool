@@ -2,8 +2,6 @@
 
 namespace Takemo101\CmsTool\Preset\Shared\HeaderTitle;
 
-use DOMElement;
-
 /**
  * Data class representing the header title of the content.
  *

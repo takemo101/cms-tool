@@ -5,7 +5,6 @@ namespace Takemo101\CmsTool\Support\Twig;
 use Takemo101\CmsTool\Support\Session\FlashOldInputs;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
-use RuntimeException;
 use Takemo101\Chubby\Context\ContextRepository;
 
 class OldExtension extends AbstractExtension

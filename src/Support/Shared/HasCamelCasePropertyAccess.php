@@ -3,6 +3,7 @@
 namespace Takemo101\CmsTool\Support\Shared;
 
 use BadMethodCallException;
+
 use function Symfony\Component\String\u;
 
 trait HasCamelCasePropertyAccess

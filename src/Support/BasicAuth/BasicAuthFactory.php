@@ -3,9 +3,6 @@
 namespace Takemo101\CmsTool\Support\BasicAuth;
 
 use CmsTool\Support\Hash\Hasher;
-use Takemo101\CmsTool\Support\BasicAuth\BasicAuthenticator;
-use Takemo101\CmsTool\Support\BasicAuth\BasicAuthHeaderParser;
-use Takemo101\CmsTool\Support\BasicAuth\BasicAuthUsers;
 
 class BasicAuthFactory
 {

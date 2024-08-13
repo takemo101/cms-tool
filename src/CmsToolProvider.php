@@ -67,7 +67,7 @@ class CmsToolProvider implements Provider
     public function register(Definitions $definitions): void
     {
         $definitions->add([
-            VendorPath::class => fn() => new VendorPath(
+            VendorPath::class => fn () => new VendorPath(
                 dirname(__DIR__, 1),
                 'src',
                 'config',
@@ -121,17 +121,16 @@ class CmsToolProvider implements Provider
                     enabled: $enabled,
                 );
             },
-            HeadHtmls::class => fn(
+            HeadHtmls::class => fn (
                 Hook $hook,
                 FeedLinkHtml $feedLink,
             ) => $hook->doTyped(
                 new HeadHtmls($feedLink),
             ),
-            FeedActionAndResponseRenderer::class => fn(
+            FeedActionAndResponseRenderer::class => fn (
                 Hook $hook,
                 FeedGenerator $generator,
                 ApplicationContainer $container,
-
             ) => $hook->doTyped(
                 new FeedActionAndResponseRenderer(
                     generator: $generator,
@@ -193,7 +192,7 @@ class CmsToolProvider implements Provider
     {
         $hook
             ->onTyped(
-                fn(TemplateFinder $finder) => $finder->addNamespace(
+                fn (TemplateFinder $finder) => $finder->addNamespace(
                     'cms-tool',
                     $path->getResourcePath('views'),
                 )
@@ -211,7 +210,7 @@ class CmsToolProvider implements Provider
     {
         $hook
             ->onTyped(
-                fn(ThemeFinder $finder) => $finder->addLocation(
+                fn (ThemeFinder $finder) => $finder->addLocation(
                     $path->getResourcePath('themes'),
                 )
             );
@@ -273,14 +272,14 @@ class CmsToolProvider implements Provider
     {
         $hook
             ->onTyped(
-                fn(GlobalMiddlewareCollection $middlewares) => $middlewares->add(
+                fn (GlobalMiddlewareCollection $middlewares) => $middlewares->add(
                     CacheControl::class,
                     SessionStart::class,
                 ),
             )
             ->on(
                 ApplicationHookTags::Http_AfterAddRoutingMiddleware,
-                fn(Slim $slim) => $slim->add(
+                fn (Slim $slim) => $slim->add(
                     new MethodOverrideMiddleware(),
                 ),
             );

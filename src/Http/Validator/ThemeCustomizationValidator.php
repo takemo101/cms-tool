@@ -180,7 +180,8 @@ class ThemeCustomizationValidator
                     }
                     : [
                         new Assert\Type('string')
-                    ]),
+                    ]
+                ),
                 new Assert\Length(max: TextSetting::LimitLength),
             ],
             $setting instanceof EditorSetting => [

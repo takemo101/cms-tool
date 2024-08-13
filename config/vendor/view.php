@@ -15,6 +15,7 @@ use Takemo101\CmsTool\Support\Accessor\ActiveThemeCustomizationAccessor;
 use Takemo101\CmsTool\Support\Accessor\MicroCmsApiAccessor;
 use Takemo101\CmsTool\Support\Accessor\ServerRequestAccessor;
 use Takemo101\CmsTool\Support\Accessor\SiteMetaAccessor;
+use Takemo101\CmsTool\Support\Htmlable\HtmlSectionAccessor;
 use Takemo101\CmsTool\Support\Twig\AssetExtension;
 use Takemo101\CmsTool\Support\Twig\ErrorExtension;
 use Takemo101\CmsTool\Support\Twig\FlashExtension;
@@ -127,6 +128,7 @@ return [
         'api' => MicroCmsApiAccessor::class,
         'request' => ServerRequestAccessor::class,
         'theme' => ActiveThemeCustomizationAccessor::class,
+        'section' => HtmlSectionAccessor::class,
     ],
 
     // Set up components

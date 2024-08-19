@@ -61,13 +61,13 @@ use Takemo101\CmsTool\Support\Htmx\HtmxAccess;
 
 hook()
     ->onTyped(
-        fn(CommandCollection $commands) => $commands->add(
+        fn (CommandCollection $commands) => $commands->add(
             StorageLinkCommand::class,
             GenerateBasicAuthPasswordCommand::class,
         ),
     )
     ->onTyped(
-        fn(EventRegister $register) => $register
+        fn (EventRegister $register) => $register
             ->on(AdminSessionSetupListener::class)
             ->on(CsrfGuardSetupListener::class)
             ->on(RequestParameterSetupListener::class)

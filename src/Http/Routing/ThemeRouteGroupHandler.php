@@ -7,6 +7,7 @@ use Takemo101\CmsTool\Http\Action\Theme\HomeAction;
 use Takemo101\CmsTool\Support\Theme\ActiveThemeRouteRegister;
 use Slim\Interfaces\RouteCollectorProxyInterface as Proxy;
 use Slim\Interfaces\RouteGroupInterface;
+use Takemo101\CmsTool\Preset\Shared\Feed\FeedActionAndResponseRenderer;
 
 class ThemeRouteGroupHandler
 {
@@ -35,14 +36,41 @@ class ThemeRouteGroupHandler
      */
     public function __invoke(Proxy $proxy): void
     {
+        $this->registerBeforeBaseRoutes($proxy);
+
+        // Set routing for theme
+        $this->register->register($proxy);
+
+        $this->registerAfterBaseRoutes($proxy);
+    }
+
+    /**
+     * Register before base routes.
+     *
+     * @param Proxy $proxy
+     * @return void
+     */
+    private function registerBeforeBaseRoutes(Proxy $proxy): void
+    {
         $proxy->get(
             empty($proxy->getBasePath()) ? '/' : '',
             HomeAction::class,
         )->setName('home');
 
-        // Set routing for theme
-        $this->register->register($proxy);
+        $proxy->get(
+            '/feed',
+            FeedActionAndResponseRenderer::class,
+        )->setName('feed');
+    }
 
+    /**
+     * Register after base routes.
+     *
+     * @param Proxy $proxy
+     * @return void
+     */
+    private function registerAfterBaseRoutes(Proxy $proxy): void
+    {
         $proxy->get(
             '/{path:.+}',
             FixedPageAction::class,

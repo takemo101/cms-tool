@@ -45,7 +45,7 @@ class GuideToInstallation implements MiddlewareInterface
         if (!$this->repository->isInstalled()) {
             return (new HtmlRenderer(
                 view('cms-tool::error.uninstalled'),
-                StatusCodeInterface::STATUS_UNAUTHORIZED,
+                StatusCodeInterface::STATUS_FORBIDDEN,
             ))->render(
                 $request,
                 $this->responseFactory->createResponse(),

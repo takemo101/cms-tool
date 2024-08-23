@@ -148,15 +148,11 @@
   background-color: #0d1117;
 }
 .prose h2 {
-  position: relative;
-  padding-left: 18px;
-  display: inline-block;
+  @apply relative inline-block pl-[18px];
 
   &::before,
   &::after {
-    content: "";
-    position: absolute;
-    display: block;
+    @apply block absolute content-[''];
   }
 
   &::after {
@@ -170,13 +166,11 @@
 /* 装飾 Utility */
 
 .lego-accent {
-  position: relative;
+  @apply relative;
 
   &::after,
   &::before {
-    content: "";
-    position: absolute;
-    display: block;
+    @apply block absolute content-[''];
   }
 
   &::after {

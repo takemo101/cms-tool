@@ -6,13 +6,18 @@
     {% set secondColumnSubtitle = share.theme.top.second_column_subtitle %}
     {% set secondColumnCategory = share.theme.top.second_column_category %}
 
-    {% set contents = share.contents_9 %}
-    {% set top_contents = contents[:3] %}
+    {# スライダーの表示件数 #}
+    {% set slider_max = share.theme.top.slider_max %}
+    {# 新着記事の取得 #}
+    {% set contents = share.contents(slider_max + 6) %}
+    {# スライダーの記事取得 #}
+    {% set top_contents = contents[:slider_max] %}
+    {# スライダーの先頭記事取得 #}
     {% set first_content = top_contents|first %}
 
     {% if top_contents|length %}
         <section class="bg-white text-black xl:px-6 px-0">
-            <div id="splide" class="splide w-full xl:h-[680px] sm:h-[580px]">
+            <div id="splide" class="splide w-full xl:h-[680px] sm:h-[580px] h-[320px]">
                 <div class="splide__track h-full">
                     <ul class="splide__list">
                         {% for content in top_contents %}
@@ -55,7 +60,7 @@
 
     <section class="bg-white text-black">
         {% include 'components.home.contents' with {
-            contents: contents[4:],
+            contents: contents[slider_max:],
             title: 'BLOG',
             subtitle: '新着記事',
             link: route('blog.index'),

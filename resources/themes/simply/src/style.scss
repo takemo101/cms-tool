@@ -147,3 +147,8 @@
 .prose pre {
   background-color: #0d1117;
 }
+
+/* Splide */
+.splide__pagination__page {
+  @apply sm:mx-4 mx-2 my-1 !important;
+}

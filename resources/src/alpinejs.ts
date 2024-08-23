@@ -62,4 +62,36 @@ export default function init() {
       return `${this.value.length.toLocaleString()} / ${this.maxLength.toLocaleString()}`;
     },
   }));
+
+  type InputNumberElement = HTMLInputElement | undefined;
+
+  Alpine.data<{
+    value: string;
+    input: InputNumberElement;
+    min: number | undefined;
+    max: number | undefined;
+    init: () => void;
+  }>("inputNumber", () => ({
+    value: "",
+    input: undefined,
+    min: undefined,
+    max: undefined,
+    init() {
+      this.$nextTick(() => {
+        const input = this.$refs.input as HTMLInputElement;
+        this.min = input.min ? Number.parseInt(input.min) : undefined;
+        this.max = input.max ? Number.parseInt(input.max) : undefined;
+      });
+      this.$watch("value", (value) => {
+        const num = Number.parseInt(value);
+
+        if (this.min !== undefined && num < this.min) {
+          this.value = this.min.toString();
+        }
+        if (this.max !== undefined && num > this.max) {
+          this.value = this.max.toString();
+        }
+      });
+    },
+  }));
 }

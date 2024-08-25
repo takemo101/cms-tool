@@ -2,14 +2,14 @@
 
 namespace Takemo101\CmsTool\UseCase\Shared\QueryService;
 
-use Takemo101\CmsTool\Support\Shared\HasMethodAccessor;
+use Takemo101\CmsTool\Support\Shared\HasCamelCaseAccess;
 
 /**
  * @property-read integer $offset
  */
 readonly class Pager
 {
-    use HasMethodAccessor;
+    use HasCamelCaseAccess;
 
     /** @var integer */
     public const DefaultLimit = 10;

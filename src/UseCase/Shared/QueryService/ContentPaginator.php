@@ -2,7 +2,7 @@
 
 namespace Takemo101\CmsTool\UseCase\Shared\QueryService;
 
-use Takemo101\CmsTool\Support\Shared\HasMethodAccessor;
+use Takemo101\CmsTool\Support\Shared\HasCamelCaseAccess;
 
 /**
  * @property-read boolean $onFirstPage
@@ -19,7 +19,7 @@ use Takemo101\CmsTool\Support\Shared\HasMethodAccessor;
  */
 readonly class ContentPaginator
 {
-    use HasMethodAccessor;
+    use HasCamelCaseAccess;
 
     /**
      * constructor

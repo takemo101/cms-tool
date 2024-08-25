@@ -1,32 +1,32 @@
 <!DOCTYPE html>
 <html lang="{{ config('app.locale') }}">
     <head>
-        {% set metaTitle = block('title') is defined ? block('title') : share.meta.seo.title %}
-        {% set metaDescription = block('description') is defined ? block('description') : share.meta.seo.description %}
-        {% set metaIcon = block('image') is defined ? block('image') : storage(share.meta.seo.icon, true) %}
-        {% set metaRobots = block('robots') is defined ? block('robots') : share.meta.seo.robots %}
+        {% set meta_title = block('title') is defined ? block('title') : share.meta.seo.title %}
+        {% set meta_description = block('description') is defined ? block('description') : share.meta.seo.description %}
+        {% set meta_icon = block('image') is defined ? block('image') : storage(share.meta.seo.icon, true) %}
+        {% set meta_robots = block('robots') is defined ? block('robots') : share.meta.seo.robots %}
 
         {# meta tag #}
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <meta name="description" content="{{ metaDescription }}">
-        <meta name="robots" content="{{ metaRobots ?: 'all' }}">
+        <meta name="description" content="{{ meta_description }}">
+        <meta name="robots" content="{{ meta_robots ?: 'all' }}">
         <meta property="og:url" content="{{ share.request.uri.current }}" />
-        <meta property="og:title" content="{{ metaTitle }}" />
-        <meta property="og:description" content="{{ metaDescription }}" />
+        <meta property="og:title" content="{{ meta_title }}" />
+        <meta property="og:description" content="{{ meta_description }}" />
         <meta property="og:site_name" content="{{ share.meta.name }}" />
         <meta property="og:type" content="article" />
-        {% if metaIcon %}
-            <meta property="og:image" content="{{ metaIcon }}" />
+        {% if meta_icon %}
+            <meta property="og:image" content="{{ meta_icon }}" />
         {% endif %}
 
         {% if share.meta.seo.favicon %}
             <link rel="icon" href="{{ storage(share.meta.seo.favicon, true) }}">
         {% endif %}
 
-        <title>{{ metaTitle }}{% block title_separator %}｜{% endblock %}{% block title_suffix %}{{ share.meta.name }}{% endblock %}</title>
+        <title>{{ meta_title }}{% block title_separator %}｜{% endblock %}{% block title_suffix %}{{ share.meta.name }}{% endblock %}</title>
 
         {{ share.section.head }}
 

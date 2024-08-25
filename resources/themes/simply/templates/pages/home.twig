@@ -2,9 +2,9 @@
 
 {% block content %}
     {# 新着記事の次のカラムに表示させる内容の変数設定 #}
-    {% set secondColumnTitle = share.theme.top.second_column_title %}
-    {% set secondColumnSubtitle = share.theme.top.second_column_subtitle %}
-    {% set secondColumnCategory = share.theme.top.second_column_category %}
+    {% set second_column_title = share.theme.top.second_column_title %}
+    {% set second_column_subtitle = share.theme.top.second_column_subtitle %}
+    {% set second_column_category = share.theme.top.second_column_category %}
 
     {# スライダーの表示件数 #}
     {% set slider_max = share.theme.top.slider_max %}
@@ -63,16 +63,16 @@
             title: 'BLOG',
             subtitle: '新着記事',
             link: route('blog.index'),
-            showCategory: true,
+            show_category: true,
         } %}
     </section>
     <section class="bg-gray-100 text-black">
         {% include 'components.home.contents' with {
-            contents: share.category_contents_6(secondColumnCategory),
-            title: secondColumnTitle,
-            subtitle: secondColumnSubtitle,
+            contents: share.category_contents_6(second_column_category),
+            title: second_column_title,
+            subtitle: second_column_subtitle,
             link: route('blog.category', {
-                id: secondColumnCategory,
+                id: second_column_category,
             }),
         } %}
     </section>

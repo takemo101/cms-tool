@@ -57,10 +57,11 @@ class ArrayKeySearcher
      *
      * @return self
      */
-    public static function createCamelCaseSearcher(): self
+    public static function createSnakeAndCamelCaseSearcher(): self
     {
         return new self(
             fn (string $key) => u($key)->camel()->toString(),
+            fn (string $key) => u($key)->snake()->toString(),
         );
     }
 }

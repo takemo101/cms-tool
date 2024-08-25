@@ -17,7 +17,7 @@ class ImmutableArrayObject extends ImmutableArrayObjectable
      */
     protected function __init(): void
     {
-        $this->searcher = ArrayKeySearcher::createCamelCaseSearcher();
+        $this->searcher = ArrayKeySearcher::createSnakeAndCamelCaseSearcher();
     }
 
     /**

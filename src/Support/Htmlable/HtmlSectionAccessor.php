@@ -2,7 +2,8 @@
 
 namespace Takemo101\CmsTool\Support\Htmlable;
 
-use Takemo101\CmsTool\Support\Shared\ImmutableArrayObject;
+use Takemo101\CmsTool\Support\ArrayObject\ImmutableArrayObject;
+use Takemo101\CmsTool\Support\ArrayObject\ImmutableArrayObjectable;
 
 class HtmlSectionAccessor
 {
@@ -18,7 +19,7 @@ class HtmlSectionAccessor
     }
 
     /**
-     * @return ImmutableArrayObject&object{
+     * @return ImmutableArrayObjectable&object{
      *    head: HeadHtmls
      * }
      */

@@ -2,7 +2,6 @@
 
 namespace Takemo101\CmsTool\Preset\MicroCms\Shared\Action;
 
-use ArrayObject;
 use Closure;
 use CmsTool\View\View;
 use CmsTool\View\ViewCreator;
@@ -11,6 +10,7 @@ use Slim\Exception\HttpNotFoundException;
 use Takemo101\CmsTool\Preset\Shared\Exception\NotFoundThemeTemplateException;
 use Takemo101\CmsTool\Preset\Shared\LayeredTemplateNamesCreator;
 use Takemo101\CmsTool\Preset\MicroCms\Shared\ViewModel\ContentDetailPage;
+use Takemo101\CmsTool\Support\ArrayObject\ImmutableArrayObjectable;
 use Takemo101\CmsTool\UseCase\MicroCms\QueryService\Content\MicroCmsContentGetListQuery;
 use Takemo101\CmsTool\UseCase\MicroCms\QueryService\Content\MicroCmsContentQueryService;
 
@@ -98,11 +98,11 @@ class ContentDetailAction
      *
      * @param MicroCmsContentQueryService $queryService
      * @param ArrayObject $content
-     * @return Closure():array{0: ?ArrayObject, 1: ?ArrayObject}
+     * @return Closure():array{0: ?ImmutableArrayObjectable, 1: ?ImmutableArrayObjectable}
      */
     private function createPrevAndNextGenerator(
         MicroCmsContentQueryService $queryService,
-        ArrayObject $content,
+        ImmutableArrayObjectable $content,
     ): Closure {
         return function () use ($queryService, $content) {
             /** @var string */

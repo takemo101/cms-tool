@@ -2,8 +2,8 @@
 
 namespace Takemo101\CmsTool\Preset\MicroCms\Shared\ViewModel;
 
-use ArrayObject;
 use Closure;
+use Takemo101\CmsTool\Support\ArrayObject\ImmutableArrayObjectable;
 use Takemo101\CmsTool\Support\Shared\HasCamelCaseAccess;
 
 class ContentDetailHelper
@@ -13,7 +13,7 @@ class ContentDetailHelper
     /**
      * constructor
      *
-     * @param Closure():array{0: ?ArrayObject, 1: ?ArrayObject} $generator [0 => prev, 1 => next]
+     * @param Closure():array{0: ?ImmutableArrayObjectable, 1: ?ImmutableArrayObjectable} $generator [0 => prev, 1 => next]
      */
     public function __construct(
         private readonly Closure $generator,
@@ -25,8 +25,8 @@ class ContentDetailHelper
      * Get the next and previous content.
      *
      * @return object {
-     *   prev: ?ArrayObject,
-     *   next: ?ArrayObject,
+     *   prev: ?ImmutableArrayObjectable,
+     *   next: ?ImmutableArrayObjectable,
      * }
      */
     public function getPrevNext(): object
@@ -39,12 +39,12 @@ class ContentDetailHelper
             /**
              * constructor
              *
-             * @param ArrayObject|null $prev
-             * @param ArrayObject|null $next
+             * @param ImmutableArrayObjectable|null $prev
+             * @param ImmutableArrayObjectable|null $next
              */
             public function __construct(
-                public readonly ?ArrayObject $prev,
-                public readonly ?ArrayObject $next,
+                public readonly ?ImmutableArrayObjectable $prev,
+                public readonly ?ImmutableArrayObjectable $next,
             ) {
                 //
             }

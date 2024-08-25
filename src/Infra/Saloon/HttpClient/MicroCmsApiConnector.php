@@ -6,7 +6,7 @@ use Saloon\Http\Connector;
 use Saloon\Http\Response;
 use Saloon\Traits\Plugins\HasTimeout;
 use Takemo101\CmsTool\Domain\MicroCms\MicroCmsApi;
-use Takemo101\CmsTool\Support\Shared\ImmutableArrayObject;
+use Takemo101\CmsTool\Support\ArrayObject\ImmutableArrayObject;
 use Takemo101\CmsTool\Infra\Shared\Exception\InfraException;
 
 class MicroCmsApiConnector extends Connector

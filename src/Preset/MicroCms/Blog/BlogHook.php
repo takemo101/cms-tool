@@ -8,7 +8,8 @@ use CmsTool\View\Accessor\DataAccessors;
 use Takemo101\Chubby\Hook\Hook;
 use Takemo101\CmsTool\Preset\MicroCms\Shared\Accessor\TaxonomiesAccessor;
 use Takemo101\CmsTool\Preset\Shared\Feed\FeedActionAndResponseRenderer;
-use Takemo101\CmsTool\Support\Shared\ImmutableArrayObject;
+use Takemo101\CmsTool\Support\ArrayObject\ImmutableArrayObject;
+use Takemo101\CmsTool\Support\ArrayObject\ImmutableArrayObjectable;
 
 class BlogHook implements ThemeHook
 {
@@ -46,7 +47,7 @@ class BlogHook implements ThemeHook
                     $extension = ImmutableArrayObject::of($theme->meta->extension);
 
                     /**
-                     * @var object{
+                     * @var ImmutableArrayObjectable&object{
                      *  blog: string,
                      *  category: string,
                      *  tag: string,
@@ -59,7 +60,7 @@ class BlogHook implements ThemeHook
                     ]);
 
                     /**
-                     * @var object{
+                     * @var ImmutableArrayObjectable&object{
                      *  category: string,
                      *  tag: string,
                      * }

@@ -2,10 +2,10 @@
 
 namespace Takemo101\CmsTool\Support\Accessor;
 
-use ArrayObject;
 use CmsTool\Theme\ActiveTheme;
 use CmsTool\Theme\Schema\ThemeCustomizationFetcher;
-use Takemo101\CmsTool\Support\Shared\ImmutableArrayObject;
+use Takemo101\CmsTool\Support\ArrayObject\ImmutableArrayObject;
+use Takemo101\CmsTool\Support\ArrayObject\ImmutableArrayObjectable;
 
 class ActiveThemeCustomizationAccessor
 {
@@ -23,9 +23,9 @@ class ActiveThemeCustomizationAccessor
     }
 
     /**
-     * @return ArrayObject
+     * @return ImmutableArrayObjectable
      */
-    public function __invoke(): ArrayObject
+    public function __invoke(): ImmutableArrayObjectable
     {
         return ImmutableArrayObject::of($this->fetcher->get($this->activeTheme));
     }

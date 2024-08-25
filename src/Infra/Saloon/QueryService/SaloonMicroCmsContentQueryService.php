@@ -12,11 +12,11 @@ use Takemo101\CmsTool\Infra\Saloon\HttpClient\Get\MicroCmsGetOneQuery;
 use Takemo101\CmsTool\Infra\Saloon\HttpClient\Get\MicroCmsGetOneRequest;
 use Takemo101\CmsTool\Infra\Saloon\HttpClient\MicroCmsApiConnectorFactory;
 use Takemo101\CmsTool\Infra\Shared\Exception\InfraException;
-use Takemo101\CmsTool\Support\Shared\ImmutableArrayObject;
+use Takemo101\CmsTool\Support\ArrayObject\ImmutableArrayObjectable;
 use Takemo101\CmsTool\UseCase\Shared\QueryService\ContentPaginator;
 use Takemo101\CmsTool\UseCase\Shared\QueryService\Pager;
-use ArrayObject;
 use CmsTool\Cache\ControlledCache;
+use Takemo101\CmsTool\Support\ArrayObject\ImmutableArrayObject;
 
 class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
 {
@@ -40,7 +40,7 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
         string $endpoint,
         MicroCmsContentGetOneQuery $query = new MicroCmsContentGetOneQuery(),
         bool $cache = true,
-    ): ?ArrayObject {
+    ): ?ImmutableArrayObjectable {
 
         $apiQuery = new MicroCmsGetOneQuery(
             fields: $query->fields,
@@ -89,7 +89,7 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
         string $endpoint,
         string $draftKey,
         MicroCmsContentGetOneQuery $query = new MicroCmsContentGetOneQuery(),
-    ): ?ArrayObject {
+    ): ?ImmutableArrayObjectable {
         $connector = $this->factory->create();
 
         $response = $connector->send(
@@ -107,7 +107,7 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
             return null;
         }
 
-        /** @var ImmutableArrayObject */
+        /** @var ImmutableArrayObjectable */
         $dto = $response->dto();
 
         return $dto;
@@ -121,7 +121,7 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
         string $id,
         MicroCmsContentGetOneQuery $query = new MicroCmsContentGetOneQuery(),
         bool $cache = true,
-    ): ?ArrayObject {
+    ): ?ImmutableArrayObjectable {
 
         $apiQuery = new MicroCmsGetOneQuery(
             fields: $query->fields,
@@ -174,7 +174,7 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
         string $id,
         string $draftKey,
         MicroCmsContentGetOneQuery $query = new MicroCmsContentGetOneQuery(),
-    ): ?ArrayObject {
+    ): ?ImmutableArrayObjectable {
 
         $connector = $this->factory->create();
 
@@ -194,7 +194,7 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
             return null;
         }
 
-        /** @var ImmutableArrayObject */
+        /** @var ImmutableArrayObjectable */
         $dto = $response->dto();
 
         return $dto;
@@ -207,7 +207,7 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
         string $endpoint,
         MicroCmsContentGetListQuery $query = new MicroCmsContentGetListQuery(),
         bool $cache = true,
-    ): ?ArrayObject {
+    ): ?ImmutableArrayObjectable {
 
         $apiQuery = new MicroCmsGetListQuery(
             limit: 1,
@@ -253,7 +253,7 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
         /** @var array<string,mixed> */
         $contents = $json['contents'] ?? [];
 
-        /** @var ImmutableArrayObject[] */
+        /** @var ImmutableArrayObjectable[] */
         $contents = array_map(
             fn (array $content) => ImmutableArrayObject::of($content),
             $contents,
@@ -317,7 +317,7 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
         /** @var array<string,mixed> */
         $contents = $json['contents'] ?? [];
 
-        /** @var ImmutableArrayObject[] */
+        /** @var ImmutableArrayObjectable[] */
         $contents = array_map(
             fn (array $content) => ImmutableArrayObject::of($content),
             $contents,

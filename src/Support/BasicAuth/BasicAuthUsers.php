@@ -2,7 +2,8 @@
 
 namespace Takemo101\CmsTool\Support\BasicAuth;
 
-use Takemo101\CmsTool\Support\Shared\ImmutableArrayObject;
+use Takemo101\CmsTool\Support\ArrayObject\ImmutableArrayObject;
+use Takemo101\CmsTool\Support\ArrayObject\ImmutableArrayObjectable;
 
 class BasicAuthUsers
 {
@@ -51,7 +52,7 @@ class BasicAuthUsers
      * If the user does not exist, it returns false.
      *
      * @param string $username
-     * @return object{
+     * @return ImmutableArrayObjectable&object{
      *   username: string,
      *   password: string,
      * }

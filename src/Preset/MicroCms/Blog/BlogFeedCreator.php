@@ -18,9 +18,10 @@ use Takemo101\CmsTool\UseCase\MicroCms\QueryService\Content\MicroCmsContentQuery
 use Takemo101\CmsTool\UseCase\Shared\QueryService\Pager;
 use Takemo101\CmsTool\UseCase\SiteMeta\QueryService\SiteMetaQueryService;
 use DateTimeImmutable;
+use Takemo101\CmsTool\Support\ArrayObject\ImmutableArrayObjectable;
 
 /**
- * @phpstan-type ContentData = object{
+ * @phpstan-type ContentData = ImmutableArrayObjectable&object{
  *   title: string,
  *   publishedAt: string,
  *   updatedAt: string,

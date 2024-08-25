@@ -2,7 +2,7 @@
 
 namespace Takemo101\CmsTool\UseCase\MicroCms\QueryService\Content;
 
-use ArrayObject;
+use Takemo101\CmsTool\Support\ArrayObject\ImmutableArrayObjectable;
 use Takemo101\CmsTool\UseCase\Shared\QueryService\Pager;
 
 interface MicroCmsContentQueryService
@@ -13,13 +13,13 @@ interface MicroCmsContentQueryService
      * @param string $endpoint
      * @param MicroCmsContentGetOneQuery $query
      * @param bool $cache
-     * @return ArrayObject|null
+     * @return ImmutableArrayObjectable|null
      */
     public function getSingle(
         string $endpoint,
         MicroCmsContentGetOneQuery $query = new MicroCmsContentGetOneQuery(),
         bool $cache = true,
-    ): ?ArrayObject;
+    ): ?ImmutableArrayObjectable;
 
     /**
      * Get a draft of a single object
@@ -27,13 +27,13 @@ interface MicroCmsContentQueryService
      * @param string $endpoint
      * @param string $draftKey
      * @param MicroCmsContentGetOneQuery $query
-     * @return ArrayObject|null
+     * @return ImmutableArrayObjectable|null
      */
     public function getSingleDraft(
         string $endpoint,
         string $draftKey,
         MicroCmsContentGetOneQuery $query = new MicroCmsContentGetOneQuery(),
-    ): ?ArrayObject;
+    ): ?ImmutableArrayObjectable;
 
     /**
      * Get the published content.
@@ -43,14 +43,14 @@ interface MicroCmsContentQueryService
      * @param string $id
      * @param MicroCmsContentGetOneQuery $query
      * @param bool $cache
-     * @return ArrayObject|null
+     * @return ImmutableArrayObjectable|null
      */
     public function getOne(
         string $endpoint,
         string $id,
         MicroCmsContentGetOneQuery $query = new MicroCmsContentGetOneQuery(),
         bool $cache = true,
-    ): ?ArrayObject;
+    ): ?ImmutableArrayObjectable;
 
     /**
      * Get the content during draft
@@ -59,14 +59,14 @@ interface MicroCmsContentQueryService
      * @param string $id
      * @param string $draftKey
      * @param MicroCmsContentGetOneQuery $query
-     * @return ArrayObject|null
+     * @return ImmutableArrayObjectable|null
      */
     public function getOneDraft(
         string $endpoint,
         string $id,
         string $draftKey,
         MicroCmsContentGetOneQuery $query = new MicroCmsContentGetOneQuery(),
-    ): ?ArrayObject;
+    ): ?ImmutableArrayObjectable;
 
     /**
      * Get the first content
@@ -74,13 +74,13 @@ interface MicroCmsContentQueryService
      * @param string $endpoint
      * @param MicroCmsContentGetOneQuery $query
      * @param bool $cache
-     * @return ArrayObject|null
+     * @return ImmutableArrayObjectable|null
      */
     public function getFirst(
         string $endpoint,
         MicroCmsContentGetListQuery $query = new MicroCmsContentGetListQuery(),
         bool $cache = true,
-    ): ?ArrayObject;
+    ): ?ImmutableArrayObjectable;
 
     /**
      * Get Microcms content list

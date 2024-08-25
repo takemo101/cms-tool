@@ -2,10 +2,9 @@
 
 namespace Takemo101\CmsTool\Http\ViewModel;
 
-use ArrayObject;
 use CmsTool\Theme\Contract\ThemeCustomizationLoader;
 use CmsTool\Theme\Theme;
-use Takemo101\CmsTool\Support\Shared\ImmutableArrayObject;
+use Takemo101\CmsTool\Support\ArrayObject\ImmutableArrayObject;
 use Takemo101\CmsTool\Domain\Shared\IdCreator;
 
 class ThemeCustomizationEditPage extends ViewModel
@@ -51,11 +50,11 @@ class ThemeCustomizationEditPage extends ViewModel
      * Get theme customization data.
      *
      * @param ThemeCustomizationLoader $loader
-     * @return ArrayObject
+     * @return object
      */
     public function data(
         ThemeCustomizationLoader $loader,
-    ): ArrayObject {
+    ): object {
         return ImmutableArrayObject::of(
             $loader->load($this->theme),
         );

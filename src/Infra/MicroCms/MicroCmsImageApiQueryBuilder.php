@@ -2,7 +2,7 @@
 
 namespace Takemo101\CmsTool\Infra\MicroCms;
 
-use Takemo101\CmsTool\Support\Shared\ImmutableArrayObject;
+use Takemo101\CmsTool\Support\ArrayObject\ImmutableArrayObject;
 
 class MicroCmsImageApiQueryBuilder
 {

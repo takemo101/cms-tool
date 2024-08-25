@@ -2,11 +2,11 @@
 
 namespace Takemo101\CmsTool\Support\Accessor;
 
-use ArrayObject;
 use Psr\Http\Message\ServerRequestInterface;
 use Takemo101\Chubby\Context\ContextRepository;
 use Takemo101\Chubby\Http\Uri\UriProxy;
-use Takemo101\CmsTool\Support\Shared\ImmutableArrayObject;
+use Takemo101\CmsTool\Support\ArrayObject\ImmutableArrayObject;
+use Takemo101\CmsTool\Support\ArrayObject\ImmutableArrayObjectable;
 
 class ServerRequestAccessor
 {
@@ -22,9 +22,9 @@ class ServerRequestAccessor
     }
 
     /**
-     * @return ArrayObject
+     * @return ImmutableArrayObjectable
      */
-    public function __invoke(): ArrayObject
+    public function __invoke(): ImmutableArrayObjectable
     {
         $request = $this->repository->get()->getTyped(ServerRequestInterface::class);
 

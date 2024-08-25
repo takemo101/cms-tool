@@ -2,7 +2,7 @@
 
 namespace Takemo101\CmsTool\Preset\MicroCms\Blog;
 
-use ArrayObject;
+use Takemo101\CmsTool\Support\ArrayObject\ImmutableArrayObjectable;
 use Takemo101\CmsTool\UseCase\MicroCms\QueryService\Content\MicroCmsContentGetListQuery;
 use Takemo101\CmsTool\UseCase\MicroCms\QueryService\Content\MicroCmsContentQueryService;
 use Takemo101\CmsTool\UseCase\Shared\QueryService\Pager;
@@ -35,7 +35,7 @@ class RelatedBlogAccessor
      *
      * @param string $id
      * @param integer $limit
-     * @return ArrayObject[]
+     * @return ImmutableArrayObjectable[]
      */
     public function __invoke(
         string $id,

@@ -6,28 +6,44 @@
     {% set secondColumnSubtitle = share.theme.top.second_column_subtitle %}
     {% set secondColumnCategory = share.theme.top.second_column_category %}
 
-    {% set contents = share.contents_7 %}
-    {% set first_content = contents|first %}
+    {# スライダーの表示件数 #}
+    {% set slider_max = share.theme.top.slider_max %}
+    {# 新着記事の取得 #}
+    {% set contents = share.contents(slider_max + 6) %}
+    {# スライダーの記事取得 #}
+    {% set top_contents = contents[:slider_max] %}
+    {# スライダーの先頭記事取得 #}
+    {% set first_content = top_contents|first %}
 
-    {% if first_content %}
-        <section class="bg-white text-black">
-            <img
-                alt="{{ first_content.title }}"
-                class="object-cover
-                    w-full xl:h-[680px] sm:h-[580px] h-full"
-                src="{{ first_content.eyecatch ? microcms_img(first_content.eyecatch.url, { w: 1000 }) : asset('empty.jpeg') }}" />
+    {% if top_contents|length %}
+        <section class="bg-white text-black xl:px-6 px-0">
+            <div id="splide" class="splide w-full xl:h-[680px] sm:h-[580px] h-[320px]">
+                <div class="splide__track h-full">
+                    <ul class="splide__list">
+                        {% for content in top_contents %}
+                            <li class="splide__slide"
+                                data-category="{{ content.category.name }}" data-title="{{ content.title }}"
+                                data-link="{{ route('blog.detail', {id: content.id}) }}">
+                                <img
+                                    class="object-cover w-full h-full"
+                                    alt="{{ content.title }}"
+                                    src="{{ content.eyecatch ? microcms_img(content.eyecatch.url, { w: 1000 }) : asset('empty.jpeg') }}" />
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
             <div class="bg-black text-white">
-                <div class="container mx-auto px-4">
+                <div class="container mx-auto sm:px-8 px-4">
                     <div class="flex items-center">
                         <div class="pr-8 py-6
-                            hidden sm:block
-                            border-white border-r">
-                            <span class="sm:text-2xl text-xl font-bold">
+                            hidden sm:block lego-accent lego-accent--right">
+                            <span id="splide-category" class="sm:text-2xl text-xl font-bold">
                                 {{ first_content.category.name }}
                             </span>
                         </div>
                         <div class="sm:pl-8 sm:py-6 py-4">
-                            <a href="{{ route('blog.detail', {id: first_content.id}) }}" class="hover:opacity-60">
+                            <a id="splide-title" href="{{ route('blog.detail', {id: first_content.id}) }}" class="hover:opacity-60 line-clamp-1">
                                 {{ first_content.title }}
                             </a>
                         </div>
@@ -43,7 +59,7 @@
 
     <section class="bg-white text-black">
         {% include 'components.home.contents' with {
-            contents: contents[1:],
+            contents: contents[slider_max:],
             title: 'BLOG',
             subtitle: '新着記事',
             link: route('blog.index'),
@@ -60,4 +76,39 @@
             }),
         } %}
     </section>
+{% endblock %}
+
+{% block footer_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        const element = document.getElementById('splide');
+
+        if (!element) {
+            return;
+        }
+
+        const slide = Slider.mount(element, {
+            arrows: false,
+            loop: true,
+            height: '100%',
+            lazyLoad: true,
+            rewind: true,
+        });
+
+        slide.on('active', function () {
+            const element = slide.Components.Elements.track.querySelector('.splide__slide.is-active');
+
+            if (element) {
+                const category = document.getElementById('splide-category');
+                const title = document.getElementById('splide-title');
+
+                category.textContent = element.dataset.category;
+                title.href = element.dataset.link;
+                title.textContent = element.dataset.title;
+
+            }
+        });
+    });
+</script>
 {% endblock %}

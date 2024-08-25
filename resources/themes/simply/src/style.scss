@@ -147,3 +147,50 @@
 .prose pre {
   background-color: #0d1117;
 }
+.prose h2 {
+  @apply relative inline-block pl-[18px];
+
+  &::before,
+  &::after {
+    @apply block absolute content-[''];
+  }
+
+  &::after {
+    @apply left-0 top-0 h-1/3 w-[6px] bg-black;
+  }
+  &::before {
+    @apply left-0 bottom-0 h-2/3 w-[6px] bg-gray-300;
+  }
+}
+
+/* 装飾 Utility */
+
+.lego-accent {
+  @apply relative;
+
+  &::after,
+  &::before {
+    @apply block absolute content-[''];
+  }
+
+  &::after {
+    @apply h-1/3 w-[6px] bg-gray-300;
+  }
+  &::before {
+    @apply h-2/3 w-[6px] bg-white;
+  }
+
+  &--right {
+    &::after {
+      @apply right-0 top-0;
+    }
+    &::before {
+      @apply right-0 bottom-0;
+    }
+  }
+}
+
+/* Splide */
+.splide__pagination__page {
+  @apply sm:mx-3 mx-2 my-1 !important;
+}

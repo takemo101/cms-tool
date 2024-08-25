@@ -117,7 +117,7 @@ class SupportProvider implements Provider
         $hook = $container->get(Hook::class);
 
         $hook->onTyped(
-            fn(CommandCollection $commands) => $commands->add(
+            fn (CommandCollection $commands) => $commands->add(
                 GenerateEncryptKeyCommand::class,
                 AddTranslationTextCommand::class,
                 AccessLogCleanCommand::class,
@@ -192,7 +192,7 @@ class SupportProvider implements Provider
                     ->setTranslationDomain(SymfonyTranslationProxy::ValidationDomain)
                     ->getValidator();
             },
-            ObjectMapper::class => fn() => new ObjectMapperUsingReflection(),
+            ObjectMapper::class => fn () => new ObjectMapperUsingReflection(),
         ]);
     }
 
@@ -208,7 +208,7 @@ class SupportProvider implements Provider
     public function registerAccessLog(Definitions $definitions): void
     {
         $definitions->add([
-            AccessLogger::class => fn(AccessLoggerFactory $factory) => $factory->create(),
+            AccessLogger::class => fn (AccessLoggerFactory $factory) => $factory->create(),
         ]);
     }
 }

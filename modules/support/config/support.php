@@ -56,5 +56,6 @@ return [
         // CmsTool\Support\Translation\TranslationAccessor::class => CmsTool\Support\Translation\TranslationJsonFileAccessor::class,
         // CmsTool\Support\Translation\Translator::class => CmsTool\Support\Translation\DefaultTranslator::class,
         // CmsTool\Support\AccessLog\AccessLoggerFactory::class => CmsTool\Support\AccessLog\FileAccessLoggerFactory::class,
+        // CmsTool\Support\Dotenv\DotenvContentRepository::class => CmsTool\Support\Dotenv\LocalFileDotenvContentRepository::class,
     ],
 ];

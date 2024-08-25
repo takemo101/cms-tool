@@ -6,6 +6,8 @@ use CmsTool\Support\AccessLog\AccessLogger;
 use CmsTool\Support\AccessLog\AccessLoggerFactory;
 use CmsTool\Support\AccessLog\Command\AccessLogCleanCommand;
 use CmsTool\Support\AccessLog\FileAccessLoggerFactory;
+use CmsTool\Support\Dotenv\DotenvContentRepository;
+use CmsTool\Support\Dotenv\LocalFileDotenvContentRepository;
 use CmsTool\Support\Encrypt\Command\GenerateEncryptKeyCommand;
 use CmsTool\Support\Encrypt\DefaultEncrypter;
 use CmsTool\Support\Encrypt\EncryptCipher;
@@ -80,6 +82,7 @@ class SupportProvider implements Provider
                     Translator::class => DefaultTranslator::class,
                     AccessLoggerFactory::class => FileAccessLoggerFactory::class,
                     FeedGenerator::class => Rss2FeedGenerator::class,
+                    DotenvContentRepository::class => LocalFileDotenvContentRepository::class,
                 ],
                 configKeyPrefix: 'support',
             )
@@ -114,7 +117,7 @@ class SupportProvider implements Provider
         $hook = $container->get(Hook::class);
 
         $hook->onTyped(
-            fn (CommandCollection $commands) => $commands->add(
+            fn(CommandCollection $commands) => $commands->add(
                 GenerateEncryptKeyCommand::class,
                 AddTranslationTextCommand::class,
                 AccessLogCleanCommand::class,
@@ -189,7 +192,7 @@ class SupportProvider implements Provider
                     ->setTranslationDomain(SymfonyTranslationProxy::ValidationDomain)
                     ->getValidator();
             },
-            ObjectMapper::class => fn () => new ObjectMapperUsingReflection(),
+            ObjectMapper::class => fn() => new ObjectMapperUsingReflection(),
         ]);
     }
 
@@ -205,7 +208,7 @@ class SupportProvider implements Provider
     public function registerAccessLog(Definitions $definitions): void
     {
         $definitions->add([
-            AccessLogger::class => fn (AccessLoggerFactory $factory) => $factory->create(),
+            AccessLogger::class => fn(AccessLoggerFactory $factory) => $factory->create(),
         ]);
     }
 }

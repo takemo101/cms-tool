@@ -2,13 +2,12 @@
 
 namespace Takemo101\CmsTool\Console;
 
+use CmsTool\Support\Dotenv\DotenvContentRepository;
 use CmsTool\Support\Hash\Hasher;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Takemo101\Chubby\Console\Command\Command;
-use Takemo101\Chubby\Filesystem\LocalFilesystem;
-use Takemo101\Chubby\Support\ApplicationPath;
 
 #[AsCommand(
     name: 'generate:basic-auth-pass',
@@ -35,16 +34,14 @@ class GenerateBasicAuthPasswordCommand extends Command
      * @param OutputInterface $output
      * @param InputInterface $input
      * @param Hasher $hasher
-     * @param LocalFilesystem $filesystem
-     * @param ApplicationPath $path
+     * @param DotenvContentRepository $repository
      * @return integer
      */
     public function handle(
         OutputInterface $output,
         InputInterface $input,
         Hasher $hasher,
-        LocalFilesystem $filesystem,
-        ApplicationPath $path,
+        DotenvContentRepository $repository,
     ) {
         /** @var string */
         $plainPassword = $input->getArgument('password');
@@ -56,10 +53,9 @@ class GenerateBasicAuthPasswordCommand extends Command
 
         $hashedPassword = $hasher->hash($plainPassword);
 
-        $this->putBasicAuthPassword(
+        $this->saveBasicAuthPassword(
             password: $hashedPassword,
-            filesystem: $filesystem,
-            path: $path,
+            repository: $repository,
         );
 
         $output->writeln("<info>password = {$hashedPassword}</info>");
@@ -71,38 +67,24 @@ class GenerateBasicAuthPasswordCommand extends Command
      * Write BASIC_AUTH_PASSWORD to .env file.
      *
      * @param string $password
-     * @param LocalFilesystem $filesystem
-     * @param ApplicationPath $path
+     * @param DotenvContentRepository $repository
      * @return void
      */
-    public function putBasicAuthPassword(
+    public function saveBasicAuthPassword(
         string $password,
-        LocalFilesystem $filesystem,
-        ApplicationPath $path,
+        DotenvContentRepository $repository,
     ): void {
-        $dotEnvPath = $path->getBasePath('.env');
+        $dotenv = $repository->find();
 
-        if (!$filesystem->exists($dotEnvPath)) {
+        if ($dotenv === false) {
             return;
         }
 
-        if ($dotEnv = $filesystem->read($dotEnvPath)) {
+        $replaced = $dotenv->replace(
+            key: 'BASIC_AUTH_PASSWORD',
+            value: $password,
+        );
 
-            // Generate a random string and create a replacement key.
-            $random = bin2hex(random_bytes(8));
-            $replaceKey = "### ----{$random}---- ###";
-
-            // Replace $ with \$ to avoid error
-            $escapedPassword = str_replace('$', '\$', $password);
-
-            /** @var string|null */
-            $replaced = preg_replace('/BASIC_AUTH_PASSWORD=.*$/m', $replaceKey, $dotEnv);
-
-            $replaced = str_replace($replaceKey, "BASIC_AUTH_PASSWORD=\"{$escapedPassword}\"", $replaced);
-
-            if ($replaced) {
-                $filesystem->write($dotEnvPath, $replaced);
-            }
-        }
+        $repository->save($replaced);
     }
 }

@@ -2,11 +2,10 @@
 
 namespace CmsTool\Support\Encrypt\Command;
 
+use CmsTool\Support\Dotenv\DotenvContentRepository;
 use CmsTool\Support\Encrypt\EncryptCipher;
 use Symfony\Component\Console\Output\OutputInterface;
 use Takemo101\Chubby\Console\Command\Command;
-use Takemo101\Chubby\Filesystem\LocalFilesystem;
-use Takemo101\Chubby\Support\ApplicationPath;
 
 class GenerateEncryptKeyCommand extends Command
 {
@@ -24,21 +23,19 @@ class GenerateEncryptKeyCommand extends Command
      *
      * @param OutputInterface $output
      * @param EncryptCipher $cipher
-     * @param LocalFilesystem $filesystem
-     * @param ApplicationPath $path
+     * @param DotenvContentRepository $repository
      * @return integer
      */
     public function handle(
         OutputInterface $output,
         EncryptCipher $cipher,
-        LocalFilesystem $filesystem,
-        ApplicationPath $path,
+        DotenvContentRepository $repository,
     ) {
         $key = $cipher->generateKey();
 
         $base64key = base64_encode($key);
 
-        $this->putAppKey($base64key, $filesystem, $path);
+        $this->saveAppKey($base64key, $repository);
 
         $output->writeln("<info>key = {$base64key}</info>");
 
@@ -49,28 +46,22 @@ class GenerateEncryptKeyCommand extends Command
      * Write App_key to Dotenv
      *
      * @param string $key
-     * @param LocalFilesystem $filesystem
-     * @param ApplicationPath $path
+     * @param DotenvContentRepository $repository
      * @return void
      */
-    public function putAppKey(
+    public function saveAppKey(
         string $key,
-        LocalFilesystem $filesystem,
-        ApplicationPath $path,
+        DotenvContentRepository $repository,
     ): void {
-        $dotEnvPath = $path->getBasePath('.env');
 
-        if (!$filesystem->exists($dotEnvPath)) {
+        $dotenv = $repository->find();
+
+        if ($dotenv === null) {
             return;
         }
 
-        if ($dotEnv = $filesystem->read($dotEnvPath)) {
-            /** @var string|null */
-            $replaced = preg_replace('/APP_KEY=.*$/m', "APP_KEY=\"{$key}\"", $dotEnv);
+        $replaced = $dotenv->replace('APP_KEY', $key);
 
-            if ($replaced) {
-                $filesystem->write($dotEnvPath, $replaced);
-            }
-        }
+        $repository->save($replaced);
     }
 }

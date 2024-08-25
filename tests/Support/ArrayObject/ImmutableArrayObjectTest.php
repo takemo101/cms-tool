@@ -103,6 +103,20 @@ describe(
             expect($immutableArray['key_of'])->toBe($data['keyOf']);
         });
 
+        it('should get the value of a camel case key from the immutable array object using offsetGet', function () {
+            $data = [
+                'all_of' => 'value',
+                'key_of' => 'value',
+            ];
+
+            $immutableArray = ImmutableArrayObject::of($data);
+
+            expect($immutableArray->allOf)->toBe($data['all_of']);
+            expect($immutableArray['allOf'])->toBe($data['all_of']);
+            expect($immutableArray->keyOf)->toBe($data['key_of']);
+            expect($immutableArray['keyOf'])->toBe($data['key_of']);
+        });
+
         it('should get the value of a key from the immutable array object using toArray', function () {
             $data = [
                 'key1' => 'value1',

@@ -17,20 +17,22 @@
 
     {% if top_contents|length %}
         <section class="bg-white text-black xl:px-6 px-0">
-            <div id="splide" class="splide w-full xl:h-[680px] sm:h-[580px] h-[320px]">
-                <div class="splide__track h-full">
-                    <ul class="splide__list">
-                        {% for content in top_contents %}
-                            <li class="splide__slide"
-                                data-category="{{ content.category.name }}" data-title="{{ content.title }}"
-                                data-link="{{ route('blog.detail', {id: content.id}) }}">
-                                <img
-                                    class="object-cover w-full h-full"
-                                    alt="{{ content.title }}"
-                                    src="{{ content.eyecatch ? microcms_img(content.eyecatch.url, { w: 1000 }) : asset('empty.jpeg') }}" />
-                            </li>
-                        {% endfor %}
-                    </ul>
+            <div class="bg-gray-200">
+                <div id="splide" class="splide w-full xl:h-[680px] sm:h-[580px] h-[320px]">
+                    <div class="splide__track h-full">
+                        <ul class="splide__list">
+                            {% for content in top_contents %}
+                                <li class="splide__slide"
+                                    data-category="{{ content.category.name }}" data-title="{{ content.title }}"
+                                    data-link="{{ route('blog.detail', {id: content.id}) }}">
+                                    <img
+                                        class="object-cover w-full h-full"
+                                        alt="{{ content.title }}"
+                                        src="{{ content.eyecatch ? microcms_img(content.eyecatch.url, { w: 1000 }) : asset('empty.jpeg') }}" />
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
                 </div>
             </div>
             <div class="bg-black text-white">

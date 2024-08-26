@@ -145,7 +145,7 @@
 
 /* 記事詳細の記事内容 */
 .prose pre {
-  background-color: #0d1117;
+  @apply bg-[#0d1117];
 }
 .prose h2 {
   @apply relative inline-block pl-[18px];
@@ -160,6 +160,36 @@
   }
   &::before {
     @apply left-0 bottom-0 h-2/3 w-[6px] bg-gray-300;
+  }
+}
+
+/* 記事詳細のシェアリンク */
+.share-links {
+  @apply grid sm:grid-cols-4 grid-cols-2 gap-2 w-full;
+
+  &__item {
+    @apply w-full;
+
+    a {
+      @apply flex items-center px-4 w-full h-[40px] text-base text-white hover:opacity-60 relative;
+
+      i {
+        @apply mr-2 text-xl;
+      }
+    }
+
+    &--x-twitter a {
+      @apply bg-black;
+    }
+    &--facebook a {
+      @apply bg-blue-600;
+    }
+    &--line a {
+      @apply bg-green-500;
+    }
+    &--feed a {
+      @apply bg-orange-600;
+    }
   }
 }
 

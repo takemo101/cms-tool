@@ -28,7 +28,9 @@
         <div x-show="show" class="my:20px">
             {% for setting in settings.settings %}
                 {% set name = settings.id ~ '[' ~ setting.id ~ ']' %}
-                {% set value = data[settings.id][setting.id] %}
+                {% if setting.type != 'header' %}
+                    {% set value = data[settings.id][setting.id] %}
+                {% endif %}
 
                 {% if setting.type == 'color' %}
                     <div class="form-column">

@@ -1,0 +1,46 @@
+{% set x = x ?? false %}
+{% set facebook = facebook ?? false %}
+{% set line = line ?? false %}
+{% set feed = feed ?? false %}
+
+{% if x or facebook or line or feed %}
+    <ul class="share-links">
+        {% if x %}
+            <li class="share-links__item share-links__item--x-twitter">
+                <a href="//twitter.com/intent/tweet?{{ { 'url': url, 'text': title }|url_encode }}"
+                    target="_blank"
+                    class="text-black">
+                    <i class="fab fa-x-twitter"></i>
+                    Post
+                </a>
+            </li>
+        {% endif %}
+        {% if facebook %}
+            <li class="share-links__item share-links__item--facebook">
+                <a href="//www.facebook.com/sharer/sharer.php?{{ { 'u': url }|url_encode }}"
+                    target="_blank">
+                    <i class="fab fa-facebook"></i>
+                    Share
+                </a>
+            </li>
+        {% endif %}
+        {% if line %}
+            <li class="share-links__item share-links__item--line">
+                <a href="//line.me/R/msg/text/?{{ { 'text': title ~ ' ' ~ url }|url_encode }}"
+                    target="_blank">
+                    <i class="fab fa-line"></i>
+                    LINE
+                </a>
+            </li>
+        {% endif %}
+        {% if feed %}
+            <li class="share-links__item share-links__item--feed">
+                <a href="{{ route('feed') }}"
+                    target="_blank">
+                    <i class="fas fa-rss"></i>
+                    RSS
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+{% endif %}

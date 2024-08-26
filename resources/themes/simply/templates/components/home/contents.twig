@@ -20,7 +20,7 @@
                     href="{{ route('blog.detail', {id: content.id}) }}"
                     class="hover:opacity-60">
                     <div class="relative mb-4">
-                        {% if showCategory and content.category %}
+                        {% if show_category and content.category %}
                             <span class="py-2 px-6 bg-white
                                 absolute top-2 right-2
                                 text-black text-sm">
@@ -47,7 +47,7 @@
                     {% endif %}
                     <p class="text-sm text-gray-500">
                         <i class="far fa-clock"></i>
-                        {{ content.publishedAt|date('Y.m.d') }}
+                        {{ content.published_at|date('Y.m.d') }}
                     </p>
                 </a>
             </article>

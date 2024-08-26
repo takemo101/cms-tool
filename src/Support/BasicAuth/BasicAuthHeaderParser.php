@@ -3,7 +3,8 @@
 namespace Takemo101\CmsTool\Support\BasicAuth;
 
 use Psr\Http\Message\ServerRequestInterface;
-use Takemo101\CmsTool\Support\Shared\ImmutableArrayObject;
+use Takemo101\CmsTool\Support\ArrayObject\ImmutableArrayObject;
+use Takemo101\CmsTool\Support\ArrayObject\ImmutableArrayObjectable;
 
 class BasicAuthHeaderParser
 {
@@ -12,10 +13,10 @@ class BasicAuthHeaderParser
      * If the header is invalid, it returns false.
      *
      * @param string $header
-     * @return object{
+     * @return (ImmutableArrayObjectable&object{
      *   username: string,
      *   password: string,
-     * }|false
+     * })|false
      */
     public function parse(string $header): object|false
     {
@@ -50,10 +51,10 @@ class BasicAuthHeaderParser
      * If the header is invalid, it returns false.
      *
      * @param ServerRequestInterface $request
-     * @return object{
+     * @return (ImmutableArrayObjectable&object{
      *   username: string,
      *   password: string,
-     * }|false
+     * })|false
      */
     public function parseFromRequest(ServerRequestInterface $request): object|false
     {

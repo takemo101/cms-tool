@@ -11,26 +11,25 @@ import "./codemirror";
 import initAlpineJs from "./alpinejs";
 import Toastr from "./support/toastr";
 
-// Definition of MasterCSS custom style
+// Definition of MasterCSS custom style.
 Style.extend("classes", style);
 initMasterCss();
 
-// Register Toastr
+// Register Toastr object globally.
 window.Toastr = new Toastr();
 
-// Register Splide
+// Register Splide component globally.
 window.Splide = Splide;
 
 // reference: https://dev.to/wtho/get-started-with-alpinejs-and-typescript-4dgf
 
-// Register AlpineJS
+// Register AlpineJS component globally.
 window.Alpine = Alpine;
 
 window.lazyImage = (el: HTMLImageElement) => {
   el.src = el.dataset.src as string;
 };
 
-// Register AlpineJS components
 // reference: https://www.raymondcamden.com/2022/06/03/image-upload-preview-in-alpinejs
 document.addEventListener("alpine:init", initAlpineJs);
 

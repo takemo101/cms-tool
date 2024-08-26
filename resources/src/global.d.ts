@@ -6,9 +6,8 @@ import type Toastr from "./support/toastr";
 
 declare global {
   interface Window {
-    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-    Splide: any;
-    Alpine: Alpine;
+    Splide: typeof Splide;
+    Alpine: typeof Alpine;
     CodeMirror: CodeMirror;
     Toastr: Toastr;
     lazyImage: (el: HTMLImageElement) => void;

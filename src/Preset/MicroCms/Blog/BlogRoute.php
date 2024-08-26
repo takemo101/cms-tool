@@ -9,7 +9,8 @@ use Takemo101\CmsTool\Preset\MicroCms\Shared\Action\ContentDetailAction;
 use Takemo101\CmsTool\Preset\MicroCms\Shared\Action\ContentIndexAction;
 use Takemo101\CmsTool\Preset\MicroCms\Shared\Action\TaxonomyIndexAction;
 use Takemo101\CmsTool\Preset\MicroCms\Shared\Action\TaxonomyIndexActionEndpoints;
-use Takemo101\CmsTool\Support\Shared\ImmutableArrayObject;
+use Takemo101\CmsTool\Support\ArrayObject\ImmutableArrayObject;
+use Takemo101\CmsTool\Support\ArrayObject\ImmutableArrayObjectable;
 
 class BlogRoute implements ThemeRoute
 {
@@ -27,7 +28,7 @@ class BlogRoute implements ThemeRoute
         $order = 'publishedAt';
 
         /**
-         * @var object{
+         * @var ImmutableArrayObjectable&object{
          *  endpoints: object{
          *   blog: string,
          *   category: string,

@@ -2,7 +2,7 @@
 
 namespace Takemo101\CmsTool\Preset\MicroCms\Shared\Accessor;
 
-use ArrayObject;
+use Takemo101\CmsTool\Support\ArrayObject\ImmutableArrayObjectable;
 use Takemo101\CmsTool\UseCase\MicroCms\QueryService\Content\MicroCmsContentGetListQuery;
 use Takemo101\CmsTool\UseCase\MicroCms\QueryService\Content\MicroCmsContentQueryService;
 use Takemo101\CmsTool\UseCase\Shared\QueryService\Pager;
@@ -33,7 +33,7 @@ class TaxonomiesAccessor
      * @param integer $limit
      * @param string|null $id
      * @param string|null $orders
-     * @return ArrayObject[]
+     * @return ImmutableArrayObjectable[]
      */
     public function __invoke(int $limit = self::DefaultLimit, ?string $id = null, ?string $orders = null): array
     {

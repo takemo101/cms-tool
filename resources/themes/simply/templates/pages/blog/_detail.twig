@@ -29,7 +29,7 @@
                         （下書き中）
                     {% else %}
                         <i class="far fa-clock"></i>
-                        {{ content.publishedAt|date('Y.m.d') }}
+                        {{ content.published_at|date('Y.m.d') }}
                     {% endif %}
                 </p>
                 <h1 class="sm:text-2xl text-xl text-gray-900">
@@ -52,26 +52,37 @@
                         {{ content.content|raw }}
                     </div>
 
-                    {% if content.tags|length %}
-                        <div class="tag mt-8">
-                            {% for tag in content.tags %}
-                                <a
-                                    href="{{ route('blog.tag', {
-                                        id: tag.id
-                                    }) }}"
-                                    class="tag-label hover:opacity-60">
-                                    {{ tag.name }}
-                                </a>
-                            {% else %}
-                                <p>タグはありません</p>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
+                    <div class="flex flex-col gap-8 mt-12">
+                        {% if content.tags|length %}
+                            <div class="tag">
+                                {% for tag in content.tags %}
+                                    <a
+                                        href="{{ route('blog.tag', {
+                                            id: tag.id
+                                        }) }}"
+                                        class="tag-label hover:opacity-60">
+                                        {{ tag.name }}
+                                    </a>
+                                {% else %}
+                                    <p>タグはありません</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
 
-                    {% include 'components.content-prev-next-link' with {
-                        helper: helper,
-                        show: share.theme.detail.prev_next_show,
-                    } %}
+                        {% include 'components.share-links' with {
+                            url: share.request.uri.current,
+                            title: content.title,
+                            x: share.theme.detail.share_x,
+                            facebook: share.theme.detail.share_facebook,
+                            line: share.theme.detail.share_line,
+                            feed: share.theme.detail.share_feed,
+                        } %}
+
+                        {% include 'components.content-prev-next-link' with {
+                            helper: helper,
+                            show: share.theme.detail.prev_next_show,
+                        } %}
+                    </div>
                 </div>
 
             </article>
@@ -87,6 +98,7 @@
         x: share.theme.detail.profile_sns_x,
         facebook: share.theme.detail.profile_sns_facebook,
         instagram: share.theme.detail.profile_sns_instagram,
+        line: share.theme.detail.profile_sns_line,
         youtube: share.theme.detail.profile_sns_youtube,
         github: share.theme.detail.profile_sns_github,
         show: share.theme.detail.profile_show,

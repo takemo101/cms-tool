@@ -40,7 +40,7 @@ class CmsToolProvider implements Provider
     /**
      * @var string CmsTool Version number.
      */
-    public const Version = '0.1.4';
+    public const Version = '0.1.5';
 
     /**
      * constructor

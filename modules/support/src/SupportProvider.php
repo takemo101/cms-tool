@@ -6,6 +6,8 @@ use CmsTool\Support\AccessLog\AccessLogger;
 use CmsTool\Support\AccessLog\AccessLoggerFactory;
 use CmsTool\Support\AccessLog\Command\AccessLogCleanCommand;
 use CmsTool\Support\AccessLog\FileAccessLoggerFactory;
+use CmsTool\Support\Dotenv\DotenvContentRepository;
+use CmsTool\Support\Dotenv\LocalFileDotenvContentRepository;
 use CmsTool\Support\Encrypt\Command\GenerateEncryptKeyCommand;
 use CmsTool\Support\Encrypt\DefaultEncrypter;
 use CmsTool\Support\Encrypt\EncryptCipher;
@@ -80,6 +82,7 @@ class SupportProvider implements Provider
                     Translator::class => DefaultTranslator::class,
                     AccessLoggerFactory::class => FileAccessLoggerFactory::class,
                     FeedGenerator::class => Rss2FeedGenerator::class,
+                    DotenvContentRepository::class => LocalFileDotenvContentRepository::class,
                 ],
                 configKeyPrefix: 'support',
             )

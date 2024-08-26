@@ -7,6 +7,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Mockery as m;
+use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\UriInterface;
 use Takemo101\Chubby\Hook\Hook;
@@ -22,6 +23,7 @@ describe(
             $this->request = m::mock(ServerRequestInterface::class);
             $this->response = m::mock(ResponseInterface::class);
             $this->handler = m::mock(RequestHandlerInterface::class);
+            $this->clock = m::mock(ClockInterface::class);
         });
 
         it('should call the handle method of the request handler and write to the logger', function () {
@@ -30,6 +32,7 @@ describe(
                 $this->logger,
                 $this->hook,
                 $this->dispatcher,
+                $this->clock,
                 true,
             );
 
@@ -72,6 +75,9 @@ describe(
             $this->hook->shouldReceive('doTyped')->once();
             $this->dispatcher->shouldReceive('dispatch')->once();
 
+            // Mock the methods of ClockInterface
+            $this->clock->shouldReceive('now')->andReturn(new DateTimeImmutable());
+
             // Call the process method
             $result = $accessLog->process($this->request, $this->handler);
 
@@ -85,6 +91,7 @@ describe(
                 $this->logger,
                 $this->hook,
                 $this->dispatcher,
+                $this->clock,
                 false,
             );
 
@@ -97,6 +104,8 @@ describe(
             // Mock the methods of Hook and EventDispatcherInterface
             $this->hook->shouldNotReceive('doTyped');
             $this->dispatcher->shouldNotReceive('dispatch');
+
+            $this->clock->shouldNotReceive('now');
 
             // Call the process method
             $result = $accessLog->process($this->request, $this->handler);

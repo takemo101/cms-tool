@@ -235,6 +235,13 @@
                 },
                 {
                     "type": "text",
+                    "id": "profile_sns_line",
+                    "label": "LINEの友だち追加URL",
+                    "format": "url",
+                    "placeholder": "https:// から始まるLINEの友だち追加URLの入力"
+                },
+                {
+                    "type": "text",
                     "id": "profile_sns_youtube",
                     "label": "YouTubeのチャンネルURL",
                     "format": "url",
@@ -246,6 +253,35 @@
                     "label": "GithubのURL",
                     "format": "url",
                     "placeholder": "https:// から始まるGithubのURLの入力"
+                },
+                {
+                    "type": "header",
+                    "title": "SNSシェアボタン設定",
+                    "description": "記事詳細ページの下部に表示されるSNSシェアボタンの設定となります。"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "share_x",
+                    "label": "Xのシェアボタンを表示する",
+                    "default": true
+                },
+                {
+                    "type": "checkbox",
+                    "id": "share_facebook",
+                    "label": "Facebookのシェアボタンを表示する",
+                    "default": true
+                },
+                {
+                    "type": "checkbox",
+                    "id": "share_line",
+                    "label": "LINEのシェアボタンを表示する",
+                    "default": true
+                },
+                {
+                    "type": "checkbox",
+                    "id": "share_feed",
+                    "label": "RSSフィードのシェアボタンを表示する",
+                    "default": true
                 }
             ]
         }

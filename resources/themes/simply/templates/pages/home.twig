@@ -16,8 +16,11 @@
     {% set first_content = top_contents|first %}
 
     {% if top_contents|length %}
+        {# スライダーの先頭記事取得 #}
+        {% set first_background_image = first_content.eyecatch ? microcms_img(first_content.eyecatch.url, { w: 100 }) : asset('empty.jpeg') %}
         <section class="bg-white text-black xl:px-6 px-0">
-            <div class="bg-gray-200">
+            <div class="splide-outer">
+                <div class="splide-outer__bg" style="background-image: url('{{ first_background_image }}')"></div>
                 <div id="splide" class="splide w-full xl:h-[680px] sm:h-[580px] h-[320px]">
                     <div class="splide__track h-full">
                         <ul class="splide__list">
@@ -92,6 +95,7 @@
 
         const slide = Slider.mount(element, {
             arrows: false,
+            type: 'loop',
             loop: true,
             height: '100%',
             lazyLoad: true,

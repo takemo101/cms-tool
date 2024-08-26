@@ -224,3 +224,14 @@
 .splide__pagination__page {
   @apply sm:mx-3 mx-2 my-1 !important;
 }
+.splide-outer {
+  @apply relative overflow-hidden z-[1];
+
+  &__bg {
+    @apply block absolute top-0 left-0 w-full h-full bg-cover bg-center z-[-1];
+
+    &::before {
+      @apply block absolute content-[''] top-0 left-0 w-full h-full backdrop-blur;
+    }
+  }
+}

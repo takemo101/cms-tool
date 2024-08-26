@@ -10,7 +10,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use DateTimeImmutable;
+use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Takemo101\Chubby\Hook\Hook;
 
@@ -22,12 +22,14 @@ class AccessLog implements MiddlewareInterface
      * @param AccessLogger $logger
      * @param Hook $hook
      * @param EventDispatcherInterface $dispatcher
+     * @param ClockInterface $clock
      * @param boolean $enabled
      */
     public function __construct(
         private readonly AccessLogger $logger,
         private readonly Hook $hook,
         private readonly EventDispatcherInterface $dispatcher,
+        private readonly ClockInterface $clock,
         #[Inject('config.support.access_log.enabled')]
         private readonly bool $enabled = false,
     ) {
@@ -49,7 +51,7 @@ class AccessLog implements MiddlewareInterface
 
         if ($this->enabled) {
             $entry = new AccessLogEntry(
-                datetime: new DateTimeImmutable(),
+                datetime: $this->clock->now(),
                 ip: $request->getServerParams()['REMOTE_ADDR'] ?? '',
                 uri: $request->getUri(),
                 method: $request->getMethod(),

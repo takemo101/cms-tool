@@ -13,7 +13,7 @@ interface MicroCmsContentQueryService
      * @param string $endpoint
      * @param MicroCmsContentGetOneQuery $query
      * @param bool $cache
-     * @return ImmutableArrayObjectable|null
+     * @return ImmutableArrayObjectable<string,mixed>|null
      */
     public function getSingle(
         string $endpoint,
@@ -27,7 +27,7 @@ interface MicroCmsContentQueryService
      * @param string $endpoint
      * @param string $draftKey
      * @param MicroCmsContentGetOneQuery $query
-     * @return ImmutableArrayObjectable|null
+     * @return ImmutableArrayObjectable<string,mixed>|null
      */
     public function getSingleDraft(
         string $endpoint,
@@ -43,7 +43,7 @@ interface MicroCmsContentQueryService
      * @param string $id
      * @param MicroCmsContentGetOneQuery $query
      * @param bool $cache
-     * @return ImmutableArrayObjectable|null
+     * @return ImmutableArrayObjectable<string,mixed>|null
      */
     public function getOne(
         string $endpoint,
@@ -59,7 +59,7 @@ interface MicroCmsContentQueryService
      * @param string $id
      * @param string $draftKey
      * @param MicroCmsContentGetOneQuery $query
-     * @return ImmutableArrayObjectable|null
+     * @return ImmutableArrayObjectable<string,mixed>|null
      */
     public function getOneDraft(
         string $endpoint,
@@ -74,7 +74,7 @@ interface MicroCmsContentQueryService
      * @param string $endpoint
      * @param MicroCmsContentGetOneQuery $query
      * @param bool $cache
-     * @return ImmutableArrayObjectable|null
+     * @return ImmutableArrayObjectable<string,mixed>|null
      */
     public function getFirst(
         string $endpoint,

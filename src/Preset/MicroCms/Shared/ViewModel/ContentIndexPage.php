@@ -21,7 +21,7 @@ class ContentIndexPage extends ViewModel
     }
 
     /**
-     * @return ImmutableArrayObjectable[]
+     * @return ImmutableArrayObjectable<string,mixed>[]
      */
     public function contents(): array
     {

@@ -23,7 +23,7 @@ class ActiveThemeCustomizationAccessor
     }
 
     /**
-     * @return ImmutableArrayObjectable
+     * @return ImmutableArrayObjectable<string,array<string,mixed>>
      */
     public function __invoke(): ImmutableArrayObjectable
     {

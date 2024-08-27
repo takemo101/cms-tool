@@ -33,7 +33,7 @@ class TaxonomiesAccessor
      * @param integer $limit
      * @param string|null $id
      * @param string|null $orders
-     * @return ImmutableArrayObjectable[]
+     * @return ImmutableArrayObjectable<string,mixed>[]
      */
     public function __invoke(int $limit = self::DefaultLimit, ?string $id = null, ?string $orders = null): array
     {

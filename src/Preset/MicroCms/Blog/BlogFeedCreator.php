@@ -21,7 +21,7 @@ use DateTimeImmutable;
 use Takemo101\CmsTool\Support\ArrayObject\ImmutableArrayObjectable;
 
 /**
- * @phpstan-type ContentData = ImmutableArrayObjectable&object{
+ * @phpstan-type ContentData = ImmutableArrayObjectable<string,mixed>&object{
  *   title: string,
  *   publishedAt: string,
  *   updatedAt: string,

@@ -1,5 +1,9 @@
 {% extends 'layouts.master' %}
 
+{% block header_js %}
+    <script src="{{ asset('slider.js') }}"></script>
+{% endblock %}
+
 {% block content %}
     {# 新着記事の次のカラムに表示させる内容の変数設定 #}
     {% set second_column_title = share.theme.top.second_column_title %}
@@ -85,36 +89,27 @@
 
 {% block footer_js %}
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    const slide = Slider.mount('#splide', {
+        arrows: false,
+        type: 'loop',
+        loop: true,
+        height: '100%',
+        lazyLoad: true,
+        rewind: true,
+    });
 
-        const element = document.getElementById('splide');
+    slide.on('active', function () {
+        const element = slide.Components.Elements.track.querySelector('.splide__slide.is-active');
 
-        if (!element) {
-            return;
+        if (element) {
+            const category = document.getElementById('splide-category');
+            const title = document.getElementById('splide-title');
+
+            category.textContent = element.dataset.category;
+            title.href = element.dataset.link;
+            title.textContent = element.dataset.title;
+
         }
-
-        const slide = Slider.mount(element, {
-            arrows: false,
-            type: 'loop',
-            loop: true,
-            height: '100%',
-            lazyLoad: true,
-            rewind: true,
-        });
-
-        slide.on('active', function () {
-            const element = slide.Components.Elements.track.querySelector('.splide__slide.is-active');
-
-            if (element) {
-                const category = document.getElementById('splide-category');
-                const title = document.getElementById('splide-title');
-
-                category.textContent = element.dataset.category;
-                title.href = element.dataset.link;
-                title.textContent = element.dataset.title;
-
-            }
-        });
     });
 </script>
 {% endblock %}

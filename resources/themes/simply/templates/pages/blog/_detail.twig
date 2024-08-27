@@ -1,6 +1,8 @@
 {% extends 'layouts.content' %}
 
 {% block title %}{{ content.title }}{% endblock %}
+{% block description %}{{ content.title }}{% endblock %}
+{% block image %}{{ content.eyecatch ? microcms_img(content.eyecatch.url, { w: 600 }) : asset('empty.jpeg') }}{% endblock %}
 
 {% block content %}
     <section class="section-narrow bg-gray-100 text-black">

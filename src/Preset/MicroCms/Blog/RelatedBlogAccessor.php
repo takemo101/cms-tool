@@ -35,7 +35,7 @@ class RelatedBlogAccessor
      *
      * @param string $id
      * @param integer $limit
-     * @return ImmutableArrayObjectable[]
+     * @return ImmutableArrayObjectable<string,mixed>[]
      */
     public function __invoke(
         string $id,

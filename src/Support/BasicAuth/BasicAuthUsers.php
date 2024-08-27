@@ -52,7 +52,7 @@ class BasicAuthUsers
      * If the user does not exist, it returns false.
      *
      * @param string $username
-     * @return ImmutableArrayObjectable&object{
+     * @return ImmutableArrayObjectable<string,mixed>&object{
      *   username: string,
      *   password: string,
      * }

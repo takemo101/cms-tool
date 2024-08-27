@@ -172,7 +172,7 @@ abstract class ImmutableArrayObjectable implements IteratorAggregate, ArrayAcces
     final public function toArray(): array
     {
         return array_map(
-            fn ($item) => $item instanceof Arrayable
+            fn($item) => $item instanceof Arrayable
                 ? $item->toArray()
                 : $item,
             $this->items,
@@ -182,8 +182,11 @@ abstract class ImmutableArrayObjectable implements IteratorAggregate, ArrayAcces
     /**
      * Constructor of static method.
      *
-     * @param array<TKey,TValue> $items
-     * @return static
+     * @template TK as array-key
+     * @template TV
+     *
+     * @param array<TK,TV> $items
+     * @return static<TK,TV>
      */
     final public static function of(
         array $items = [],

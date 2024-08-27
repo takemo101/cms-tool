@@ -107,7 +107,7 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
             return null;
         }
 
-        /** @var ImmutableArrayObjectable */
+        /** @var ImmutableArrayObjectable<string,mixed> */
         $dto = $response->dto();
 
         return $dto;
@@ -194,7 +194,7 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
             return null;
         }
 
-        /** @var ImmutableArrayObjectable */
+        /** @var ImmutableArrayObjectable<string,mixed> */
         $dto = $response->dto();
 
         return $dto;
@@ -250,12 +250,12 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
             enabled: $cache,
         );
 
-        /** @var array<string,mixed> */
+        /** @var array<string,mixed>[] */
         $contents = $json['contents'] ?? [];
 
-        /** @var ImmutableArrayObjectable[] */
+        /** @var ImmutableArrayObjectable<string,mixed>[] */
         $contents = array_map(
-            fn (array $content) => ImmutableArrayObject::of($content),
+            fn(array $content) => ImmutableArrayObject::of($content),
             $contents,
         );
 
@@ -314,12 +314,12 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
             enabled: $cache,
         );
 
-        /** @var array<string,mixed> */
+        /** @var array<string,mixed>[] */
         $contents = $json['contents'] ?? [];
 
-        /** @var ImmutableArrayObjectable[] */
+        /** @var ImmutableArrayObjectable<string,mixed>[] */
         $contents = array_map(
-            fn (array $content) => ImmutableArrayObject::of($content),
+            fn(array $content) => ImmutableArrayObject::of($content),
             $contents,
         );
 

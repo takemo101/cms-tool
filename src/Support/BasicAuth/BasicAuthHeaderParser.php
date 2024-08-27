@@ -13,7 +13,7 @@ class BasicAuthHeaderParser
      * If the header is invalid, it returns false.
      *
      * @param string $header
-     * @return (ImmutableArrayObjectable&object{
+     * @return (ImmutableArrayObjectable<string,mixed>&object{
      *   username: string,
      *   password: string,
      * })|false
@@ -51,7 +51,7 @@ class BasicAuthHeaderParser
      * If the header is invalid, it returns false.
      *
      * @param ServerRequestInterface $request
-     * @return (ImmutableArrayObjectable&object{
+     * @return (ImmutableArrayObjectable<string,mixed>&object{
      *   username: string,
      *   password: string,
      * })|false

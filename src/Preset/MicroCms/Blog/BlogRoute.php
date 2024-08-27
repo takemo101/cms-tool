@@ -28,7 +28,7 @@ class BlogRoute implements ThemeRoute
         $order = 'publishedAt';
 
         /**
-         * @var ImmutableArrayObjectable&object{
+         * @var ImmutableArrayObjectable<string,mixed>&object{
          *  endpoints: object{
          *   blog: string,
          *   category: string,

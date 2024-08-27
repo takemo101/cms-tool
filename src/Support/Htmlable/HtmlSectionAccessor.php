@@ -19,7 +19,7 @@ class HtmlSectionAccessor
     }
 
     /**
-     * @return ImmutableArrayObjectable&object{
+     * @return ImmutableArrayObjectable<string,mixed>&object{
      *    head: HeadHtmls
      * }
      */

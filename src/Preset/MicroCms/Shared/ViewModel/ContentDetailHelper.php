@@ -33,7 +33,7 @@ class ContentDetailHelper
     {
         [$prev, $next] = ($this->generator)();
 
-        return new class($prev, $next) {
+        return new class ($prev, $next) {
             use HasCamelCaseAccess;
 
             /**

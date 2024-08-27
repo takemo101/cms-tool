@@ -255,7 +255,7 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
 
         /** @var ImmutableArrayObjectable<string,mixed>[] */
         $contents = array_map(
-            fn(array $content) => ImmutableArrayObject::of($content),
+            fn (array $content) => ImmutableArrayObject::of($content),
             $contents,
         );
 
@@ -319,7 +319,7 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
 
         /** @var ImmutableArrayObjectable<string,mixed>[] */
         $contents = array_map(
-            fn(array $content) => ImmutableArrayObject::of($content),
+            fn (array $content) => ImmutableArrayObject::of($content),
             $contents,
         );
 

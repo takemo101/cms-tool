@@ -29,7 +29,7 @@ class ImmutableArrayObject extends ImmutableArrayObjectable
      */
     public function get(string $name, mixed $default = null): mixed
     {
-        return Arr::get($this->items, $name, $default);
+        return Arr::get($this->__items, $name, $default);
     }
 
     /**
@@ -41,11 +41,11 @@ class ImmutableArrayObject extends ImmutableArrayObjectable
     {
         // If the offset is an numeric, it is treated as an index.
         if (is_numeric($offset)) {
-            return $this->items[$offset] ?? null;
+            return $this->__items[$offset] ?? null;
         }
 
-        if ($key = $this->searcher->search($offset, $this->items)) {
-            return $this->items[$key] ?? throw new OutOfBoundsException('offset not found');
+        if ($key = $this->searcher->search($offset, $this->__items)) {
+            return $this->__items[$key] ?? throw new OutOfBoundsException('offset not found');
         }
 
         return null;
@@ -58,9 +58,9 @@ class ImmutableArrayObject extends ImmutableArrayObjectable
     {
         // If the offset is an numeric, it is treated as an index.
         if (is_numeric($offset)) {
-            return array_key_exists($offset, $this->items);
+            return array_key_exists($offset, $this->__items);
         }
 
-        return $this->searcher->search($offset, $this->items) !== false;
+        return $this->searcher->search($offset, $this->__items) !== false;
     }
 }

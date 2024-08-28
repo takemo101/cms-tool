@@ -95,7 +95,7 @@ readonly class HeaderLayer
     }
 
     /**
-     * {@inheritdoc}
+     * @return array<string,mixed> [propertyNames => propertyValues]
      */
     protected function __properties(): array
     {

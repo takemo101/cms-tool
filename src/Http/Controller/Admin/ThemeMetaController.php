@@ -11,6 +11,8 @@ use CmsTool\Theme\ThemeQueryService;
 use CmsTool\View\View;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
+use Takemo101\Chubby\Http\Renderer\RouteRedirectRenderer;
+use Takemo101\CmsTool\Http\Renderer\RedirectBackRenderer;
 use Takemo101\CmsTool\Http\Request\Admin\ChangeThemeMetaInputs;
 use Takemo101\CmsTool\Http\Request\Admin\UpdateThemeMetaJsonRequest;
 use Takemo101\CmsTool\Http\ViewModel\ThemeMetaPage;
@@ -52,7 +54,7 @@ class ThemeMetaController
      * @param ServerRequestInterface $request
      * @param RequestValidator $validator
      * @param string $id
-     * @return ToastRenderer
+     * @return ToastRenderer<RouteRedirectRenderer|RedirectBackRenderer>
      */
     public function update(
         ServerRequestInterface $request,
@@ -68,7 +70,7 @@ class ThemeMetaController
 
         $payload = $form->getMetaPayload();
 
-        $formRequest = $validator->throwIfFailedInputs(
+        $validator->throwIfFailedInputs(
             $payload,
             $request,
             ChangeThemeMetaInputs::class,

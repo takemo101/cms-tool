@@ -13,7 +13,7 @@ class ContentDetailHelper
     /**
      * constructor
      *
-     * @param Closure():array{0: ?ImmutableArrayObjectable, 1: ?ImmutableArrayObjectable} $generator [0 => prev, 1 => next]
+     * @param Closure():array{0: ?ImmutableArrayObjectable<string,mixed>, 1: ?ImmutableArrayObjectable<string,mixed>} $generator [0 => prev, 1 => next]
      */
     public function __construct(
         private readonly Closure $generator,
@@ -25,8 +25,8 @@ class ContentDetailHelper
      * Get the next and previous content.
      *
      * @return object {
-     *   prev: ?ImmutableArrayObjectable,
-     *   next: ?ImmutableArrayObjectable,
+     *   prev: ?ImmutableArrayObjectable<string,mixed>,
+     *   next: ?ImmutableArrayObjectable<string,mixed>,
      * }
      */
     public function getPrevNext(): object
@@ -39,8 +39,8 @@ class ContentDetailHelper
             /**
              * constructor
              *
-             * @param ImmutableArrayObjectable|null $prev
-             * @param ImmutableArrayObjectable|null $next
+             * @param ImmutableArrayObjectable<string,mixed>|null $prev
+             * @param ImmutableArrayObjectable<string,mixed>|null $next
              */
             public function __construct(
                 public readonly ?ImmutableArrayObjectable $prev,

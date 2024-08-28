@@ -97,6 +97,10 @@ class MicroCmsImageApiQueryBuilder
         ];
     }
 
+    /**
+     * @param ImmutableArrayObject $object
+     * @return array<string,mixed>
+     */
     private function buildDprQuery(ImmutableArrayObject $object): array
     {
         return [

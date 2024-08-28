@@ -1,26 +1,29 @@
 {% extends 'layouts.master' %}
 
+{% block header_js %}
+    <script src="{{ asset('slider.js') }}"></script>
+{% endblock %}
+
+{# スライダーの表示件数 #}
+{% set slider_max = share.theme.top.slider_max %}
+{% set is_scroll_slider = slider_max > 1 %}
+{# 新着記事の取得 #}
+{% set contents = share.contents(slider_max + 6) %}
+{# スライダーの記事取得 #}
+{% set top_contents = contents[:slider_max] %}
+{# スライダーの先頭記事取得 #}
+{% set first_content = top_contents|first %}
+
 {% block content %}
     {# 新着記事の次のカラムに表示させる内容の変数設定 #}
     {% set second_column_title = share.theme.top.second_column_title %}
     {% set second_column_subtitle = share.theme.top.second_column_subtitle %}
     {% set second_column_category = share.theme.top.second_column_category %}
 
-    {# スライダーの表示件数 #}
-    {% set slider_max = share.theme.top.slider_max %}
-    {# 新着記事の取得 #}
-    {% set contents = share.contents(slider_max + 6) %}
-    {# スライダーの記事取得 #}
-    {% set top_contents = contents[:slider_max] %}
-    {# スライダーの先頭記事取得 #}
-    {% set first_content = top_contents|first %}
-
     {% if top_contents|length %}
-        {# スライダーの先頭記事取得 #}
-        {% set first_background_image = first_content.eyecatch ? microcms_img(first_content.eyecatch.url, { w: 100 }) : asset('empty.jpeg') %}
         <section class="bg-white text-black xl:px-6 px-0">
             <div class="splide-outer">
-                <div class="splide-outer__bg" style="background-image: url('{{ first_background_image }}')"></div>
+                <div class="splide-outer__bg"></div>
                 <div id="splide" class="splide w-full xl:h-[680px] sm:h-[580px] h-[320px]">
                     <div class="splide__track h-full">
                         <ul class="splide__list">
@@ -85,36 +88,27 @@
 
 {% block footer_js %}
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    const slide = Slider.mount('#splide', {
+        arrows: {{ is_scroll_slider ? 'true' : 'false' }},
+        type: 'loop',
+        loop: true,
+        height: '100%',
+        lazyLoad: true,
+        rewind: true,
+    });
 
-        const element = document.getElementById('splide');
+    slide.on('active', function () {
+        const element = slide.Components.Elements.track.querySelector('.splide__slide.is-active');
 
-        if (!element) {
-            return;
+        if (element) {
+            const category = document.getElementById('splide-category');
+            const title = document.getElementById('splide-title');
+
+            category.textContent = element.dataset.category;
+            title.href = element.dataset.link;
+            title.textContent = element.dataset.title;
+
         }
-
-        const slide = Slider.mount(element, {
-            arrows: false,
-            type: 'loop',
-            loop: true,
-            height: '100%',
-            lazyLoad: true,
-            rewind: true,
-        });
-
-        slide.on('active', function () {
-            const element = slide.Components.Elements.track.querySelector('.splide__slide.is-active');
-
-            if (element) {
-                const category = document.getElementById('splide-category');
-                const title = document.getElementById('splide-title');
-
-                category.textContent = element.dataset.category;
-                title.href = element.dataset.link;
-                title.textContent = element.dataset.title;
-
-            }
-        });
     });
 </script>
 {% endblock %}

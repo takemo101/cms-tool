@@ -103,6 +103,20 @@ describe(
             expect($immutableArray['key_of'])->toBe($data['keyOf']);
         });
 
+        it('should get the value of a underscore-prefixed key from the immutable array object using offsetGet', function () {
+            $data = [
+                '_id' => 'value',
+                '_key' => 'value',
+            ];
+
+            $immutableArray = ImmutableArrayObject::of($data);
+
+            expect($immutableArray->id)->toBe($data['_id']);
+            expect($immutableArray['id'])->toBe($data['_id']);
+            expect($immutableArray->key)->toBe($data['_key']);
+            expect($immutableArray['key'])->toBe($data['_key']);
+        });
+
         it('should get the value of a camel case key from the immutable array object using offsetGet', function () {
             $data = [
                 'all_of' => 'value',

@@ -8,7 +8,7 @@ readonly class MicroCmsContentGetOneQuery
      * constructor
      *
      * @param string[]|string|null $fields
-     * @param string|null $depth
+     * @param integer|null $depth
      */
     public function __construct(
         public array|string|null $fields = null,

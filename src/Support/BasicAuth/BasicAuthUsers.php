@@ -5,6 +5,12 @@ namespace Takemo101\CmsTool\Support\BasicAuth;
 use Takemo101\CmsTool\Support\ArrayObject\ImmutableArrayObject;
 use Takemo101\CmsTool\Support\ArrayObject\ImmutableArrayObjectable;
 
+/**
+ * @phpstan-type UserData = ImmutableArrayObjectable<string,mixed>&object{
+ *   username: string,
+ *   password: string,
+ * }
+ */
 class BasicAuthUsers
 {
     /**
@@ -52,20 +58,20 @@ class BasicAuthUsers
      * If the user does not exist, it returns false.
      *
      * @param string $username
-     * @return ImmutableArrayObjectable&object{
-     *   username: string,
-     *   password: string,
-     * }
+     * @return UserData|false
      */
     public function get(string $username): object|false
     {
         $users = $this->users;
 
         if ($hashedPassword = $users[$username] ?? false) {
-            return ImmutableArrayObject::of([
+            /** @var UserData */
+            $obj = ImmutableArrayObject::of([
                 'username' => $username,
                 'password' => $hashedPassword
             ]);
+
+            return $obj;
         }
 
         return false;

@@ -17,7 +17,8 @@ abstract class AbstractErrorPageRender extends HtmlErrorResponseRender
     /**
      * constructor
      *
-     * @param string $systemRoutePath
+     * @param TemplateFinder $finder
+     * @param string $systemPath
      */
     public function __construct(
         private TemplateFinder $finder,
@@ -100,7 +101,8 @@ abstract class AbstractErrorPageRender extends HtmlErrorResponseRender
     /**
      * Judge whether to display an error page by comparing the path
      *
-     * @param string $path Request path
+     * @param string $requestPath
+     * @param string $systemPath
      * @return boolean
      */
     abstract protected function isMatchPath(

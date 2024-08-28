@@ -12,6 +12,8 @@ use Takemo101\Chubby\Http\Renderer\ResponseRenderer;
 
 /**
  * @template T of ResponseRenderer
+ *
+ * @implements Arrayable<string,mixed>
  */
 class ToastRenderer implements ResponseRenderer, Arrayable, ContainerInjectable
 {
@@ -57,7 +59,8 @@ class ToastRenderer implements ResponseRenderer, Arrayable, ContainerInjectable
     /**
      * Set toast style to session.
      *
-     * @return self
+     * @param ToastStyle $style
+     * @return self<T>
      */
     public function setStyle(ToastStyle $style): self
     {
@@ -69,7 +72,8 @@ class ToastRenderer implements ResponseRenderer, Arrayable, ContainerInjectable
     /**
      * Set toast message to session.
      *
-     * @return self
+     * @param string $message
+     * @return self<T>
      */
     public function setMessage(string $message): self
     {
@@ -102,22 +106,17 @@ class ToastRenderer implements ResponseRenderer, Arrayable, ContainerInjectable
     }
 
     /**
-     * Perform response writing process.
-     *
-     * @param ServerRequestInterface $request
-     * @param ResponseInterface $response
-     * @return ResponseInterface
+     * {@inheritDoc}
      */
     public function render(
         ServerRequestInterface $request,
         ResponseInterface $response,
     ): ResponseInterface {
 
-        $toast = FlashSessionsContext::fromRequest($request)
-            ->getFlashSessions()
-            ->get(FlashToast::class);
-
-        $toast->put($this->toArray());
+        FlashSessionsContext::fromRequest($request)
+            ?->getFlashSessions()
+            ->get(FlashToast::class)
+            ->put($this->toArray());
 
         return $this->response->render($request, $response);
     }

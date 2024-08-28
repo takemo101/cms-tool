@@ -11,9 +11,11 @@ class ErrorPage extends ViewModel
     /** @var string */
     public readonly string $message;
 
-    /** @var string */
-    public readonly int $code;
-
+    /**
+     * constructor
+     *
+     * @param Throwable $e
+     */
     public function __construct(
         public readonly Throwable $e,
     ) {

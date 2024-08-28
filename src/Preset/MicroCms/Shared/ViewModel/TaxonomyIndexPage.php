@@ -12,7 +12,7 @@ class TaxonomyIndexPage extends ViewModel
     /**
      * constructor
      *
-     * @param ImmutableArrayObjectable $taxonomy
+     * @param ImmutableArrayObjectable<string,mixed> $taxonomy
      * @param MicroCmsContentGetListResult $result
      */
     public function __construct(
@@ -23,7 +23,7 @@ class TaxonomyIndexPage extends ViewModel
     }
 
     /**
-     * @return ImmutableArrayObjectable[]
+     * @return ImmutableArrayObjectable<string,mixed>[]
      */
     public function contents(): array
     {

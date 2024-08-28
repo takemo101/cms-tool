@@ -21,16 +21,16 @@ use DateTimeImmutable;
 use Takemo101\CmsTool\Support\ArrayObject\ImmutableArrayObjectable;
 
 /**
- * @phpstan-type ContentData = ImmutableArrayObjectable&object{
+ * @phpstan-type ContentData = ImmutableArrayObjectable<string,mixed>&object{
  *   title: string,
  *   publishedAt: string,
  *   updatedAt: string,
  *   content: string,
  *   id: string,
- *   eyecatch?: object{
+ *   eyecatch: ?object{
  *     url: string,
  *   },
- *   category?: object{
+ *   category: ?object{
  *     name: string,
  *   }
  * }
@@ -113,14 +113,14 @@ class BlogFeedCreator extends AbstractIndexable implements FeedCreator
 
         $siteMeta = $siteMetaQueryService->get();
 
-        /**
-         * @var ContentData|null $latest
-         */
-        $latest = $result->contents[0] ?? null;
+        /** @var ContentData[] */
+        $contents = $result->contents;
 
-        $updated = new DateTimeImmutable($latest->publishedAt);
+        $latest = $contents[0] ?? null;
 
-        $items = collect($result->contents)
+        $updated = new DateTimeImmutable($latest?->publishedAt ?? 'now');
+
+        $items = collect($contents)
             ->map(
                 /**
                  * @param ContentData $content

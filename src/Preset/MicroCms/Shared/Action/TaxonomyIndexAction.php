@@ -49,7 +49,7 @@ class TaxonomyIndexAction extends AbstractIndexable
             'The limit must be greater than 0',
         );
 
-        if ($order) {
+        if ($order !== null) {
             assert(
                 empty($order) === false,
                 'The order must not be empty',

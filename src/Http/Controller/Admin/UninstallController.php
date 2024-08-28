@@ -5,6 +5,7 @@ namespace Takemo101\CmsTool\Http\Controller\Admin;
 use CmsTool\View\View;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
+use Takemo101\CmsTool\Http\Renderer\RedirectBackRenderer;
 use Takemo101\CmsTool\Infra\Event\Uninstalled;
 use Takemo101\CmsTool\Support\Toast\ToastRenderer;
 use Takemo101\CmsTool\Support\Toast\ToastStyle;
@@ -22,7 +23,7 @@ class UninstallController
     }
 
     /**
-     * @return ToastRenderer
+     * @return ToastRenderer<RedirectBackRenderer>
      */
     public function uninstall(
         UninstallHandler $handler,

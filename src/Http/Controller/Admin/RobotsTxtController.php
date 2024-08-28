@@ -6,6 +6,7 @@ use CmsTool\Support\Validation\HttpValidationErrorException;
 use CmsTool\Support\Validation\RequestValidator;
 use CmsTool\View\View;
 use Psr\Http\Message\ServerRequestInterface;
+use Takemo101\CmsTool\Http\Renderer\RedirectBackRenderer;
 use Takemo101\CmsTool\Http\Request\Admin\SaveRobotsTxtRequest;
 use Takemo101\CmsTool\Infra\Storage\Repository\RobotsTxtRepository;
 use Takemo101\CmsTool\Support\Toast\ToastRenderer;
@@ -32,7 +33,7 @@ class RobotsTxtController
      * @param ServerRequestInterface $request
      * @param RequestValidator $validator
      * @param RobotsTxtRepository $repository
-     * @return ToastRenderer
+     * @return ToastRenderer<RedirectBackRenderer>
      * @throws HttpValidationErrorException
      */
     public function update(

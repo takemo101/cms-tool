@@ -46,18 +46,19 @@ class FlashExtension extends AbstractExtension
      * Get flash message from the key
      *
      * @param string $key
-     * @param mixed $default
+     * @param string|null $default
      * @return string|null
      */
     public function flash(string $key, ?string $default = null): ?string
     {
-        /** @var array<string,string[]> */
+        /** @var array<string,string> */
         $messages = $this->getFlash()->get($key);
 
+        /** @var string|null */
         $lastKey = array_key_last($messages);
 
-        return !is_null($lastKey)
-            ? $messages[$lastKey]
+        return $lastKey !== null
+            ? ($messages[$lastKey] ?? null)
             : $default;
     }
 

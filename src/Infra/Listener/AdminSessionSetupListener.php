@@ -26,6 +26,7 @@ class AdminSessionSetupListener
     /**
      * @param AdminSessionStarted $event
      * @return void
+     * @todo The current situation is that there is only one RootAdmin, but in the future, multiple administrators are expected.
      */
     public function __invoke(
         AdminSessionStarted $event
@@ -35,7 +36,7 @@ class AdminSessionSetupListener
         $this->view->share(
             'auth',
             $admin->isLoggedIn()
-                ? $this->repository->find($admin->getId())
+                ? $this->repository->find()
                 : null,
         );
     }

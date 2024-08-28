@@ -22,7 +22,7 @@ class ServerRequestAccessor
     }
 
     /**
-     * @return ImmutableArrayObjectable
+     * @return ImmutableArrayObjectable<string,mixed>
      */
     public function __invoke(): ImmutableArrayObjectable
     {

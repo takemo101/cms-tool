@@ -18,8 +18,8 @@ class StorageHelper
     }
 
     /**
-     * @param UploadedFileInterface $file
-     * @param string|null
+     * @param UploadedFileInterface|null $file
+     * @param string|null $originalPath
      * @return string|null
      */
     public function storeOr(

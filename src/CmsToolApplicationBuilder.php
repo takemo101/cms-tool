@@ -27,13 +27,13 @@ class CmsToolApplicationBuilder
         $path = $app->getPath();
 
         $app->getProvider(DependencyProvider::class)
-            ->setDependencyPath(
+            ?->setDependencyPath(
                 __DIR__ . '/dependency.php',
                 $path->getSettingPath('dependency.php'),
             );
 
         $app->getProvider(FunctionProvider::class)
-            ->setFunctionPath(
+            ?->setFunctionPath(
                 __DIR__ . '/function.php',
                 $path->getSettingPath('function.php'),
             );

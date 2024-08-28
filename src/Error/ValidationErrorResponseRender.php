@@ -35,7 +35,7 @@ class ValidationErrorResponseRender extends AbstractErrorResponseRender
      * Create error response renderer.
      *
      * @param ServerRequestInterface $request
-     * @param Throwable $exception
+     * @param HttpValidationErrorException $exception
      * @param ErrorSetting $setting
      *
      * @return ResponseRenderer

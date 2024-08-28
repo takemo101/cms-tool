@@ -2,6 +2,7 @@
 
 namespace Takemo101\CmsTool\Http\Request\Admin;
 
+use RuntimeException;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
@@ -30,10 +31,14 @@ readonly class UpdateThemeMetaJsonRequest
     }
 
     /**
-     * @return array<string,mixed>|null
+     * @return array<string,mixed>
+     * @throw RuntimeException
      */
-    public function getMetaPayload(): ?array
+    public function getMetaPayload(): array
     {
-        return json_decode($this->meta, true);
+        /** @var array<string,mixed> */
+        $data = json_decode($this->meta, true) ?? throw new RuntimeException('Invalid JSON format.');
+
+        return $data;
     }
 }

@@ -1,6 +1,9 @@
 parameters:
     level: max
     paths:
-        - app
-
+        - src
+    scanFiles:
+        - vendor/takemo101/chubby/src/helper.php
+        - modules/view/src/helper.php
     reportUnmatchedIgnoredErrors: true
+    treatPhpDocTypesAsCertain: false

@@ -17,7 +17,7 @@ class ArrayKeySearcher
     /**
      * constructor
      *
-     * @param (callable(string):string)[] ...$transformers
+     * @param (callable(string):string) ...$transformers
      */
     public function __construct(
         callable ...$transformers,
@@ -42,10 +42,15 @@ class ArrayKeySearcher
         }
 
         foreach ($this->transformers as $transformer) {
-            $key = $transformer($key);
+            $transformed = $transformer($key);
 
-            if (array_key_exists($key, $items)) {
-                return $key;
+            // If the key is the same, skip it.
+            if ($transformed === $key) {
+                continue;
+            }
+
+            if (array_key_exists($transformed, $items)) {
+                return $transformed;
             }
         }
 
@@ -62,6 +67,8 @@ class ArrayKeySearcher
         return new self(
             fn (string $key) => u($key)->camel()->toString(),
             fn (string $key) => u($key)->snake()->toString(),
+            // Add a underscore to the beginning of the key.
+            fn (string $key) => "_{$key}",
         );
     }
 }

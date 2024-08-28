@@ -12,7 +12,7 @@ class MicroCmsGetOneQuery
      *
      * @param string|null $draftKey
      * @param string[]|string|null $fields
-     * @param string|null $depth
+     * @param integer|null $depth
      */
     public function __construct(
         ?string $draftKey = null,

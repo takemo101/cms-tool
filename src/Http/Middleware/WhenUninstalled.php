@@ -2,7 +2,6 @@
 
 namespace Takemo101\CmsTool\Http\Middleware;
 
-use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -16,11 +15,9 @@ class WhenUninstalled implements MiddlewareInterface
      * constructor
      *
      * @param InstallRepository $repository
-     * @param ResponseFactoryInterface $responseFactory
      */
     public function __construct(
-        private InstallRepository $repository,
-        private ResponseFactoryInterface $responseFactory,
+        private readonly InstallRepository $repository,
     ) {
         //
     }

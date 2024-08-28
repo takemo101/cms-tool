@@ -15,7 +15,7 @@ readonly class MicroCmsContentQuery
      * @param string[]|string|null $fields
      * @param string[]|string|null $ids
      * @param string|null $filters
-     * @param string|null $depth
+     * @param integer|null $depth
      */
     public function __construct(
         public ?string $draftKey = null,
@@ -96,7 +96,7 @@ readonly class MicroCmsContentQuery
         }
 
         if (is_string($q)) {
-            return $this->q;
+            return $q;
         }
 
         return implode(',', $q);
@@ -114,7 +114,7 @@ readonly class MicroCmsContentQuery
         }
 
         if (is_string($fields)) {
-            return $this->fields;
+            return $fields;
         }
 
         return implode(',', $fields);
@@ -132,7 +132,7 @@ readonly class MicroCmsContentQuery
         }
 
         if (is_string($ids)) {
-            return $this->ids;
+            return $ids;
         }
 
         return implode(',', $ids);

@@ -9,7 +9,9 @@ use CmsTool\View\View;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
+use Takemo101\Chubby\Http\Renderer\RouteRedirectRenderer;
 use Takemo101\CmsTool\Domain\Theme\NotFoundThemeIdException;
+use Takemo101\CmsTool\Http\Renderer\RedirectBackRenderer;
 use Takemo101\CmsTool\Http\ViewModel\ThemeDetailPage;
 use Takemo101\CmsTool\Http\ViewModel\ThemeIndexPage;
 use Takemo101\CmsTool\Infra\Event\ThemeActivated;
@@ -65,7 +67,7 @@ class ThemeController
      * @param ActivateThemeHandler $handler
      * @param EventDispatcherInterface $dispatcher
      * @param string $id
-     * @return ToastRenderer
+     * @return ToastRenderer<RedirectBackRenderer>
      */
     public function activate(
         ServerRequestInterface $request,
@@ -92,7 +94,7 @@ class ThemeController
      * @param ServerRequestInterface $request
      * @param CopyThemeHandler $handler
      * @param string $id
-     * @return ToastRenderer
+     * @return ToastRenderer<RouteRedirectRenderer>
      */
     public function copy(
         ServerRequestInterface $request,
@@ -120,7 +122,7 @@ class ThemeController
      * @param ServerRequestInterface $request
      * @param DeleteThemeHandler $handler
      * @param string $id
-     * @return ToastRenderer
+     * @return ToastRenderer<RouteRedirectRenderer>
      */
     public function delete(
         ServerRequestInterface $request,

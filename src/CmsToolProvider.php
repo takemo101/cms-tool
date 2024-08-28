@@ -40,7 +40,7 @@ class CmsToolProvider implements Provider
     /**
      * @var string CmsTool Version number.
      */
-    public const Version = '0.1.5';
+    public const Version = '0.1.6';
 
     /**
      * constructor
@@ -167,6 +167,7 @@ class CmsToolProvider implements Provider
         // Load helper functions.
         $this->filesystem->require($path->getSourcePath('helper.php'));
 
+        /** @var Hook */
         $hook = $container->get(Hook::class);
 
         $this->bootTemplate($hook, $path);

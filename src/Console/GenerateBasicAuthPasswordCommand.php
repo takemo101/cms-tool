@@ -76,7 +76,7 @@ class GenerateBasicAuthPasswordCommand extends Command
     ): void {
         $dotenv = $repository->find();
 
-        if ($dotenv === false) {
+        if ($dotenv === null) {
             return;
         }
 

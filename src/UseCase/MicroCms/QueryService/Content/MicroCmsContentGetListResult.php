@@ -10,7 +10,7 @@ readonly class MicroCmsContentGetListResult
     /**
      * constructor
      *
-     * @param ImmutableArrayObjectable[] $contents
+     * @param ImmutableArrayObjectable<string,mixed>[] $contents
      * @param ContentPaginator $paginator
      */
     public function __construct(

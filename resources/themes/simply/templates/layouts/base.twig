@@ -31,13 +31,13 @@
         {{ share.section.head }}
 
         {# css #}
-        {% block css %}{% endblock %}
         <link rel="stylesheet" href="{{ asset('app.css') }}">
+        {% block css %}{% endblock %}
 
         {# header js #}
-        {% block header_js %}{% endblock %}
         <script src="//kit.fontawesome.com/849ec56e4d.js" defer crossorigin="anonymous"></script>
         <script defer src="{{ asset('app.js') }}"></script>
+        {% block header_js %}{% endblock %}
     </head>
     <body
         class="flex flex-col h-full {% block body_class %}{% endblock %}">

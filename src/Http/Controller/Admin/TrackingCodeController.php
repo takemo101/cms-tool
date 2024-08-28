@@ -5,6 +5,7 @@ namespace Takemo101\CmsTool\Http\Controller\Admin;
 use CmsTool\Support\Validation\RequestValidator;
 use CmsTool\View\View;
 use Psr\Http\Message\ServerRequestInterface;
+use Takemo101\CmsTool\Http\Renderer\RedirectBackRenderer;
 use Takemo101\CmsTool\Http\Request\Admin\SaveTrackingCodeRequest;
 use Takemo101\CmsTool\Support\Toast\ToastRenderer;
 use Takemo101\CmsTool\Support\Toast\ToastStyle;
@@ -33,8 +34,7 @@ class TrackingCodeController
      * @param ServerRequestInterface $request
      * @param RequestValidator $validator
      * @param SaveTrackingCodeHandler $handler
-     * @return ToastRenderer
-     * @throws HttpValidationErrorException
+     * @return ToastRenderer<RedirectBackRenderer>
      */
     public function update(
         ServerRequestInterface $request,

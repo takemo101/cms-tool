@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "highlight.js/styles/github-dark.css";
+@import "@splidejs/splide/css";
+
 /* 垂直表示のレイアウトやコンテンツを表示するコンテナ（セクション）など */
 .section-layout {
   @apply container mx-auto px-4 py-12;
@@ -228,10 +231,24 @@
   @apply relative overflow-hidden z-[1];
 
   &__bg {
-    @apply block absolute top-0 left-0 w-full h-full bg-cover bg-center z-[-1];
+    @apply block absolute top-0 left-0 w-full h-full bg-gray-500 z-[-1];
 
     &::before {
-      @apply block absolute content-[''] top-0 left-0 w-full h-full backdrop-blur;
+      @apply block absolute content-[''] top-0 left-0 w-full h-full;
     }
   }
+}
+.splide__track {
+  @apply h-full xl:px-[8rem] px-0 !important;
+}
+.splide__slide {
+  &.is-prev {
+    @apply opacity-60;
+  }
+  &.is-next {
+    @apply opacity-60;
+  }
+}
+.splide__arrows {
+  @apply sm:visible invisible;
 }

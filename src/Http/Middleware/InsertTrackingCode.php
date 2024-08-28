@@ -14,10 +14,10 @@ class InsertTrackingCode implements MiddlewareInterface
     /**
      * constructor
      *
-     * @param TrackingCodeQueryService $repository
+     * @param TrackingCodeQueryService $queryService
      */
     public function __construct(
-        private TrackingCodeQueryService $queryService,
+        private readonly TrackingCodeQueryService $queryService,
     ) {
         //
     }
@@ -50,6 +50,7 @@ class InsertTrackingCode implements MiddlewareInterface
         $count = 0;
 
         if ($tracking->head) {
+            /** @var string */
             $body = preg_replace(
                 '/<head>/',
                 '<head>' . $tracking->head,
@@ -60,6 +61,7 @@ class InsertTrackingCode implements MiddlewareInterface
         }
 
         if ($tracking->body) {
+            /** @var string */
             $body = preg_replace(
                 '/(<body[^>]*>)/',
                 '$1' . $tracking->body,
@@ -70,6 +72,7 @@ class InsertTrackingCode implements MiddlewareInterface
         }
 
         if ($tracking->footer) {
+            /** @var string */
             $body = preg_replace(
                 '/<\/body>/',
                 $tracking->footer . '</body>',

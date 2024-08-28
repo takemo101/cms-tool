@@ -158,7 +158,7 @@ class InstallController
      *
      * @param ServerRequestInterface $request
      * @param InstallHandler $handler
-     * @return ToastRenderer
+     * @return ToastRenderer<RouteRedirectRenderer>
      */
     public function install(
         ServerRequestInterface $request,

@@ -13,7 +13,7 @@ class FlashOldInputs extends AbstractFlashSession
     public const SessionKey = '_old_inputs';
 
     /**
-     * @var array<string,string[]>
+     * @return array<string,mixed>
      */
     protected function getInputs(): array
     {

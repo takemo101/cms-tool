@@ -23,23 +23,40 @@ class ThemeCustomizationEditPage extends ViewModel
     /**
      * Get theme schema.
      *
-     * @return array<string,array<string,mixed>>
+     * @return array<integer,array<string,mixed>>
      */
     public function schema(): array
     {
         $schema = $this->theme->meta->schema->toArray();
 
+        /** @var array<integer,array<string,mixed>> */
         $data = array_map(
-            fn (array $settings) => [
-                ...$settings,
-                'settings' => array_map(
-                    fn (array $setting) => [
-                        'uid' => IdCreator::ulid()->generate(),
-                        ...$setting,
-                    ],
-                    $settings['settings'],
-                ),
-            ],
+            /**
+             * @param array<string,mixed> $settings
+             * @return array<string,mixed>
+             */
+            function (array $settings) {
+
+                /** @var array<integer,array<string,mixed>> */
+                $schemaSettings = $settings['settings'];
+
+                return [
+                    ...$settings,
+                    'settings' => array_map(
+                        /**
+                         * @param array<string,mixed> $setting
+                         * @return array<string,mixed>
+                         */
+                        function (array $setting) {
+                            return [
+                                'uid' => IdCreator::ulid()->generate(),
+                                ...$setting,
+                            ];
+                        },
+                        $schemaSettings,
+                    ),
+                ];
+            },
             $schema,
         );
 

@@ -47,7 +47,7 @@ class BlogHook implements ThemeHook
                     $extension = ImmutableArrayObject::of($theme->meta->extension);
 
                     /**
-                     * @var ImmutableArrayObjectable&object{
+                     * @var ImmutableArrayObjectable<string,mixed>&object{
                      *  blog: string,
                      *  category: string,
                      *  tag: string,
@@ -60,7 +60,7 @@ class BlogHook implements ThemeHook
                     ]);
 
                     /**
-                     * @var ImmutableArrayObjectable&object{
+                     * @var ImmutableArrayObjectable<string,mixed>&object{
                      *  category: string,
                      *  tag: string,
                      * }

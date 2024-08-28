@@ -13,7 +13,7 @@ interface ValueObject
     public function value();
 
     /**
-     * @param ValueObject $other
+     * @param ValueObject<T> $other
      * @return boolean
      */
     public function equals(ValueObject $other): bool;

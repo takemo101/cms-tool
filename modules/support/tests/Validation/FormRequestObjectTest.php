@@ -1,6 +1,6 @@
 <?php
 
-use CmsTool\Support\Validation\FormRequest;
+use CmsTool\Support\Validation\FormRequestObject;
 use EventSauce\ObjectHydrator\ObjectMapper;
 use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Component\Validator\ConstraintViolationList;
@@ -27,7 +27,7 @@ describe(
                 ];
 
                 // Create an instance of FormRequest
-                $formRequest = new FormRequest($mapper, $object, $inputs);
+                $formRequest = new FormRequestObject($mapper, $object, $inputs);
 
                 // Get the input value
                 $inputValue = $formRequest->input('key1');
@@ -53,7 +53,7 @@ describe(
                 ];
 
                 // Create an instance of FormRequest
-                $formRequest = new FormRequest($mapper, $object, $inputs);
+                $formRequest = new FormRequestObject($mapper, $object, $inputs);
 
                 // Get all inputs
                 $allInputs = $formRequest->inputs();
@@ -73,7 +73,7 @@ describe(
                 $object = new stdClass();
 
                 // Create an instance of FormRequest
-                $formRequest = new FormRequest($mapper, $object);
+                $formRequest = new FormRequestObject($mapper, $object);
 
                 // Get the hydrated object
                 $hydratedObject = $formRequest->getHydratedObject();
@@ -93,7 +93,7 @@ describe(
                 $object = new stdClass();
 
                 // Create an instance of FormRequest
-                $formRequest = new FormRequest($mapper, $object);
+                $formRequest = new FormRequestObject($mapper, $object);
 
                 // Set the errors to an empty ConstraintViolationList
                 $formRequest->setErrors(new ConstraintViolationList());
@@ -114,7 +114,7 @@ describe(
             $object = new stdClass();
 
             // Create an instance of FormRequest
-            $formRequest = new FormRequest($mapper, $object);
+            $formRequest = new FormRequestObject($mapper, $object);
 
             // Set the errors to a non-empty ConstraintViolationList
             $formRequest->setErrors(new ConstraintViolationList([
@@ -136,7 +136,7 @@ describe(
             $object = new stdClass();
 
             // Create an instance of FormRequest
-            $formRequest = new FormRequest($mapper, $object);
+            $formRequest = new FormRequestObject($mapper, $object);
 
             // Set the errors to a non-null value
             $formRequest->setErrors(new ConstraintViolationList());
@@ -156,11 +156,11 @@ describe(
             $object = new stdClass();
 
             // Create an instance of FormRequest
-            $formRequest = new FormRequest($mapper, $object);
+            $formRequest = new FormRequestObject($mapper, $object);
 
             // Get the errors
             // Expect a RuntimeException to be thrown when getting errors
-            expect(fn () => $formRequest->getErrors())
+            expect(fn() => $formRequest->getErrors())
                 ->toThrow(RuntimeException::class);
         });
 
@@ -176,7 +176,7 @@ describe(
             $object = new stdClass();
 
             // Create an instance of FormRequest
-            $formRequest = new FormRequest($mapper, $object);
+            $formRequest = new FormRequestObject($mapper, $object);
 
             // Convert the object to an array
             $arrayRepresentation = $formRequest->toArray();
@@ -185,4 +185,4 @@ describe(
             expect($arrayRepresentation)->toBe($serializedObject);
         });
     }
-)->group('form-request', 'validation');
+)->group('FormRequestObject', 'validation');

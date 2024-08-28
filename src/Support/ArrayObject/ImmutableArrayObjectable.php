@@ -22,13 +22,20 @@ use OutOfBoundsException;
 abstract class ImmutableArrayObjectable implements IteratorAggregate, ArrayAccess, Countable, JsonSerializable, Arrayable
 {
     /**
+     * @var array<TKey,TValue>
+     */
+    protected readonly array $__items;
+
+    /**
      * constructor
      *
      * @param array<TKey,TValue> $items
      */
     final public function __construct(
-        protected readonly array $items = [],
+        array $items = [],
     ) {
+        $this->__items = $items;
+
         $this->__init();
     }
 
@@ -73,7 +80,6 @@ abstract class ImmutableArrayObjectable implements IteratorAggregate, ArrayAcces
 
     /**
      * @param string $name
-     * @param mixed $value
      * @return never
      * @throws OutOfBoundsException
      */
@@ -89,7 +95,7 @@ abstract class ImmutableArrayObjectable implements IteratorAggregate, ArrayAcces
      */
     final public function getIterator(): Traversable
     {
-        return new ArrayIterator($this->items);
+        return new ArrayIterator($this->__items);
     }
 
     /**
@@ -140,7 +146,7 @@ abstract class ImmutableArrayObjectable implements IteratorAggregate, ArrayAcces
      */
     final public function count(): int
     {
-        return count($this->items);
+        return count($this->__items);
     }
 
     /**
@@ -160,7 +166,7 @@ abstract class ImmutableArrayObjectable implements IteratorAggregate, ArrayAcces
 
                 return $item;
             },
-            $this->items,
+            $this->__items,
         );
     }
 
@@ -172,10 +178,17 @@ abstract class ImmutableArrayObjectable implements IteratorAggregate, ArrayAcces
     final public function toArray(): array
     {
         return array_map(
-            fn ($item) => $item instanceof Arrayable
-                ? $item->toArray()
-                : $item,
-            $this->items,
+            function ($item) {
+                if ($item instanceof Arrayable) {
+                    /** @var TValue */
+                    $data = $item->toArray();
+
+                    return $data;
+                }
+
+                return $item;
+            },
+            $this->__items,
         );
     }
 
@@ -183,13 +196,12 @@ abstract class ImmutableArrayObjectable implements IteratorAggregate, ArrayAcces
      * Constructor of static method.
      *
      * @param array<TKey,TValue> $items
-     * @return static
+     * @return static(static<TKey,TValue>)
      */
     final public static function of(
         array $items = [],
     ): static {
 
-        /** @var array<string,mixed> */
         $items = array_map(
             fn ($item) => is_array($item)
                 ? static::of($item)

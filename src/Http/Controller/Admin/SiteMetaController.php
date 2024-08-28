@@ -4,6 +4,7 @@ namespace Takemo101\CmsTool\Http\Controller\Admin;
 
 use CmsTool\Support\Validation\RequestValidator;
 use Psr\Http\Message\ServerRequestInterface;
+use Takemo101\CmsTool\Http\Renderer\RedirectBackRenderer;
 use Takemo101\CmsTool\Http\Request\Admin\ChangeSiteNameRequest;
 use Takemo101\CmsTool\Support\Toast\ToastRenderer;
 use Takemo101\CmsTool\Support\Toast\ToastStyle;
@@ -15,8 +16,7 @@ class SiteMetaController
      * @param ServerRequestInterface $request
      * @param RequestValidator $validator
      * @param ChangeSiteNameHandler $handler
-     * @return ToastRenderer
-     * @throws HttpValidationErrorException
+     * @return ToastRenderer<RedirectBackRenderer>
      */
     public function update(
         ServerRequestInterface $request,

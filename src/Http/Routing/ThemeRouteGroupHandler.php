@@ -31,7 +31,6 @@ class ThemeRouteGroupHandler
      * Handler to set up routing for themes.
      *
      * @param Proxy $proxy
-     * @param ActiveThemeRouteRegister $register
      * @return void
      */
     public function __invoke(Proxy $proxy): void

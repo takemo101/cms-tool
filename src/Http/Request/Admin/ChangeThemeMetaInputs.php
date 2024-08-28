@@ -10,6 +10,21 @@ use Symfony\Component\Validator\Constraints\All;
 
 readonly class ChangeThemeMetaInputs
 {
+    /**
+     * constructor
+     *
+     * @param string $uid
+     * @param string $name
+     * @param string $version
+     * @param string[] $images
+     * @param string[] $tags
+     * @param string|null $link
+     * @param string|null $preset
+     * @param AuthorForChangeThemeMetaInputs $author
+     * @param boolean $readonly
+     * @param array<string,mixed> $extension
+     * @param array<integer,array<string,mixed>> $schema
+     */
     public function __construct(
         #[NotBlank]
         public string $uid = '',

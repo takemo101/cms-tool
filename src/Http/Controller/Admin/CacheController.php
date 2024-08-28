@@ -4,6 +4,7 @@ namespace Takemo101\CmsTool\Http\Controller\Admin;
 
 use CmsTool\View\View;
 use Psr\Cache\CacheItemPoolInterface;
+use Takemo101\CmsTool\Http\Renderer\RedirectBackRenderer;
 use Takemo101\CmsTool\Support\Toast\ToastRenderer;
 use Takemo101\CmsTool\Support\Toast\ToastStyle;
 
@@ -19,7 +20,7 @@ class CacheController
 
     /**
      * @param CacheItemPoolInterface $cache
-     * @return ToastRenderer
+     * @return ToastRenderer<RedirectBackRenderer>
      */
     public function clean(
         CacheItemPoolInterface $cache,

@@ -16,9 +16,9 @@ class HtmxRenderer extends AbstractResponseRenderer
      * Set HX-Retarget header
      *
      * @param string $selector
-     * @return static
+     * @return self
      */
-    public function setHxRetarget(string $selector): static
+    public function setHxRetarget(string $selector): self
     {
         return $this->addHeader('HX-Retarget', $selector);
     }
@@ -27,10 +27,9 @@ class HtmxRenderer extends AbstractResponseRenderer
      * Set HX-Reswap header
      *
      * @param string $selector
-     * @param string $event
-     * @return static
+     * @return self
      */
-    public function setHxReswap(string $selector): static
+    public function setHxReswap(string $selector): self
     {
         return $this->addHeader('HX-Reswap', $selector);
     }
@@ -39,9 +38,9 @@ class HtmxRenderer extends AbstractResponseRenderer
      * Set header for client-side redirect using Htmx
      *
      * @param string $to
-     * @return static
+     * @return self
      */
-    public function setHxRedirect(string $to): static
+    public function setHxRedirect(string $to): self
     {
         return $this->addHeader('HX-Redirect', $to);
     }
@@ -49,9 +48,10 @@ class HtmxRenderer extends AbstractResponseRenderer
     /**
      * Create a response for client-side redirect using Htmx
      *
-     * @return static
+     * @param string $to
+     * @return self
      */
-    public static function redirect(string $to): static
+    public static function redirect(string $to): self
     {
         return (new self())->setHxRedirect($to);
     }
@@ -60,9 +60,9 @@ class HtmxRenderer extends AbstractResponseRenderer
      * Create a response for client-side redirect back using Htmx
      *
      * @param ServerRequestInterface $request
-     * @return static
+     * @return self
      */
-    public static function back(ServerRequestInterface $request): static
+    public static function back(ServerRequestInterface $request): self
     {
         return (new self())->setHxRedirect($request->getHeaderLine('referer'));
     }

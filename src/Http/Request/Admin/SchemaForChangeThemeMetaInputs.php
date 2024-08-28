@@ -16,6 +16,13 @@ use Symfony\Component\Validator\Constraints\Regex;
 
 readonly class SchemaForChangeThemeMetaInputs
 {
+    /**
+     * constructor
+     *
+     * @param string $id
+     * @param string $title
+     * @param array<string,mixed>[] $settings
+     */
     public function __construct(
         #[NotBlank]
         #[Regex(pattern: SchemaSettingId::Regex)]

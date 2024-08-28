@@ -32,7 +32,7 @@ class ChangeThemeMetaHandler
      * Execute the processing the processing
      *
      * @param string $id
-     * @param array $payload
+     * @param array<string,mixed> $payload
      * @return Theme
      * @throws NotFoundDataException
      * @throws ArrayKeyMissingException
@@ -51,7 +51,7 @@ class ChangeThemeMetaHandler
         }
 
         $changeTheme = $theme->changeMeta(
-            $this->factory->create($payload),
+            $this->factory->create($payload), // @phpstan-ignore-line
         );
 
         $this->saver->save($changeTheme);

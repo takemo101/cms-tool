@@ -112,7 +112,7 @@ class ThemeCustomizationValidator
     /**
      * Create schema setting constraints
      *
-     * @param AbstractInputSetting $setting
+     * @param AbstractInputSetting<mixed> $setting
      * @param bool $isStrict Check if the body is strict
      * @return Constraint[]
      */

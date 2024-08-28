@@ -31,10 +31,10 @@ class CreateRobotsTxtListener
      */
     public function __invoke(): void
     {
-        $content = $this->filesystem->read(
+        if ($content = $this->filesystem->read(
             $this->path->getResourcePath('txt', 'robots.txt'),
-        );
-
-        $this->repository->save($content);
+        )) {
+            $this->repository->save($content);
+        }
     }
 }

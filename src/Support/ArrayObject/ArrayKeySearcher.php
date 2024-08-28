@@ -17,7 +17,7 @@ class ArrayKeySearcher
     /**
      * constructor
      *
-     * @param (callable(string):string)[] ...$transformers
+     * @param (callable(string):string) ...$transformers
      */
     public function __construct(
         callable ...$transformers,

@@ -14,7 +14,7 @@ class FlashToast extends AbstractFlashSession
     /**
      * Get toast session data
      *
-     * @var ToastSession|null
+     * @return ToastSession|null
      */
     public function get(): ?ToastSession
     {
@@ -23,6 +23,6 @@ class FlashToast extends AbstractFlashSession
 
         return empty($data)
             ? null
-            : ToastSession::fromArray($data);
+            : ToastSession::fromArray($data); // @phpstan-ignore-line
     }
 }

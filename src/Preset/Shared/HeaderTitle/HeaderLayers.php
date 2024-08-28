@@ -11,6 +11,7 @@ use Traversable;
 /**
  * Data class to structure the header titles of the content.
  *
+ * @implements IteratorAggregate<HeaderLayer>
  * @immutable
  */
 readonly class HeaderLayers implements Countable, IteratorAggregate
@@ -107,7 +108,7 @@ readonly class HeaderLayers implements Countable, IteratorAggregate
     /**
      * {@inheritDoc}
      *
-     * @return Traversable<array-key,HeaderTitle>
+     * @return Traversable<array-key,HeaderLayer>
      */
     public function getIterator(): Traversable
     {

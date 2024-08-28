@@ -6,7 +6,6 @@ use CmsTool\Theme\ThemeId;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 use Slim\Interfaces\RouteParserInterface;
-use Takemo101\Chubby\Filesystem\PathHelper;
 use Takemo101\Chubby\Http\Uri\ApplicationUri;
 use Takemo101\CmsTool\Http\Action\Theme\ActiveThemeAssetAction;
 use Takemo101\CmsTool\Http\Action\ThemeAssetAction;
@@ -20,13 +19,11 @@ class AssetExtension extends AbstractExtension
      *
      * @param RouteParserInterface $routeParser
      * @param ApplicationUri $uri
-     * @param PathHelper $helper
      * @param LocalPublicStoragePath $localPublicStoragePath
      */
     public function __construct(
         private readonly RouteParserInterface $routeParser,
         private readonly ApplicationUri $uri,
-        private readonly PathHelper $helper,
         private readonly LocalPublicStoragePath $localPublicStoragePath,
     ) {
         //

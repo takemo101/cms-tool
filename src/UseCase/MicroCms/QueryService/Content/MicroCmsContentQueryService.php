@@ -72,7 +72,7 @@ interface MicroCmsContentQueryService
      * Get the first content
      *
      * @param string $endpoint
-     * @param MicroCmsContentGetOneQuery $query
+     * @param MicroCmsContentGetListQuery $query
      * @param bool $cache
      * @return ImmutableArrayObjectable<string,mixed>|null
      */

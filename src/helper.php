@@ -1,7 +1,6 @@
 <?php
 
 use Slim\Interfaces\RouteParserInterface;
-use Takemo101\Chubby\Http\Renderer\RedirectRenderer;
 use Takemo101\Chubby\Http\Renderer\ResponseRenderer;
 use Takemo101\CmsTool\Support\RedirectRendererFactory;
 use Takemo101\CmsTool\Support\Toast\ToastRenderer;
@@ -12,8 +11,8 @@ if (!function_exists('route')) {
      * Obtain a URI path from the named route.
      *
      * @param string $name
-     * @param array<string,mixed> $data
-     * @param array<string,mixed> $query
+     * @param array<string,string> $data
+     * @param array<string,string> $query
      * @return string
      */
     function route(string $name, array $data = [], array $query = []): string
@@ -29,15 +28,13 @@ if (!function_exists('redirect')) {
     /**
      * Create a redirect renderer
      *
-     * @return RedirectRendererFactory|RedirectRenderer
+     * @return RedirectRendererFactory
      */
-    function redirect(?string $url = null): RedirectRendererFactory|RedirectRenderer
+    function redirect(): RedirectRendererFactory
     {
         $factory = new RedirectRendererFactory();
 
-        return $url
-            ? $factory->url($url)
-            : $factory;
+        return $factory;
     }
 }
 

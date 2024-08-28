@@ -66,7 +66,8 @@ abstract class AbstractResponseRenderer implements ResponseRenderer, ContainerIn
     /**
      * Set content to be rendered.
      *
-     * @param string|View $content
+     * @param string $name
+     * @param string $value
      * @return static
      */
     public function addHeader(string $name, string $value): static

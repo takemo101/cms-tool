@@ -6,6 +6,7 @@ use CmsTool\Support\Validation\HttpValidationErrorException;
 use CmsTool\Support\Validation\RequestValidator;
 use CmsTool\View\View;
 use Psr\Http\Message\ServerRequestInterface;
+use Takemo101\Chubby\Http\Renderer\RouteRedirectRenderer;
 use Takemo101\CmsTool\Http\Request\Admin\LoginRequest;
 use Takemo101\CmsTool\Support\Toast\ToastRenderer;
 use Takemo101\CmsTool\Support\Toast\ToastStyle;
@@ -33,7 +34,7 @@ class LoginController
      * @param RequestValidator $validator
      * @param AdminSession $session
      * @param LoginAdminHandler $handler
-     * @return ToastRenderer
+     * @return ToastRenderer<RouteRedirectRenderer>
      */
     public function login(
         ServerRequestInterface $request,
@@ -76,7 +77,7 @@ class LoginController
      * Logout
      *
      * @param AdminSession $session
-     * @return ToastRenderer
+     * @return ToastRenderer<RouteRedirectRenderer>
      */
     public function logout(AdminSession $session): ToastRenderer
     {

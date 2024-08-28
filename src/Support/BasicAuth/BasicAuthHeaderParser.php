@@ -6,6 +6,12 @@ use Psr\Http\Message\ServerRequestInterface;
 use Takemo101\CmsTool\Support\ArrayObject\ImmutableArrayObject;
 use Takemo101\CmsTool\Support\ArrayObject\ImmutableArrayObjectable;
 
+/**
+ * @phpstan-type UserData = ImmutableArrayObjectable<string,mixed>&object{
+ *    username: string,
+ *   password: string,
+ * }
+ */
 class BasicAuthHeaderParser
 {
     /**
@@ -13,10 +19,7 @@ class BasicAuthHeaderParser
      * If the header is invalid, it returns false.
      *
      * @param string $header
-     * @return (ImmutableArrayObjectable<string,mixed>&object{
-     *   username: string,
-     *   password: string,
-     * })|false
+     * @return UserData|false
      */
     public function parse(string $header): object|false
     {
@@ -40,10 +43,13 @@ class BasicAuthHeaderParser
             return false;
         }
 
-        return ImmutableArrayObject::of([
+        /** @var UserData */
+        $data = ImmutableArrayObject::of([
             'username' => $splitHeader[0],
             'password' => $splitHeader[1],
         ]);
+
+        return $data;
     }
 
     /**
@@ -51,10 +57,7 @@ class BasicAuthHeaderParser
      * If the header is invalid, it returns false.
      *
      * @param ServerRequestInterface $request
-     * @return (ImmutableArrayObjectable<string,mixed>&object{
-     *   username: string,
-     *   password: string,
-     * })|false
+     * @return UserData|false
      */
     public function parseFromRequest(ServerRequestInterface $request): object|false
     {

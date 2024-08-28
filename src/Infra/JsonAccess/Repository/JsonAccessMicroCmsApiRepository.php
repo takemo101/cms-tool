@@ -7,6 +7,9 @@ use Takemo101\CmsTool\Domain\MicroCms\MicroCmsApiRepository;
 use Takemo101\CmsTool\Infra\JsonAccess\SettingJsonAccessObjectCreator;
 use Takemo101\CmsTool\Infra\JsonAccess\SettingJsonObjectKeys;
 
+/**
+ * @phpstan-import-type MicroCmsApiData from JsonAccessMicroCmsApiEntityMapper
+ */
 readonly class JsonAccessMicroCmsApiRepository implements MicroCmsApiRepository
 {
     /**
@@ -39,7 +42,7 @@ readonly class JsonAccessMicroCmsApiRepository implements MicroCmsApiRepository
     {
         $object = $this->creator->create();
 
-        /** @var array<string,mixed>|null */
+        /** @var MicroCmsApiData|null */
         $data = $object->get(SettingJsonObjectKeys::MicroCmsApiKey);
 
         return empty($data)

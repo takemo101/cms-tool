@@ -97,7 +97,7 @@ class ContentDetailAction
      * Create a closure to retrieve the next and previous content.
      *
      * @param MicroCmsContentQueryService $queryService
-     * @param ArrayObject $content
+     * @param ImmutableArrayObjectable<string,mixed> $content
      * @return Closure():array{0: ?ImmutableArrayObjectable<string,mixed>, 1: ?ImmutableArrayObjectable<string,mixed>}
      */
     private function createPrevAndNextGenerator(

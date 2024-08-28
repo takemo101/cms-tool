@@ -19,7 +19,7 @@ class JsonAccessAdminAccountDataMapper
     }
 
     /**
-     * @param array<string,mixed>
+     * @param array<string,mixed> $data
      * @return RootAdminAccountData
      */
     public function toRootAdmin(array $data): RootAdminAccountData

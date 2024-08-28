@@ -5,7 +5,6 @@ namespace Takemo101\CmsTool\UseCase\Theme\Handler;
 use CmsTool\Theme\Exception\NotFoundThemeException;
 use CmsTool\Theme\Theme;
 use CmsTool\Theme\ThemeId;
-use CmsTool\Theme\ThemePathHelper;
 use CmsTool\Theme\ThemeQueryService;
 use Takemo101\Chubby\Filesystem\LocalFilesystem;
 use Takemo101\CmsTool\UseCase\Shared\Exception\NotFoundDataException;
@@ -18,12 +17,10 @@ class DeleteThemeHandler
      *
      * @param LocalFilesystem $filesystem
      * @param ThemeQueryService $queryService
-     * @param ThemePathHelper $helper
      */
     public function __construct(
         private LocalFilesystem $filesystem,
         private ThemeQueryService $queryService,
-        private ThemePathHelper $helper,
     ) {
         //
     }

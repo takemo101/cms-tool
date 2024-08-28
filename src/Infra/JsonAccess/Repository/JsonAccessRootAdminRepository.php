@@ -7,6 +7,9 @@ use Takemo101\CmsTool\Domain\Admin\RootAdminRepository;
 use Takemo101\CmsTool\Infra\JsonAccess\SettingJsonAccessObjectCreator;
 use Takemo101\CmsTool\Infra\JsonAccess\SettingJsonObjectKeys;
 
+/**
+ * @phpstan-import-type RootAdminData from JsonAccessRootAdminEntityMapper
+ */
 readonly class JsonAccessRootAdminRepository implements RootAdminRepository
 {
     /**
@@ -39,7 +42,7 @@ readonly class JsonAccessRootAdminRepository implements RootAdminRepository
     {
         $object = $this->creator->create();
 
-        /** @var array<string,mixed>|null */
+        /** @var RootAdminData|null */
         $data = $object->get(SettingJsonObjectKeys::RootAdminKey);
 
         return empty($data)

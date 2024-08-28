@@ -19,7 +19,7 @@ class Ulid implements Stringable
     /**
      * constructor
      *
-     * @param integer|null $lastTimestamp
+     * @param integer $lastTimestamp
      */
     public function __construct(
         private int $lastTimestamp,

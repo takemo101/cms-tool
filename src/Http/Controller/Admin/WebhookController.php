@@ -6,6 +6,7 @@ use CmsTool\View\View;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Routing\RouteContext;
 use Takemo101\CmsTool\Domain\Webhook\WebhookTokenRepository;
+use Takemo101\CmsTool\Http\Renderer\RedirectBackRenderer;
 use Takemo101\CmsTool\Support\Toast\ToastRenderer;
 use Takemo101\CmsTool\Support\Toast\ToastStyle;
 use Takemo101\CmsTool\UseCase\Webhook\Handler\RegenerateWebhookTokenHandler;
@@ -41,7 +42,7 @@ class WebhookController
 
     /**
      * @param RegenerateWebhookTokenHandler $handler
-     * @return ToastRenderer
+     * @return ToastRenderer<RedirectBackRenderer>
      */
     public function regenerate(
         RegenerateWebhookTokenHandler $handler,

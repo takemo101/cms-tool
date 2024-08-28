@@ -44,7 +44,7 @@ class PsrThemeCustomizationTemporaryCache implements ThemeCustomizationTemporary
             return false;
         }
 
-        /** @var array<string,mixed<string,mixed>> $data */
+        /** @var array<string,array<string,mixed>> $data */
         $data = $item->get();
 
         return $data;

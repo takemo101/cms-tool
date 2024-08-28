@@ -36,7 +36,13 @@ class LocalSiteAssetStorage implements SiteAssetStorage
 
         $this->createDirectoryIfNotExists();
 
-        $info = pathinfo($file->getClientFilename());
+        $filename = $file->getClientFilename();
+
+        if ($filename === null) {
+            return null;
+        }
+
+        $info = pathinfo($filename);
 
         $extension = is_array($info)
             ? $info['extension'] ?? null

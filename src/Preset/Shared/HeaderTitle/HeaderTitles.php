@@ -12,6 +12,7 @@ use Traversable;
 /**
  * Data class to structure the header titles of the content.
  *
+ * @implements IteratorAggregate<HeaderTitle>
  * @immutable
  */
 readonly class HeaderTitles implements Countable, IteratorAggregate
@@ -98,7 +99,7 @@ readonly class HeaderTitles implements Countable, IteratorAggregate
             $layers = $layers->add($title->toLayered());
         }
 
-        return new HeaderLayers(...$layers);
+        return $layers;
     }
 
     /**

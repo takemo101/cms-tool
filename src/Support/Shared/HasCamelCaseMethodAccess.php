@@ -24,6 +24,7 @@ trait HasCamelCaseMethodAccess
     /**
      * {@inheritDoc}
      *
+     * @param mixed[] $arguments
      * @throws BadMethodCallException
      */
     public function __call(string $name, array $arguments): mixed

@@ -9,7 +9,8 @@ class BasicAuthenticator
     /**
      * constructor
      *
-     * @param
+     * @param BasicAuthUsers $users
+     * @param Hasher $hasher
      */
     public function __construct(
         private readonly BasicAuthUsers $users,

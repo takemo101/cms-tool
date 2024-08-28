@@ -12,7 +12,7 @@ readonly class MicroCmsContentGetListQuery
      * @param string[]|string|null $fields
      * @param string[]|string|null $ids
      * @param string|null $filters
-     * @param string|null $depth
+     * @param integer|null $depth
      */
     public function __construct(
         public array|string|null $orders = null,

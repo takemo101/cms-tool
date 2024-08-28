@@ -13,11 +13,12 @@ class MicroCmsApiConnectorFactory
      * constructor
      *
      * @param MicroCmsApiRepository $repository
+     * @param array<string,mixed> $guzzleOptions
      */
     public function __construct(
         private MicroCmsApiRepository $repository,
         #[Inject('config.system.guzzle')]
-        private $guzzleOptions = [],
+        private array $guzzleOptions = [],
     ) {
         //
     }

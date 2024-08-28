@@ -80,7 +80,6 @@ abstract class ImmutableArrayObjectable implements IteratorAggregate, ArrayAcces
 
     /**
      * @param string $name
-     * @param mixed $value
      * @return never
      * @throws OutOfBoundsException
      */
@@ -179,9 +178,16 @@ abstract class ImmutableArrayObjectable implements IteratorAggregate, ArrayAcces
     final public function toArray(): array
     {
         return array_map(
-            fn ($item) => $item instanceof Arrayable
-                ? $item->toArray()
-                : $item,
+            function ($item) {
+                if ($item instanceof Arrayable) {
+                    /** @var TValue */
+                    $data = $item->toArray();
+
+                    return $data;
+                }
+
+                return $item;
+            },
             $this->__items,
         );
     }
@@ -189,17 +195,13 @@ abstract class ImmutableArrayObjectable implements IteratorAggregate, ArrayAcces
     /**
      * Constructor of static method.
      *
-     * @template TK as array-key
-     * @template TV
-     *
-     * @param array<TK,TV> $items
-     * @return static<TK,TV>
+     * @param array<TKey,TValue> $items
+     * @return static(static<TKey,TValue>)
      */
     final public static function of(
         array $items = [],
     ): static {
 
-        /** @var array<string,mixed> */
         $items = array_map(
             fn ($item) => is_array($item)
                 ? static::of($item)

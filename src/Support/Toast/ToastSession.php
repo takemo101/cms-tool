@@ -45,15 +45,15 @@ class ToastSession
      * Create a new instance from the array
      *
      * @param array{
-     *  toast-style: ToastTyle|string,
+     *  toast-style: ToastStyle|string,
      *  toast-message?: string,
      * } $data
-     * @return array<string,mixed>
+     * @return self
      */
     public static function fromArray(
         array $data
     ): self {
-        /** @var ToastTyle|string */
+        /** @var ToastStyle|string */
         $style = $data[ToastRenderer::ToastStyleKey];
 
         return new self(

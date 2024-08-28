@@ -6,6 +6,7 @@ use CmsTool\Support\Validation\RequestValidator;
 use CmsTool\View\View;
 use Psr\Http\Message\ServerRequestInterface;
 use Takemo101\CmsTool\Domain\SiteMeta\SiteSeoImageTarget;
+use Takemo101\CmsTool\Http\Renderer\RedirectBackRenderer;
 use Takemo101\CmsTool\Http\Request\Admin\ChangeSiteSeoRequest;
 use Takemo101\CmsTool\Http\ViewModel\SiteSeoPage;
 use Takemo101\CmsTool\Support\Toast\ToastRenderer;
@@ -36,8 +37,7 @@ class SiteSeoController
      * @param ServerRequestInterface $request
      * @param RequestValidator $validator
      * @param ChangeSiteSeoHandler $handler
-     * @return ToastRenderer
-     * @throws HttpValidationErrorException
+     * @return ToastRenderer<RedirectBackRenderer>
      */
     public function update(
         ServerRequestInterface $request,

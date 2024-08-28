@@ -7,12 +7,12 @@ use ReflectionMethod;
 use Takemo101\Chubby\Contract\Arrayable;
 
 /**
- * @extends Arrayable<string,mixed>
+ * @implements Arrayable<string,mixed>
  */
 abstract class ViewModel implements Arrayable
 {
     /**
-    * @var string The method name to retrieve data in bulk
+     * @var string The method name to retrieve data in bulk
      */
     public const DataMethod = '__data';
 
@@ -26,7 +26,7 @@ abstract class ViewModel implements Arrayable
     /**
      * Get the instance as an array.
      *
-     * @return array<string,mixed>
+     * @return mixed[]
      */
     public function toArray(): array
     {
@@ -64,7 +64,7 @@ abstract class ViewModel implements Arrayable
                 ),
             ...(
                 method_exists($this, static::DataMethod)
-                ? container()->call([$this, static::DataMethod])
+                ? (array) container()->call([$this, static::DataMethod])
                 : []
             ),
         ];

@@ -6,6 +6,13 @@ use Takemo101\CmsTool\Domain\Admin\RootAdmin;
 use Takemo101\CmsTool\Domain\Shared\EmailAddress;
 use Takemo101\CmsTool\Domain\Shared\HashedPassword;
 
+/**
+ * @phpstan-type RootAdminData = array{
+ *   name: string,
+ *   email: string,
+ *   password: string,
+ * }
+ */
 class JsonAccessRootAdminEntityMapper
 {
     /**
@@ -22,11 +29,7 @@ class JsonAccessRootAdminEntityMapper
     }
 
     /**
-     * @param array{
-     *  name: string,
-     *  email: string,
-     *  password: string,
-     * } $data
+     * @param RootAdminData $data
      * @return RootAdmin
      */
     public function toEntity(array $data): RootAdmin

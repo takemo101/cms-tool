@@ -12,6 +12,24 @@ use Takemo101\CmsTool\Preset\MicroCms\Shared\Action\TaxonomyIndexActionEndpoints
 use Takemo101\CmsTool\Support\ArrayObject\ImmutableArrayObject;
 use Takemo101\CmsTool\Support\ArrayObject\ImmutableArrayObjectable;
 
+/**
+ * @phpstan-type ExtensionData = ImmutableArrayObjectable<string,mixed>&object{
+ *  endpoints: object{
+ *   blog: string,
+ *   category: string,
+ *   tag: string,
+ *  },
+ *  signatures: object{
+ *   blog: string,
+ *   category: string,
+ *   tag: string,
+ *  },
+ *  fields: object{
+ *   category: string,
+ *   tag: string,
+ *  }
+ * }
+ */
 class BlogRoute implements ThemeRoute
 {
     /**
@@ -28,22 +46,7 @@ class BlogRoute implements ThemeRoute
         $order = 'publishedAt';
 
         /**
-         * @var ImmutableArrayObjectable<string,mixed>&object{
-         *  endpoints: object{
-         *   blog: string,
-         *   category: string,
-         *   tag: string,
-         *  },
-         *  signatures: object{
-         *   blog: string,
-         *   category: string,
-         *   tag: string,
-         *  }
-         *  fields: object{
-         *   category: string,
-         *   tag: string,
-         *  }
-         * }
+         * @var ExtensionData
          */
         $ext = ImmutableArrayObject::of([
             'endpoints' => [

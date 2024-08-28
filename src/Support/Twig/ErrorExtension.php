@@ -48,7 +48,7 @@ class ErrorExtension extends AbstractExtension
     /**
      * Exists flash error messages?
      *
-     * @return string[]
+     * @return boolean
      */
     public function isError(): bool
     {
@@ -69,7 +69,7 @@ class ErrorExtension extends AbstractExtension
     /**
      * Get the first flash error messages from the key
      *
-     * @return array<string,string[]>
+     * @return string|null
      */
     public function errorFirst(string $key, ?string $default = null): ?string
     {

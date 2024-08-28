@@ -12,7 +12,7 @@ class FlashErrorMessages extends AbstractFlashSession
     public const SessionKey = '_errors';
 
     /**
-     * @var array<string,string[]>
+     * @return array<string,string[]>
      */
     protected function getMessages(): array
     {

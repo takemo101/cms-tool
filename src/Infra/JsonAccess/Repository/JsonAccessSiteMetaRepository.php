@@ -7,6 +7,9 @@ use Takemo101\CmsTool\Domain\SiteMeta\SiteMetaRepository;
 use Takemo101\CmsTool\Infra\JsonAccess\SettingJsonAccessObjectCreator;
 use Takemo101\CmsTool\Infra\JsonAccess\SettingJsonObjectKeys;
 
+/**
+ * @phpstan-import-type SiteMetaData from JsonAccessSiteMetaEntityMapper
+ */
 readonly class JsonAccessSiteMetaRepository implements SiteMetaRepository
 {
     /**
@@ -39,7 +42,7 @@ readonly class JsonAccessSiteMetaRepository implements SiteMetaRepository
     {
         $object = $this->creator->create();
 
-        /** @var array<string,mixed>|null */
+        /** @var SiteMetaData|null */
         $data = $object->get(SettingJsonObjectKeys::SiteMetaKey);
 
         return empty($data)

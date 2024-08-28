@@ -5,6 +5,7 @@ namespace Takemo101\CmsTool\Http\Action;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
 use Takemo101\CmsTool\Domain\Publish\SitePublishService;
+use Takemo101\CmsTool\Http\Renderer\RedirectBackRenderer;
 use Takemo101\CmsTool\Support\Toast\ToastRenderer;
 use Takemo101\CmsTool\Support\Toast\ToastStyle;
 
@@ -12,7 +13,7 @@ class SitePublishAction
 {
     /**
      * @param SitePublishService $service
-     * @return ToastRenderer
+     * @return ToastRenderer<RedirectBackRenderer>
      * @throws HttpNotFoundException
      */
     public function __invoke(

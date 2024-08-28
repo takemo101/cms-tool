@@ -37,7 +37,7 @@ readonly class HtmxRequest
      *
      * Returns false if the URL does not exist.
      *
-     * @return bool
+     * @return string|false
      */
     public function getCurrentUrl(): string|false
     {

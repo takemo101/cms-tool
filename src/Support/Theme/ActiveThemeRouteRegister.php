@@ -2,7 +2,6 @@
 
 namespace Takemo101\CmsTool\Support\Theme;
 
-use CmsTool\Theme\Routing\NotFoundThemePresetException;
 use CmsTool\Theme\Routing\ThemeRoutePresetResolver;
 use Slim\Interfaces\RouteCollectorProxyInterface;
 use Takemo101\Chubby\Hook\Hook;
@@ -31,7 +30,6 @@ class ActiveThemeRouteRegister
      *
      * @param RouteCollectorProxyInterface $proxy
      * @return void
-     * @throws NotFoundThemePresetException
      */
     public function register(RouteCollectorProxyInterface $proxy): void
     {

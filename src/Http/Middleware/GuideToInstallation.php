@@ -21,8 +21,8 @@ class GuideToInstallation implements MiddlewareInterface
      * @param ResponseFactoryInterface $responseFactory
      */
     public function __construct(
-        private InstallRepository $repository,
-        private ResponseFactoryInterface $responseFactory,
+        private readonly InstallRepository $repository,
+        private readonly ResponseFactoryInterface $responseFactory,
     ) {
         //
     }

@@ -35,7 +35,7 @@ class RequestValidator
         array $inputs,
         string|object $classOrObject,
     ): FormRequest {
-        /** @var FormRequest<T> */
+        /** @var FormRequest<T>&T */
         $formRequest = new FormRequest(
             $this->mapper,
             is_string($classOrObject)
@@ -51,7 +51,7 @@ class RequestValidator
             $this->validator->validate($formRequest->getHydratedObject()),
         );
 
-        return $formRequest; // @phpstan-ignore-line
+        return $formRequest;
     }
 
     /**
@@ -92,6 +92,7 @@ class RequestValidator
         ServerRequestInterface $request,
         string|object $classOrObject,
     ): FormRequest {
+        /** @var FormRequest<T>&T */
         $formRequest = $this->validateInputs(
             $inputs,
             $classOrObject,
@@ -121,6 +122,7 @@ class RequestValidator
         ServerRequestInterface $request,
         string|object $classOrObject,
     ): FormRequest {
+        /** @var FormRequest<T>&T */
         $formRequest = $this->validate(
             $request,
             $classOrObject,

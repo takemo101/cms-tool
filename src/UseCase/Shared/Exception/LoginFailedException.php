@@ -2,17 +2,10 @@
 
 namespace Takemo101\CmsTool\UseCase\Shared\Exception;
 
-use Throwable;
-
 class LoginFailedException extends UseCaseException
 {
     /**
-     * constructor
-     *
-     * @param string $message
-     * @param integer $code
-     * @param Throwable $previous
-     * @return void
+     * @return self
      */
     public static function notFound(): self
     {

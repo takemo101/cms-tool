@@ -12,7 +12,7 @@ class ContentDetailPage extends ViewModel
      * constructor
      *
      * @param ImmutableArrayObjectable<string,mixed> $content
-     * @param Closure():array{0:?ArrayObject, 1:?ArrayObject} $prevAndNextContentsGenerator [0 => prev, 1 => next]
+     * @param Closure():array{0:?ImmutableArrayObjectable<string,mixed>, 1:?ImmutableArrayObjectable<string,mixed>} $prevAndNextContentsGenerator [0 => prev, 1 => next]
      * @param bool $isDraft
      */
     public function __construct(

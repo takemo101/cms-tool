@@ -35,8 +35,7 @@ class RequestValidator
         array $inputs,
         string|object $classOrObject,
     ): FormRequest {
-        /** @var FormRequest<T>&T */
-        $formRequest = new FormRequest(
+        $formRequest = new FormRequestObject(
             $this->mapper,
             is_string($classOrObject)
                 ? $this->mapper->hydrateObject(

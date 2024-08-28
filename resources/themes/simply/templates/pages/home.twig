@@ -4,27 +4,26 @@
     <script src="{{ asset('slider.js') }}"></script>
 {% endblock %}
 
+{# スライダーの表示件数 #}
+{% set slider_max = share.theme.top.slider_max %}
+{% set is_scroll_slider = slider_max > 1 %}
+{# 新着記事の取得 #}
+{% set contents = share.contents(slider_max + 6) %}
+{# スライダーの記事取得 #}
+{% set top_contents = contents[:slider_max] %}
+{# スライダーの先頭記事取得 #}
+{% set first_content = top_contents|first %}
+
 {% block content %}
     {# 新着記事の次のカラムに表示させる内容の変数設定 #}
     {% set second_column_title = share.theme.top.second_column_title %}
     {% set second_column_subtitle = share.theme.top.second_column_subtitle %}
     {% set second_column_category = share.theme.top.second_column_category %}
 
-    {# スライダーの表示件数 #}
-    {% set slider_max = share.theme.top.slider_max %}
-    {# 新着記事の取得 #}
-    {% set contents = share.contents(slider_max + 6) %}
-    {# スライダーの記事取得 #}
-    {% set top_contents = contents[:slider_max] %}
-    {# スライダーの先頭記事取得 #}
-    {% set first_content = top_contents|first %}
-
     {% if top_contents|length %}
-        {# スライダーの先頭記事取得 #}
-        {% set first_background_image = first_content.eyecatch ? microcms_img(first_content.eyecatch.url, { w: 100 }) : asset('empty.jpeg') %}
         <section class="bg-white text-black xl:px-6 px-0">
             <div class="splide-outer">
-                <div class="splide-outer__bg" style="background-image: url('{{ first_background_image }}')"></div>
+                <div class="splide-outer__bg"></div>
                 <div id="splide" class="splide w-full xl:h-[680px] sm:h-[580px] h-[320px]">
                     <div class="splide__track h-full">
                         <ul class="splide__list">
@@ -90,7 +89,7 @@
 {% block footer_js %}
 <script>
     const slide = Slider.mount('#splide', {
-        arrows: false,
+        arrows: {{ is_scroll_slider ? 'true' : 'false' }},
         type: 'loop',
         loop: true,
         height: '100%',

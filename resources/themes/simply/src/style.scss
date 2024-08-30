@@ -242,10 +242,7 @@
   @apply h-full xl:px-[8rem] px-0 !important;
 }
 .splide__slide {
-  &.is-prev {
-    @apply opacity-60;
-  }
-  &.is-next {
+  &:not(.is-active) {
     @apply opacity-60;
   }
 }

@@ -28,6 +28,7 @@ class ClearCacheListener
      */
     public function __invoke(): void
     {
+        // If the theme is changed, both the API and regular cache need to be cleared as the presets for the theme will also change.
         $this->cache->clear();
         $this->memo->clear();
     }

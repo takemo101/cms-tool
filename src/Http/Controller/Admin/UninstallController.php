@@ -36,6 +36,7 @@ class UninstallController
 
         $handler->handle();
 
+        // When uninstalling, it is necessary to clear both the API cache and the regular cache as it deletes all data in the system.
         $cache->clear();
         $memo->clear();
 

@@ -29,6 +29,7 @@ class CacheController
         ApiMemoCache $memo,
     ): ToastRenderer {
 
+        // If clearing the cache from the admin panel, it is recommended to use a webhook to clear only the API cache, as clearing the regular cache can affect more than just the frontend display.
         $cache->clear();
         $memo->clear();
 

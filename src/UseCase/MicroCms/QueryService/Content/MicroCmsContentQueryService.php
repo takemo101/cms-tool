@@ -12,13 +12,11 @@ interface MicroCmsContentQueryService
      *
      * @param string $endpoint
      * @param MicroCmsContentGetOneQuery $query
-     * @param bool $cache
      * @return ImmutableArrayObjectable<string,mixed>|null
      */
     public function getSingle(
         string $endpoint,
         MicroCmsContentGetOneQuery $query = new MicroCmsContentGetOneQuery(),
-        bool $cache = true,
     ): ?ImmutableArrayObjectable;
 
     /**
@@ -42,14 +40,12 @@ interface MicroCmsContentQueryService
      * @param string $endpoint
      * @param string $id
      * @param MicroCmsContentGetOneQuery $query
-     * @param bool $cache
      * @return ImmutableArrayObjectable<string,mixed>|null
      */
     public function getOne(
         string $endpoint,
         string $id,
         MicroCmsContentGetOneQuery $query = new MicroCmsContentGetOneQuery(),
-        bool $cache = true,
     ): ?ImmutableArrayObjectable;
 
     /**
@@ -73,13 +69,11 @@ interface MicroCmsContentQueryService
      *
      * @param string $endpoint
      * @param MicroCmsContentGetListQuery $query
-     * @param bool $cache
      * @return ImmutableArrayObjectable<string,mixed>|null
      */
     public function getFirst(
         string $endpoint,
         MicroCmsContentGetListQuery $query = new MicroCmsContentGetListQuery(),
-        bool $cache = true,
     ): ?ImmutableArrayObjectable;
 
     /**
@@ -88,13 +82,11 @@ interface MicroCmsContentQueryService
      * @param string $endpoint
      * @param Pager $pager
      * @param MicroCmsContentGetListQuery $query
-     * @param bool $cache
      * @return MicroCmsContentGetListResult
      */
     public function getList(
         string $endpoint,
         Pager $pager = new Pager(),
         MicroCmsContentGetListQuery $query = new MicroCmsContentGetListQuery(),
-        bool $cache = true,
     ): MicroCmsContentGetListResult;
 }

@@ -15,7 +15,7 @@ use Takemo101\CmsTool\Infra\Shared\Exception\InfraException;
 use Takemo101\CmsTool\Support\ArrayObject\ImmutableArrayObjectable;
 use Takemo101\CmsTool\UseCase\Shared\QueryService\ContentPaginator;
 use Takemo101\CmsTool\UseCase\Shared\QueryService\Pager;
-use CmsTool\Cache\ControlledCache;
+use CmsTool\Cache\Contract\MemoCache;
 use Takemo101\CmsTool\Support\ArrayObject\ImmutableArrayObject;
 
 class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
@@ -24,11 +24,11 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
      * constructor
      *
      * @param MicroCmsApiConnectorFactory $factory
-     * @param ControlledCache $cache
+     * @param MemoCache $cache
      */
     public function __construct(
         private MicroCmsApiConnectorFactory $factory,
-        private ControlledCache $cache,
+        private MemoCache $cache,
     ) {
         //
     }
@@ -39,7 +39,6 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
     public function getSingle(
         string $endpoint,
         MicroCmsContentGetOneQuery $query = new MicroCmsContentGetOneQuery(),
-        bool $cache = true,
     ): ?ImmutableArrayObjectable {
 
         $apiQuery = new MicroCmsGetOneQuery(
@@ -73,8 +72,7 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
                 }
 
                 return $response->json();
-            },
-            enabled: $cache,
+            }
         );
 
         return empty($json)
@@ -120,7 +118,6 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
         string $endpoint,
         string $id,
         MicroCmsContentGetOneQuery $query = new MicroCmsContentGetOneQuery(),
-        bool $cache = true,
     ): ?ImmutableArrayObjectable {
 
         $apiQuery = new MicroCmsGetOneQuery(
@@ -158,7 +155,6 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
 
                 return $response->json();
             },
-            enabled: $cache,
         );
 
         return empty($json)
@@ -206,7 +202,6 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
     public function getFirst(
         string $endpoint,
         MicroCmsContentGetListQuery $query = new MicroCmsContentGetListQuery(),
-        bool $cache = true,
     ): ?ImmutableArrayObjectable {
 
         $apiQuery = new MicroCmsGetListQuery(
@@ -247,7 +242,6 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
 
                 return $response->json();
             },
-            enabled: $cache,
         );
 
         /** @var array<string,mixed>[] */
@@ -270,7 +264,6 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
         string $endpoint,
         Pager $pager = new Pager(),
         MicroCmsContentGetListQuery $query = new MicroCmsContentGetListQuery(),
-        bool $cache = true,
     ): MicroCmsContentGetListResult {
         $apiQuery = new MicroCmsGetListQuery(
             limit: $pager->limit,
@@ -311,7 +304,6 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
 
                 return $response->json();
             },
-            enabled: $cache,
         );
 
         /** @var array<string,mixed>[] */

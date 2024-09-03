@@ -26,5 +26,6 @@ return [
     // This configuration is used to modify the dependencies for cache.
     'dependencies' => [
         // CmsTool\Cache\Contract\CacheItemPoolFactory::class => CmsTool\Cache\FilesystemCacheItemPoolFactory::class,
+        // CmsTool\Cache\Contract\MemoCache::class => CmsTool\Cache\PsrMemoCache::class
     ],
 ];

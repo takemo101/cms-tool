@@ -2,12 +2,12 @@
 
 namespace CmsTool\Cache;
 
+use CmsTool\Cache\Contract\MemoCache;
 use DI\Attribute\Inject;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Cache\CacheItemInterface;
-use InvalidArgumentException;
 
-class ControlledCache
+class PsrMemoCache implements MemoCache
 {
     /**
      * constructor
@@ -27,22 +27,22 @@ class ControlledCache
     }
 
     /**
-     * CacheItemPoolInterface wrapper
-     * enabled = false, always return $callback()
+     * {@inheritDoc}
      *
      * @template T
      *
      * @param string $key
      * @param callable(CacheItemInterface):T $callback
-     * @param bool $enabled default true
+     * @param bool $enabled Whether to enable caching or not
      * @return T
-     * @throws InvalidArgumentException
      */
     public function get(
         string $key,
         callable $callback,
         bool $enabled = true,
     ): mixed {
+        // If the base constructor flag is enabled, then enable the cache.
+        // Otherwise, enable the cache based on the argument flag.
         $enabled = $this->enabled && $enabled;
 
         $item = $this->pool->getItem($key);

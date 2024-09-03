@@ -1,6 +1,6 @@
 <?php
 
-use CmsTool\Cache\ControlledCache;
+use CmsTool\Cache\Contract\MemoCache;
 use Takemo101\Chubby\Support\ServiceLocator;
 use Psr\Cache\CacheItemInterface;
 
@@ -21,8 +21,8 @@ if (!function_exists('cache')) {
         callable $callback,
         bool $enabled = true,
     ): mixed {
-        /** @var ControlledCache */
-        $cache = ServiceLocator::container()->get(ControlledCache::class);
+        /** @var MemoCache */
+        $cache = ServiceLocator::container()->get(MemoCache::class);
 
         /** @var T */
         $value = $cache->get($key, $callback, $enabled);

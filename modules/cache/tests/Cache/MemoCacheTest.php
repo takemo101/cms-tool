@@ -1,6 +1,6 @@
 <?php
 
-use CmsTool\Cache\ControlledCache;
+use CmsTool\Cache\PsrMemoCache;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Cache\CacheItemInterface;
 use Mockery as m;
@@ -20,7 +20,7 @@ describe(
             $item->shouldReceive('get')->andReturn('cached value');
 
             // Create an instance of ControlledCache
-            $cache = new ControlledCache($pool);
+            $cache = new PsrMemoCache($pool);
 
             // Define the callback function
             $callback = function (CacheItemInterface $item) {
@@ -47,7 +47,7 @@ describe(
             $pool->shouldReceive('save');
 
             // Create an instance of ControlledCache
-            $cache = new ControlledCache($pool);
+            $cache = new PsrMemoCache($pool);
 
             // Define the callback function
             $callback = function (CacheItemInterface $item) {
@@ -73,7 +73,7 @@ describe(
             $item->shouldReceive('set');
 
             // Create an instance of ControlledCache with cache disabled
-            $cache = new ControlledCache($pool, false);
+            $cache = new PsrMemoCache($pool, false);
 
             // Define the callback function
             $callback = function (CacheItemInterface $item) {
@@ -87,4 +87,4 @@ describe(
             expect($result)->toBe('callback value');
         });
     }
-)->group('ControlledCache', 'cache');
+)->group('MemoCache', 'cache');

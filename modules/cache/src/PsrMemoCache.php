@@ -64,4 +64,12 @@ class PsrMemoCache implements MemoCache
 
         return $value;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function clear(): void
+    {
+        $this->pool->clear();
+    }
 }

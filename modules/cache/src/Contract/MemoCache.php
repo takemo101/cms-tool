@@ -29,4 +29,11 @@ interface MemoCache
         callable $callback,
         bool $enabled = true,
     ): mixed;
+
+    /**
+     * Clear all cached values.
+     *
+     * @return void
+     */
+    public function clear(): void;
 }

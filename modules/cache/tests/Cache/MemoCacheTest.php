@@ -86,5 +86,18 @@ describe(
             // Assertions
             expect($result)->toBe('callback value');
         });
+
+        it('should clear the cache', function () {
+            // Create a mock for CacheItemPoolInterface
+            $pool = m::mock(CacheItemPoolInterface::class);
+
+            // Mock the clear method of CacheItemPoolInterface
+            $pool->shouldReceive('clear')->once();
+
+            // Create an instance of MemoCache with cache disabled
+            $cache = new PsrMemoCache($pool, false);
+
+            $cache->clear();
+        });
     }
 )->group('MemoCache', 'cache');

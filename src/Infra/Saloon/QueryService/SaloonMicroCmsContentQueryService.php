@@ -15,7 +15,7 @@ use Takemo101\CmsTool\Infra\Shared\Exception\InfraException;
 use Takemo101\CmsTool\Support\ArrayObject\ImmutableArrayObjectable;
 use Takemo101\CmsTool\UseCase\Shared\QueryService\ContentPaginator;
 use Takemo101\CmsTool\UseCase\Shared\QueryService\Pager;
-use CmsTool\Cache\Contract\MemoCache;
+use Takemo101\CmsTool\Infra\Cache\ApiMemoCache;
 use Takemo101\CmsTool\Support\ArrayObject\ImmutableArrayObject;
 
 class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
@@ -24,11 +24,11 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
      * constructor
      *
      * @param MicroCmsApiConnectorFactory $factory
-     * @param MemoCache $cache
+     * @param ApiMemoCache $memo
      */
     public function __construct(
         private MicroCmsApiConnectorFactory $factory,
-        private MemoCache $cache,
+        private ApiMemoCache $memo,
     ) {
         //
     }
@@ -52,7 +52,7 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
         ]);
 
         /** @var array<string,mixed> */
-        $json = $this->cache->get(
+        $json = $this->memo->get(
             key: $key,
             callback: function () use (
                 $endpoint,
@@ -132,7 +132,7 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
         ]);
 
         /** @var array<string,mixed> */
-        $json = $this->cache->get(
+        $json = $this->memo->get(
             key: $key,
             callback: function () use (
                 $endpoint,
@@ -220,7 +220,7 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
         ]);
 
         /** @var array<string,mixed> */
-        $json = $this->cache->get(
+        $json = $this->memo->get(
             key: $key,
             callback: function () use (
                 $endpoint,
@@ -282,7 +282,7 @@ class SaloonMicroCmsContentQueryService implements MicroCmsContentQueryService
         ]);
 
         /** @var array<string,mixed> */
-        $json = $this->cache->get(
+        $json = $this->memo->get(
             key: $key,
             callback: function () use (
                 $endpoint,

@@ -6,7 +6,7 @@ use Psr\Cache\CacheItemInterface;
 use Mockery as m;
 
 describe(
-    'ControlledCache',
+    'MemoCache',
     function () {
 
         it('should return cached value if enabled and item is hit', function () {
@@ -19,7 +19,7 @@ describe(
             $item->shouldReceive('isHit')->andReturn(true);
             $item->shouldReceive('get')->andReturn('cached value');
 
-            // Create an instance of ControlledCache
+            // Create an instance of MemoCache
             $cache = new PsrMemoCache($pool);
 
             // Define the callback function
@@ -46,7 +46,7 @@ describe(
             $item->shouldReceive('set');
             $pool->shouldReceive('save');
 
-            // Create an instance of ControlledCache
+            // Create an instance of MemoCache
             $cache = new PsrMemoCache($pool);
 
             // Define the callback function
@@ -72,7 +72,7 @@ describe(
             $item->shouldReceive('expiresAfter');
             $item->shouldReceive('set');
 
-            // Create an instance of ControlledCache with cache disabled
+            // Create an instance of MemoCache with cache disabled
             $cache = new PsrMemoCache($pool, false);
 
             // Define the callback function

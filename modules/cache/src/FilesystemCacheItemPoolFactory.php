@@ -26,11 +26,14 @@ class FilesystemCacheItemPoolFactory implements CacheItemPoolFactory
     }
 
     /**
-     * @return CacheItemPoolInterface
+     * {@inheritDoc}
      */
-    public function create(): CacheItemPoolInterface
+    public function create(array $options = []): CacheItemPoolInterface
     {
-        $driver = new FileSystem($this->options);
+        $driver = new FileSystem([
+            ...$this->options,
+            ...$options,
+        ]);
 
         $pool = new Pool($driver);
 

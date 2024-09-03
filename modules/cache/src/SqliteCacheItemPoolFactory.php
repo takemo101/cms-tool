@@ -26,11 +26,14 @@ class SqliteCacheItemPoolFactory implements CacheItemPoolFactory
     }
 
     /**
-     * @return CacheItemPoolInterface
+     * {@inheritDoc}
      */
-    public function create(): CacheItemPoolInterface
+    public function create(array $options = []): CacheItemPoolInterface
     {
-        $driver = new Sqlite($this->options);
+        $driver = new Sqlite([
+            ...$this->options,
+            ...$options,
+        ]);
 
         $pool = new Pool($driver);
 

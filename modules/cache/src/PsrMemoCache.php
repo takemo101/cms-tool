@@ -64,4 +64,14 @@ class PsrMemoCache implements MemoCache
 
         return $value;
     }
+
+    /**
+     * Clear all cache items.
+     *
+     * @return boolean If the cache was cleared successfully, it returns true.
+     */
+    public function clear(): bool
+    {
+        return $this->pool->clear();
+    }
 }

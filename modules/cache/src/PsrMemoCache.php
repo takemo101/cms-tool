@@ -14,14 +14,14 @@ class PsrMemoCache implements MemoCache
      *
      * @param CacheItemPoolInterface $pool
      * @param boolean $enabled
-     * @param integer $lifetime
+     * @param int<1,max> $lifetime
      */
     public function __construct(
         private readonly CacheItemPoolInterface $pool,
         #[Inject('config.cache.enabled')]
         private readonly bool $enabled = true,
         #[Inject('config.cache.lifetime')]
-        private readonly int $lifetime = 0,
+        private readonly int $lifetime = 21600,
     ) {
         //
     }
@@ -33,17 +33,16 @@ class PsrMemoCache implements MemoCache
      *
      * @param string $key
      * @param callable(CacheItemInterface):T $callback
-     * @param bool $enabled Whether to enable caching or not
+     * @param MemoCacheOptions|null $options Cache options
      * @return T
      */
     public function get(
         string $key,
         callable $callback,
-        bool $enabled = true,
+        ?MemoCacheOptions $options = null,
     ): mixed {
-        // If the base constructor flag is enabled, then enable the cache.
-        // Otherwise, enable the cache based on the argument flag.
-        $enabled = $this->enabled && $enabled;
+        // Use default values if options are not specified.
+        $enabled = $options?->enabled ?? $this->enabled;
 
         $item = $this->pool->getItem($key);
 
@@ -54,7 +53,9 @@ class PsrMemoCache implements MemoCache
             return $value;
         }
 
-        $item->expiresAfter($this->lifetime);
+        $item->expiresAfter(
+            $options?->lifetime ?? $this->lifetime,
+        );
 
         /** @var T */
         $value = call_user_func($callback, $item);

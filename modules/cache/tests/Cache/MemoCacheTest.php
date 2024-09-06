@@ -87,6 +87,26 @@ describe(
             expect($result)->toBe('callback value');
         });
 
+        it(
+            'should remove the cache for the specified key',
+            function () {
+                // Create a mock for CacheItemPoolInterface
+                $pool = m::mock(CacheItemPoolInterface::class);
+
+                // Mock the deleteItem method of CacheItemPoolInterface
+                $pool->shouldReceive('deleteItem')->once()->with('key')->andReturn(true);
+
+                // Create an instance of MemoCache
+                $cache = new PsrMemoCache($pool);
+
+                // Call the forget method
+                $result = $cache->forget('key');
+
+                // Assertions
+                expect($result)->toBe(true);
+            }
+        );
+
         it('should clear the cache', function () {
             // Create a mock for CacheItemPoolInterface
             $pool = m::mock(CacheItemPoolInterface::class);

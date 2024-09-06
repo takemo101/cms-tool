@@ -30,4 +30,12 @@ interface MemoCache
         callable $callback,
         ?MemoCacheOptions $options = null,
     ): mixed;
+
+    /**
+     * Remove the cache for the specified key.
+     *
+     * @param string $key
+     * @return boolean True if the cache was removed, false if it was not
+     */
+    public function forget(string $key): bool;
 }

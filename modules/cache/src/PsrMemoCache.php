@@ -67,6 +67,17 @@ class PsrMemoCache implements MemoCache
     }
 
     /**
+     * Remove the cache for the specified key.
+     *
+     * @param string $key
+     * @return boolean
+     */
+    public function forget(string $key): bool
+    {
+        return $this->pool->deleteItem($key);
+    }
+
+    /**
      * Clear all cache items.
      *
      * @return boolean If the cache was cleared successfully, it returns true.

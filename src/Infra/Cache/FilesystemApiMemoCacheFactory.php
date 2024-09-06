@@ -14,7 +14,7 @@ class FilesystemApiMemoCacheFactory
      * @param FilesystemCacheItemPoolFactory $factory
      * @param array<string,mixed> $options
      * @param boolean $enabled
-     * @param integer $lifetime
+     * @param int<1,max> $lifetime
      */
     public function __construct(
         private readonly FilesystemCacheItemPoolFactory $factory,
@@ -23,7 +23,7 @@ class FilesystemApiMemoCacheFactory
         #[Inject('config.system.api_cache.enabled')]
         private readonly bool $enabled = true,
         #[Inject('config.system.api_cache.lifetime')]
-        private readonly int $lifetime = 0,
+        private readonly int $lifetime = 21600,
     ) {
         //
     }

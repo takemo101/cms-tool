@@ -2,6 +2,7 @@
 
 namespace Takemo101\CmsTool\Infra\Cache;
 
+use CmsTool\Cache\MemoCacheOptions;
 use CmsTool\Cache\PsrMemoCache;
 use Psr\Cache\CacheItemInterface;
 
@@ -25,18 +26,18 @@ class PsrApiMemoCache implements ApiMemoCache
      *
      * @param string $key
      * @param callable(CacheItemInterface):T $callback
-     * @param bool $enabled Whether to enable caching or not
+     * @param MemoCacheOptions|null $options Cache options
      * @return T
      */
     public function get(
         string $key,
         callable $callback,
-        bool $enabled = true,
+        ?MemoCacheOptions $options = null,
     ): mixed {
         return $this->memo->get(
             key: $key,
             callback: $callback,
-            enabled: $enabled,
+            options: $options,
         );
     }
 

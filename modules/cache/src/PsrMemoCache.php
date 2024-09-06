@@ -2,48 +2,47 @@
 
 namespace CmsTool\Cache;
 
+use CmsTool\Cache\Contract\MemoCache;
 use DI\Attribute\Inject;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Cache\CacheItemInterface;
-use InvalidArgumentException;
 
-class ControlledCache
+class PsrMemoCache implements MemoCache
 {
     /**
      * constructor
      *
      * @param CacheItemPoolInterface $pool
      * @param boolean $enabled
-     * @param integer $lifetime
+     * @param int<1,max> $lifetime
      */
     public function __construct(
         private readonly CacheItemPoolInterface $pool,
         #[Inject('config.cache.enabled')]
         private readonly bool $enabled = true,
         #[Inject('config.cache.lifetime')]
-        private readonly int $lifetime = 0,
+        private readonly int $lifetime = 21600,
     ) {
         //
     }
 
     /**
-     * CacheItemPoolInterface wrapper
-     * enabled = false, always return $callback()
+     * {@inheritDoc}
      *
      * @template T
      *
      * @param string $key
      * @param callable(CacheItemInterface):T $callback
-     * @param bool $enabled default true
+     * @param MemoCacheOptions|null $options Cache options
      * @return T
-     * @throws InvalidArgumentException
      */
     public function get(
         string $key,
         callable $callback,
-        bool $enabled = true,
+        ?MemoCacheOptions $options = null,
     ): mixed {
-        $enabled = $this->enabled && $enabled;
+        // Use default values if options are not specified.
+        $enabled = $options?->enabled ?? $this->enabled;
 
         $item = $this->pool->getItem($key);
 
@@ -54,7 +53,9 @@ class ControlledCache
             return $value;
         }
 
-        $item->expiresAfter($this->lifetime);
+        $item->expiresAfter(
+            $options?->lifetime ?? $this->lifetime,
+        );
 
         /** @var T */
         $value = call_user_func($callback, $item);
@@ -63,5 +64,26 @@ class ControlledCache
         $this->pool->save($item);
 
         return $value;
+    }
+
+    /**
+     * Remove the cache for the specified key.
+     *
+     * @param string $key
+     * @return boolean
+     */
+    public function forget(string $key): bool
+    {
+        return $this->pool->deleteItem($key);
+    }
+
+    /**
+     * Clear all cache items.
+     *
+     * @return boolean If the cache was cleared successfully, it returns true.
+     */
+    public function clear(): bool
+    {
+        return $this->pool->clear();
     }
 }

@@ -1,12 +1,12 @@
 <?php
 
-use CmsTool\Cache\ControlledCache;
+use CmsTool\Cache\PsrMemoCache;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Cache\CacheItemInterface;
 use Mockery as m;
 
 describe(
-    'ControlledCache',
+    'MemoCache',
     function () {
 
         it('should return cached value if enabled and item is hit', function () {
@@ -19,8 +19,8 @@ describe(
             $item->shouldReceive('isHit')->andReturn(true);
             $item->shouldReceive('get')->andReturn('cached value');
 
-            // Create an instance of ControlledCache
-            $cache = new ControlledCache($pool);
+            // Create an instance of MemoCache
+            $cache = new PsrMemoCache($pool);
 
             // Define the callback function
             $callback = function (CacheItemInterface $item) {
@@ -46,8 +46,8 @@ describe(
             $item->shouldReceive('set');
             $pool->shouldReceive('save');
 
-            // Create an instance of ControlledCache
-            $cache = new ControlledCache($pool);
+            // Create an instance of MemoCache
+            $cache = new PsrMemoCache($pool);
 
             // Define the callback function
             $callback = function (CacheItemInterface $item) {
@@ -72,8 +72,8 @@ describe(
             $item->shouldReceive('expiresAfter');
             $item->shouldReceive('set');
 
-            // Create an instance of ControlledCache with cache disabled
-            $cache = new ControlledCache($pool, false);
+            // Create an instance of MemoCache with cache disabled
+            $cache = new PsrMemoCache($pool, false);
 
             // Define the callback function
             $callback = function (CacheItemInterface $item) {
@@ -86,5 +86,38 @@ describe(
             // Assertions
             expect($result)->toBe('callback value');
         });
+
+        it(
+            'should remove the cache for the specified key',
+            function () {
+                // Create a mock for CacheItemPoolInterface
+                $pool = m::mock(CacheItemPoolInterface::class);
+
+                // Mock the deleteItem method of CacheItemPoolInterface
+                $pool->shouldReceive('deleteItem')->once()->with('key')->andReturn(true);
+
+                // Create an instance of MemoCache
+                $cache = new PsrMemoCache($pool);
+
+                // Call the forget method
+                $result = $cache->forget('key');
+
+                // Assertions
+                expect($result)->toBe(true);
+            }
+        );
+
+        it('should clear the cache', function () {
+            // Create a mock for CacheItemPoolInterface
+            $pool = m::mock(CacheItemPoolInterface::class);
+
+            // Mock the clear method of CacheItemPoolInterface
+            $pool->shouldReceive('clear')->once()->andReturn(true);
+
+            // Create an instance of MemoCache with cache disabled
+            $cache = new PsrMemoCache($pool, false);
+
+            expect($cache->clear())->toBe(true);
+        });
     }
-)->group('ControlledCache', 'cache');
+)->group('MemoCache', 'cache');

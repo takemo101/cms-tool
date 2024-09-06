@@ -44,6 +44,14 @@ class PsrApiMemoCache implements ApiMemoCache
     /**
      * {@inheritDoc}
      */
+    public function forget(string $key): bool
+    {
+        return $this->memo->forget($key);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function clear(): bool
     {
         return $this->memo->clear();

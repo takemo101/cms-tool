@@ -3,7 +3,7 @@
 return [
 
     // Whether to enable cache
-    // This setting is reflected when using ControlledCache
+    // This setting is reflected when using MemoCache
     'enabled' => (bool) env('CACHE_ENABLED', true),
 
     // Default lifetime seconds
@@ -26,5 +26,6 @@ return [
     // This configuration is used to modify the dependencies for cache.
     'dependencies' => [
         // CmsTool\Cache\Contract\CacheItemPoolFactory::class => CmsTool\Cache\FilesystemCacheItemPoolFactory::class,
+        // CmsTool\Cache\Contract\MemoCache::class => CmsTool\Cache\PsrMemoCache::class
     ],
 ];

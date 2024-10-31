@@ -6,6 +6,7 @@ use CmsTool\View\View;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Takemo101\CmsTool\Http\Renderer\RedirectBackRenderer;
+use Takemo101\CmsTool\Infra\Cache\ApiMemoCache;
 use Takemo101\CmsTool\Infra\Event\Uninstalled;
 use Takemo101\CmsTool\Support\Toast\ToastRenderer;
 use Takemo101\CmsTool\Support\Toast\ToastStyle;
@@ -29,12 +30,15 @@ class UninstallController
         UninstallHandler $handler,
         AdminSession $session,
         CacheItemPoolInterface $cache,
+        ApiMemoCache $memo,
         EventDispatcherInterface $dispatcher
     ): ToastRenderer {
 
         $handler->handle();
 
+        // When uninstalling, it is necessary to clear both the API cache and the regular cache as it deletes all data in the system.
         $cache->clear();
+        $memo->clear();
 
         $session->logout();
 

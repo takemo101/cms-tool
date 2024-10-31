@@ -3,6 +3,7 @@
 namespace Takemo101\CmsTool\Support\Webhook;
 
 use DI\FactoryInterface;
+use Throwable;
 
 class WebhookExecutor
 {
@@ -23,17 +24,27 @@ class WebhookExecutor
      * Execute WebHook processing together
      *
      * @param array<string,mixed> $payload
-     * @return void
+     * @return void|never
+     * @throws WebhookHandlingExceptions
      */
     public function execute(array $payload): void
     {
+        /** @var Throwable[] */
+        $throwables = [];
+
         foreach ($this->handlers->classes() as $handler) {
             if (is_string($handler)) {
                 /** @var WebhookHandler */
                 $handler = $this->factory->make($handler);
             }
 
-            $handler->handle($payload);
+            try {
+                $handler->handle($payload);
+            } catch (Throwable $e) {
+                $throwables[] = $e;
+            }
         }
+
+        WebhookHandlingExceptions::throwIfNotEmpty(...$throwables);
     }
 }

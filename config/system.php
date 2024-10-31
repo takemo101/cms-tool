@@ -58,4 +58,28 @@ return [
             env('BASIC_AUTH_USERNAME', 'admin') => env('BASIC_AUTH_PASSWORD', 'admin'),
         ],
     ],
+
+    // Content api cache settings
+    'api_cache' => [
+
+        // Whether to enable cache
+        // This setting is reflected when using ApiMemoCache
+        'enabled' => (bool) env(
+            'API_CACHE_ENABLED',
+            env('CACHE_ENABLED', true),
+        ),
+
+        // Default lifetime seconds
+        'lifetime' => (int) env(
+            'API_CACHE_LIFETIME',
+            env('CACHE_LIFETIME', 21600 * 2), // 6 hours
+        ),
+
+        // FilesystemAdapter options
+        'filesystem' => [
+
+            // Cache directory path
+            'path' => storage_path('cache/api-data'),
+        ],
+    ]
 ];

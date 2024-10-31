@@ -3,7 +3,7 @@
 return [
 
     // Whether to enable cache
-    // This setting is reflected when using ControlledCache
+    // This setting is reflected when using MemoCache
     'enabled' => (bool) env('CACHE_ENABLED', true),
 
     // Default lifetime seconds

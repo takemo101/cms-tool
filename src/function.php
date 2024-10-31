@@ -12,6 +12,7 @@ use Takemo101\Chubby\Event\EventRegister;
 use Takemo101\Chubby\Http\ErrorHandler\ErrorResponseRenders;
 use Takemo101\Chubby\Http\SlimHttp;
 use Takemo101\Chubby\Support\ApplicationSummary;
+use Takemo101\CmsTool\Console\ApiCacheCleanCommand;
 use Takemo101\CmsTool\Console\GenerateBasicAuthPasswordCommand;
 use Takemo101\CmsTool\Console\StorageLinkCommand;
 use Takemo101\CmsTool\Error\SystemErrorPageRender;
@@ -64,6 +65,7 @@ hook()
         fn (CommandCollection $commands) => $commands->add(
             StorageLinkCommand::class,
             GenerateBasicAuthPasswordCommand::class,
+            ApiCacheCleanCommand::class,
         ),
     )
     ->onTyped(

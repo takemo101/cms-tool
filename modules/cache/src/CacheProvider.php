@@ -4,6 +4,7 @@ namespace CmsTool\Cache;
 
 use CmsTool\Cache\Command\CacheCleanCommand;
 use CmsTool\Cache\Contract\CacheItemPoolFactory;
+use CmsTool\Cache\Contract\MemoCache;
 use Psr\Cache\CacheItemPoolInterface;
 use Takemo101\Chubby\ApplicationContainer;
 use Takemo101\Chubby\Bootstrap\Definitions;
@@ -35,6 +36,7 @@ class CacheProvider implements Provider
             ...ConfigBasedDefinitionReplacer::createDependencyDefinitions(
                 dependencies: [
                     CacheItemPoolFactory::class => FilesystemCacheItemPoolFactory::class,
+                    MemoCache::class => PsrMemoCache::class,
                 ],
                 configKeyPrefix: 'cache',
             )
